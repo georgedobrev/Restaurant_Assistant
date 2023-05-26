@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  db:
+    container_name: mssqldb
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=#PetkoLyutskanov123
+    ports:
+      - 1433:1433
