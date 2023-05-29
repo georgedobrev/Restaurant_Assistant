@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "restaurant-app",
-    "slug": "restaurant-app",
+    "name": "my-app",
+    "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,21 +10,29 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.restaurant.my-app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "package": "com.restaurant.my-app"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+
+    "expo": {
+      "scheme": "myapp"
     }
+    
   }
 }
