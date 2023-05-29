@@ -12,7 +12,7 @@ export function LoginScreen({}) {
   const [accessToken, setAccessToken] = React.useState(null);
   const [user, setUser] = React.useState(null);
 
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "204367786739-m0li9b5tkdqt0j44b0jh17et4ukpgme7.apps.googleusercontent.com",
     iosCliendId:
