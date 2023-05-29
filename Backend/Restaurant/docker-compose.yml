@@ -5,6 +5,7 @@ services:
     image: mcr.microsoft.com/azure-sql-edge
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=#PetkoLyutskanov123
+      - SA_PASSWORD=#RestaurantAssistant123
+      - SA_USERNAME=sa
     ports:
       - 1433:1433
