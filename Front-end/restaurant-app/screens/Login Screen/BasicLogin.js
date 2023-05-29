@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import GlobalStyles from "../GlobalStyles";
 
 const BasicLogin = () => {
   const [password, setPassword] = useState("");
@@ -62,7 +63,7 @@ const styles = {
   },
   textInput: {
     padding: 4,
-    backgroundColor: "#F6F1E9",
+    backgroundColor: GlobalStyles.lightColor,
     color: "#333",
     borderRadius: 10,
     marginBottom: 3,
@@ -76,7 +77,7 @@ const styles = {
   },
   loginButton: {
     padding: 10,
-    backgroundColor: "#ecd282",
+    backgroundColor: GlobalStyles.yellowColor,
     borderRadius: 20,
     marginTop: 10,
     shadowColor: "black",

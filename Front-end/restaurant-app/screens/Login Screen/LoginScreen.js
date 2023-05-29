@@ -5,20 +5,18 @@ import * as Google from "expo-auth-session/providers/google";
 import { useNavigation } from "@react-navigation/native";
 import ImageSection from "./ImageSection";
 import BasicLogin from "./BasicLogin";
+import GoogleConfig from "./GoogleConfig";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export function LoginScreen({}) {
+export const LoginScreen = () => {
   const [accessToken, setAccessToken] = React.useState(null);
   const [user, setUser] = React.useState(null);
 
-    const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId:
-      "204367786739-m0li9b5tkdqt0j44b0jh17et4ukpgme7.apps.googleusercontent.com",
-    iosCliendId:
-      "204367786739-m82dvi0rqag8943ja9676l5ocjemkup4.apps.googleusercontent.com",
-    androidClientId:
-      "204367786739-s9v0h7p0vga6lm81rkic6hs3a2qeokak.apps.googleusercontent.com",
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: GoogleConfig.clientId,
+    iosCliendId: GoogleConfig.iosCliendId,
+    androidClientId: GoogleConfig.androidClientId,
   });
 
   useEffect(() => {
@@ -58,44 +56,39 @@ export function LoginScreen({}) {
     navigation.navigate("Dashboard");
   };
 
-
   return (
     <View style={styles.container}>
       <ImageSection />
       <View style={styles.contentContainer}>
-      
-        <BasicLogin/>
+        <BasicLogin />
 
-          <Text style={styles.orText}>Or</Text>
+        <Text style={styles.orText}>Or</Text>
 
-          <View>
-            <TouchableOpacity
-              style={styles.googleSignInContainer}
-              disabled={!request}
-              onPress={() => {
-                promptAsync().then((result) => {
-                  if (result.type === "success") {
-                    onSignInPressed();
-                  }
-                });
+        <View>
+          <TouchableOpacity
+            style={styles.googleSignInContainer}
+            disabled={!request}
+            onPress={() => {
+              promptAsync().then((result) => {
+                if (result.type === "success") {
+                  onSignInPressed();
+                }
+              });
+            }}
+          >
+            <Image
+              style={styles.googleSignInImage}
+              source={{
+                uri: "https://i.ibb.co/j82DCcR/search.png",
               }}
-            >
-              <Image
-                style={styles.googleSignInImage}
-                source={{
-                  uri: "https://i.ibb.co/j82DCcR/search.png",
-                }}
-              />
-              <Text style={styles.googleSignInText}>
-                Sign in with Google
-              </Text>
-            </TouchableOpacity>
-          </View>
+            />
+            <Text style={styles.googleSignInText}>Sign in with Google</Text>
+          </TouchableOpacity>
         </View>
       </View>
+    </View>
   );
-}
-
+};
 
 const styles = {
   container: {
@@ -108,8 +101,8 @@ const styles = {
     paddingHorizontal: 30,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-  }, 
- 
+  },
+
   orText: {
     textAlign: "center",
     paddingTop: 5,
@@ -136,4 +129,3 @@ const styles = {
     fontWeight: "semibold",
   },
 };
-
