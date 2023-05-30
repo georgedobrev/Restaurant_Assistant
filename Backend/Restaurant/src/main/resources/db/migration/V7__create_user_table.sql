@@ -1,12 +1,12 @@
 CREATE TABLE [user]
 (
-    user_id INT PRIMARY KEY,
-    email VARCHAR(255),
-    name VARCHAR(255),
-    surname VARCHAR(255),
+    id INT PRIMARY KEY,
+    email NVARCHAR(100),
+    name NVARCHAR(100),
+    surname NVARCHAR(100),
     created DATETIME,
     blacklisted BIT,
     table_id INT,
     active INT,
-    FOREIGN KEY (table_id) REFERENCES [table] (table_id)
+    FOREIGN KEY (table_id) REFERENCES [table] (id)
 );

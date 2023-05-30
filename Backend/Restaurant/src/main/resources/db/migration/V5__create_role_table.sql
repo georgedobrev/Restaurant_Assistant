@@ -1,5 +1,5 @@
 CREATE TABLE role
 (
-    role_id INT PRIMARY KEY,
-    role_type VARCHAR(10) CHECK (role_type IN ('Admin', 'User', 'Waiter'))
+    id INT PRIMARY KEY,
+    type NVARCHAR(6) CHECK (type IN ('Admin', 'User', 'Waiter'))
 );

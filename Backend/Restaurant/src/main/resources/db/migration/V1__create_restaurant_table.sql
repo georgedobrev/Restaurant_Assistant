@@ -1,8 +1,8 @@
 CREATE TABLE restaurant
 (
-    restaurant_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255),
+    id INT PRIMARY KEY,
+    name NVARCHAR(255),
+    address NVARCHAR(255),
     tables_count INT,
     active BIT
 );
