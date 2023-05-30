@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import globalStyles from "../globalStyles";
+import styles from "./stylesLogin";
 
 const BasicLogin = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState("");
 
   const navigation = useNavigation();
 
@@ -24,15 +25,19 @@ const BasicLogin = () => {
   const onSignInPressed = () => {
     const isValidPassword = validatePassword(password);
     if (isValidPassword) {
-      navigation.navigate("Dashboard");
+      navigation.navigate("Dashboard", { email });
     }
   };
 
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.labelText}>Email address</Text>
-      <TextInput style={styles.textInput} placeholder="Enter email" />
-
+      <TextInput
+        style={styles.textInput}
+        placeholder="Enter email"
+        onChangeText={setEmail}
+        value={email}
+      />
       <Text style={[styles.labelText, styles.passwordLabelText]}>Password</Text>
       <TextInput
         style={styles.textInput}
@@ -54,58 +59,6 @@ const BasicLogin = () => {
       </TouchableOpacity>
     </View>
   );
-};
-
-const styles = {
-  inputContainer: {
-    marginBottom: 10,
-    marginTop: 20,
-  },
-  textInput: {
-    padding: 4,
-    backgroundColor: globalStyles.lightColor,
-    color: globalStyles.blackColor,
-    borderRadius: 10,
-    marginBottom: 3,
-    marginTop: 5,
-    padding: 12,
-  },
-  forgotPassword: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginBottom: 5,
-  },
-  loginButton: {
-    padding: 10,
-    backgroundColor: globalStyles.yellowColor,
-    borderRadius: 20,
-    marginTop: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
-  },
-  loginButtonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: globalStyles.blackColor,
-    textAlign: "center",
-  },
-  labelText: {
-    color: globalStyles.blackColor,
-    marginLeft: 4,
-  },
-  passwordLabelText: {
-    marginTop: 10,
-  },
-  forgotPasswordText: {
-    color: globalStyles.blackColor,
-  },
-  errorText: {
-    color: globalStyles.redColor,
-    marginTop: 5,
-  },
 };
 
 export default BasicLogin;

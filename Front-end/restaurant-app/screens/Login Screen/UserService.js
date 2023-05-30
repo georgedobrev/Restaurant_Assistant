@@ -1,13 +1,14 @@
-async function fetchUserInfo(accessToken) {
-  if (accessToken) {
-    const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    const userInfo = await response.json();
-    return userInfo;
-  }
-}
+import axios from "axios";
+import config from "../../config.json";
 
-export default {
-  fetchUserInfo,
+export const fetchUserInfo = async (accessToken) => {
+  const response = await axios.get(config.googleApi, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.data;
 };

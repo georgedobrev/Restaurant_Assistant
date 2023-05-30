@@ -6,51 +6,52 @@ import { useNavigation } from "@react-navigation/native";
 import ImageSection from "./ImageSection";
 import BasicLogin from "./BasicLogin";
 import GoogleConfig from "./GoogleConfig";
-import globalStyles from "../globalStyles";
-import UserService from "./UserService";
+import { fetchUserInfo } from "./UserService";
+import styles from "./stylesLogin";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export const LoginScreen = () => {
-  const [accessToken, setAccessToken] = React.useState(null);
   const [user, setUser] = React.useState(null);
+  const [accessToken, setAccessToken] = React.useState(null);
 
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+  const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: GoogleConfig.clientId,
-    iosCliendId: GoogleConfig.iosCliendId,
+    iosClientId: GoogleConfig.iosCliendId,
     androidClientId: GoogleConfig.androidClientId,
+    scopes: ["openid", "profile", "email"],
   });
 
   useEffect(() => {
-    if (response?.type === "success" && response.authentication) {
-      setAccessToken(response.authentication.accessToken);
-      accessToken && fetchUserInfo();
-    }
-  }, [response, accessToken]);
+    if (response?.type === "success") {
+      const { access_token } = response.params;
+      setAccessToken(access_token);
 
-  async function fetchUserInfo() {
-    if (accessToken) {
-      const userInfo = await UserService.fetchUserInfo(accessToken);
-      setUser(userInfo);
+      fetchUserInfo(access_token)
+        .then((userInfo) => {
+          setUser(userInfo);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }
-
-  const ShowUserInfo = () => {
-    if (user) {
-      return (
-        <View>
-          <Text style={styles.welcomeText}>Welcome</Text>
-          <Text style={styles.userNameText}>{user.name}</Text>
-        </View>
-      );
-    }
-  };
+  }, [response]);
 
   const navigation = useNavigation();
 
   const onSignInPressed = () => {
-    navigation.navigate("Dashboard");
+    if (user && accessToken) {
+      navigation.navigate("Dashboard", { email: user.email, accessToken });
+    } else {
+      navigation.navigate("Dashboard", { email });
+    }
   };
+
+  useEffect(() => {
+    if (user && accessToken) {
+      onSignInPressed();
+    }
+  }, [user, accessToken]);
 
   return (
     <View style={styles.container}>
@@ -65,11 +66,7 @@ export const LoginScreen = () => {
             style={styles.googleSignInContainer}
             disabled={!request}
             onPress={() => {
-              promptAsync().then((result) => {
-                if (result.type === "success") {
-                  onSignInPressed();
-                }
-              });
+              promptAsync();
             }}
           >
             <Image
@@ -84,43 +81,4 @@ export const LoginScreen = () => {
       </View>
     </View>
   );
-};
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: globalStyles.brownColor,
-  },
-  contentContainer: {
-    flex: 1,
-    backgroundColor: globalStyles.bgColor,
-    paddingHorizontal: 30,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-  },
-  orText: {
-    textAlign: "center",
-    paddingTop: 5,
-    fontWeight: "bold",
-    fontSize: 20,
-    marginVertical: 10,
-  },
-  googleSignInContainer: {
-    backgroundColor: globalStyles.bgColor,
-    borderRadius: 5,
-    paddingHorizontal: 6,
-    paddingVertical: 6,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "middle",
-  },
-  googleSignInImage: {
-    width: 24,
-    height: 24,
-  },
-  googleSignInText: {
-    marginLeft: 4,
-    fontSize: 20,
-    fontWeight: "semibold",
-  },
 };

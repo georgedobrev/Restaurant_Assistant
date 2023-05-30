@@ -1,10 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 const Dashboard = () => {
+  const route = useRoute();
+  const { email, accessToken, user } = route.params;
+
   return (
     <View>
-      <Text>Succesfull Login</Text>
+      {accessToken && <Image source={{ uri: user?.profilePicture }} />}
+      <Text>Welcome, {email}!</Text>
+      {accessToken && <Text>Access Token: {accessToken}</Text>}
     </View>
   );
 };
