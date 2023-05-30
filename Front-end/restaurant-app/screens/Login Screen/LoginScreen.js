@@ -5,7 +5,7 @@ import * as Google from "expo-auth-session/providers/google";
 import { useNavigation } from "@react-navigation/native";
 import ImageSection from "./ImageSection";
 import BasicLogin from "./BasicLogin";
-import GoogleConfig from "./GoogleConfig";
+import googleConfig from "./GoogleConfig";
 import { fetchUserInfo } from "./UserService";
 import styles from "./stylesLogin";
 
@@ -16,9 +16,9 @@ export const LoginScreen = () => {
   const [accessToken, setAccessToken] = React.useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: GoogleConfig.clientId,
-    iosClientId: GoogleConfig.iosCliendId,
-    androidClientId: GoogleConfig.androidClientId,
+    clientId: googleConfig.clientId,
+    iosClientId: googleConfig.iosCliendId,
+    androidClientId: googleConfig.androidClientId,
     scopes: ["openid", "profile", "email"],
   });
 
