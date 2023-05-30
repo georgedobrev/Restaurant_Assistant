@@ -1,0 +1,5 @@
+CREATE TABLE QR_code
+(
+    QR_id INT PRIMARY KEY,
+    QR_img VARBINARY(MAX)
+);
