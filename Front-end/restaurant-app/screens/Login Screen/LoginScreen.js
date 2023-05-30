@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import ImageSection from "./ImageSection";
 import BasicLogin from "./BasicLogin";
 import GoogleConfig from "./GoogleConfig";
+import globalStyles from "../globalStyles";
+import UserService from "./UserService";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -28,13 +30,7 @@ export const LoginScreen = () => {
 
   async function fetchUserInfo() {
     if (accessToken) {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      const userInfo = await response.json();
+      const userInfo = await UserService.fetchUserInfo(accessToken);
       setUser(userInfo);
     }
   }
@@ -93,16 +89,15 @@ export const LoginScreen = () => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#615149",
+    backgroundColor: globalStyles.brownColor,
   },
   contentContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: globalStyles.bgColor,
     paddingHorizontal: 30,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   },
-
   orText: {
     textAlign: "center",
     paddingTop: 5,
@@ -111,7 +106,7 @@ const styles = {
     marginVertical: 10,
   },
   googleSignInContainer: {
-    backgroundColor: "white",
+    backgroundColor: globalStyles.bgColor,
     borderRadius: 5,
     paddingHorizontal: 6,
     paddingVertical: 6,
