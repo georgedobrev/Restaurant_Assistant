@@ -14,20 +14,8 @@ public class VirtualTable {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "tables_ids")
     private String tablesIds;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VirtualTable that = (VirtualTable) o;
-        return id == that.id && Objects.equals(tablesIds, that.tablesIds);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tablesIds);
-    }
 }
