@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Objects;
 
 @Data
 @Entity

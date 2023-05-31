@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public class UserRolePK implements Serializable {

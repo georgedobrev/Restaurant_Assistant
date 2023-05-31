@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.util.Objects;
-
 @Data
 @Entity
 @Table(name = "virtual_table", schema = "dbo", catalog = "restaurant_assistant")
