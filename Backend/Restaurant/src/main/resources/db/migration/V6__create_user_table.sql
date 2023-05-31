@@ -4,9 +4,9 @@ CREATE TABLE [user]
     email NVARCHAR(100),
     name NVARCHAR(100),
     surname NVARCHAR(100),
-    created DATETIME,
-    blacklisted BIT,
+    created_at DATETIME,
     table_id INT,
-    active INT,
+    blacklisted BIT,
+    active BIT,
     FOREIGN KEY (table_id) REFERENCES [table] (id)
 );
