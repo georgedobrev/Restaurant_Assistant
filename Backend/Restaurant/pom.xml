@@ -40,19 +40,19 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.10.5</version>
+            <version>0.11.5</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <scope>runtime</scope>
-            <version>0.10.5</version>
+            <version>0.11.5</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <scope>runtime</scope>
-            <version>0.10.5</version>
+            <version>0.11.5</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -63,6 +63,10 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>11.2.3.jre18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-sqlserver</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -103,6 +107,32 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.19.1</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+                    <url>jdbc:sqlserver://localhost:1433;databaseName=restaurant_assistant;trustServerCertificate=true</url>
+                    <user>sa</user>
+                    <password>RestaurantAssistant123</password>
+                    <baselineOnMigrate>true</baselineOnMigrate>
+                    <schemas>dbo</schemas>
+                    <locations>
+                        <location>
+                            filesystem:src/main/resources/db/migration
+                        </location>
+                    </locations>
                 </configuration>
             </plugin>
         </plugins>
