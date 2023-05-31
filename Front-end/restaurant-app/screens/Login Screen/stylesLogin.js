@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
   },
   orText: {
     textAlign: "center",
-    paddingTop: 5,
+    paddingTop: 4,
     fontWeight: "bold",
     fontSize: 20,
     marginVertical: 10,
   },
   googleSignInContainer: {
     backgroundColor: globalStyles.bgColor,
-    borderRadius: 5,
+    borderRadius: 4,
     paddingHorizontal: 6,
     paddingVertical: 6,
     flexDirection: "row",
@@ -49,14 +49,14 @@ const styles = StyleSheet.create({
     backgroundColor: globalStyles.lightColor,
     color: globalStyles.blackColor,
     borderRadius: 10,
-    marginBottom: 3,
-    marginTop: 5,
+    marginBottom: 4,
+    marginTop: 4,
     padding: 12,
   },
   forgotPassword: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginBottom: 5,
+    marginBottom: 4,
   },
   loginButton: {
     padding: 10,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    elevation: 3,
+    elevation: 4,
   },
   loginButtonText: {
     fontSize: 16,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: globalStyles.redColor,
-    marginTop: 5,
+    marginTop: 4,
   },
 });
 

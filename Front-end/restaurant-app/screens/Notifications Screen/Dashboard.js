@@ -10,7 +10,6 @@ const Dashboard = () => {
     <View>
       {accessToken && <Image source={{ uri: user?.profilePicture }} />}
       <Text>Welcome, {email}!</Text>
-      {accessToken && <Text>Access Token: {accessToken}</Text>}
     </View>
   );
 };
