@@ -15,7 +15,6 @@ public class VirtualTable {
     @Column(name = "id")
     private int id;
 
-    @Basic
     @Column(name = "tables_ids")
     private String tablesIds;
 }

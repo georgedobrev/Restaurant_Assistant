@@ -3,6 +3,7 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -13,27 +14,41 @@ public class Table {
     @Column(name = "id")
     private int id;
 
-    @Basic
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "qr_id")
     private Integer qrId;
 
-    @Basic
     @Column(name = "occupied")
     private Boolean occupied;
 
-    @Basic
     @Column(name = "restaurant_id")
     private int restaurantId;
 
-    @Basic
     @Column(name = "capacity")
     private Integer capacity;
 
-    @Basic
     @Column(name = "virtual_table")
     private Boolean virtualTable;
 
-    @Basic
     @Column(name = "active")
     private Boolean active;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<Reporting> reportsById;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<Reservation> reservationsById;
+
+    @ManyToOne
+    @JoinColumn(name = "qr_id", referencedColumnName = "id")
+    private QrCode qrCodeByQrId;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
+    private Restaurant restaurantByRestaurantId;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<UserTable> userTablesById;
 }
