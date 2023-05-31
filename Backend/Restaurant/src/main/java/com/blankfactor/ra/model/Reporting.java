@@ -3,8 +3,6 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Objects;
-
 @Data
 @Entity
 public class Reporting {
@@ -13,19 +11,31 @@ public class Reporting {
     @Column(name = "id")
     private int id;
 
-    @Basic
     @Column(name = "table_id")
     private int tableId;
 
-    @Basic
     @Column(name = "restaurant_id")
     private int restaurantId;
 
-    @Basic
     @Column(name = "report_from")
     private int reportFrom;
 
-    @Basic
     @Column(name = "report_to")
     private int reportTo;
+
+    @ManyToOne
+    @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
+    private Table tableByTableId;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
+    private Restaurant restaurantByRestaurantId;
+
+    @ManyToOne
+    @JoinColumn(name = "report_from", referencedColumnName = "id", nullable = false)
+    private User userByReportFrom;
+
+    @ManyToOne
+    @JoinColumn(name = "report_to", referencedColumnName = "id", nullable = false)
+    private User userByReportTo;
 }

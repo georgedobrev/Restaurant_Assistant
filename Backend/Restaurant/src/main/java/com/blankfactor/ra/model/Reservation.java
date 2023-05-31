@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
-import java.util.Objects;
 
 @Data
 @Entity
@@ -14,23 +13,26 @@ public class Reservation {
     @Column(name = "id")
     private int id;
 
-    @Basic
     @Column(name = "restaurant_id")
     private int restaurantId;
 
-    @Basic
     @Column(name = "table_id")
     private Integer tableId;
 
-    @Basic
     @Column(name = "people_count")
     private Integer peopleCount;
 
-    @Basic
     @Column(name = "reservation_time")
     private Date reservationTime;
 
-    @Basic
     @Column(name = "client_phone_number")
     private String clientPhoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
+    private Restaurant restaurantByRestaurantId;
+
+    @ManyToOne
+    @JoinColumn(name = "table_id", referencedColumnName = "id")
+    private Table tableByTableId;
 }

@@ -25,4 +25,16 @@ public class UserRole {
     @Id
     @Column(name = "role_id")
     private int roleId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User userByUserId;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
+    private Restaurant restaurantByRestaurantId;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role roleByRoleId;
 }

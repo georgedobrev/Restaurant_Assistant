@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -14,27 +15,39 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Basic
     @Column(name = "email")
     private String email;
 
-    @Basic
     @Column(name = "name")
     private String name;
 
-    @Basic
     @Column(name = "surname")
     private String surname;
 
-    @Basic
     @Column(name = "created_at")
     private Date createdAt;
 
-    @Basic
     @Column(name = "blacklisted")
     private Boolean blacklisted;
 
-    @Basic
     @Column(name = "active")
     private Boolean active;
+
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<NotificationTable> notificationTablesById;
+
+    @OneToMany(mappedBy = "userByReportFrom")
+    private Collection<Reporting> reportsById;
+
+    @OneToMany(mappedBy = "userByReportTo")
+    private Collection<Reporting> reportsToId;
+
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<UserRole> userRolesById;
+
+    @OneToMany(mappedBy = "userByUserId")
+    private Collection<UserTable> userTablesByUserId;
+
+    @OneToMany(mappedBy = "userByWaiterId")
+    private Collection<UserTable> userTablesByWaiterId;
 }

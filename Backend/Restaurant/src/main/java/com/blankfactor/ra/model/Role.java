@@ -3,6 +3,7 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -13,7 +14,9 @@ public class Role {
     @Column(name = "id")
     private int id;
 
-    @Basic
     @Column(name = "type")
     private String type;
+
+    @OneToMany(mappedBy = "roleByRoleId")
+    private Collection<UserRole> userRolesById;
 }
