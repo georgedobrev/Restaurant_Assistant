@@ -1,9 +1,10 @@
 CREATE TABLE notification_table
 (
-    table_id INT PRIMARY KEY,
-    user_id INT,
+    id INT PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    table_id INT NOT NULL,
     request_type NVARCHAR(6) CHECK (request_type IN ('Menu', 'Bill', 'Waiter')),
     message NVARCHAR(255),
     approved BIT,
-    FOREIGN KEY (user_id) REFERENCES [user] (id),
+    FOREIGN KEY (user_id) REFERENCES [user] (id)
 );

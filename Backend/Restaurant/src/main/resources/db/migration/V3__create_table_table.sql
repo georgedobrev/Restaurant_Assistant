@@ -3,7 +3,7 @@ CREATE TABLE [table]
     id INT PRIMARY KEY,
     qr_id INT,
     occupied BIT,
-    restaurant_id INT,
+    restaurant_id INT NOT NULL,
     capacity INT,
     virtual_table BIT,
     active BIT,
