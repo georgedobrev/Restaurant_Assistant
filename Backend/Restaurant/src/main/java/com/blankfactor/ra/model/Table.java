@@ -1,39 +1,58 @@
 package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@Entity
-@jakarta.persistence.Table(name = "table")
+import java.util.Collection;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Table {
-
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "id")
-    private Integer tableId;
+    private int id;
 
+    @Column(name = "name")
     private String name;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "qr_id")
-    private QRCode qrCode;
+    @Column(name = "qr_id")
+    private Integer qrId;
 
-    // @Column(name = "occupied")
-    private boolean occupied;
+    @Column(name = "occupied")
+    private Boolean occupied;
+
+    @Column(name = "restaurant_id")
+    private int restaurantId;
 
     @Column(name = "capacity")
-    private int capacity;
-
+    private Integer capacity;
 
     @Column(name = "virtual_table")
-    private boolean virtualTable;
+    private Boolean virtualTable;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<Reporting> reportsById;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<Reservation> reservationsById;
+
+    @OneToOne
+    @JoinColumn(name = "qr_id", referencedColumnName = "id")
+    private QrCode qrCodeByQrId;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
+    private Restaurant restaurantByRestaurantId;
+
+    @OneToMany(mappedBy = "tableByTableId")
+    private Collection<UserTable> userTablesById;
 }
 
