@@ -1,7 +1,7 @@
 package com.blankfactor.ra.repository;
 
 
-import com.blankfactor.ra.entity.QRCode;
+import com.blankfactor.ra.model.QRCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

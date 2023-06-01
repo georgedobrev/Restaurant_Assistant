@@ -1,7 +1,7 @@
 package com.blankfactor.ra.controller;
 
 
-import com.blankfactor.ra.entity.Table;
+import com.blankfactor.ra.model.Table;
 import com.blankfactor.ra.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,9 @@ public class TableController {
     }
 
     @GetMapping("/{tableId}")
-    public ResponseEntity<Table> getTableById(@PathVariable Integer tableId) {
-        Table table = tableService.getTableById(tableId);
+    public ResponseEntity<Table> getTableById(@PathVariable String tableName) {
+
+        Table table = tableService.getTableByName(tableName);
         if (table != null) {
             return ResponseEntity.ok(table);
         } else {

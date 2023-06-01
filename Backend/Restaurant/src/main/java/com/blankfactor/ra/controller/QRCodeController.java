@@ -1,6 +1,6 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.entity.QRCode;
+import com.blankfactor.ra.model.QRCode;
 import com.blankfactor.ra.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

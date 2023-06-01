@@ -1,4 +1,4 @@
-package com.blankfactor.ra.entity;
+package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

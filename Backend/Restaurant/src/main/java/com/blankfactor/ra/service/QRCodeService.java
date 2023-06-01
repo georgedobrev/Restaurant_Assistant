@@ -1,8 +1,8 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.config.AppConfig;
-import com.blankfactor.ra.entity.QRCode;
-import com.blankfactor.ra.entity.Table;
+import com.blankfactor.ra.model.QRCode;
+import com.blankfactor.ra.model.Table;
 import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.repository.TableRepository;
 import com.google.zxing.BarcodeFormat;
@@ -36,15 +36,6 @@ public class QRCodeService {
         this.tableRepository = tableRepository;
     }
 
-    private byte[] generateQRCodeImage(String text) throws WriterException, IOException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 350, 350);
-
-        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-        return pngOutputStream.toByteArray();
-    }
-
     public List<QRCode> generateQRCodeForTables(List<Integer> tableIds) {
         List<QRCode> qrCodes = new ArrayList<>();
         String baseUrl = appConfig.getBaseUrl();
@@ -73,6 +64,16 @@ public class QRCodeService {
         return qrCodes;
     }
 
+    private byte[] generateQRCodeImage(String text) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 350, 350);
+
+        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+        return pngOutputStream.toByteArray();
+    }
+
+
     public List<QRCode> getQRCodesByIds(List<Integer> ids) {
         return qrCodeRepository.findAllById(ids);
     }
@@ -94,7 +95,6 @@ public class QRCodeService {
         }
         return qrCodes;
     }
-
 
     public Resource createZipFile(List<QRCode> qrCodes) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

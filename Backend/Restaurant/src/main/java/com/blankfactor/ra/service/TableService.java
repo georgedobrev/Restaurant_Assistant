@@ -1,7 +1,7 @@
 package com.blankfactor.ra.service;
 
 
-import com.blankfactor.ra.entity.Table;
+import com.blankfactor.ra.model.Table;
 import com.blankfactor.ra.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,9 @@ public class TableService {
 
     public Table getTableById(Integer tableId) {
         return tableRepository.findById(tableId).orElse(null);
+    }
+    public Table getTableByName(String name) {
+        return tableRepository.findTableByName(name);
     }
 }
 
