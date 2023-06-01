@@ -1,5 +1,6 @@
 package com.blankfactor.ra.model;
 
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.sql.Date;
 
 @Data
 @Entity
-@jakarta.persistence.Table(name = "user_table", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "user_table", schema = "dbo", catalog = "restaurant_assistant")
 public class UserTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -39,5 +40,5 @@ public class UserTable {
 
     @ManyToOne
     @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    private Table tableByTableId;
+    private com.blankfactor.ra.model.Table tableByTableId;
 }

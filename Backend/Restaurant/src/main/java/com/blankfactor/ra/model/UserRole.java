@@ -1,7 +1,7 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
