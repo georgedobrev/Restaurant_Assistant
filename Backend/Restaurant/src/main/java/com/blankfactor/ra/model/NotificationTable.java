@@ -13,9 +13,6 @@ public class NotificationTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
-
     @Column(name = "table_id")
     private int tableId;
 
@@ -30,5 +27,5 @@ public class NotificationTable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
+    private User userId;
 }

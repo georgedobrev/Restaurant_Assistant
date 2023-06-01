@@ -18,6 +18,6 @@ public class QrCode {
     @Column(name = "qr_img")
     private byte[] qrImg;
 
-    @OneToMany(mappedBy = "qrCodeByQrId")
+    @OneToMany(mappedBy = "qrId")
     private Collection<com.blankfactor.ra.model.Table> tablesById;
 }

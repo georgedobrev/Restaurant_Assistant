@@ -16,38 +16,20 @@ public class Table {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "qr_id")
-    private Integer qrId;
-
-    @Column(name = "occupied")
-    private Boolean occupied;
-
-    @Column(name = "restaurant_id")
-    private int restaurantId;
-
-    @Column(name = "capacity")
-    private Integer capacity;
-
-    @Column(name = "virtual_table")
-    private Boolean virtualTable;
-
-    @Column(name = "active")
-    private Boolean active;
-
-    @OneToMany(mappedBy = "tableByTableId")
+    @OneToMany(mappedBy = "tableId")
     private Collection<Reporting> reportsById;
 
-    @OneToMany(mappedBy = "tableByTableId")
+    @OneToMany(mappedBy = "tableId")
     private Collection<Reservation> reservationsById;
 
     @ManyToOne
     @JoinColumn(name = "qr_id", referencedColumnName = "id")
-    private QrCode qrCodeByQrId;
+    private QrCode qrId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantByRestaurantId;
+    private Restaurant restaurantId;
 
-    @OneToMany(mappedBy = "tableByTableId")
-    private Collection<UserTable> userTablesById;
+    @OneToMany(mappedBy = "tableId")
+    private Collection<UserTable> tablesById;
 }

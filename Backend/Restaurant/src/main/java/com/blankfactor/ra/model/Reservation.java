@@ -13,12 +13,6 @@ public class Reservation {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "restaurant_id")
-    private int restaurantId;
-
-    @Column(name = "table_id")
-    private Integer tableId;
-
     @Column(name = "people_count")
     private Integer peopleCount;
 
@@ -30,9 +24,9 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantByRestaurantId;
+    private Restaurant restaurantId;
 
     @ManyToOne
     @JoinColumn(name = "table_id", referencedColumnName = "id")
-    private Table tableByTableId;
+    private Table tableId;
 }

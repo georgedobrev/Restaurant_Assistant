@@ -11,31 +11,19 @@ public class Reporting {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "table_id")
-    private int tableId;
-
-    @Column(name = "restaurant_id")
-    private int restaurantId;
-
-    @Column(name = "report_from")
-    private int reportFrom;
-
-    @Column(name = "report_to")
-    private int reportTo;
-
     @ManyToOne
     @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    private Table tableByTableId;
+    private Table tableId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantByRestaurantId;
+    private Restaurant restaurantId;
 
     @ManyToOne
     @JoinColumn(name = "report_from", referencedColumnName = "id", nullable = false)
-    private User userByReportFrom;
+    private User reportFrom;
 
     @ManyToOne
     @JoinColumn(name = "report_to", referencedColumnName = "id", nullable = false)
-    private User userByReportTo;
+    private User reportTo;
 }

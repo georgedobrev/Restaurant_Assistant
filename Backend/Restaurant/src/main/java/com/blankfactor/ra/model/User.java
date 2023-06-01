@@ -32,21 +32,21 @@ public class User {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userId")
     private Collection<NotificationTable> notificationTablesById;
 
-    @OneToMany(mappedBy = "userByReportFrom")
+    @OneToMany(mappedBy = "reportFrom")
     private Collection<Reporting> reportsById;
 
-    @OneToMany(mappedBy = "userByReportTo")
+    @OneToMany(mappedBy = "reportTo")
     private Collection<Reporting> reportsToId;
 
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userId")
     private Collection<UserRole> userRolesById;
 
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userId")
     private Collection<UserTable> userTablesByUserId;
 
-    @OneToMany(mappedBy = "userByWaiterId")
+    @OneToMany(mappedBy = "waiterId")
     private Collection<UserTable> userTablesByWaiterId;
 }

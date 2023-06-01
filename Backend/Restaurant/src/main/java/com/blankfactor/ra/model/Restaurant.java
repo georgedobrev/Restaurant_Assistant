@@ -34,15 +34,15 @@ public class Restaurant {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
+    @OneToMany(mappedBy = "restaurantId")
     private Collection<Reporting> reportsById;
 
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
+    @OneToMany(mappedBy = "restaurantId")
     private Collection<Reservation> reservationsById;
 
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
+    @OneToMany(mappedBy = "restaurantId")
     private Collection<Table> tablesById;
 
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
+    @OneToMany(mappedBy = "restaurantId")
     private Collection<UserRole> userRolesById;
 }

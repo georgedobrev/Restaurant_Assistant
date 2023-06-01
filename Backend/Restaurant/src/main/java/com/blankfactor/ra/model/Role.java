@@ -16,6 +16,6 @@ public class Role {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "roleByRoleId")
+    @OneToMany(mappedBy = "roleId")
     private Collection<UserRole> userRolesById;
 }

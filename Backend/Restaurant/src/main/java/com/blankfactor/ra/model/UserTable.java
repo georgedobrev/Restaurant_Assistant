@@ -15,15 +15,6 @@ public class UserTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
-
-    @Column(name = "waiter_id")
-    private int waiterId;
-
-    @Column(name = "table_id")
-    private int tableId;
-
     @Column(name = "start_time")
     private Date startTime;
 
@@ -32,13 +23,13 @@ public class UserTable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name = "waiter_id", referencedColumnName = "id", nullable = false)
-    private User userByWaiterId;
+    private User waiterId;
 
     @ManyToOne
     @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    private com.blankfactor.ra.model.Table tableByTableId;
+    private com.blankfactor.ra.model.Table tableId;
 }
