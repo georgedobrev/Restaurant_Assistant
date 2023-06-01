@@ -1,7 +1,7 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.config.AppConfig;
-import com.blankfactor.ra.model.QRCode;
+import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Table;
 import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.repository.TableRepository;
@@ -36,8 +36,8 @@ public class QRCodeService {
         this.tableRepository = tableRepository;
     }
 
-    public List<QRCode> generateQRCodeForTables(List<Integer> tableIds) {
-        List<QRCode> qrCodes = new ArrayList<>();
+    public List<QrCode> generateQRCodeForTables(List<Integer> tableIds) {
+        List<QrCode> qrCodes = new ArrayList<>();
         String baseUrl = appConfig.getBaseUrl();
 
         for (Integer tableId : tableIds) {
@@ -45,13 +45,13 @@ public class QRCodeService {
 
             try {
                 byte[] qrCodeImage = generateQRCodeImage(qrText);
-                QRCode qrCode = new QRCode(qrCodeImage);
+                QrCode qrCode = new QrCode(qrCodeImage);
                 qrCodeRepository.save(qrCode);
 
                 Optional<Table> optionalTable = tableRepository.findById(tableId);
                 if (optionalTable.isPresent()) {
                     Table table = optionalTable.get();
-                    table.setQrCode(qrCode);
+                    table.setQrCodeByQrId(qrCode);
                     tableRepository.save(table);
                 }
 
@@ -74,7 +74,7 @@ public class QRCodeService {
     }
 
 
-    public List<QRCode> getQRCodesByIds(List<Integer> ids) {
+    public List<QrCode> getQRCodesByIds(List<Integer> ids) {
         return qrCodeRepository.findAllById(ids);
     }
 
@@ -82,12 +82,12 @@ public class QRCodeService {
         return qrCodeRepository.findTableIdByQrCodeId(qrId);
     }
 
-    public List<QRCode> getQRCodesByTableIds(List<Integer> tableIds) {
-        List<QRCode> qrCodes = new ArrayList<>();
+    public List<QrCode> getQRCodesByTableIds(List<Integer> tableIds) {
+        List<QrCode> qrCodes = new ArrayList<>();
         for (Integer tableId : tableIds) {
             Optional<Table> optionalTable = tableRepository.findById(tableId);
             if (optionalTable.isPresent()) {
-                QRCode qrCode = optionalTable.get().getQrCode();
+                QrCode qrCode = optionalTable.get().getQrCodeByQrId();
                 if (qrCode != null) {
                     qrCodes.add(qrCode);
                 }
@@ -96,10 +96,10 @@ public class QRCodeService {
         return qrCodes;
     }
 
-    public Resource createZipFile(List<QRCode> qrCodes) throws IOException {
+    public Resource createZipFile(List<QrCode> qrCodes) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zipOut = new ZipOutputStream(baos)) {
-            for (QRCode qrCode : qrCodes) {
+            for (QrCode qrCode : qrCodes) {
 
                 Integer qrCodeId = qrCode.getId();
                 Integer tableId = getTableIdByQrCodeId(qrCodeId);

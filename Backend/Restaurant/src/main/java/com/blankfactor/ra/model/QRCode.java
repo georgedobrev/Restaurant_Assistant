@@ -1,27 +1,29 @@
 package com.blankfactor.ra.model;
 
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@jakarta.persistence.Table(name = "qr_code")
+import java.util.Collection;
+
 @Data
+@Entity
+@Table(name = "qr_code", schema = "dbo", catalog = "restaurant_assistant")
 @NoArgsConstructor
-@AllArgsConstructor
-public class QRCode {
-
-    @Id
+public class QrCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qr_id")
-    private Integer id;
+    @Id
+    @Column(name = "id")
+    private int id;
 
-    @Column(name = "qr_img", columnDefinition = "BLOB")
+    @Column(name = "qr_img")
     private byte[] qrImg;
 
-    public QRCode(byte[] qrImg) {
+    @OneToMany(mappedBy = "qrCodeByQrId")
+    private Collection<com.blankfactor.ra.model.Table> tablesById;
+
+    public QrCode(byte[] qrImg) {
         this.qrImg = qrImg;
     }
 }
-

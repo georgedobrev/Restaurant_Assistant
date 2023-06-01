@@ -1,7 +1,8 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.model.QRCode;
+
 import com.blankfactor.ra.service.QRCodeService;
+import com.blankfactor.ra.model.QrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -24,8 +25,8 @@ public class QRCodeController {
     }
 
     @PostMapping("/generate")
-    public ResponseEntity<List<QRCode>> generateQRCodeForTables(@RequestBody List<Integer> tableIds) {
-        List<QRCode> qrCodes = qrCodeService.generateQRCodeForTables(tableIds);
+    public ResponseEntity<List<QrCode>> generateQRCodeForTables(@RequestBody List<Integer> tableIds) {
+        List<QrCode> qrCodes = qrCodeService.generateQRCodeForTables(tableIds);
 
         if (!qrCodes.isEmpty()) {
             return ResponseEntity.ok(qrCodes);
@@ -36,7 +37,7 @@ public class QRCodeController {
 
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadQRCodes(@RequestParam("ids") List<Integer> ids) throws IOException {
-        List<QRCode> qrCodes = qrCodeService.getQRCodesByTableIds(ids);
+        List<QrCode> qrCodes = qrCodeService.getQRCodesByTableIds(ids);
         Resource zipFileResource = qrCodeService.createZipFile(qrCodes);
 
         HttpHeaders headers = new HttpHeaders();

@@ -54,5 +54,6 @@ public class Table {
 
     @OneToMany(mappedBy = "tableByTableId")
     private Collection<UserTable> userTablesById;
+
 }
 

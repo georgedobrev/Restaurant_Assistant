@@ -3,12 +3,14 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
 @Data
 @Entity
 @Table(name = "qr_code", schema = "dbo", catalog = "restaurant_assistant")
+@NoArgsConstructor
 public class QrCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,4 +22,8 @@ public class QrCode {
 
     @OneToMany(mappedBy = "qrCodeByQrId")
     private Collection<com.blankfactor.ra.model.Table> tablesById;
+
+    public QrCode(byte[] qrImg) {
+        this.qrImg = qrImg;
+    }
 }
