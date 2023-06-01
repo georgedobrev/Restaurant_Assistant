@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, Image } from "react-native";
 import styles from "./stylesDashboard";
 import { useRoute } from "@react-navigation/native";
 import requests from "./requests";
