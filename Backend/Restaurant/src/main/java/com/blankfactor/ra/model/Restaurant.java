@@ -3,13 +3,12 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
-
 @Data
 @Entity
 public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
