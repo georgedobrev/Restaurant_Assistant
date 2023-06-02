@@ -13,23 +13,26 @@ public class Table {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "table_number")
+    private int tableNumber;
 
-    @OneToMany(mappedBy = "tableId")
-    private Collection<Reporting> reportsById;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qr_id")
+    private QrCode qr;
 
-    @OneToMany(mappedBy = "tableId")
-    private Collection<Reservation> reservationsById;
+    @Column(name = "occupied")
+    private boolean occupied;
 
-    @ManyToOne
-    @JoinColumn(name = "qr_id", referencedColumnName = "id")
-    private QrCode qrId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantId;
+    @Column(name = "capacity")
+    private int capacity;
 
-    @OneToMany(mappedBy = "tableId")
-    private Collection<UserTable> tablesById;
+    @Column(name = "virtual_table")
+    private boolean isVirtualTable;
+
+    @Column(name = "active")
+    private boolean active;
 }

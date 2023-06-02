@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
@@ -24,29 +26,11 @@ public class User {
     private String surname;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private Instant createdAt;
 
     @Column(name = "blacklisted")
     private Boolean blacklisted;
 
     @Column(name = "active")
     private Boolean active;
-
-    @OneToMany(mappedBy = "userId")
-    private Collection<NotificationTable> notificationTablesById;
-
-    @OneToMany(mappedBy = "reportFrom")
-    private Collection<Reporting> reportsById;
-
-    @OneToMany(mappedBy = "reportTo")
-    private Collection<Reporting> reportsToId;
-
-    @OneToMany(mappedBy = "userId")
-    private Collection<UserRole> userRolesById;
-
-    @OneToMany(mappedBy = "userId")
-    private Collection<UserTable> userTablesByUserId;
-
-    @OneToMany(mappedBy = "waiterId")
-    private Collection<UserTable> userTablesByWaiterId;
 }

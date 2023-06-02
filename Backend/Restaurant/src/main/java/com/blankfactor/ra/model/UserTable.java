@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -15,21 +17,21 @@ public class UserTable {
     @Column(name = "id")
     private int id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "waiter_id", nullable = false)
+    private User waiter;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "table_id", nullable = false)
+    private com.blankfactor.ra.model.Table tableId;
+
     @Column(name = "start_time")
-    private Date startTime;
+    private Instant startTime;
 
     @Column(name = "end_time")
-    private Date endTime;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userId;
-
-    @ManyToOne
-    @JoinColumn(name = "waiter_id", referencedColumnName = "id", nullable = false)
-    private User waiterId;
-
-    @ManyToOne
-    @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    private com.blankfactor.ra.model.Table tableId;
+    private Instant endTime;
 }

@@ -1,7 +1,7 @@
 CREATE TABLE [table]
 (
-    id INT PRIMARY KEY,
-    name NVARCHAR(100),
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    table_number INT,
     qr_id INT,
     occupied BIT,
     restaurant_id INT NOT NULL,

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -13,20 +15,20 @@ public class Reservation {
     @Column(name = "id")
     private int id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "table_id")
+    private Table table;
+
     @Column(name = "people_count")
     private Integer peopleCount;
 
     @Column(name = "reservation_time")
-    private Date reservationTime;
+    private Instant reservationTime;
 
     @Column(name = "client_phone_number")
     private String clientPhoneNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantId;
-
-    @ManyToOne
-    @JoinColumn(name = "table_id", referencedColumnName = "id")
-    private Table tableId;
 }

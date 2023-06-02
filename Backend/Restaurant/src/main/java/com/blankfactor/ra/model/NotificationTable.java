@@ -13,8 +13,13 @@ public class NotificationTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "table_id")
-    private int tableId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "table_id", nullable = false)
+    private com.blankfactor.ra.model.Table table;
 
     @Column(name = "request_type")
     private String requestType;
@@ -24,8 +29,4 @@ public class NotificationTable {
 
     @Column(name = "approved")
     private Boolean approved;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userId;
 }

@@ -1,6 +1,6 @@
 CREATE TABLE notification_table
 (
-    id INT PRIMARY KEY NOT NULL,
+    id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
     table_id INT NOT NULL,
     request_type NVARCHAR(6) CHECK (request_type IN ('Menu', 'Bill', 'Waiter')),

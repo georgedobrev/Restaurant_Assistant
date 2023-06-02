@@ -1,6 +1,6 @@
 CREATE TABLE reservation
 (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     restaurant_id INT NOT NULL,
     table_id INT,
     people_count INT,

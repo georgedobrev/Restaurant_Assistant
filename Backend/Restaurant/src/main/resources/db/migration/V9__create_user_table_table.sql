@@ -1,6 +1,6 @@
 CREATE TABLE user_table
 (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     user_id INT NOT NULL,
     waiter_id INT NOT NULL,
     table_id INT NOT NULL,
