@@ -1,6 +1,6 @@
 CREATE TABLE tenant
 (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     email VARCHAR(255),
     restaurant_id INT,
     name VARCHAR(255),
