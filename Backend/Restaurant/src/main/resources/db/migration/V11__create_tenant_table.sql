@@ -5,8 +5,8 @@ CREATE TABLE tenant
     restaurant_id INT,
     name VARCHAR(255),
     surname VARCHAR(255),
-    created_at DATETIME,
     blacklisted BIT,
     active BIT,
+    created_at DATETIME,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)
 );

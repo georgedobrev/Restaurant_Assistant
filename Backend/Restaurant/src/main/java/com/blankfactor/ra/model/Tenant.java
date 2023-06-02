@@ -27,12 +27,12 @@ public class Tenant {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
     @Column(name = "blacklisted")
     private Boolean blacklisted;
 
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
 }
