@@ -15,7 +15,4 @@ public class Role {
 
     @Column(name = "type")
     private String type;
-
-    @OneToMany(mappedBy = "roleByRoleId")
-    private Collection<UserRole> userRolesById;
 }
