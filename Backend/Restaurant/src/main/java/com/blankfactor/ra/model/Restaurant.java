@@ -10,7 +10,6 @@ import java.util.Collection;
 public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
@@ -33,16 +32,4 @@ public class Restaurant {
 
     @Column(name = "active")
     private Boolean active;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Reporting> reportsById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Reservation> reservationsById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Table> tablesById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<UserRole> userRolesById;
 }

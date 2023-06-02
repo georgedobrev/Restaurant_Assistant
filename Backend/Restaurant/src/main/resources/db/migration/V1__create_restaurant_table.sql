@@ -1,6 +1,6 @@
 CREATE TABLE restaurant
 (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY ,
     name NVARCHAR(255) NOT NULL,
     tables_count INT,
     address NVARCHAR(255),

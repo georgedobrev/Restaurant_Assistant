@@ -3,7 +3,7 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -13,26 +13,20 @@ public class Reservation {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "restaurant_id")
-    private int restaurantId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
-    @Column(name = "table_id")
-    private Integer tableId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_table_id")
+    private AppTable appTable;
 
     @Column(name = "people_count")
     private Integer peopleCount;
 
     @Column(name = "reservation_time")
-    private Date reservationTime;
+    private Instant reservationTime;
 
     @Column(name = "client_phone_number")
     private String clientPhoneNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    private Restaurant restaurantByRestaurantId;
-
-    @ManyToOne
-    @JoinColumn(name = "table_id", referencedColumnName = "id")
-    private Table tableByTableId;
 }

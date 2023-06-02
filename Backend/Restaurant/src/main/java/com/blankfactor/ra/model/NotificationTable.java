@@ -13,11 +13,13 @@ public class NotificationTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
-    @Column(name = "table_id")
-    private int tableId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_table_id", nullable = false)
+    private AppTable appTable;
 
     @Column(name = "request_type")
     private String requestType;
@@ -27,8 +29,4 @@ public class NotificationTable {
 
     @Column(name = "approved")
     private Boolean approved;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
 }
