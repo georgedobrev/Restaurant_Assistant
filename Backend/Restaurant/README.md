@@ -57,8 +57,9 @@ Generate reports on sales, orders, transactions and other key metrics to gain in
 
 4. Install Docker
 5. Write 'docker-compose up' on the console
-6. Connecting to the DataBase using username and password
-7. Write 'CREATE DATABASE restaurant_assistant' in create_database.sql
+6. Create new Database `CREATE DATABASE restaurant_assistant;`
+7. Connecting to the DataBase using username and password
+8. Write 'CREATE DATABASE restaurant_assistant' in create_database.sql
 
 ### Configuration
 **Configure the database connection in src/main/resources/application.properties.**
