@@ -17,8 +17,8 @@ public class Tenant {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurantId;
 
     @Column(name = "name")
