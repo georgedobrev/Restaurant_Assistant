@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/{restaurantId}/tables")
 public class AppTableController {
+
     private final AppTableService appTableService;
     private final RestaurantServiceImpl restaurantService;
 

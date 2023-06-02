@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 @AllArgsConstructor
 @RestController
-@RequestMapping("/qrcode")
+@RequestMapping("/{restaurantId}/qrcode")
 public class QRCodeController {
 
     private final QRCodeService qrCodeService;

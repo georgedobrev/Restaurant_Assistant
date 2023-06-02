@@ -29,18 +29,22 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return restaurantRepository.save(restaurant);
     }
+    @Override
     public Restaurant createRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
 
+    @Override
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
 
+    @Override
     public List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds) {
         return restaurantRepository.findAllById(restaurantIds);
     }
 
+    @Override
     public Restaurant updateRestaurantById(Integer restaurantId, Restaurant updatedRestaurant) {
         Optional<Restaurant> existingRestaurant = restaurantRepository.findById(restaurantId);
         if (existingRestaurant.isPresent()) {
@@ -59,6 +63,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return null;
     }
 
+    @Override
     public Restaurant getRestaurantsById(Integer restaurantId) {
         return restaurantRepository.findById(restaurantId).orElse(null);
     }
