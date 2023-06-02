@@ -1,6 +1,7 @@
 package com.blankfactor.ra.controller;
 
 
+import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
@@ -33,9 +34,9 @@ public class AppTableController {
         return ResponseEntity.ok(qrCodes);
     }
 
-    @GetMapping("/{tableName}")
-    public ResponseEntity<AppTable> getTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
-        AppTable appTable = appTableService.getTableByNumber(restaurantId, tableNumber);
+    @GetMapping("/{tableNumber}")
+    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
+        AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
         if (appTable != null) {
             return ResponseEntity.ok(appTable);
@@ -44,13 +45,13 @@ public class AppTableController {
         }
     }
     @GetMapping("/all")
-    public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable Integer restaurantId) {
-        List<AppTable> appTables = appTableService.getTablesByRestaurantId(restaurantId);
+    public ResponseEntity<List<AppTableDto>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
+        List<AppTableDto> appTables = appTableService.getTablesByRestaurantId(restaurantId);
         return ResponseEntity.ok(appTables);
     }
 
-    @PutMapping("/{tableName}")
-    public ResponseEntity<AppTable> updateTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber, @RequestBody AppTable appTable) {
+    @PutMapping("/{tableNumber}")
+    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTable appTable) {
         AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTable);
 
         if (appTable != null) {

@@ -31,8 +31,8 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantIds}")
-    public ResponseEntity<List<Restaurant>> getRestaurantById(@PathVariable List<Integer> ids) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(ids);
+    public ResponseEntity<List<Restaurant>> getRestaurantById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
 
         if (!restaurants.isEmpty()) {
             return ResponseEntity.ok(restaurants);
@@ -41,7 +41,7 @@ public class RestaurantController {
     }
 
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable Integer restaurantId, @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Restaurant restaurant) {
         Restaurant updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
         if (updatedRestaurant != null) {
             return ResponseEntity.ok(updatedRestaurant);

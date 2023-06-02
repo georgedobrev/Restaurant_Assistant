@@ -2,6 +2,7 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
+import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final AppTableRepository appTableRepository;
 
     @Override
     public Restaurant save(RestaurantDto restaurantDto) {

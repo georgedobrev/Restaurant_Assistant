@@ -17,5 +17,4 @@ public interface RestaurantService {
     List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds);
     Restaurant updateRestaurantById(Integer restaurantId, Restaurant updatedRestaurant);
     Restaurant getRestaurantsById(Integer restaurantId);
-
 }
