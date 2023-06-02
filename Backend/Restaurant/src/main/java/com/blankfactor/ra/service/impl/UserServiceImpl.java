@@ -1,7 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UserDto;
-import com.blankfactor.ra.model.User;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     @Override
-    public User saveUser(UserDto userDto) {
-        User user = new User();
+    public AppUser saveUser(UserDto userDto) {
+        AppUser appUser = new AppUser();
 
-        user.setEmail(userDto.getEmail());
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        user.setCreatedAt(userDto.getCreatedAt());
-        user.setBlacklisted(userDto.getBlacklisted());
-        user.setActive(userDto.getActive());
+        appUser.setEmail(userDto.getEmail());
+        appUser.setName(userDto.getName());
+        appUser.setSurname(userDto.getSurname());
+        appUser.setCreatedAt(userDto.getCreatedAt());
+        appUser.setBlacklisted(userDto.getBlacklisted());
+        appUser.setActive(userDto.getActive());
 
-        return userRepository.save(user);
+        return userRepository.save(appUser);
     }
 }

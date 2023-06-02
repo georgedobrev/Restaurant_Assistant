@@ -1,8 +1,8 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Role;
-import com.blankfactor.ra.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRoleDto {
 
-    private User user;
+    private AppUser appUser;
     private Role role;
     private Restaurant restaurant;
 }

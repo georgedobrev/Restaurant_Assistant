@@ -3,9 +3,7 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,8 +18,8 @@ public class Reservation {
     private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "table_id")
-    private Table table;
+    @JoinColumn(name = "app_table_id")
+    private AppTable appTable;
 
     @Column(name = "people_count")
     private Integer peopleCount;

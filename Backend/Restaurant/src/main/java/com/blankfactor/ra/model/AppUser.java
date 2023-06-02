@@ -1,16 +1,15 @@
 package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Data
 @Entity
-public class User {
+@Table(name = "app_user")
+public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class UserRolePK implements Serializable {
 
     private static final Long serialVersionUID = 1L;
-    private Integer user;
+    private Integer appUser;
     private Integer restaurant;
     private Integer role;
 }

@@ -1,4 +1,4 @@
-CREATE TABLE [user]
+CREATE TABLE app_user
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     email NVARCHAR(100) NOT NULL,

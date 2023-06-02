@@ -17,7 +17,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole saveUserRole(UserRoleDto userRoleDto) {
         UserRole userRole = new UserRole();
 
-        userRole.setUser(userRoleDto.getUser());
+        userRole.setAppUser(userRoleDto.getAppUser());
         userRole.setRole(userRoleDto.getRole());
         userRole.setRestaurant(userRoleDto.getRestaurant());
 

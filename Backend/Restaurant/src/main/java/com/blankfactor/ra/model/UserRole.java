@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class UserRole {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

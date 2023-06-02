@@ -1,4 +1,4 @@
-CREATE TABLE [table]
+CREATE TABLE app_table
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     table_number INT,

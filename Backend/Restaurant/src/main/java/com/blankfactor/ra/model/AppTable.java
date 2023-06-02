@@ -3,11 +3,10 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
-
 @Data
 @Entity
-public class Table {
+@Table(name = "app_table")
+public class AppTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

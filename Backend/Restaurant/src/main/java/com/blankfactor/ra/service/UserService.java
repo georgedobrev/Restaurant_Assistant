@@ -1,8 +1,8 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.UserDto;
-import com.blankfactor.ra.model.User;
+import com.blankfactor.ra.model.AppUser;
 
 public interface UserService {
-    User saveUser(UserDto userDto);
+    AppUser saveUser(UserDto userDto);
 }

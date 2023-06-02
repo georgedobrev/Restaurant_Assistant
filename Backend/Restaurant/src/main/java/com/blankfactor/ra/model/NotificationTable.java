@@ -14,12 +14,12 @@ public class NotificationTable {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "table_id", nullable = false)
-    private com.blankfactor.ra.model.Table table;
+    @JoinColumn(name = "app_table_id", nullable = false)
+    private AppTable appTable;
 
     @Column(name = "request_type")
     private String requestType;

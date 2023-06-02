@@ -4,8 +4,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
-
 @Data
 @Entity
 @Table(name = "qr_code", schema = "dbo", catalog = "restaurant_assistant")
@@ -19,5 +17,5 @@ public class QrCode {
     private byte[] qrImg;
 
     @OneToOne(mappedBy = "qr", fetch = FetchType.LAZY)
-    private com.blankfactor.ra.model.Table table;
+    private AppTable appTable;
 }
