@@ -1,6 +1,5 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
