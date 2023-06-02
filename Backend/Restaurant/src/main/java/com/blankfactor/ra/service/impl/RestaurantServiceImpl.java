@@ -7,6 +7,9 @@ import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -25,5 +28,38 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setActive(restaurantDto.getActive());
 
         return restaurantRepository.save(restaurant);
+    }
+    public Restaurant createRestaurant(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
+
+    public List<Restaurant> getAllRestaurants() {
+        return restaurantRepository.findAll();
+    }
+
+    public List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds) {
+        return restaurantRepository.findAllById(restaurantIds);
+    }
+
+    public Restaurant updateRestaurantById(Integer restaurantId, Restaurant updatedRestaurant) {
+        Optional<Restaurant> existingRestaurant = restaurantRepository.findById(restaurantId);
+        if (existingRestaurant.isPresent()) {
+            Restaurant restaurantToUpdate = existingRestaurant.get();
+
+            restaurantToUpdate.setName(updatedRestaurant.getName());
+            restaurantToUpdate.setActive(updatedRestaurant.getActive());
+            restaurantToUpdate.setAddress(updatedRestaurant.getAddress());
+            restaurantToUpdate.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
+            restaurantToUpdate.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
+            restaurantToUpdate.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
+            restaurantToUpdate.setTablesCount(updatedRestaurant.getTablesCount());
+
+            return restaurantRepository.save(restaurantToUpdate);
+        }
+        return null;
+    }
+
+    public Restaurant getRestaurantsById(Integer restaurantId) {
+        return restaurantRepository.findById(restaurantId).orElse(null);
     }
 }
