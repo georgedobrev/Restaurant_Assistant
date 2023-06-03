@@ -15,7 +15,6 @@ public class UserDto {
     private String email;
     private String name;
     private String surname;
-    private Instant createdAt;
-    private Boolean blacklisted;
-    private Boolean active;
+    private int roleId;
+    private int restaurantId;
 }
