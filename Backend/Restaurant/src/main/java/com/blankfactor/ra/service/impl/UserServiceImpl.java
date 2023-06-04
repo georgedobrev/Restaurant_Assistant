@@ -3,6 +3,7 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.exceptions.RestaurantException;
 import com.blankfactor.ra.exceptions.RoleException;
+import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Role;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findById(userDto.getRoleId()).orElse(null);
 
         if (role == null) {
-            throw new RoleException("Role not found");
+            throw new RoleException("Role with id " + userDto.getRoleId() + " not found");
         } else {
             userRole.setRole(role);
         }
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
         Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId()).orElse(null);
 
         if (restaurant == null) {
-            throw new RestaurantException("Restaurant not found");
+            throw new RestaurantException("Restaurant with id " + userDto.getRestaurantId() + " not found");
         } else {
             userRole.setRestaurant(restaurant);
         }
@@ -61,5 +62,16 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return savedAppUser;
+    }
+
+    @Override
+    public AppUser getUserById(int id) {
+        AppUser appUser = userRepository.findById(id).orElse(null);
+
+        if (appUser ==  null) {
+            throw new UserException("User with id " + id + " not found");
+        }
+
+        return appUser;
     }
 }

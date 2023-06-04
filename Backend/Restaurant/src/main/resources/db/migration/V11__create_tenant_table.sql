@@ -7,6 +7,6 @@ CREATE TABLE tenant
     surname VARCHAR(255),
     blacklisted BIT,
     active BIT,
-    created_at DATETIME,
+    created_at DATETIMEOFFSET,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)
 );

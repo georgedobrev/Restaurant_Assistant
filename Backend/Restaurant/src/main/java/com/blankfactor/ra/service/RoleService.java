@@ -5,4 +5,6 @@ import com.blankfactor.ra.model.Role;
 
 public interface RoleService {
     Role save(RoleDto roleDto);
+
+    void deleteRoleById(int id);
 }
