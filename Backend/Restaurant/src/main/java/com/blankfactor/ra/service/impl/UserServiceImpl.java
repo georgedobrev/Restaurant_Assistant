@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -41,8 +42,54 @@ public class UserServiceImpl implements UserService {
 
         AppUser savedAppUser = userRepository.save(appUser);
 
+        return assignUserRole(userDto, savedAppUser);
+    }
+
+    @Override
+    public AppUser addRoleToUser(UserDto userDto) {
+        AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail());
+
+        if (appUser ==  null) {
+            throw new UserException("User with email " + userDto.getEmail() + " not found");
+        }
+
+        return assignUserRole(userDto, appUser);
+    }
+
+    @Override
+    public AppUser getUserById(int id) {
+        AppUser appUser = userRepository.findById(id).orElse(null);
+
+        if (appUser ==  null) {
+            throw new UserException("User with id " + id + " not found");
+        }
+
+        return appUser;
+    }
+
+    @Override
+    public void deleteUserById(int id) {
+        AppUser appUser = userRepository.findById(id).orElse(null);
+
+        List<UserRole> userRoles = userRoleRepository.findByAppUser(appUser);
+
+        if (userRoles.isEmpty()) {
+            throw new UserException("UserRoles not found for User with id " + id);
+        }
+
+        userRoleRepository.deleteAll(userRoles);
+
+        if (appUser == null) {
+            throw new UserException("User with id " + id + " not found");
+        }
+
+        userRepository.delete(appUser);
+    }
+
+    private AppUser assignUserRole(UserDto userDto, AppUser appUser) {
         UserRole userRole = new UserRole();
-        userRole.setAppUser(savedAppUser);
+
+        userRole.setAppUser(appUser);
         Role role = roleRepository.findById(userDto.getRoleId()).orElse(null);
 
         if (role == null) {
@@ -60,17 +107,6 @@ public class UserServiceImpl implements UserService {
         }
 
         userRoleRepository.save(userRole);
-
-        return savedAppUser;
-    }
-
-    @Override
-    public AppUser getUserById(int id) {
-        AppUser appUser = userRepository.findById(id).orElse(null);
-
-        if (appUser ==  null) {
-            throw new UserException("User with id " + id + " not found");
-        }
 
         return appUser;
     }

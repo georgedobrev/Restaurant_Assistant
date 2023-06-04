@@ -21,10 +21,24 @@ public class UserController {
         return ResponseEntity.ok(createdAppUser);
     }
 
+    @PostMapping("/addRole")
+    public ResponseEntity<AppUser> addRoleToUser(@RequestBody UserDto userDto) {
+        AppUser createdAppUser = userService.addRoleToUser(userDto);
+
+        return ResponseEntity.ok(createdAppUser);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AppUser> getUserById(@PathVariable int id) {
         AppUser appUser = userService.getUserById(id);
 
         return ResponseEntity.ok(appUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable int id) {
+        userService.deleteUserById(id);
+
+        return ResponseEntity.ok().build();
     }
 }
