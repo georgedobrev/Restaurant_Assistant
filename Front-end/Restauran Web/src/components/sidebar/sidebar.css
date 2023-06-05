@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 a {
   text-decoration: none;
 }
@@ -43,7 +37,6 @@ main {
   left: -30%;
   height: 100vh;
   width: var(--nav-width);
-  /* background: linear-gradient(to bottom, #ecd282 0%, #e7d59e 100%); */
   padding-top: 1rem;
   transition: 0.5s;
   z-index: 1;
@@ -59,7 +52,7 @@ main {
 
 .nav-logo,
 .nav-link {
-  display: grid;
+  display: flex;
   grid-template-columns: max-content max-content;
   column-gap: 2rem;
   padding: 0.5rem 0 0.5rem 1.5rem;
