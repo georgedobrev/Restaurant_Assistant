@@ -4,6 +4,7 @@ import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,14 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @RestController
 public class UserController {
-
     private final UserService userService;
 
     @PostMapping("")
     public ResponseEntity<AppUser> createUser(@RequestBody UserDto userDto) {
         AppUser createdAppUser = userService.saveUser(userDto);
 
-        return ResponseEntity.ok(createdAppUser);
+        return new ResponseEntity<>(createdAppUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/addRole")

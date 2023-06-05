@@ -4,7 +4,7 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +20,6 @@ public class RestaurantController {
 
     @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        Restaurant createdRestaurant = restaurantService.save(restaurantDto);
-
-        return ResponseEntity.ok(createdRestaurant);
+        return new ResponseEntity<>(restaurantService.saveRestaurant(restaurantDto), HttpStatus.CREATED);
     }
 }

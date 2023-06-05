@@ -13,7 +13,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public Restaurant save(RestaurantDto restaurantDto) {
+    public Restaurant saveRestaurant(RestaurantDto restaurantDto) {
         Restaurant restaurant = new Restaurant();
 
         restaurant.setName(restaurantDto.getName());

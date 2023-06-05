@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,6 @@ public class UserDto {
     private String email;
     private String name;
     private String surname;
-    private int roleId;
+    private RoleType roleType;
     private int restaurantId;
 }

@@ -6,10 +6,8 @@ import com.blankfactor.ra.exceptions.RoleException;
 import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
-import com.blankfactor.ra.model.Role;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
-import com.blankfactor.ra.repository.RoleRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
@@ -18,14 +16,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
 
@@ -90,13 +86,8 @@ public class UserServiceImpl implements UserService {
         UserRole userRole = new UserRole();
 
         userRole.setAppUser(appUser);
-        Role role = roleRepository.findById(userDto.getRoleId()).orElse(null);
 
-        if (role == null) {
-            throw new RoleException("Role with id " + userDto.getRoleId() + " not found");
-        } else {
-            userRole.setRole(role);
-        }
+        userRole.setRole(userDto.getRoleType());
 
         Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId()).orElse(null);
 
