@@ -3,12 +3,12 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.Instant;
 
-@Data
 @Entity
-@Table(name = "app_user")
-public class AppUser {
+@Data
+public class Tenant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -16,6 +16,10 @@ public class AppUser {
 
     @Column(name = "email")
     private String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurantId;
 
     @Column(name = "name")
     private String name;

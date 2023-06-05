@@ -12,7 +12,6 @@ import java.time.Instant;
 @NoArgsConstructor
 public class UserDto {
 
-    private int id;
     private String email;
     private String name;
     private String surname;
