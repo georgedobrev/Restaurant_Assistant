@@ -1,65 +1,69 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.NotificationsDto;
+import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/notification")
 @AllArgsConstructor
 public class NotificationsController {
 
-    @Qualifier
     private final NotificationService notificationService;
 
-
-    @PostMapping("/new-notification")
-    public ResponseEntity<Notification> createNotification(@RequestBody NotificationsDto notificationsDto)
-    {
-        Notification createdNotification = notificationService.save(notificationsDto);
-
-        return ResponseEntity.ok(createdNotification);
-    }
-
-
-    @GetMapping("/find-notification/{id}")
-    public Optional<Notification> findNotificationById(@PathVariable("id") Integer notificationId)
-    {
-        //notificationService.getNotificationById(notificationId);
-
-      // Optional<Notification> notificationsDtos = Optional.ofNullable(notificationService.getNotificationById(notificationId));
-        return notificationService.findNotificationById(notificationId);
-    }
-
-    @GetMapping("/notifications")
-    public ResponseEntity<List<Notification>> getAllNotifications() {
-        List<Notification> notificationsDtos = notificationService.getNotifications();
-        return ResponseEntity.ok(notificationsDtos);
-    }
-
-    @DeleteMapping(path = "/notification/{id}")
-    public void deleteNotification (@PathVariable("id") int notificationId)
-    {
-        notificationService.deleteNotification(notificationId);
-    }
-
-    @DeleteMapping(path = "/delete-notifications")
-    public void deleteAllNotifications()
-    {
-        notificationService.deleteAllNotifications();
-    }
-
-//    @PutMapping(path = "{notificationId}")
-//    public void updateStudent(@PathVariable("notificationId") int notificationId,
-//                              @RequestParam(required = false) String message,
-//                              @RequestParam(required = false) LocalDate time)
-//    {
-//        notificationService.updateNotification(notificationId, message, time);
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Notification> getNotificationById(@PathVariable("id") Integer notificationId) throws Exception {
+//        Notification notification = notificationService.getNotificationById(notificationId);
+//
+//        return ResponseEntity.ok(notification);
 //    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(int tableId) {
+//        List<Notification> notificationsDtos = notificationService.getAllNotificationsByTableId();
+//
+//        return ResponseEntity.ok(notificationsDtos);
+//    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(int restaurantId) {
+//        List<Notification> notificationsDtos = notificationService.getAllNotificationsByRestaurantId();
+//
+//        return ResponseEntity.ok(notificationsDtos);
+//    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationsDto) {
+        Notification notification = notificationService.createNotification(notificationsDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(notification);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId,
+                       @RequestBody NotificationDto notificationDto) {
+        Notification notification = notificationService.updateNotification(notificationDto, notificationId);
+
+        return ResponseEntity.ok(notification);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Notification> deleteNotification (@PathVariable("id") int notificationId) {
+        Notification notification = notificationService.deleteNotification(notificationId);
+
+        return ResponseEntity.ok(notification);
+    }
+
+    @DeleteMapping("/all/{id}")
+    public ResponseEntity<Notification> deleteAllNotificationsByRestaurantId(int restaurantId) {
+       Notification notification = notificationService.deleteAllNotificationsByRestaurantId(restaurantId);
+
+        return ResponseEntity.ok(notification);
+    }
+
+
 }

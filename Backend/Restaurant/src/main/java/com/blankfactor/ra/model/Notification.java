@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
@@ -31,7 +29,7 @@ public class Notification {
     private String message;
 
     @Column(name = "time")
-    private Instant time;
+    private Instant createdAt;
 
     @Column(name = "approved")
     private Boolean approved;

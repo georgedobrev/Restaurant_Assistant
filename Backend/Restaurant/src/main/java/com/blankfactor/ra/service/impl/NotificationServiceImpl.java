@@ -1,64 +1,78 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.dto.NotificationsDto;
+import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
-    @Qualifier
     private final NotificationRepository notificationRepository;
 
+//    @Override
+//    public Notification getNotificationById(Integer notificationId) throws Exception {
+//        return notificationRepository.findById(notificationId)
+//                .orElseThrow(() -> new Exception ("Can not find this notification."));
+//    }
+
+//    @Override
+//    public List<Notification> getAllNotificationsByRestaurantId() {
+//        return notificationRepository.findAllByRestaurantId();
+//    }
+
+//    @Override
+//    public List<Notification> getAllNotificationsByTableId() {
+//        return notificationRepository.findAllByTableId();
+//    }
+
     @Override
-    public Notification save(NotificationsDto notificationsDto) {
+    public Notification createNotification(NotificationDto notificationsDto) {
 
-       Notification notification = new Notification();
+        Notification notification = new Notification();
 
-       notification.setAppTable(null);
-       notification.setTime(Instant.now());
-       notification.setMessage(notificationsDto.getMessage());
-       notification.setApproved(notificationsDto.isApproved());
+        notification.setAppTable(null);
+        notification.setCreatedAt(Instant.now());
+        notification.setMessage(notificationsDto.getMessage());
+        notification.setApproved(notificationsDto.isApproved());
 
         return notificationRepository.save(notification);
     }
 
-//    public void updateSNotification(int notificationId, String message, LocalDate time) {    }
+    public Notification updateNotification(NotificationDto notificationDto, int notificationId) {
 
-    public void deleteNotification(int notificationId) {
+        return null;
+    }
+
+    public Notification deleteNotification(int notificationId) {
 
         boolean exists = notificationRepository.existsById(notificationId);
 
-        if(!exists)
-        {
+        if (!exists) {
             throw new IllegalStateException("Notification with id " + notificationId + "does not exists.");
         }
         notificationRepository.deleteById(notificationId);
-    }
-
-    public void deleteAllNotifications()
-    {
-        notificationRepository.deleteAll();
-
-    }
-
-    public List<Notification> getNotifications() {
-        return notificationRepository.findAll();
+        return null;
     }
 
     @Override
-    public Optional<Notification> findNotificationById(int id) {
-        notificationRepository.findById(id);
-        return Optional.empty();
+    public Notification deleteAllNotificationsByRestaurantId(int restaurantId) {
+        return null;
     }
+
+//    public Notification deleteAllNotificationsByRestaurantId(int restaurantId) {
+//        notificationRepository.deleteAllByRestaurantId(restaurantId);
+//        return null;
+//    }
+
+
 
 }

@@ -93,25 +93,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.ow2.petals.dsb</groupId>
-            <artifactId>dsb-kernel-notificationservice</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ow2.petals.dsb</groupId>
-            <artifactId>dsb-kernel-notificationservice</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.2.4.Final</version>
-            <type>pom</type>
-        </dependency>
-
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

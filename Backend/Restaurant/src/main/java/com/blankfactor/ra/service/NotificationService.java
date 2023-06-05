@@ -1,24 +1,19 @@
 package com.blankfactor.ra.service;
 
-import com.blankfactor.ra.dto.NotificationsDto;
-import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NotificationService {
-    //ResponseEntity<NotificationTable> createNewNotification(NotificationsDto notificationsDto);
+    //Notification getNotificationById(Integer notificationId) throws Exception;
+    //List<Notification> getAllNotificationsByRestaurantId();
+    //List<Notification> getAllNotificationsByTableId();
+    Notification createNotification(NotificationDto notificationsDto);
 
-    Notification save(NotificationsDto notificationsDto);
+    public Notification updateNotification(NotificationDto notificationDto, int notificationId);
 
-    // Notification save(NotificationsDto notificationsDto);
-    void deleteNotification(int notificationId);
-    void deleteAllNotifications();
-    List<Notification> getNotifications();
+    Notification deleteNotification(int notificationId);
 
-    Optional<Notification> findNotificationById(int id);
-
-
-
+    Notification deleteAllNotificationsByRestaurantId(int restaurantId);
 }

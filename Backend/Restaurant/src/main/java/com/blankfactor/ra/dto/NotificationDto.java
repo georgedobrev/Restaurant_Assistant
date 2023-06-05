@@ -5,16 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationsDto {
+public class NotificationDto {
 
-//    private int id;
-//    private AppTable appTable;
+    private AppTable appTable;
     private String requestType;
     private String message;
     private boolean approved;
