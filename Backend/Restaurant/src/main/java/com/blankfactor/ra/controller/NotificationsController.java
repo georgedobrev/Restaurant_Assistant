@@ -1,41 +1,38 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.NotificationsDto;
-import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.model.NotificationTable;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.impl.NotificationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @RestController
 public class NotificationsController {
 
     private final NotificationRepository notificationRepository;
-   // @Autowired
+    @Autowired
     private NotificationServiceImpl notificationService;
 
     public NotificationsController(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
 
-    @PostMapping("/notification")
-    public void createNotification(@RequestBody Notification notification)
+    @PostMapping("/new-notification")
+    public ResponseEntity<NotificationTable> createNotification(@RequestBody NotificationsDto notificationsDto)
     {
-        notificationService.createNewNotification(notification);
-        notificationRepository.save(notification);
+        NotificationTable createdNotification = notificationService.save(notificationsDto);
+
+        return ResponseEntity.ok(createdNotification);
     }
 
 
-    @GetMapping("/notification/{id}")
-    public Optional<Notification> findById(@PathVariable("notification_id") Integer notificationId)
+    @GetMapping("/find-notification/{id}")
+    public Optional<NotificationTable> findNotificationById(@PathVariable("notification_id") Integer notificationId)
     {
         //notificationService.getNotificationById(notificationId);
 
@@ -51,8 +48,8 @@ public class NotificationsController {
 //        return
 //    }
     @GetMapping("/notifications")
-    public ResponseEntity<List<Notification>> getAllNotifications() {
-        List<Notification> notificationsDtos = notificationService.getNotifications();
+    public ResponseEntity<List<NotificationTable>> getAllNotifications() {
+        List<NotificationTable> notificationsDtos = notificationService.getNotifications();
         return ResponseEntity.ok(notificationsDtos);
     }
 
@@ -71,14 +68,14 @@ public class NotificationsController {
 //
 //    }
 
-    @DeleteMapping(path = "{/notification/{id}")
-    public void deleteNotification(@PathVariable("notification_id") int notificationId)
+    @DeleteMapping(path = "/notification/{id}")
+    public void deleteNotification (@PathVariable("id") int notificationId)
     {
         notificationService.deleteNotification(notificationId);
 
     }
 
-    @DeleteMapping(path = "/notifications")
+    @DeleteMapping(path = "/delete-notifications")
     public void deleteAllNotifications()
     {
         notificationService.deleteAllNotifications();
