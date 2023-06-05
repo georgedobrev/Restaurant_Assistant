@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import { useNavigation } from "@react-navigation/native";
 import ImageSection from "./ImageSection";
 import BasicLogin from "./BasicLogin";
 import googleConfig from "./GoogleConfig";

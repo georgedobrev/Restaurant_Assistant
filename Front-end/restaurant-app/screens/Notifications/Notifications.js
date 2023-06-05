@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Text, View, FlatList, Image } from "react-native";
-import styles from "./stylesDashboard";
 import { useRoute } from "@react-navigation/native";
-import requests from "./requests";
+import styles from "./stylesDashboard";
+import requests from "./mock";
 
 export function Dashboard() {
   const [notifications, setNotifications] = useState([]);
@@ -19,7 +19,7 @@ export function Dashboard() {
     ]);
 
     setIncomingRequests((prevRequests) =>
-      prevRequests.filter((req) => req.id !== request.id)
+      prevRequests.filter((prevReq) => prevReq.id !== request.id)
     );
   };
 
