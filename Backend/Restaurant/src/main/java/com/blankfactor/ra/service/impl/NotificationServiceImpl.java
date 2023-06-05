@@ -1,30 +1,31 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationsDto;
-import com.blankfactor.ra.model.NotificationTable;
+import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.NotificationRepository;
-import com.blankfactor.ra.service.NotificationsService;
+import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class NotificationServiceImpl implements NotificationsService {
+public class NotificationServiceImpl implements NotificationService {
 
+    @Qualifier
     private final NotificationRepository notificationRepository;
-    private final NotificationsService notificationsService;
 
     @Override
-    public NotificationTable save(NotificationsDto notificationsDto) {
+    public Notification save(NotificationsDto notificationsDto) {
 
-       NotificationTable notification = new NotificationTable();
+       Notification notification = new Notification();
 
-       notification.setId((notificationsDto.getId()));
-       notification.setAppTable(notificationsDto.getAppTable());
-       notification.setTime(notificationsDto.getTime());
+       notification.setAppTable(null);
+       notification.setTime(Instant.now());
        notification.setMessage(notificationsDto.getMessage());
        notification.setApproved(notificationsDto.isApproved());
 
@@ -34,6 +35,7 @@ public class NotificationServiceImpl implements NotificationsService {
 //    public void updateSNotification(int notificationId, String message, LocalDate time) {    }
 
     public void deleteNotification(int notificationId) {
+
         boolean exists = notificationRepository.existsById(notificationId);
 
         if(!exists)
@@ -49,11 +51,14 @@ public class NotificationServiceImpl implements NotificationsService {
 
     }
 
-    public List<NotificationTable> getNotifications() {
+    public List<Notification> getNotifications() {
         return notificationRepository.findAll();
     }
-//    public Notification getNotificationById(int notificationId)
-//    {
-//        return notificationRepository.getReferenceById(notificationId);
-//    }
+
+    @Override
+    public Optional<Notification> findNotificationById(int id) {
+        notificationRepository.findById(id);
+        return Optional.empty();
+    }
+
 }

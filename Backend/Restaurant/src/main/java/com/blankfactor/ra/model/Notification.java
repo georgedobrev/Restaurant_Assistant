@@ -3,6 +3,10 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
@@ -25,6 +29,9 @@ public class Notification {
 
     @Column(name = "message")
     private String message;
+
+    @Column(name = "time")
+    private Instant time;
 
     @Column(name = "approved")
     private Boolean approved;

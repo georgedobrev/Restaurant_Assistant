@@ -13,10 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class NotificationsDto {
 
-    private int id;
-    private AppTable appTable;
+//    private int id;
+//    private AppTable appTable;
     private String requestType;
-    private LocalDate time;
     private String message;
     private boolean approved;
 

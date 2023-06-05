@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "10ab228c-b072-4087-90fa-b64d978feb9a",
+		"name": "Restaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27618519",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27755902-10ab228c-b072-4087-90fa-b64d978feb9a?action=share&creator=27618519&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Get restaurants by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/restaurant/1,2,3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurant",
+						"1,2,3"
+					],
+					"query": [
+						{
+							"key": "restaurantIds",
+							"value": "1,2,3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/restaurant/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurant",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new Restaurant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"happy\",\r\n    \"tablesCount\":50,\r\n    \"address\":\"mladost 00\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/restaurant",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a restaurant",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/restaurant/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restaurant",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

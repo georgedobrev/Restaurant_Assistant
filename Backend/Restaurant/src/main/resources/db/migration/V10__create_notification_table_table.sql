@@ -5,7 +5,7 @@ CREATE TABLE notification
     app_table_id INT NOT NULL,
     request_type NVARCHAR(6) CHECK (request_type IN ('Menu', 'Bill', 'Waiter')),
     message NVARCHAR(255),
-    time DATE NOT NULL,
+    time DATETIMEOFFSET NOT NULL,
     approved BIT,
     FOREIGN KEY (app_user_id) REFERENCES app_user (id),
     FOREIGN KEY (app_table_id) REFERENCES app_table (id)
