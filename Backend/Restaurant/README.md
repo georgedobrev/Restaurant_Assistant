@@ -5,7 +5,7 @@ For clients, the application allows them to easily scan a QR code assigned to th
 
 ## Table of Contents
 * #### Features
-* #### Softwares
+* #### Software
 * #### Installation
 * #### Usage
 * #### Contributing
@@ -40,7 +40,7 @@ Generate reports on sales, orders, transactions and other key metrics to gain in
 #### Prerequisites
 **Before running Restaurant Assistant, ensure you have the following prerequisites installed:**
 
-### Softwares
+### Software
 
 * Docker
 * Java Development Kit (JDK) 20
