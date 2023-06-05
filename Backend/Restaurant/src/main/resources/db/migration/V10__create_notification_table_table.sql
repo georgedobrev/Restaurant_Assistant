@@ -1,4 +1,4 @@
-CREATE TABLE notification_table
+CREATE TABLE notification
 (
     id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     app_user_id INT NOT NULL,
