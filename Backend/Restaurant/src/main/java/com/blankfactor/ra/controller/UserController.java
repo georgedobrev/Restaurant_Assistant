@@ -1,5 +1,6 @@
 package com.blankfactor.ra.controller;
 
+import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
@@ -33,6 +34,14 @@ public class UserController {
         AppUser appUser = userService.getUserById(id);
 
         return ResponseEntity.ok(appUser);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AppUser> updateUserById(@PathVariable int id,
+                                                  @RequestBody UpdateUserDto updateUserDto) {
+        AppUser updatedAppUser = userService.updateUserById(id, updateUserDto);
+
+        return ResponseEntity.ok(updatedAppUser);
     }
 
     @DeleteMapping("/{id}")

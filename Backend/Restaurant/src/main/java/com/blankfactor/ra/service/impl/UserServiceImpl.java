@@ -1,8 +1,8 @@
 package com.blankfactor.ra.service.impl;
 
+import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.exceptions.RestaurantException;
-import com.blankfactor.ra.exceptions.RoleException;
 import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
@@ -13,9 +13,11 @@ import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -61,6 +63,41 @@ public class UserServiceImpl implements UserService {
         }
 
         return appUser;
+    }
+
+    @Transactional
+    @Override
+    public AppUser updateUserById(int id, UpdateUserDto updateUserDto) {
+        AppUser appUserToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
+
+        Restaurant restaurant = restaurantRepository.findById(updateUserDto.getRestaurantId())
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + updateUserDto.getRestaurantId() + " not found"));
+
+        UserRole userRoleToDelete = userRoleRepository
+                .findByAppUserAndAndRestaurantAndAndRole(appUserToUpdate, restaurant, updateUserDto.getRoleBefore())
+                .orElseThrow(() -> new UserException("No such record in UserRole table"));
+
+        userRoleRepository.delete(userRoleToDelete);
+
+        appUserToUpdate.setEmail(updateUserDto.getEmail());
+        appUserToUpdate.setName(updateUserDto.getName());
+        appUserToUpdate.setSurname(updateUserDto.getSurname());
+        appUserToUpdate.setBlacklisted(false);
+        appUserToUpdate.setActive(true);
+        appUserToUpdate.setCreatedAt(Instant.now());
+
+        userRepository.save(appUserToUpdate);
+
+        UserRole userRoleToUpdate = new UserRole();
+
+        userRoleToUpdate.setAppUser(appUserToUpdate);
+        userRoleToUpdate.setRestaurant(restaurant);
+        userRoleToUpdate.setRole(updateUserDto.getRoleAfter());
+
+        userRoleRepository.save(userRoleToUpdate);
+
+        return appUserToUpdate;
     }
 
     @Override
