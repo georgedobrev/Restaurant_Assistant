@@ -5,4 +5,6 @@ import com.blankfactor.ra.model.Notification;
 
 public interface NotificationsService {
     Notification save(NotificationsDto notificationsDto);
+
+
 }
