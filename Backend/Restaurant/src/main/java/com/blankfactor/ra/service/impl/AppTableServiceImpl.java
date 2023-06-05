@@ -12,8 +12,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,14 +25,18 @@ public class AppTableServiceImpl implements AppTableService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<QrCode> createTablesForRestaurant(Restaurant restaurant, List<AppTable> appTables) {
-        List<AppTable> createdTables = new ArrayList<>();
+    public List<QrCode> createTablesForRestaurant(Restaurant restaurant, List<AppTable> appTables) throws Exception {
+        List<AppTable> createdTables = appTables.stream().map(table -> {
+            table.setRestaurant(restaurant);
+            return createTable(table);
+        }).collect(Collectors.toList());
+
         for (AppTable table : appTables) {
             table.setRestaurant(restaurant);
             createdTables.add(createTable(table));
         }
         List<Integer> tableNumbers = createdTables.stream().map(AppTable::getTableNumber).toList();
-        return qrCodeService.generateQRCodeForTables(restaurant.getId(), tableNumbers);
+        return qrCodeService.createQRCodeForTables(restaurant.getId(), tableNumbers);
     }
 
     @Override
@@ -41,13 +45,13 @@ public class AppTableServiceImpl implements AppTableService {
     }
 
     @Override
-    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
+    public Optional<AppTable> getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
         return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
     }
 
     @Override
     public List<AppTableDto> getTablesByRestaurantId(Integer restaurantId) {
-        List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
+        List<Optional<AppTable>> appTables = appTableRepository.findByRestaurantId(restaurantId);
         return appTables.stream()
                 .map(appTable -> modelMapper.map(appTable, AppTableDto.class))
                 .collect(Collectors.toList());
@@ -55,23 +59,24 @@ public class AppTableServiceImpl implements AppTableService {
 
     @Override
     public AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTable updatedTable) {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
+        Optional<AppTable> existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
 
-        if (existingTable != null) {
-            existingTable.setTableNumber(updatedTable.getTableNumber());
-            existingTable.setOccupied(updatedTable.isOccupied());
-            existingTable.setActive(updatedTable.isActive());
-            existingTable.setVirtualTable(updatedTable.isVirtualTable());
-            return appTableRepository.save(existingTable);
+        if (existingTable.isPresent()) {
+            AppTable tableToUpdate = existingTable.get();
+            tableToUpdate.setTableNumber(updatedTable.getTableNumber());
+            tableToUpdate.setOccupied(updatedTable.isOccupied());
+            tableToUpdate.setActive(updatedTable.isActive());
+            tableToUpdate.setVirtualTable(updatedTable.isVirtualTable());
+            return appTableRepository.save(tableToUpdate);
         }
         return null;
     }
 
     @Override
     public boolean removeTableByName(Integer restaurantId, Integer tableNumber) {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
-        if (existingTable != null) {
-            appTableRepository.delete(existingTable);
+        Optional<AppTable> existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
+        if (existingTable.isPresent()) {
+            appTableRepository.delete(existingTable.get());
             return true;
         }
         return false;

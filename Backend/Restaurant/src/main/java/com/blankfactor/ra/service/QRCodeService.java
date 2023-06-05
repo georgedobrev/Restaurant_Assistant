@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.util.List;
 
 public interface QRCodeService {
-    List<QrCode> generateQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers);
+    List<QrCode> createQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) throws Exception;
+
     byte[] generateQRCodeImage(String text) throws WriterException, IOException;
+
     Resource createZipFile(List<QrCode> qrCodes) throws IOException;
+
     Integer getTableNumberByQrCodeId(Integer qrId);
 }

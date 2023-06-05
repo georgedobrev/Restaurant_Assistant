@@ -3,16 +3,14 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.config.AppConfig;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
-
-import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.repository.AppTableRepository;
+import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.service.QRCodeService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -22,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -34,29 +33,22 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppTableRepository appTableRepository;
 
 
-    public List<QrCode> generateQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) {
+    public List<QrCode> createQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) throws Exception {
         List<QrCode> qrCodes = new ArrayList<>();
         String baseUrl = appConfig.getBaseUrl();
 
         for (Integer tableNumber : tableNumbers) {
+            AppTable table = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
 
-            try {
-                AppTable table = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber);
+            String qrText = baseUrl + "/" + restaurantId + "/?table=" + tableNumber;
 
-                if (table != null) {
-                    String qrText = baseUrl + "/" + restaurantId + "/?table=" + tableNumber;
-
-                    byte[] qrCodeImage = generateQRCodeImage(qrText);
-                    QrCode qrCode = new QrCode(qrCodeImage);
-                    qrCodeRepository.save(qrCode);
-                    table.setQrCode(qrCode);
-                    appTableRepository.save(table);
-                    qrCodes.add(qrCode);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            byte[] qrCodeImage = generateQRCodeImage(qrText);
+            QrCode qrCode = new QrCode(qrCodeImage);
+            qrCodeRepository.save(qrCode);
+            table.setQr(qrCode);
+            appTableRepository.save(table);
+            qrCodes.add(qrCode);
             }
-        }
         return qrCodes;
     }
 
@@ -88,6 +80,6 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     public Integer getTableNumberByQrCodeId(Integer qrId) {
-        return qrCodeRepository.findTableNumberByQrCodeId(qrId);
+        return appTableRepository.findByQrId(qrId).getTableNumber();
     }
 }

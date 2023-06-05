@@ -4,15 +4,17 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@AllArgsConstructor
+
 @RestController
 @RequestMapping("restaurant")
+@AllArgsConstructor
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
@@ -21,7 +23,8 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
         Restaurant createdRestaurant = restaurantService.save(restaurantDto);
 
-        return ResponseEntity.ok(createdRestaurant);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(createdRestaurant);
     }
 
     @GetMapping("/getAll")
@@ -31,21 +34,14 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantIds}")
-    public ResponseEntity<List<Restaurant>> getRestaurantById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
-
-        if (!restaurants.isEmpty()) {
-            return ResponseEntity.ok(restaurants);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<List<Restaurant>>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
+        Optional<List<Restaurant>> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+        return ResponseEntity.ok(restaurants);
     }
 
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Restaurant restaurant) {
-        Restaurant updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
-        if (updatedRestaurant != null) {
-            return ResponseEntity.ok(updatedRestaurant);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<Restaurant>> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Restaurant restaurant) throws Exception {
+        Optional<Restaurant> updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+        return ResponseEntity.ok(updatedRestaurant);
     }
 }

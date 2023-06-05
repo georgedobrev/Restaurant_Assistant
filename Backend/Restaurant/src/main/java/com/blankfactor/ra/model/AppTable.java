@@ -42,9 +42,4 @@ public class AppTable {
 
     @Column(name = "active")
     private boolean active;
-
-
-    public void setQrCode(QrCode qrCode) {
-        this.qr = qrCode;
-    }
 }

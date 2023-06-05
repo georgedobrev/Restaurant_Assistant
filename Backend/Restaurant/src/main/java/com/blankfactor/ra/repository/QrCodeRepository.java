@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QrCodeRepository extends JpaRepository<QrCode, Integer> {
-    List<QrCode> findQRCodesByIdIn(List<Integer> qrIds);
-
-    @Query("SELECT rt.tableNumber FROM AppTable rt WHERE rt.qr.id = :qrCodeId")
-    Integer findTableNumberByQrCodeId(@Param("qrCodeId") Integer qrCodeId);
+    List<QrCode> findQRCodesByIdIn(Optional<List<Integer>> qrIds);
 }

@@ -1,6 +1,5 @@
 package com.blankfactor.ra.dto;
 
-import com.blankfactor.ra.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
