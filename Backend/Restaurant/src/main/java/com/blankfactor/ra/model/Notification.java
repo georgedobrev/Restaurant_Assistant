@@ -1,23 +1,24 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "notification_table", schema = "dbo", catalog = "restaurant_assistant")
-public class NotificationTable {
+@Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
+public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
-    @Column(name = "table_id")
-    private int tableId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_table_id", nullable = false)
+    private AppTable appTable;
 
     @Column(name = "request_type")
     private String requestType;
@@ -27,8 +28,4 @@ public class NotificationTable {
 
     @Column(name = "approved")
     private Boolean approved;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
 }

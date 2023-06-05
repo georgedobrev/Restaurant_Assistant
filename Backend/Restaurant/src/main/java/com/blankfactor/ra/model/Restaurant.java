@@ -3,8 +3,6 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
-
 @Data
 @Entity
 public class Restaurant {
@@ -33,16 +31,4 @@ public class Restaurant {
 
     @Column(name = "active")
     private Boolean active;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Reporting> reportsById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Reservation> reservationsById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Table> tablesById;
-
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<UserRole> userRolesById;
 }

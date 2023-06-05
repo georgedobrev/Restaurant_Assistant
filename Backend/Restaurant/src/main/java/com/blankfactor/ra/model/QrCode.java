@@ -1,10 +1,7 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Collection;
 
 @Data
 @Entity
@@ -18,6 +15,6 @@ public class QrCode {
     @Column(name = "qr_img")
     private byte[] qrImg;
 
-    @OneToMany(mappedBy = "qrCodeByQrId")
-    private Collection<com.blankfactor.ra.model.Table> tablesById;
+    @OneToOne(mappedBy = "qr", fetch = FetchType.LAZY)
+    private AppTable appTable;
 }

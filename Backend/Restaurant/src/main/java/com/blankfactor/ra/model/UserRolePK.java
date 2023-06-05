@@ -1,27 +1,18 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class UserRolePK implements Serializable {
-    @Column(name = "user_id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
 
-    @Column(name = "restaurant_id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int restaurantId;
-
-    @Column(name = "role_id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
+    private static final Long serialVersionUID = 1L;
+    private Integer appUser;
+    private Integer restaurant;
+    private Integer role;
 }

@@ -1,10 +1,9 @@
 package com.blankfactor.ra.model;
 
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -15,30 +14,21 @@ public class UserTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
-    @Column(name = "waiter_id")
-    private int waiterId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "waiter_id", nullable = false)
+    private AppUser waiter;
 
-    @Column(name = "table_id")
-    private int tableId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "app_table_id", nullable = false)
+    private AppTable appTableId;
 
     @Column(name = "start_time")
-    private Date startTime;
+    private Instant startTime;
 
     @Column(name = "end_time")
-    private Date endTime;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
-
-    @ManyToOne
-    @JoinColumn(name = "waiter_id", referencedColumnName = "id", nullable = false)
-    private User userByWaiterId;
-
-    @ManyToOne
-    @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    private com.blankfactor.ra.model.Table tableByTableId;
+    private Instant endTime;
 }
