@@ -2,8 +2,8 @@ package com.blankfactor.ra.service.impl;
 
 
 import com.blankfactor.ra.dto.AppTableDto;
+import com.blankfactor.ra.dto.QrCodeDto;
 import com.blankfactor.ra.model.AppTable;
-import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.service.AppTableService;
@@ -25,23 +25,14 @@ public class AppTableServiceImpl implements AppTableService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<QrCode> createTablesForRestaurant(Restaurant restaurant, List<AppTable> appTables) throws Exception {
+    public List<QrCodeDto> createTablesForRestaurant(Restaurant restaurant, List<AppTable> appTables) throws Exception {
         List<AppTable> createdTables = appTables.stream().map(table -> {
             table.setRestaurant(restaurant);
-            return createTable(table);
-        }).collect(Collectors.toList());
+            return appTableRepository.save(table);
+        }).toList();
 
-        for (AppTable table : appTables) {
-            table.setRestaurant(restaurant);
-            createdTables.add(createTable(table));
-        }
         List<Integer> tableNumbers = createdTables.stream().map(AppTable::getTableNumber).toList();
         return qrCodeService.createQRCodeForTables(restaurant.getId(), tableNumbers);
-    }
-
-    @Override
-    public AppTable createTable(AppTable appTable) {
-        return appTableRepository.save(appTable);
     }
 
     @Override

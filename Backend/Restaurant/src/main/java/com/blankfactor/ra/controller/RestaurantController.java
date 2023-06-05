@@ -23,25 +23,27 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
         Restaurant createdRestaurant = restaurantService.save(restaurantDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(createdRestaurant);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+
         return ResponseEntity.ok(restaurants);
     }
 
     @GetMapping("/{restaurantIds}")
     public ResponseEntity<Optional<List<Restaurant>>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
         Optional<List<Restaurant>> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+
         return ResponseEntity.ok(restaurants);
     }
 
     @PutMapping("/{restaurantId}")
     public ResponseEntity<Optional<Restaurant>> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Restaurant restaurant) throws Exception {
         Optional<Restaurant> updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+
         return ResponseEntity.ok(updatedRestaurant);
     }
 }

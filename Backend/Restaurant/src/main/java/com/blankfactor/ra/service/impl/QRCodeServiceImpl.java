@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.config.AppConfig;
+import com.blankfactor.ra.dto.QrCodeDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.repository.AppTableRepository;
@@ -20,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -32,9 +32,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppConfig appConfig;
     private final AppTableRepository appTableRepository;
 
-
-    public List<QrCode> createQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) throws Exception {
-        List<QrCode> qrCodes = new ArrayList<>();
+    public List<QrCodeDto> createQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) throws Exception {
+        List<QrCodeDto> qrCodeDtos = new ArrayList<>();
         String baseUrl = appConfig.getBaseUrl();
 
         for (Integer tableNumber : tableNumbers) {
@@ -47,9 +46,11 @@ public class QRCodeServiceImpl implements QRCodeService {
             qrCodeRepository.save(qrCode);
             table.setQr(qrCode);
             appTableRepository.save(table);
-            qrCodes.add(qrCode);
-            }
-        return qrCodes;
+
+            QrCodeDto qrCodeDto = new QrCodeDto(qrCodeImage);
+            qrCodeDtos.add(qrCodeDto);
+        }
+        return qrCodeDtos;
     }
 
     public byte[] generateQRCodeImage(String text) throws WriterException, IOException {
