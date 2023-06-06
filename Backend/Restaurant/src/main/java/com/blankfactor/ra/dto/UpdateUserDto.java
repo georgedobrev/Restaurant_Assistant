@@ -8,11 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateUserDto {
-    private String email;
-    private String name;
-    private String surname;
-    private RoleType roleBefore;
+public class UpdateUserDto extends UserDto {
     private RoleType roleAfter;
-    private int restaurantId;
 }

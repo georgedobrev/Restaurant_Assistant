@@ -26,5 +26,5 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     @Id
     @Column(name = "role_type", nullable = false)
-    private RoleType role;
+    private RoleType roleType;
 }

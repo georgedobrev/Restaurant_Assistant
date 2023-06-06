@@ -15,5 +15,5 @@ public class UserRolePK implements Serializable {
     private static final Long serialVersionUID = 1L;
     private Integer appUser;
     private Integer restaurant;
-    private RoleType role;
+    private RoleType roleType;
 }

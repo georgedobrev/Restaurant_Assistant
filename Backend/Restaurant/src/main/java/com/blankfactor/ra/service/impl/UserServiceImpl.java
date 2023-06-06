@@ -2,6 +2,7 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.RestaurantException;
 import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
@@ -33,35 +34,27 @@ public class UserServiceImpl implements UserService {
         appUser.setEmail(userDto.getEmail());
         appUser.setName(userDto.getName());
         appUser.setSurname(userDto.getSurname());
-        appUser.setBlacklisted(false);
-        appUser.setActive(true);
-        appUser.setCreatedAt(Instant.now());
 
         AppUser savedAppUser = userRepository.save(appUser);
 
-        return assignUserRole(userDto, savedAppUser);
+        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
+            assignUserRole(userDto, savedAppUser);
+        }
+
+        return savedAppUser;
     }
 
     @Override
     public AppUser addRoleToUser(UserDto userDto) {
-        AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail());
-
-        if (appUser == null) {
-            throw new UserException("User with email " + userDto.getEmail() + " not found");
-        }
+        AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail()).orElseThrow(() -> new UserException("User with email " + userDto.getEmail() + " not found"));
 
         return assignUserRole(userDto, appUser);
     }
 
     @Override
     public AppUser getUserById(int id) {
-        AppUser appUser = userRepository.findById(id).orElse(null);
-
-        if (appUser == null) {
-            throw new UserException("User with id " + id + " not found");
-        }
-
-        return appUser;
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
     }
 
     @Transactional
@@ -74,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + updateUserDto.getRestaurantId() + " not found"));
 
         UserRole userRoleToDelete = userRoleRepository
-                .findByAppUserAndAndRestaurantAndAndRole(appUserToUpdate, restaurant, updateUserDto.getRoleBefore())
+                .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, restaurant, updateUserDto.getRoleType())
                 .orElseThrow(() -> new UserException("No such record in UserRole table"));
 
         userRoleRepository.delete(userRoleToDelete);
@@ -82,9 +75,6 @@ public class UserServiceImpl implements UserService {
         appUserToUpdate.setEmail(updateUserDto.getEmail());
         appUserToUpdate.setName(updateUserDto.getName());
         appUserToUpdate.setSurname(updateUserDto.getSurname());
-        appUserToUpdate.setBlacklisted(false);
-        appUserToUpdate.setActive(true);
-        appUserToUpdate.setCreatedAt(Instant.now());
 
         userRepository.save(appUserToUpdate);
 
@@ -92,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
         userRoleToUpdate.setAppUser(appUserToUpdate);
         userRoleToUpdate.setRestaurant(restaurant);
-        userRoleToUpdate.setRole(updateUserDto.getRoleAfter());
+        userRoleToUpdate.setRoleType(updateUserDto.getRoleAfter());
 
         userRoleRepository.save(userRoleToUpdate);
 
@@ -101,7 +91,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(int id) {
-        AppUser appUser = userRepository.findById(id).orElse(null);
+        AppUser appUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
 
         List<UserRole> userRoles = userRoleRepository.findByAppUser(appUser);
 
@@ -110,11 +101,6 @@ public class UserServiceImpl implements UserService {
         }
 
         userRoleRepository.deleteAll(userRoles);
-
-        if (appUser == null) {
-            throw new UserException("User with id " + id + " not found");
-        }
-
         userRepository.delete(appUser);
     }
 
@@ -123,15 +109,12 @@ public class UserServiceImpl implements UserService {
 
         userRole.setAppUser(appUser);
 
-        userRole.setRole(userDto.getRoleType());
+        userRole.setRoleType(userDto.getRoleType());
 
-        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId()).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId())
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + userDto.getRestaurantId() + " not found"));
 
-        if (restaurant == null) {
-            throw new RestaurantException("Restaurant with id " + userDto.getRestaurantId() + " not found");
-        } else {
-            userRole.setRestaurant(restaurant);
-        }
+        userRole.setRestaurant(restaurant);
 
         userRoleRepository.save(userRole);
 
