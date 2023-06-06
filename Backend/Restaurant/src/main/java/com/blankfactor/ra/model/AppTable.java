@@ -1,11 +1,17 @@
 package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@Table(name = "app_table")
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "AppTable")
+@Table(name = "app_table", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
+})
 public class AppTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -93,6 +93,12 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>

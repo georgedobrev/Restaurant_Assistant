@@ -6,14 +6,14 @@ import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
+import java.util.List;
+
+
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("restaurant")
+@AllArgsConstructor
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
@@ -23,5 +23,26 @@ public class RestaurantController {
         Restaurant createdRestaurant = restaurantService.createRestaurant(restaurantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Restaurant>> getAllRestaurants() {
+        List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+
+        return ResponseEntity.ok(restaurants);
+    }
+
+    @GetMapping("/{restaurantIds}")
+    public ResponseEntity<List<Restaurant>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+
+        return ResponseEntity.ok(restaurants);
+    }
+
+    @PutMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantDto> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) throws Exception {
+        RestaurantDto updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+
+        return ResponseEntity.ok(updatedRestaurant);
     }
 }
