@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public AppUser addRoleToUser(UserDto userDto) {
         AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail());
 
-        if (appUser ==  null) {
+        if (appUser == null) {
             throw new UserException("User with email " + userDto.getEmail() + " not found");
         }
 
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public AppUser getUserById(int id) {
         AppUser appUser = userRepository.findById(id).orElse(null);
 
-        if (appUser ==  null) {
+        if (appUser == null) {
             throw new UserException("User with id " + id + " not found");
         }
 

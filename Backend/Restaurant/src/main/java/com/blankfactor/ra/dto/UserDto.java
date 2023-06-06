@@ -1,12 +1,9 @@
 package com.blankfactor.ra.dto;
 
 import com.blankfactor.ra.enums.RoleType;
-import com.blankfactor.ra.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Data
 @AllArgsConstructor
