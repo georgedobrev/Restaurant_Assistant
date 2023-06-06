@@ -5,7 +5,7 @@ For clients, the application allows them to easily scan a QR code assigned to th
 
 ## Table of Contents
 * #### Features
-* #### Softwares
+* #### Software
 * #### Installation
 * #### Usage
 * #### Contributing
@@ -40,7 +40,7 @@ Generate reports on sales, orders, transactions and other key metrics to gain in
 #### Prerequisites
 **Before running Restaurant Assistant, ensure you have the following prerequisites installed:**
 
-### Softwares
+### Software
 
 * Docker
 * Java Development Kit (JDK) 20
@@ -50,6 +50,13 @@ Generate reports on sales, orders, transactions and other key metrics to gain in
 ### Installation
 
 1. Clone the repository:  git clone https://github.com/georgedobrev/Restaurant_Assistant.git
+2. Navigate to the project directory: `cd restaurant-assistant`
+3. Build the project using Maven: `mvn clean install`
+4. Install Docker
+5. Write 'docker-compose up' on the console
+6. Connecting to the DataBase using username and password
+7. Create new Database `CREATE DATABASE restaurant_assistant;`
+
 
 2. Navigate to the project directory: `cd restaurant-assistant`
 
@@ -92,4 +99,6 @@ We welcome contributions to the Restaurant Assistant project. To contribute, ple
 
 ### License
 This project is licensed under the MIT License.
+
+### Version of the MSSQL server that we use is Microsoft Azure SQL Edge Developer (RTM) - 15.0.2000.1574 (ARM64)
   
