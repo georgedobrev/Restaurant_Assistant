@@ -7,5 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface QrCodeRepository extends JpaRepository<QrCode, Integer> {
-    List<QrCode> findByAppTableIn(List<AppTable> appTables);
 }
