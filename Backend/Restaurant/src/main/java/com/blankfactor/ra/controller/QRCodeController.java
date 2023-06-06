@@ -14,13 +14,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/{restaurantId}/qrcode")
+@RequestMapping
 @AllArgsConstructor
 public class QRCodeController {
 
     private final QRCodeService qrCodeService;
 
-    @PostMapping("/download")
+    @PostMapping("/{restaurantId}/qrcode/download")
     public ResponseEntity<Resource> downloadQRCodes(@PathVariable("restaurantId") Integer restaurantId,
                                                     @RequestParam("ids") List<Integer> tableNumbers) throws Exception {
 
@@ -34,5 +34,12 @@ public class QRCodeController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(zipFileResource);
+    }
+
+    @GetMapping("/{hashedURL}")
+    public ResponseEntity<int[]> getQRCodeInfo(@PathVariable("hashedURL") String hashedURL) throws Exception {
+        int[] response = qrCodeService.getRestaurantIdAndTableNumberFromHashedUrl(hashedURL);
+
+        return ResponseEntity.ok(response);
     }
 }

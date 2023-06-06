@@ -19,7 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -32,14 +36,23 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppConfig appConfig;
     private final AppTableRepository appTableRepository;
 
-    public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws IOException, WriterException {
+    public static String generateHashedURL(String originalURL) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        byte[] hashBytes = digest.digest(originalURL.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(hashBytes);
+    }
+
+    public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws IOException, WriterException, NoSuchAlgorithmException {
         List<QrCode> listOfQRCodes = new ArrayList<>();
 
         String baseUrl = appConfig.getBaseUrl();
+
         for (AppTable table : appTables) {
-            String qrText = baseUrl + "/" + restaurant.getId() + "/?table=" + table.getTableNumber();
-            byte[] qrCodeImage = createQRCodeImage(qrText);
-            QrCode qrCode = new QrCode(qrCodeImage);
+            String originalURL = restaurant.getId() + "/?table=" + table.getTableNumber();
+            String hashedURL = generateHashedURL(originalURL);
+            byte[] qrCodeImage = createQRCodeImage(baseUrl + "/" + hashedURL);
+            QrCode qrCode = new QrCode(qrCodeImage, hashedURL);
             table.setQr(qrCode);
             listOfQRCodes.add(qrCode);
         }
@@ -77,5 +90,14 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     public Integer getTableNumberByQrCodeId(Integer qrId) throws Exception {
         return appTableRepository.findByQrId(qrId).orElseThrow(Exception::new).getTableNumber();
+    }
+
+    @Override
+    public int[] getRestaurantIdAndTableNumberFromHashedUrl(String hashedURL) throws Exception {
+        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedURL).orElseThrow(Exception::new);
+
+        int restaurantId = qrCode.getAppTable().getRestaurant().getId();
+        int tableNumber = qrCode.getAppTable().getTableNumber();
+        return new int[]{restaurantId, tableNumber};
     }
 }
