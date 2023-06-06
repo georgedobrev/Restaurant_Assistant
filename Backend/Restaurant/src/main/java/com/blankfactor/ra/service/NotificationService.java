@@ -4,16 +4,18 @@ import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface NotificationService {
-    //Notification getNotificationById(Integer notificationId) throws Exception;
-    //List<Notification> getAllNotificationsByRestaurantId();
-    //List<Notification> getAllNotificationsByTableId();
-    Notification createNotification(NotificationDto notificationsDto);
+    Notification createNotification(NotificationDto notificationDto);
+    Notification getNotificationById(Integer notificationId) throws Exception;
 
-    public Notification updateNotification(NotificationDto notificationDto, int notificationId);
+    List<Notification> getAllNotificationsByTableId(Integer tableId);
+    // List<Notification> getAllNotificationsByRestaurantId(int restaurantId);
+    //    public Notification updateNotification(NotificationDto notificationDto, int notificationId);
 
-    Notification deleteNotification(int notificationId);
 
-    Notification deleteAllNotificationsByRestaurantId(int restaurantId);
+    //Notification deleteNotification(int notificationId);
+
+    // Notification deleteAllNotificationsByRestaurantId(int restaurantId);
 }
