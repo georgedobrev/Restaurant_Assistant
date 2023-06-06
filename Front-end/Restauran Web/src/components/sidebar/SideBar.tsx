@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./sidebar.module.css";
-import "../../App.css";
 import Navigation from "./Navigation";
 import theme from "../../colorTheme";
 

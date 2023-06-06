@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./sidebar.module.css"; // Assuming this is the location of your CSS module
+import styles from "./sidebar.module.css";
 
 const Navigation = () => (
   <nav className={styles.nav}>
