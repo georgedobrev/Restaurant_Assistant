@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "notification_table", schema = "dbo", catalog = "restaurant_assistant")
-public class NotificationTable {
+@Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
+public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
