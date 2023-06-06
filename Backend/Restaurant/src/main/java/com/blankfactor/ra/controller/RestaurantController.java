@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
     @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        return new ResponseEntity<>(restaurantService.saveRestaurant(restaurantDto), HttpStatus.CREATED);
+        Restaurant createdRestaurant = restaurantService.createRestaurant(restaurantDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
 }

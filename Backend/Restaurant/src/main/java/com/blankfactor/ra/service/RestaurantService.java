@@ -4,5 +4,5 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 
 public interface RestaurantService {
-    Restaurant saveRestaurant(RestaurantDto restaurantDto);
+    Restaurant createRestaurant(RestaurantDto restaurantDto);
 }

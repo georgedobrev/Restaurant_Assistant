@@ -17,9 +17,9 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<AppUser> createUser(@RequestBody UserDto userDto) {
-        AppUser createdAppUser = userService.saveUser(userDto);
+        AppUser createdAppUser = userService.createUser(userDto);
 
-        return new ResponseEntity<>(createdAppUser, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
     }
 
     @PostMapping("/addRole")

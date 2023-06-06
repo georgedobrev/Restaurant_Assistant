@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public AppUser saveUser(UserDto userDto) {
+    public AppUser createUser(UserDto userDto) {
         AppUser appUser = new AppUser();
 
         appUser.setEmail(userDto.getEmail());
