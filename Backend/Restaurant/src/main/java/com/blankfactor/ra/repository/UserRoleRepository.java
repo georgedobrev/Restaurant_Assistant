@@ -15,6 +15,5 @@ import java.util.Optional;
 public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> {
     List<UserRole> findByAppUser(AppUser appUser);
 
-    //Optional<UserRole> findByAppUserAndAndRestaurantAndAndRole(AppUser appUser, Restaurant restaurant, RoleType roleType);
     Optional<UserRole> findByAppUserAndRestaurantAndRoleType(AppUser appUser, Restaurant restaurant, RoleType roleType);
 }
