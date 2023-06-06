@@ -11,7 +11,7 @@ import styles from "./stylesLogin";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export const LoginScreen = () => {
+export const Login = () => {
   const [user, setUser] = React.useState(null);
   const [accessToken, setAccessToken] = React.useState(null);
 

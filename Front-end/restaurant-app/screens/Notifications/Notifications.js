@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Text, View, FlatList, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import styles from "./stylesDashboard";
+import styles from "./stylesNotifications";
 import requests from "./mock";
 
-export function Dashboard() {
+export function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [incomingRequests, setIncomingRequests] = useState(requests);
 
