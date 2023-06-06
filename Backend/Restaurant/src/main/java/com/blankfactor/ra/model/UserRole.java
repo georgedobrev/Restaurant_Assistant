@@ -1,5 +1,6 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,8 @@ public class UserRole {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
+    @Enumerated(EnumType.STRING)
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @Column(name = "role_type", nullable = false)
+    private RoleType roleType;
 }

@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDto {
-
-    private String type;
+public class UpdateUserDto extends UserDto {
+    private RoleType roleAfter;
 }

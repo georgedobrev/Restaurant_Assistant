@@ -6,5 +6,5 @@ CREATE TABLE app_user
     surname NVARCHAR(100),
     blacklisted BIT,
     active BIT,
-    created_at DATETIME
+    created_at DATETIMEOFFSET
 );

@@ -24,11 +24,11 @@ public class AppUser {
     private String surname;
 
     @Column(name = "blacklisted")
-    private Boolean blacklisted;
+    private Boolean blacklisted = false;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = true;
 
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 }
