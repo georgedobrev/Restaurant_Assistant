@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -31,15 +32,19 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppConfig appConfig;
     private final AppTableRepository appTableRepository;
 
-    public AppTable createQRCodeForTables(Restaurant restaurant, AppTable appTable) throws IOException, WriterException {
-        String baseUrl = appConfig.getBaseUrl();
-        String qrText = baseUrl + "/" + restaurant.getId() + "/?table=" + appTable.getTableNumber();
+    public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws IOException, WriterException {
+        List<QrCode> listOfQRCodes = new ArrayList<>();
 
-        byte[] qrCodeImage = createQRCodeImage(qrText);
-        QrCode qrCode = new QrCode(qrCodeImage);
-        qrCodeRepository.save(qrCode);
-        appTable.setQr(qrCode);
-        return appTable;
+        String baseUrl = appConfig.getBaseUrl();
+        for (AppTable table : appTables) {
+            String qrText = baseUrl + "/" + restaurant.getId() + "/?table=" + table.getTableNumber();
+            byte[] qrCodeImage = createQRCodeImage(qrText);
+            QrCode qrCode = new QrCode(qrCodeImage);
+            table.setQr(qrCode);
+            listOfQRCodes.add(qrCode);
+        }
+        qrCodeRepository.saveAll(listOfQRCodes);
+        return appTables;
     }
 
     public byte[] createQRCodeImage(String text) throws WriterException, IOException {
@@ -51,20 +56,21 @@ public class QRCodeServiceImpl implements QRCodeService {
         return pngOutputStream.toByteArray();
     }
 
-    public Resource createZipFile(List<QrCode> qrCodes) throws Exception {
+    public Resource downloadQRCodes(Integer restaurantId, List<Integer> tableNumbers) {
+        List<AppTable> appTables = appTableRepository.findByRestaurantIdAndTableNumberIn(restaurantId, tableNumbers);
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zipOut = new ZipOutputStream(baos)) {
-            for (QrCode qrCode : qrCodes) {
+            for (AppTable table : appTables) {
 
-                Integer qrCodeId = qrCode.getId();
-                Integer tableNumber = getTableNumberByQrCodeId(qrCodeId);
-
-                String fileName = "qrcode_table_id_" + tableNumber + ".png";
+                String fileName = "qrcode_table_number_" + table.getTableNumber() + ".png";
                 ZipEntry zipEntry = new ZipEntry(fileName);
                 zipOut.putNextEntry(zipEntry);
-                zipOut.write(qrCode.getQrImg());
+                zipOut.write(table.getQr().getQrImg());
                 zipOut.closeEntry();
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return new ByteArrayResource(baos.toByteArray());
     }

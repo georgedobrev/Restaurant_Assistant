@@ -7,6 +7,7 @@ import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
+import com.blankfactor.ra.service.RestaurantService;
 import com.google.zxing.WriterException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -24,20 +25,24 @@ public class AppTableServiceImpl implements AppTableService {
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
     private final ModelMapper modelMapper;
+    private final RestaurantService restaurantService;
 
     @Override
-    public List<AppTable> createTablesForRestaurant(Restaurant restaurant, List<AppTable> appTables) {
-        List<AppTable> createdTables = appTables.stream().map(table -> {
-            table.setRestaurant(restaurant);
-            try {
-                qrCodeService.createQRCodeForTables(restaurant, table);
-            } catch (IOException | WriterException e) {
-                throw new RuntimeException(e);
-            }
-            return table;
-        }).toList();
-        appTableRepository.saveAll(createdTables);
-        return createdTables;
+    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) throws Exception {
+        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+
+        List<AppTable> tables = appTables.stream()
+                .peek(t -> t.setRestaurant(restaurant))
+                .collect(Collectors.toList());
+
+        try {
+            qrCodeService.createQRCodesForTables(restaurant, tables);
+        } catch (IOException | WriterException e) {
+            throw new RuntimeException(e);
+        }
+
+        appTableRepository.saveAll(tables);
+        return tables;
     }
 
     @Override
@@ -69,11 +74,9 @@ public class AppTableServiceImpl implements AppTableService {
     }
 
     @Override
-    public boolean removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception {
+    public void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception {
         AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
-
         appTableRepository.delete(existingTable);
-        return true;
     }
 }
 
