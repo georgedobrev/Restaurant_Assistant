@@ -1,9 +1,9 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.config.AppConfig;
-import com.blankfactor.ra.dto.QrCodeDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.service.QRCodeService;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -32,28 +31,18 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppConfig appConfig;
     private final AppTableRepository appTableRepository;
 
-    public List<QrCodeDto> createQRCodeForTables(Integer restaurantId, List<Integer> tableNumbers) throws Exception {
-        List<QrCodeDto> qrCodeDtos = new ArrayList<>();
+    public AppTable createQRCodeForTables(Restaurant restaurant, AppTable appTable) throws IOException, WriterException {
         String baseUrl = appConfig.getBaseUrl();
+        String qrText = baseUrl + "/" + restaurant.getId() + "/?table=" + appTable.getTableNumber();
 
-        for (Integer tableNumber : tableNumbers) {
-            AppTable table = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
-
-            String qrText = baseUrl + "/" + restaurantId + "/?table=" + tableNumber;
-
-            byte[] qrCodeImage = generateQRCodeImage(qrText);
-            QrCode qrCode = new QrCode(qrCodeImage);
-            qrCodeRepository.save(qrCode);
-            table.setQr(qrCode);
-            appTableRepository.save(table);
-
-            QrCodeDto qrCodeDto = new QrCodeDto(qrCodeImage);
-            qrCodeDtos.add(qrCodeDto);
-        }
-        return qrCodeDtos;
+        byte[] qrCodeImage = createQRCodeImage(qrText);
+        QrCode qrCode = new QrCode(qrCodeImage);
+        qrCodeRepository.save(qrCode);
+        appTable.setQr(qrCode);
+        return appTable;
     }
 
-    public byte[] generateQRCodeImage(String text) throws WriterException, IOException {
+    public byte[] createQRCodeImage(String text) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 350, 350);
 
@@ -62,7 +51,7 @@ public class QRCodeServiceImpl implements QRCodeService {
         return pngOutputStream.toByteArray();
     }
 
-    public Resource createZipFile(List<QrCode> qrCodes) throws IOException {
+    public Resource createZipFile(List<QrCode> qrCodes) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zipOut = new ZipOutputStream(baos)) {
             for (QrCode qrCode : qrCodes) {
@@ -80,7 +69,7 @@ public class QRCodeServiceImpl implements QRCodeService {
         return new ByteArrayResource(baos.toByteArray());
     }
 
-    public Integer getTableNumberByQrCodeId(Integer qrId) {
-        return appTableRepository.findByQrId(qrId).getTableNumber();
+    public Integer getTableNumberByQrCodeId(Integer qrId) throws Exception {
+        return appTableRepository.findByQrId(qrId).orElseThrow(Exception::new).getTableNumber();
     }
 }

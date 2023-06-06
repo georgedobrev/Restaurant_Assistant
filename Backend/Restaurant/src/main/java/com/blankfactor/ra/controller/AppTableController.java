@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/{restaurantId}/tables")
@@ -31,8 +30,8 @@ public class AppTableController {
     }
 
     @GetMapping("/{tableNumber}")
-    public ResponseEntity<Optional<AppTable>> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
-        Optional<AppTable> appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
+    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
+        AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
         return ResponseEntity.ok(appTable);
     }
@@ -45,14 +44,14 @@ public class AppTableController {
     }
 
     @PutMapping("/{tableNumber}")
-    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTable appTable) {
-        AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTable);
+    public ResponseEntity<AppTableDto> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) throws Exception {
+        AppTableDto updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
-        return ResponseEntity.ok(appTable);
+        return ResponseEntity.ok(updatedTable);
     }
 
     @DeleteMapping("/{tableNumber}")
-    public ResponseEntity<Boolean> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
+    public ResponseEntity<Boolean> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
         boolean removedTable = appTableService.removeTableByName(restaurantId, tableNumber);
 
         return ResponseEntity.ok(removedTable);

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -21,7 +20,7 @@ public class RestaurantController {
 
     @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        Restaurant createdRestaurant = restaurantService.save(restaurantDto);
+        Restaurant createdRestaurant = restaurantService.createRestaurant(restaurantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
@@ -34,15 +33,15 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantIds}")
-    public ResponseEntity<Optional<List<Restaurant>>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
-        Optional<List<Restaurant>> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+    public ResponseEntity<List<Restaurant>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
 
         return ResponseEntity.ok(restaurants);
     }
 
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<Optional<Restaurant>> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Restaurant restaurant) throws Exception {
-        Optional<Restaurant> updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+    public ResponseEntity<RestaurantDto> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) throws Exception {
+        RestaurantDto updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
 
         return ResponseEntity.ok(updatedRestaurant);
     }
