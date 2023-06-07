@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.config.AppConfig;
-import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
@@ -27,7 +26,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -38,7 +36,6 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final QrCodeRepository qrCodeRepository;
     private final AppConfig appConfig;
     private final AppTableRepository appTableRepository;
-    private final ModelMapper modelMapper;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -93,16 +90,14 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     public Integer getTableNumberByQrCodeId(Integer qrId) throws Exception {
-        return appTableRepository.findByQrId(qrId).orElseThrow(Exception::new).getTableNumber();
+        return appTableRepository.findByQrId(qrId).orElseThrow(() -> new Exception("No table with such QR code id")).getTableNumber();
     }
 
     @Override
-    public AppTableDto getQrCodeInfo(String hashedURL) throws NoSuchElementException {
-        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedURL).orElseThrow(NoSuchElementException::new);
+    public AppTable getTableFromQRHashURL(String hashedURL) throws Exception {
+        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedURL).orElseThrow(() -> new Exception("No QR code with this hashed url"));
+        AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new Exception("No table with such QR code"));
 
-//        int restaurantId = qrCode.getAppTable().getRestaurant().getId();
-//        int tableNumber = qrCode.getAppTable().getTableNumber();
-        AppTable appTable = qrCode.getAppTable();
-        return modelMapper.map(appTable, AppTableDto.class);
+        return appTable;
     }
 }
