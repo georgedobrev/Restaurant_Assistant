@@ -28,7 +28,7 @@ public class AppTable {
     @Column(name = "occupied")
     private boolean occupied;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 

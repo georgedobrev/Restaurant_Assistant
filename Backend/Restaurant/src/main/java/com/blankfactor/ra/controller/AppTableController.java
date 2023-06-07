@@ -3,7 +3,6 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.service.AppTableService;
-import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/{restaurantId}/tables")
+@RequestMapping("/tables/{restaurantId}")
 @AllArgsConstructor
 public class AppTableController {
 
     private final AppTableService appTableService;
-    private final RestaurantService restaurantService;
 
     @PostMapping()
     public ResponseEntity<List<AppTable>> createTable(@PathVariable("restaurantId") Integer restaurantId,

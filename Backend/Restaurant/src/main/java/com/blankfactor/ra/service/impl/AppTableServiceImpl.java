@@ -47,7 +47,7 @@ public class AppTableServiceImpl implements AppTableService {
 
     @Override
     public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) throws Exception {
-        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
+        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + " not found"));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class AppTableServiceImpl implements AppTableService {
     @Transactional
     @Override
     public AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
+        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + "not found"));
 
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
@@ -75,7 +75,7 @@ public class AppTableServiceImpl implements AppTableService {
 
     @Override
     public void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
+        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + "not found"));
         appTableRepository.delete(existingTable);
     }
 }
