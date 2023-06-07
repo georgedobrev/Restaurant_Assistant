@@ -13,6 +13,7 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +26,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public AppUser createUser(UserDto userDto) {
         AppUser appUser = new AppUser();
 
-        appUser.setEmail(userDto.getEmail());
-        appUser.setName(userDto.getName());
-        appUser.setSurname(userDto.getSurname());
+        modelMapper.map(userDto, appUser);
 
         AppUser savedAppUser = userRepository.save(appUser);
 
@@ -71,17 +71,15 @@ public class UserServiceImpl implements UserService {
 
         userRoleRepository.delete(userRoleToDelete);
 
-        appUserToUpdate.setEmail(updateUserDto.getEmail());
-        appUserToUpdate.setName(updateUserDto.getName());
-        appUserToUpdate.setSurname(updateUserDto.getSurname());
+        modelMapper.map(updateUserDto, appUserToUpdate);
 
         userRepository.save(appUserToUpdate);
 
-        UserRole userRoleToUpdate = new UserRole();
-
-        userRoleToUpdate.setAppUser(appUserToUpdate);
-        userRoleToUpdate.setRestaurant(restaurant);
-        userRoleToUpdate.setRoleType(updateUserDto.getRoleAfter());
+        UserRole userRoleToUpdate = UserRole.builder()
+                .appUser(appUserToUpdate)
+                .restaurant(restaurant)
+                .roleType(updateUserDto.getRoleAfter())
+                .build();
 
         userRoleRepository.save(userRoleToUpdate);
 
@@ -104,16 +102,14 @@ public class UserServiceImpl implements UserService {
     }
 
     private AppUser assignUserRole(UserDto userDto, AppUser appUser) {
-        UserRole userRole = new UserRole();
-
-        userRole.setAppUser(appUser);
-
-        userRole.setRoleType(userDto.getRoleType());
-
         Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId())
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + userDto.getRestaurantId() + " not found"));
 
-        userRole.setRestaurant(restaurant);
+        UserRole userRole = UserRole.builder()
+                .appUser(appUser)
+                .roleType(userDto.getRoleType())
+                .restaurant(restaurant)
+                .build();
 
         userRoleRepository.save(userRole);
 

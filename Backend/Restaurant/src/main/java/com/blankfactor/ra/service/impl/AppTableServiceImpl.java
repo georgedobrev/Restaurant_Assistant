@@ -63,11 +63,7 @@ public class AppTableServiceImpl implements AppTableService {
     public AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception {
         AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
 
-        existingTable.setTableNumber(updatedTableDto.getTableNumber());
-        existingTable.setOccupied(updatedTableDto.isOccupied());
-        existingTable.setCapacity(updatedTableDto.getCapacity());
-        existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
-        existingTable.setActive(updatedTableDto.isActive());
+        modelMapper.map(updatedTableDto, existingTable);
         appTableRepository.save(existingTable);
 
         return modelMapper.map(existingTable, AppTableDto.class);

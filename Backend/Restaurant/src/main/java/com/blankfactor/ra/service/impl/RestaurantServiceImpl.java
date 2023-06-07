@@ -21,6 +21,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = new Restaurant();
 
         modelMapper.map(restaurantDto, restaurant);
+
         return restaurantRepository.save(restaurant);
     }
 

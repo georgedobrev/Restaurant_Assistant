@@ -3,9 +3,11 @@ package com.blankfactor.ra.model;
 import com.blankfactor.ra.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
