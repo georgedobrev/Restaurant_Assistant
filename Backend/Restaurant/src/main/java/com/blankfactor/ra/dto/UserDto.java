@@ -1,11 +1,9 @@
 package com.blankfactor.ra.dto;
 
-import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +13,6 @@ public class UserDto {
     private String email;
     private String name;
     private String surname;
-    private Instant createdAt;
-    private Boolean blacklisted;
-    private Boolean active;
+    private RoleType roleType;
+    private int restaurantId;
 }

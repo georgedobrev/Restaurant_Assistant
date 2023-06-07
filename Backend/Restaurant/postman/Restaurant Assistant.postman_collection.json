@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
+		"name": "Restaurant Assistant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27618519",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "getAllNotifications Copy",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "createNotification Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"time\": \"2023-06-05T07:44:54.512+00:00\",\n    \"requestType\": \"Menu\"\n    \"message\": \"this is a message\",\n    \"approved\": false\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/new-notification",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"new-notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete all notifications Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080//delete-notifications",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"",
+								"delete-notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNotification Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:1433/notification/id",
+							"host": [
+								"localhost"
+							],
+							"port": "1433",
+							"path": [
+								"notification",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findNotificationById Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080//notification/{id}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"",
+								"notification",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "QRCodes",
+			"item": [
+				{
+					"name": "Download QrCodes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/1/qrcode/download?ids=11,12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"1",
+								"qrcode",
+								"download"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "11,12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"Waiter\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Table",
+			"item": [
+				{
+					"name": "Get all tables from a single restaurant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/1/tables/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"1",
+								"tables",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Table/s",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"tableNumber\": 10,\r\n    \"occupied\": false,\r\n    \"capacity\": 4,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n  {\r\n    \"tableNumber\": 20,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 30,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 40,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 50,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 60,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/1/tables/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"1",
+								"tables",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update existing table",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/2/tables/13",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"2",
+								"tables",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta a table",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/2/tables/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"2",
+								"tables",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 2,\n  \"restaurantId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Role To Existing User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 1,\n  \"restaurantId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/addRole",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"addRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
