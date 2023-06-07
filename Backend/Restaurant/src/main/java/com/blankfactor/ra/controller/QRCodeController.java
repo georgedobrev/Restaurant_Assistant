@@ -37,10 +37,11 @@ public class QRCodeController {
                 .body(zipFileResource);
     }
 
-    @GetMapping("/{hashedURL}")
-    public ResponseEntity<AppTable> getQRCodeInfo(@PathVariable("hashedURL") String hashedURL) throws Exception {
-        AppTable response = qrCodeService.getTableFromQRHashURL(hashedURL);
+    @GetMapping("/{hashedUrl}")
+    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl) throws Exception {
+        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl);
 
         return ResponseEntity.ok(response);
     }
 }
+

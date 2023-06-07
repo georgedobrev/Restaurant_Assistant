@@ -94,8 +94,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public AppTable getTableFromQRHashURL(String hashedURL) throws Exception {
-        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedURL).orElseThrow(() -> new Exception("No QR code with this hashed url"));
+    public AppTable getTableFromQRHashUrl(String hashedUrl) throws Exception {
+        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new Exception("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new Exception("No table with such QR code"));
 
         return appTable;

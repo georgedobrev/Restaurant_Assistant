@@ -17,5 +17,5 @@ public interface QRCodeService {
 
     Resource downloadQRCodes(Integer restaurantId, List<Integer> tableNumbers) throws IOException;
 
-    AppTable getTableFromQRHashURL(String hashedURL) throws Exception;
+    AppTable getTableFromQRHashUrl(String hashedUrl) throws Exception;
 }
