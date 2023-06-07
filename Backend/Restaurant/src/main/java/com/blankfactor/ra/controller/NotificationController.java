@@ -28,6 +28,9 @@ public class NotificationController {
 
     @GetMapping("/all/restaurant/{restaurant_id}")
     public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable("restaurant_id") int restaurantId) {
-      return ResponseEntity.ok(null);
+      List<Notification> notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
+        return ResponseEntity.ok(null);
     }
+
+
 }

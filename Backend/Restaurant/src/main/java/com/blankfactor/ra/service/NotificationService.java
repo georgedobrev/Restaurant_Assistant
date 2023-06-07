@@ -8,4 +8,6 @@ import java.util.List;
 public interface NotificationService {
 
     Notification createNotification(NotificationDto notificationDto);
+
+    List<Notification> getAllNotificationsByRestaurantId(int restaurantId);
 }

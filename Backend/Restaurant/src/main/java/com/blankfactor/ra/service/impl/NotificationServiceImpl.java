@@ -24,8 +24,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final AppTableRepository appTableRepository;
 
     @Override
-    public Notification createNotification(NotificationDto notificationDto)
-    {
+    public Notification createNotification(NotificationDto notificationDto) {
         Notification notification = new Notification();
 
         notification.setAppTable(notificationDto.getAppTable());
@@ -37,5 +36,21 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationRepository.save(notification);
     }
+
+    @Override
+    public List<Notification> getAllNotificationsByRestaurantId(int restaurantId) {
+        List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
+        List<Notification> notifications = notificationRepository.findAllAppTableIdIn();
+
+        for(AppTable appTable: appTables) {
+            Notification notification = new Notification();
+
+
+        }
+
+        // List<Notification> notifications
+        return notifications;
+    }
+
 
 }
