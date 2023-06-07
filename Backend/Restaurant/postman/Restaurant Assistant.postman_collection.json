@@ -3,40 +3,67 @@
 		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
 		"name": "Restaurant Assistant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27618519",
-		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
+		"_exporter_id": "27755902",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27755902&source=collection_link"
 	},
 	"item": [
 		{
 			"name": "Notification",
 			"item": [
 				{
-					"name": "getAllNotifications Copy",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "createNotification Copy",
+					"name": "createNotification",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"time\": \"2023-06-05T07:44:54.512+00:00\",\n    \"requestType\": \"Menu\"\n    \"message\": \"this is a message\",\n    \"approved\": false\n}"
+							"raw": "{\n  \"appTable\": {\n  \"id\": 3,\n  \"tableNumber\": 1,\n  \"qr\": {\n    \"id\": 1\n  },\n  \"occupied\": true,\n  \"restaurant\": {\n    \"id\": 1,\n    \"name\": \"marti\",\n    \"tablesCount\": 1,\n    \"address\": \"marti\",\n    \"phoneNumber1\": \"marti\",\n    \"phoneNumber2\": \"marti\",\n    \"phoneNumber3\": \"marti\",\n    \"active\": true\n  },\n  \"capacity\": 1,\n  \"isVirtualTable\": false,\n  \"active\": true\n},\n\"appUser\": {\n  \"id\": 5,\n  \"email\": \"hrisi\",\n  \"name\": \"hrisi\",\n  \"surname\": \"hrisi\",\n  \"blacklisted\": false,\n  \"active\": true\n},\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "localhost:8080/new-notification",
+							"raw": "localhost:8080/notification/create",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"new-notification"
+								"notification",
+								"create"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "findNotificationByRestaurantId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notification/all/restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"all",
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllNotificationsByTableId",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				},
@@ -77,26 +104,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "findNotificationById Copy",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080//notification/{id}",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"",
-								"notification",
-								"{id}"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -126,6 +133,26 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scanned QrCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/qrcode/iLH8IyDPDa7vq4NdEzcKbA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"qrcode",
+								"iLH8IyDPDa7vq4NdEzcKbA"
+							]
+						},
+						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
 					},
 					"response": []
 				}
@@ -193,14 +220,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/1/tables/all",
+							"raw": "localhost:8080/tables/2/all",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"1",
 								"tables",
+								"2",
 								"all"
 							]
 						}
@@ -222,15 +249,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/1/tables/create",
+							"raw": "localhost:8080/7/tables",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"1",
-								"tables",
-								"create"
+								"7",
+								"tables"
 							]
 						}
 					},
@@ -243,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": true\r\n}",
+							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,15 +277,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/2/tables/13",
+							"raw": "localhost:8080/tables/2/10",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"2",
 								"tables",
-								"13"
+								"2",
+								"10"
 							]
 						}
 					},
@@ -271,15 +297,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/2/tables/12",
+							"raw": "localhost:8080/tables/2/13",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"2",
 								"tables",
-								"12"
+								"2",
+								"13"
 							]
 						}
 					},
@@ -368,6 +394,14 @@
 					"response": []
 				},
 				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
 					"name": "Delete User By Id",
 					"request": {
 						"method": "DELETE",
@@ -382,6 +416,118 @@
 							"path": [
 								"user",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Get restaurants by ID Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurant/1,2,3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"1,2,3"
+							],
+							"query": [
+								{
+									"key": "restaurantIds",
+									"value": "1,2,3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all restaurants Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Restaurant Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"happy\",\r\n    \"tablesCount\":50,\r\n    \"address\":\"mladost 00\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a restaurant Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"5"
 							]
 						}
 					},
