@@ -3,20 +3,26 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
-    //  private final AppTableRepository appTableRepository;
+    private final AppTableRepository appTableRepository;
+
     @Override
     public Notification createNotification(NotificationDto notificationDto)
     {
@@ -27,10 +33,9 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setRequestType(notificationDto.getRequestType());
         notification.setMessage(notificationDto.getMessage());
         notification.setApproved(notificationDto.isApproved());
-        notification.setCreatedAt(OffsetDateTime.now());
+        notification.setCreatedAt(Instant.now());
 
         return notificationRepository.save(notification);
     }
-
 
 }
