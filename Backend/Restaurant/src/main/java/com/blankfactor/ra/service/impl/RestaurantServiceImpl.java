@@ -36,7 +36,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDto updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
-        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
+        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new Exception("Restaurant with id " + restaurantId + " not found"));
 
         modelMapper.map(updatedRestaurant, existingRestaurant);
 
