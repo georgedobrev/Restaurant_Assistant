@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import styles from "./users.module.css";
-import gridColumns from "./DataGrid";
-import AddUser from "./AddUser";
+import gridCol from "./DataGrid";
 import rows from "./data";
+import AddRestaurant from "./AddRestaurant";
+import styles from "./restaurant.module.css";
 
 interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
-  email: string;
+  name: string;
+  tables_count: string;
+  address: string;
+  phone_number_1: string;
 }
 
-const Users = (): JSX.Element => {
+const Restaurant = (): JSX.Element => {
   const [clickedRow, setClickedRow] = useState<User | undefined>();
 
   const onButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>,
     row: User
   ): void => {
+    e.stopPropagation();
     setClickedRow(row);
   };
 
-  const columns = gridColumns(onButtonClick);
+  const columns = gridCol(onButtonClick);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -41,9 +42,9 @@ const Users = (): JSX.Element => {
   }, []);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div>
       <div className={isMobile ? styles.dataGridMobile : styles.dataGrid}>
-        <p className={styles.title}>Employees data table</p>
+        <p className={styles.title}>Restaurants data table</p>
         <DataGrid
           sx={{
             boxShadow: 2,
@@ -57,9 +58,9 @@ const Users = (): JSX.Element => {
           columns={columns}
         />
       </div>
-      <AddUser />
+      <AddRestaurant />
     </div>
   );
 };
 
-export default Users;
+export default Restaurant;

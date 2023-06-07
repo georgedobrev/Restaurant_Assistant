@@ -1,0 +1,75 @@
+.dataGrid {
+  width: 70%;
+  margin-left: 20%;
+  margin-top: 4%;
+}
+
+.dataGridMobile {
+  width: 100%;
+  margin-top: 10%;
+}
+
+.container {
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.user-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0 6px 0;
+}
+
+.flex-column {
+  flex: 1;
+  padding-right: 8%;
+}
+
+.button-container {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .user-details {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-details {
+    flex-direction: column;
+  }
+
+  .user-details > div {
+    width: 100%;
+  }
+}
+
+.container .buttonSection {
+  display: flex;
+  margin-bottom: 2rem;
+  width: 20%;
+}
+
+.newUser {
+  color: var(--black-color-);
+  font-family: "MarckScripts", sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.title {
+  font-family: "MarckScripts", sans-serif;
+  color: var(--black-color-);
+  font-weight: 600;
+  padding: 1rem;
+  font-size: 2.5rem;
+  margin: 0 10px;
+}
