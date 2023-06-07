@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service;
 
 
+import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.google.zxing.WriterException;
@@ -19,5 +20,5 @@ public interface QRCodeService {
 
     Resource downloadQRCodes(Integer restaurantId, List<Integer> tableNumbers) throws IOException;
 
-    int[] getRestaurantIdAndTableNumberFromHashedUrl(String hashedURL) throws Exception;
+    AppTableDto getQrCodeInfo(String hashedURL) throws Exception;
 }

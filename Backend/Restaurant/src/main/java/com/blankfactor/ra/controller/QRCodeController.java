@@ -1,6 +1,7 @@
 package com.blankfactor.ra.controller;
 
 
+import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.service.QRCodeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -14,13 +15,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/qrcode")
 @AllArgsConstructor
 public class QRCodeController {
 
     private final QRCodeService qrCodeService;
 
-    @PostMapping("/{restaurantId}/qrcode/download")
+    @PostMapping("/download/{restaurantId}")
     public ResponseEntity<Resource> downloadQRCodes(@PathVariable("restaurantId") Integer restaurantId,
                                                     @RequestParam("ids") List<Integer> tableNumbers) throws Exception {
 
@@ -37,8 +38,8 @@ public class QRCodeController {
     }
 
     @GetMapping("/{hashedURL}")
-    public ResponseEntity<int[]> getQRCodeInfo(@PathVariable("hashedURL") String hashedURL) throws Exception {
-        int[] response = qrCodeService.getRestaurantIdAndTableNumberFromHashedUrl(hashedURL);
+    public ResponseEntity<AppTableDto> getQRCodeInfo(@PathVariable("hashedURL") String hashedURL) throws Exception {
+        AppTableDto response = qrCodeService.getQrCodeInfo(hashedURL);
 
         return ResponseEntity.ok(response);
     }
