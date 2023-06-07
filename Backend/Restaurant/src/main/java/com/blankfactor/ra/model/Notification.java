@@ -3,6 +3,9 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+
 @Data
 @Entity
 @Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
@@ -28,4 +31,7 @@ public class Notification {
 
     @Column(name = "approved")
     private Boolean approved;
+
+    @Column(name = "created_at")
+    private OffsetDateTime createdAt;
 }
