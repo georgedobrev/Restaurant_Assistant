@@ -7,11 +7,13 @@ import Restaurant from "./screens/admin/Restaurant.tsx/Restaurant";
 import Tables from "./screens/admin/Tables/Tables";
 import Transactions from "./screens/admin/Transactions/Transactions";
 import Users from "./screens/admin/Users/Users";
+import Customer from "./screens/customer/Customer";
 
 function App() {
   return (
     <div>
-      <Sidebar />
+      <Customer />
+      {/* <Sidebar />
 
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
@@ -20,7 +22,7 @@ function App() {
         <Route path="/tables" element={<Tables />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/transactions" element={<Transactions />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
