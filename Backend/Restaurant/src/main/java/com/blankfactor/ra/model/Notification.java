@@ -3,6 +3,9 @@ package com.blankfactor.ra.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+
 @Data
 @Entity
 @Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
@@ -12,11 +15,11 @@ public class Notification {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_table_id", nullable = false)
     private AppTable appTable;
 
@@ -28,4 +31,7 @@ public class Notification {
 
     @Column(name = "approved")
     private Boolean approved;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
 }
