@@ -31,18 +31,16 @@ public class AppTableServiceImpl implements AppTableService {
     public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) throws Exception {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        List<AppTable> tables = appTables.stream()
-                .peek(t -> t.setRestaurant(restaurant))
-                .collect(Collectors.toList());
+        appTables.forEach(t -> t.setRestaurant(restaurant));
 
         try {
-            qrCodeService.createQRCodesForTables(restaurant, tables);
+            qrCodeService.createQRCodesForTables(restaurant, appTables);
         } catch (IOException | WriterException e) {
             throw new RuntimeException(e);
         }
 
-        appTableRepository.saveAll(tables);
-        return tables;
+        appTableRepository.saveAll(appTables);
+        return appTables;
     }
 
     @Override
