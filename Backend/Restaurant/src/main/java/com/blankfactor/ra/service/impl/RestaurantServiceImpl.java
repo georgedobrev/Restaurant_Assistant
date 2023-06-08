@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.RestaurantDto;
+import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.RestaurantService;
@@ -35,8 +36,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
-        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new Exception("Restaurant with id " + restaurantId + " not found"));
+    public RestaurantDto updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) {
+        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
 
         modelMapper.map(updatedRestaurant, existingRestaurant);
 
@@ -44,7 +46,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant getRestaurantById(Integer restaurantId) throws Exception {
-        return restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
+    public Restaurant getRestaurantById(Integer restaurantId) {
+        return restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
     }
 }

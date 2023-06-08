@@ -7,12 +7,9 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
         List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
         List<Integer> appTableIds = new ArrayList<>();
 
-        for(AppTable appTable: appTables) {
+        for (AppTable appTable : appTables) {
             appTableIds.add(appTable.getId());
         }
 

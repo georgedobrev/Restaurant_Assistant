@@ -1,4 +1,4 @@
-package com.blankfactor.ra.exceptions;
+package com.blankfactor.ra.exceptions.custom;
 
 public class UserException extends RuntimeException {
     public UserException(String exMessage, Exception exception) {

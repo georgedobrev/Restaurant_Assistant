@@ -1,4 +1,4 @@
-package com.blankfactor.ra.exceptions;
+package com.blankfactor.ra.exceptions.custom;
 
 public class RoleException extends RuntimeException {
     public RoleException(String exMessage, Exception exception) {

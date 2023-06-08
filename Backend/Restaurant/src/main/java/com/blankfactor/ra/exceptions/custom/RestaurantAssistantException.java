@@ -1,4 +1,4 @@
-package com.blankfactor.ra.exceptions;
+package com.blankfactor.ra.exceptions.custom;
 
 public class RestaurantAssistantException extends RuntimeException {
     public RestaurantAssistantException(String exMessage, Exception exception) {
