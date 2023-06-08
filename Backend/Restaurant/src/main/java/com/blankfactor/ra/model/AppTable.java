@@ -21,7 +21,7 @@ public class AppTable {
     @Column(name = "table_number")
     private int tableNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 

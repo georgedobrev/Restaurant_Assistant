@@ -9,5 +9,7 @@ public interface NotificationService {
 
     Notification createNotification(NotificationDto notificationDto);
 
-    List<Notification> getAllNotificationsByRestaurantId(int restaurantId);
+    List<Notification> getAllNotificationsByRestaurantId(int restaurantId); //?
+
+    List<Notification> getAllNotificationsByTableId(int tableId);
 }

@@ -40,16 +40,19 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<Notification> getAllNotificationsByRestaurantId(int restaurantId) {
         List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
-        List<Notification> notifications = notificationRepository.findAllAppTableIdIn();
+        List<Integer> appTableIds = new ArrayList<>();
 
         for(AppTable appTable: appTables) {
-            Notification notification = new Notification();
-
-
+            appTableIds.add(appTable.getId());
         }
 
-        // List<Notification> notifications
-        return notifications;
+        return notificationRepository.findAllByAppTableIdIn(appTableIds);
+    }
+
+    @Override
+    public List<Notification> getAllNotificationsByTableId(int tableId) {
+
+        return notificationRepository.findAllByAppTableId(tableId);
     }
 
 
