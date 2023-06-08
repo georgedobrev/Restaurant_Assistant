@@ -12,4 +12,10 @@ public interface NotificationService {
     List<Notification> getAllNotificationsByRestaurantId(int restaurantId); //?
 
     List<Notification> getAllNotificationsByTableId(int tableId);
+
+    Notification updateNotification(int notificationId);
+
+    void deleteNotification(int notificationId) throws Exception;
+
+    void deleteAllNotificationsByTableId(int tableId);
 }

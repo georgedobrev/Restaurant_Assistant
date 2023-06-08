@@ -6,6 +6,7 @@ import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -15,6 +16,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -53,6 +55,35 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> getAllNotificationsByTableId(int tableId) {
 
         return notificationRepository.findAllByAppTableId(tableId);
+    }
+
+    @Override
+    public Notification updateNotification(int notificationId) {
+        Notification notification = notificationRepository.findById(notificationId).get();//.getReferenceById(notificationId);
+
+        if(notification.getApproved())
+        {
+            notification.setApproved(false);
+        } else if (!notification.getApproved())
+        {
+            notification.setApproved(true);
+        }
+        notification.setApproved(notification.getApproved());
+        System.out.println(notification.getApproved());
+
+        return notification;
+    }
+
+    @Transactional
+    @Override
+    public void deleteNotification(int notificationId) throws Exception {
+        notificationRepository.deleteNotificationById(notificationId);
+
+    }
+
+    @Override
+    public void deleteAllNotificationsByTableId(int tableId) {
+        notificationRepository.deleteAllByAppTableId(tableId);
     }
 
 
