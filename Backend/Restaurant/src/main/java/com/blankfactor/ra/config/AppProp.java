@@ -8,7 +8,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Getter
-public class AppConfig {
+public class AppProp {
+    @Value("${application.security.jwtSecretKey}")
+    private String secretKey;
+
+    @Value("${application.security.jwtExpirationMs}")
+    private long jwtExpiration;
+
+    @Value("${application.security.jwtRefreshExpiration}")
+    private long jwtRefreshExpiration;
+
     @Value("${base.url}")
     private String baseUrl;
 

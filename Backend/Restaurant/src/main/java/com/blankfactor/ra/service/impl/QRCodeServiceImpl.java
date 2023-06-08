@@ -1,6 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.config.AppConfig;
+import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
@@ -13,7 +13,6 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ import java.util.zip.ZipOutputStream;
 public class QRCodeServiceImpl implements QRCodeService {
 
     private final QrCodeRepository qrCodeRepository;
-    private final AppConfig appConfig;
+    private final AppProp appConfig;
     private final AppTableRepository appTableRepository;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
