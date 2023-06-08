@@ -24,7 +24,6 @@ public class AppTableServiceImpl implements AppTableService {
 
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
-    private final ModelMapper modelMapper;
     private final RestaurantService restaurantService;
 
     @Override
@@ -51,22 +50,24 @@ public class AppTableServiceImpl implements AppTableService {
     }
 
     @Override
-    public List<AppTableDto> getTablesByRestaurantId(Integer restaurantId) {
-        List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
-        return appTables.stream()
-                .map(appTable -> modelMapper.map(appTable, AppTableDto.class))
-                .collect(Collectors.toList());
+    public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
+        return appTableRepository.findByRestaurantId(restaurantId);
     }
 
     @Transactional
     @Override
-    public AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception {
+    public AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception {
         AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
 
-        modelMapper.map(updatedTableDto, existingTable);
+        existingTable.setTableNumber(updatedTableDto.getTableNumber());
+        existingTable.setOccupied(updatedTableDto.isOccupied());
+        existingTable.setCapacity(updatedTableDto.getCapacity());
+        existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
+        existingTable.setActive(updatedTableDto.isActive());
+
         appTableRepository.save(existingTable);
 
-        return modelMapper.map(existingTable, AppTableDto.class);
+        return existingTable;
     }
 
     @Override

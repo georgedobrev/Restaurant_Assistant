@@ -17,7 +17,6 @@ import java.util.List;
 public class AppTableController {
 
     private final AppTableService appTableService;
-    private final RestaurantService restaurantService;
 
     @PostMapping()
     public ResponseEntity<List<AppTable>> createTable(@PathVariable("restaurantId") Integer restaurantId,
@@ -35,21 +34,21 @@ public class AppTableController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AppTableDto>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
-        List<AppTableDto> appTables = appTableService.getTablesByRestaurantId(restaurantId);
+    public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
+        List<AppTable> appTables = appTableService.getTablesByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(appTables);
     }
 
     @PutMapping("/{tableNumber}")
-    public ResponseEntity<AppTableDto> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) throws Exception {
-        AppTableDto updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
+    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) throws Exception {
+        AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
         return ResponseEntity.ok(updatedTable);
     }
 
     @DeleteMapping("/{tableNumber}")
-    public ResponseEntity removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
+    public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
         appTableService.removeTableByName(restaurantId, tableNumber);
         return ResponseEntity.ok().build();
     }

@@ -14,17 +14,4 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
     @Value("${base.url}")
     private String baseUrl;
-
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-
-        modelMapper.createTypeMap(UserDto.class, AppUser.class)
-                .addMappings(mapper -> mapper.skip(AppUser::setId));
-
-        modelMapper.createTypeMap(UpdateUserDto.class, AppUser.class)
-                .addMappings(mapper -> mapper.skip(AppUser::setId));
-
-        return modelMapper;
-    }
 }

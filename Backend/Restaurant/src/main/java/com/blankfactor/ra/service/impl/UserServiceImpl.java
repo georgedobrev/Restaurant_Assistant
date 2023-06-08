@@ -13,7 +13,6 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +25,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public AppUser createUser(UserDto userDto) {
-        AppUser appUser = new AppUser();
-
-        modelMapper.map(userDto, appUser);
+        AppUser appUser = AppUser.builder()
+                .email(userDto.getEmail())
+                .name(userDto.getName())
+                .surname(userDto.getSurname())
+                .build();
 
         AppUser savedAppUser = userRepository.save(appUser);
 
@@ -51,33 +51,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser getUserById(int id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
+    public AppUser getUserById(int userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
     }
 
     @Transactional
     @Override
-    public AppUser updateUserById(int id, UpdateUserDto updateUserDto) {
-        AppUser appUserToUpdate = userRepository.findById(id)
-                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
-
-        Restaurant restaurant = restaurantRepository.findById(updateUserDto.getRestaurantId())
-                .orElseThrow(() -> new RestaurantException("Restaurant with id " + updateUserDto.getRestaurantId() + " not found"));
+    public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
+        AppUser appUserToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
         UserRole userRoleToDelete = userRoleRepository
-                .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, restaurant, updateUserDto.getRoleType())
+                .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), updateUserDto.getRoleType())
                 .orElseThrow(() -> new UserException("No such record in UserRole table"));
 
         userRoleRepository.delete(userRoleToDelete);
 
-        modelMapper.map(updateUserDto, appUserToUpdate);
+        appUserToUpdate.setEmail(updateUserDto.getEmail());
+        appUserToUpdate.setName(updateUserDto.getName());
+        appUserToUpdate.setSurname(updateUserDto.getSurname());
 
         userRepository.save(appUserToUpdate);
 
         UserRole userRoleToUpdate = UserRole.builder()
                 .appUser(appUserToUpdate)
-                .restaurant(restaurant)
+                .restaurant(updateUserDto.getRestaurant())
                 .roleType(updateUserDto.getRoleAfter())
                 .build();
 
@@ -88,6 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(int id) {
+        // admin, waiter or user
         AppUser appUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User with id " + id + " not found"));
 
@@ -98,17 +98,14 @@ public class UserServiceImpl implements UserService {
         }
 
         userRoleRepository.deleteAll(userRoles);
-        userRepository.delete(appUser);
+        userRepository.deleteById(id);
     }
 
     private AppUser assignUserRole(UserDto userDto, AppUser appUser) {
-        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurantId())
-                .orElseThrow(() -> new RestaurantException("Restaurant with id " + userDto.getRestaurantId() + " not found"));
-
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
                 .roleType(userDto.getRoleType())
-                .restaurant(restaurant)
+                .restaurant(userDto.getRestaurant())
                 .build();
 
         userRoleRepository.save(userRole);
