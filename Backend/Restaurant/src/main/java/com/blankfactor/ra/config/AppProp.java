@@ -13,11 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "ra.app")
 public class AppProp {
     private String jwtSecret;
-
     private long jwtExpiration;
-
     private long jwtRefreshExpiration;
-
     private String baseUrl;
 
     @Bean
