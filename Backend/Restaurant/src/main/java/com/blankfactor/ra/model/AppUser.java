@@ -29,12 +29,15 @@ public class AppUser {
     @Column(name = "surname")
     private String surname;
 
+    @Builder.Default
     @Column(name = "blacklisted")
     private Boolean blacklisted = false;
 
+    @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
 
+    @Builder.Default
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 }

@@ -6,7 +6,6 @@ import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.UserRole;
-import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
@@ -14,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,15 +21,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
-    private final RestaurantRepository restaurantRepository;
 
     @Override
     public AppUser createUser(UserDto userDto) {
-        AppUser appUser = new AppUser();
-
-        appUser.setEmail(userDto.getEmail());
-        appUser.setName(userDto.getName());
-        appUser.setSurname(userDto.getSurname());
+        AppUser appUser = AppUser.builder()
+                .email(userDto.getEmail())
+                .name(userDto.getName())
+                .surname(userDto.getSurname())
+                .build();
 
         AppUser savedAppUser = userRepository.save(appUser);
 
@@ -86,11 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(int id) {
-        // admin, waiter or user
-        AppUser appUser = userRepository.findById(id)
-                .orElseThrow(() -> new UserException("User with id " + id + " not found"));
-
-        List<UserRole> userRoles = userRoleRepository.findByAppUser(appUser);
+        List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
 
         if (userRoles.isEmpty()) {
             throw new UserException("UserRoles not found for User with id " + id);
