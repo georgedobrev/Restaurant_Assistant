@@ -1,6 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.config.AppConfig;
+import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
@@ -33,7 +33,7 @@ import java.util.zip.ZipOutputStream;
 public class QRCodeServiceImpl implements QRCodeService {
 
     private final QrCodeRepository qrCodeRepository;
-    private final AppConfig appConfig;
+    private final AppProp appProp;
     private final AppTableRepository appTableRepository;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
@@ -46,7 +46,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws IOException, WriterException, NoSuchAlgorithmException {
         List<QrCode> listOfQRCodes = new ArrayList<>();
 
-        String baseUrl = appConfig.getBaseUrl() + "/qrcode";
+        String baseUrl = appProp.getBaseUrl() + "/qrcode";
 
         for (AppTable table : appTables) {
             String originalURL = restaurant.getId() + "/?table=" + table.getTableNumber();
