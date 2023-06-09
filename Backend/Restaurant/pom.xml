@@ -98,7 +98,6 @@
             <artifactId>modelmapper</artifactId>
             <version>RELEASE</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -117,5 +116,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
