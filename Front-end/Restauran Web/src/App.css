@@ -6,11 +6,12 @@
 
 :root {
   --header-height: 3rem;
-  --nav-width: 68px;
+  --nav-width: 4rem;
   --primary-color: #ecd282;
   --second-color: #ff8400;
   --brown-color: #1c1c1c;
   --buttons-color: #011936;
+  --dataGrid-color: #c1c1c1;
   --input-fields-color: #fffcf6;
 
   background-color: var(--input-fields-color);
