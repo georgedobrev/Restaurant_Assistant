@@ -1,4 +1,12 @@
-const rows = [
+interface rowsRestaurant {
+  id: number;
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+}
+
+const rows: rowsRestaurant[] = [
   {
     id: 1,
     firstName: "Martin",

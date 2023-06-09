@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import gridCol from "./DataGrid";
-import rows from "./data";
+import { mobileBreakPoint } from "../../mobileBreakPoint";
 import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
+import gridCol from "./DataGrid";
+import rows from "./mockData";
 
 interface User {
   id: number;
@@ -12,8 +13,7 @@ interface User {
   address: string;
   phone_number_1: string;
 }
-
-const Restaurant = (): JSX.Element => {
+const Restaurant = () => {
   const [clickedRow, setClickedRow] = useState<User | undefined>();
 
   const onButtonClick = (
@@ -30,7 +30,7 @@ const Restaurant = (): JSX.Element => {
 
   useEffect(() => {
     const handleResize = (): void => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= mobileBreakPoint);
     };
 
     window.addEventListener("resize", handleResize);

@@ -1,18 +1,17 @@
-import { TextField } from "@mui/material";
-import { Button, Box } from "@mui/material";
+import { Button, Box, TextField } from "@mui/material";
 import styles from "./restaurant.module.css";
 
 const AddRestaurant = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.newRestaurant}>Add new restaurant</h2>
+      <h2 className={styles.newRestaurant}>Add restaurant</h2>
 
       <form>
-        <div className={styles["user-details"]}>
-          <div className={styles["flex-column"]}>
+        <div className={styles.userDetails}>
+          <div className={styles.flexColumn}>
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 label="Restaurant Name"
                 variant="outlined"
                 size="small"
@@ -24,7 +23,7 @@ const AddRestaurant = () => {
 
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 id="filled-basic"
                 label="Tables Count"
                 variant="outlined"
@@ -37,7 +36,7 @@ const AddRestaurant = () => {
 
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 id="filled-basic"
                 label="Phone Number"
                 variant="outlined"
@@ -49,10 +48,10 @@ const AddRestaurant = () => {
             </Box>
           </div>
 
-          <div className={styles["flex-column"]}>
+          <div className={styles.flexColumn}>
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 id="filled-basic"
                 label="Address"
                 variant="outlined"
@@ -67,7 +66,7 @@ const AddRestaurant = () => {
 
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 id="filled-basic"
                 label="Email Address"
                 variant="outlined"
@@ -80,7 +79,7 @@ const AddRestaurant = () => {
 
             <Box marginBottom={"4%"}>
               <TextField
-                className={styles.userInputs}
+                className={styles.inputFields}
                 id="filled-basic"
                 label="Phone Number 2"
                 variant="outlined"
@@ -94,16 +93,11 @@ const AddRestaurant = () => {
             </Box>
           </div>
         </div>
-        <div className={styles["flex-column"]}>
+        <div className={styles.flexColumn}>
           <Button
+            className={styles.button}
+            style={{ background: "var(--primary-color)" }}
             variant="contained"
-            style={{
-              backgroundColor: "var(--primary-color)",
-              color: "var(--brown-color)",
-              fontWeight: "bold",
-              fontSize: "12px",
-            }}
-            fullWidth
           >
             Add Restaurant
           </Button>

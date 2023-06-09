@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "./users.module.css";
+import { mobileBreakPoint } from "../../mobileBreakPoint";
 import gridColumns from "./DataGrid";
 import AddUser from "./AddUser";
-import rows from "./data";
+import rows from "./mockData";
 
 interface User {
   id: number;
@@ -13,7 +14,7 @@ interface User {
   email: string;
 }
 
-const Users = (): JSX.Element => {
+const Users = () => {
   const [clickedRow, setClickedRow] = useState<User | undefined>();
 
   const onButtonClick = (
@@ -29,7 +30,7 @@ const Users = (): JSX.Element => {
 
   useEffect(() => {
     const handleResize = (): void => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= mobileBreakPoint);
     };
 
     window.addEventListener("resize", handleResize);

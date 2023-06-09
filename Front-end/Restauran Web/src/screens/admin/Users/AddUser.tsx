@@ -1,18 +1,7 @@
-import { TextField } from "@mui/material";
-import { Button, Box } from "@mui/material";
+import { Button, Box, TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import styles from "./users.module.css";
-
-const roles = [
-  {
-    value: "admin",
-    label: "admin",
-  },
-  {
-    value: "waiter",
-    label: "waiter",
-  },
-];
+import { Role, roles } from "./rolesData";
 
 const AddUser = () => {
   return (
@@ -20,10 +9,11 @@ const AddUser = () => {
       <h2 className={styles.newUser}>Add new user</h2>
 
       <form>
-        <div className={styles["user-details"]}>
-          <div className={styles["flex-column"]}>
+        <div className={styles.userDetails}>
+          <div className={styles.flexColumn}>
             <Box marginBottom={"4%"}>
               <TextField
+                className={styles.inputFields}
                 label="Enter Name"
                 variant="outlined"
                 size="small"
@@ -35,6 +25,7 @@ const AddUser = () => {
 
             <Box marginBottom={"4%"}>
               <TextField
+                className={styles.inputFields}
                 label="Enter Surname"
                 variant="outlined"
                 size="small"
@@ -45,9 +36,10 @@ const AddUser = () => {
             </Box>
           </div>
 
-          <div className={styles["flex-column"]}>
+          <div className={styles.flexColumn}>
             <Box marginBottom={"1%"}>
               <TextField
+                className={styles.inputFields}
                 label="Enter Email"
                 variant="outlined"
                 size="small"
@@ -66,6 +58,7 @@ const AddUser = () => {
               autoComplete="off"
             >
               <TextField
+                className={styles.inputFields}
                 select
                 size="small"
                 label="Select"
@@ -74,7 +67,7 @@ const AddUser = () => {
                 helperText="Please select role"
                 style={{ width: "100%", marginLeft: 0 }}
               >
-                {roles.map((option) => (
+                {roles.map((option: Role) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -83,17 +76,12 @@ const AddUser = () => {
             </Box>
           </div>
         </div>
-        <div className={styles["flex-column"]}>
+
+        <div className={styles.flexColumn}>
           <Button
             variant="contained"
-            style={{
-              backgroundColor: "var(--primary-color)",
-              color: "var(--brown-color)",
-              fontWeight: "bold",
-              fontSize: "12px",
-              width: "46%",
-              alignContent: "center",
-            }}
+            className={styles.button}
+            style={{ background: "var(--primary-color)" }}
           >
             Add User
           </Button>
