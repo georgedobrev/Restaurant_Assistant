@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
@@ -52,5 +53,23 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findAllByAppTableId(tableId);
     }
 
+    @Override
+    public Notification updateNotification(int notificationId) throws Exception {
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new Exception("Notification"));
 
+        notification.setApproved(!notification.getApproved());
+        notification.setApproved(notification.getApproved());
+
+        return notificationRepository.save(notification);
+    }
+
+    @Override
+    public void deleteById(int notificationId) {
+        notificationRepository.deleteNotificationById(notificationId);
+    }
+
+    @Override
+    public void deleteAllNotificationsByTableId(int tableId) {
+        notificationRepository.deleteAllByAppTableId(tableId);
+    }
 }

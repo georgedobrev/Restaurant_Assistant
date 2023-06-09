@@ -2,18 +2,19 @@ package com.blankfactor.ra.service.impl;
 
 
 import com.blankfactor.ra.dto.AppTableDto;
-import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.RestaurantService;
+import com.google.zxing.WriterException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,15 +32,19 @@ public class AppTableServiceImpl implements AppTableService {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
         appTables.forEach(t -> t.setRestaurant(restaurant));
-        qrCodeService.createQRCodesForTables(restaurant, appTables);
-        appTableRepository.saveAll(appTables);
-        return appTables;
+
+        try {
+            qrCodeService.createQRCodesForTables(restaurant, appTables);
+        } catch (IOException | WriterException e) {
+            throw new RuntimeException(e);
+        }
+
+        return appTableRepository.saveAll(appTables);
     }
 
     @Override
-    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) throws AppTableException {
-        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                .orElseThrow(() -> new AppTableException("Table with number " + tableNumber + " and restaurant id " + restaurantId + " not found"));
+    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) throws Exception {
+        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + " not found"));
     }
 
     @Override
@@ -52,9 +57,8 @@ public class AppTableServiceImpl implements AppTableService {
 
     @Transactional
     @Override
-    public AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws AppTableException {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                .orElseThrow(() -> new AppTableException("Table with number " + tableNumber + " and restaurant id " + restaurantId + " not found"));
+    public AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception {
+        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + "not found"));
 
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
@@ -67,9 +71,8 @@ public class AppTableServiceImpl implements AppTableService {
     }
 
     @Override
-    public void removeTableByName(Integer restaurantId, Integer tableNumber) throws AppTableException {
-        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                .orElseThrow(() -> new AppTableException("Table with number " + tableNumber + " and restaurant id " + restaurantId + " not found"));
+    public void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception {
+        AppTable existingTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(() -> new Exception("Table with number " + tableNumber + " and " + "restaurant id " + restaurantId + "not found"));
         appTableRepository.delete(existingTable);
     }
 }
