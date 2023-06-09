@@ -3,7 +3,7 @@ import MenuItem from "@mui/material/MenuItem";
 import styles from "./users.module.css";
 import { Role, roles } from "./rolesData";
 
-const AddUser = () => {
+const AddUser: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.newUser}>Add new user</h2>
@@ -78,11 +78,7 @@ const AddUser = () => {
         </div>
 
         <div className={styles.flexColumn}>
-          <Button
-            variant="contained"
-            className={styles.button}
-            style={{ background: "var(--primary-color)" }}
-          >
+          <Button variant="contained" className={styles.button}>
             Add User
           </Button>
         </div>

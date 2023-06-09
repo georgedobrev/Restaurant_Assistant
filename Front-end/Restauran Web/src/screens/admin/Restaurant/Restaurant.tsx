@@ -3,8 +3,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { mobileBreakPoint } from "../../mobileBreakPoint";
 import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
-import gridCol from "./DataGrid";
 import rows from "./mockData";
+import GridColumns from "./DataGrid";
 
 interface User {
   id: number;
@@ -13,7 +13,7 @@ interface User {
   address: string;
   phone_number_1: string;
 }
-const Restaurant = () => {
+const Restaurant: React.FC = () => {
   const [clickedRow, setClickedRow] = useState<User | undefined>();
 
   const onButtonClick = (
@@ -24,7 +24,7 @@ const Restaurant = () => {
     setClickedRow(row);
   };
 
-  const columns = gridCol(onButtonClick);
+  const columns = GridColumns(onButtonClick);
 
   const [isMobile, setIsMobile] = useState(false);
 

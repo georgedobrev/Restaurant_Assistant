@@ -1,7 +1,7 @@
 import { Button, Box, TextField } from "@mui/material";
 import styles from "./restaurant.module.css";
 
-const AddRestaurant = () => {
+const AddRestaurant: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.newRestaurant}>Add restaurant</h2>
@@ -94,11 +94,7 @@ const AddRestaurant = () => {
           </div>
         </div>
         <div className={styles.flexColumn}>
-          <Button
-            className={styles.button}
-            style={{ background: "var(--primary-color)" }}
-            variant="contained"
-          >
+          <Button className={styles.button} variant="contained">
             Add Restaurant
           </Button>
         </div>

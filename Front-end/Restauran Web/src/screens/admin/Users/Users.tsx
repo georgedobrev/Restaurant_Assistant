@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "./users.module.css";
 import { mobileBreakPoint } from "../../mobileBreakPoint";
-import gridColumns from "./DataGrid";
+import GridColumns from "./DataGrid";
 import AddUser from "./AddUser";
 import rows from "./mockData";
 
@@ -14,7 +14,7 @@ interface User {
   email: string;
 }
 
-const Users = () => {
+const Users: React.FC = () => {
   const [clickedRow, setClickedRow] = useState<User | undefined>();
 
   const onButtonClick = (
@@ -24,7 +24,7 @@ const Users = () => {
     setClickedRow(row);
   };
 
-  const columns = gridColumns(onButtonClick);
+  const columns = GridColumns(onButtonClick);
 
   const [isMobile, setIsMobile] = useState(false);
 

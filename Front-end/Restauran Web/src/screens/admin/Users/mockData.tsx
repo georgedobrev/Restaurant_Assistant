@@ -1,4 +1,4 @@
-interface rowsRestaurant {
+interface RowsRestaurant {
   id: number;
   firstName: string;
   lastName: string;
@@ -6,7 +6,7 @@ interface rowsRestaurant {
   email: string;
 }
 
-const rows: rowsRestaurant[] = [
+const rows: RowsRestaurant[] = [
   {
     id: 1,
     firstName: "Martin",
