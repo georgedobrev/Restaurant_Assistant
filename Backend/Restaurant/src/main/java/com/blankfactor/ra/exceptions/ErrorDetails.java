@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RAErrorResponse {
+public class ErrorDetails {
     String message;
     String details;
 }

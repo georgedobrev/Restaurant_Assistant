@@ -10,38 +10,38 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RestaurantException.class)
-    public ResponseEntity<RAErrorResponse> handleRestaurantNotFoundException(RestaurantException ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("Restaurant Not Found", ex.getMessage());
+    public ResponseEntity<ErrorDetails> handleRestaurantException(RestaurantException ex) {
+        ErrorDetails errorResponse = new ErrorDetails("Restaurant Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(AppTableNotFoundException.class)
-    public ResponseEntity<RAErrorResponse> handleAppTableNotFoundException(AppTableNotFoundException ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("App Table Not Found", ex.getMessage());
+    @ExceptionHandler(AppTableException.class)
+    public ResponseEntity<ErrorDetails> handleAppTableException(AppTableException ex) {
+        ErrorDetails errorResponse = new ErrorDetails("App Table Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(QRCodeException.class)
-    public ResponseEntity<RAErrorResponse> handleQRCodeException(QRCodeException ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("QR Code Error", ex.getMessage());
+    public ResponseEntity<ErrorDetails> handleQRCodeException(QRCodeException ex) {
+        ErrorDetails errorResponse = new ErrorDetails("QR Code Error", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<RAErrorResponse> handleUserException(UserException ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("User Not Found", ex.getMessage());
+    public ResponseEntity<ErrorDetails> handleUserException(UserException ex) {
+        ErrorDetails errorResponse = new ErrorDetails("User Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RoleException.class)
-    public ResponseEntity<RAErrorResponse> handleRoleException(RoleException ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("Role Not Found", ex.getMessage());
+    public ResponseEntity<ErrorDetails> handleRoleException(RoleException ex) {
+        ErrorDetails errorResponse = new ErrorDetails("Role Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<RAErrorResponse> handleException(Exception ex) {
-        RAErrorResponse errorResponse = new RAErrorResponse("Internal Server Error", ex.getMessage());
+    public ResponseEntity<ErrorDetails> handleException(Exception ex) {
+        ErrorDetails errorResponse = new ErrorDetails("Internal Server Error", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

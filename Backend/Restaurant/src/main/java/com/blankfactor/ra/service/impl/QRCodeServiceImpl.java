@@ -1,7 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.config.AppConfig;
-import com.blankfactor.ra.exceptions.custom.AppTableNotFoundException;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
@@ -100,7 +100,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public AppTable getTableFromQRHashUrl(String hashedUrl) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
-        AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableNotFoundException("No table with such QR code"));
+        AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
 
         return appTable;
     }
