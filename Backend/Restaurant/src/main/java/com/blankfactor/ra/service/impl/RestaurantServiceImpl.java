@@ -5,7 +5,6 @@ import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +13,18 @@ import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
-        Restaurant restaurant = new Restaurant();
-
-        modelMapper.map(restaurantDto, restaurant);
+        Restaurant restaurant = Restaurant.builder()
+                .name(restaurantDto.getName())
+                .tablesCount(restaurantDto.getTablesCount())
+                .address(restaurantDto.getAddress())
+                .phoneNumber1(restaurantDto.getPhoneNumber1())
+                .phoneNumber2(restaurantDto.getPhoneNumber2())
+                .phoneNumber3(restaurantDto.getPhoneNumber3())
+                .active(restaurantDto.getActive())
+                .build();
 
         return restaurantRepository.save(restaurant);
     }
@@ -36,12 +40,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
+    public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
         Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
 
-        modelMapper.map(updatedRestaurant, existingRestaurant);
+        existingRestaurant.setName(updatedRestaurant.getName());
+        existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
+        existingRestaurant.setAddress(updatedRestaurant.getAddress());
+        existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
+        existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
+        existingRestaurant.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
+        existingRestaurant.setActive(updatedRestaurant.getActive());
 
-        return modelMapper.map(restaurantRepository.save(existingRestaurant), RestaurantDto.class);
+        return restaurantRepository.save(existingRestaurant);
     }
 
     @Override

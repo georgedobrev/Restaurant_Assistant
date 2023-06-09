@@ -3,10 +3,8 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.enums.RoleType;
-import com.blankfactor.ra.exceptions.RestaurantException;
 import com.blankfactor.ra.exceptions.UserException;
 import com.blankfactor.ra.model.AppUser;
-import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
@@ -16,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,11 +27,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser createUser(UserDto userDto) {
-        AppUser appUser = AppUser.builder()
-                .email(userDto.getEmail())
-                .name(userDto.getName())
-                .surname(userDto.getSurname())
-                .build();
+        AppUser appUser = new AppUser();
+
+        appUser.setEmail(userDto.getEmail());
+        appUser.setName(userDto.getName());
+        appUser.setSurname(userDto.getSurname());
 
         AppUser savedAppUser = userRepository.save(appUser);
 
