@@ -3,7 +3,6 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.enums.RoleType;
-import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.UserRole;
