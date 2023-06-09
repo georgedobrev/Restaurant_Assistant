@@ -2,23 +2,20 @@ package com.blankfactor.ra.config;
 
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Getter
+@PropertySource("classpath:application.properties")
 public class AppProp {
-    @Value("${application.security.jwtSecretKey}")
-    private String secretKey;
+    private String jwtSecret;
 
-    @Value("${application.security.jwtExpirationMs}")
     private long jwtExpiration;
 
-    @Value("${application.security.jwtRefreshExpiration}")
     private long jwtRefreshExpiration;
 
-    @Value("${base.url}")
     private String baseUrl;
 
     @Bean
