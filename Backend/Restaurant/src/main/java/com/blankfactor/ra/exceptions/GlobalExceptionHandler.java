@@ -33,8 +33,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(RoleException.class)
-    public ResponseEntity<ExceptionResponse> handleRoleException(RoleException ex) {
+    @ExceptionHandler(UserRoleException.class)
+    public ResponseEntity<ExceptionResponse> handleUserRoleException(UserRoleException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Role Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
