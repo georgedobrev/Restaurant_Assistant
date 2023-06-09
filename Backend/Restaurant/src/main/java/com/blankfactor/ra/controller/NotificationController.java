@@ -41,19 +41,19 @@ public class NotificationController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId) {
+    public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId) throws Exception {
         Notification notification = notificationService.updateNotification(notificationId);
 
         return ResponseEntity.ok(notification);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteNotificationById(@PathVariable("id") int notificationId) throws Exception {
-        notificationService.deleteNotification(notificationId);
+        notificationService.deleteById(notificationId);
 
         return ResponseEntity.ok().build();
     }
 
-    @Transactional
+
     @DeleteMapping("/delete/all/{app_table_id}")
     public ResponseEntity<?> deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
         notificationService.deleteAllNotificationsByTableId(tableId);

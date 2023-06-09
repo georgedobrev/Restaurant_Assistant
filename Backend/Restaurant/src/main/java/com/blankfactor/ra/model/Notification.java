@@ -16,12 +16,10 @@ public class Notification {
     @Column(name = "id")
     private int id;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_table_id", nullable = false)
     private AppTable appTable;

@@ -13,9 +13,9 @@ public interface NotificationService {
 
     List<Notification> getAllNotificationsByTableId(int tableId);
 
-    Notification updateNotification(int notificationId);
+    Notification updateNotification(int notificationId) throws Exception;
 
-    void deleteNotification(int notificationId) throws Exception;
+    void deleteById(int notificationId) throws Exception;
 
     void deleteAllNotificationsByTableId(int tableId);
 }

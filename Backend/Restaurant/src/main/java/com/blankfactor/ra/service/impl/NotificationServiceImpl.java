@@ -58,25 +58,26 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notification updateNotification(int notificationId) {
-        Notification notification = notificationRepository.findById(notificationId).get();//.getReferenceById(notificationId);
+    public Notification updateNotification(int notificationId) throws Exception {
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(()-> new Exception("Notification"));
 
         if(notification.getApproved())
         {
             notification.setApproved(false);
-        } else if (!notification.getApproved())
+        } else
         {
             notification.setApproved(true);
         }
         notification.setApproved(notification.getApproved());
-        System.out.println(notification.getApproved());
+
+        notificationRepository.save(notification);
 
         return notification;
     }
 
     @Transactional
     @Override
-    public void deleteNotification(int notificationId) throws Exception {
+    public void deleteById(int notificationId) throws Exception {
         notificationRepository.deleteNotificationById(notificationId);
 
     }
