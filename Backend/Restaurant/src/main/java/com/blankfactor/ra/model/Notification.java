@@ -1,11 +1,9 @@
 package com.blankfactor.ra.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 
 @Data
 @Entity

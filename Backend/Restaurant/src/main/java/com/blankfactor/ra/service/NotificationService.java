@@ -9,13 +9,13 @@ public interface NotificationService {
 
     Notification createNotification(NotificationDto notificationDto);
 
-    List<Notification> getAllNotificationsByRestaurantId(int restaurantId); //?
+    List<Notification> getAllNotificationsByRestaurantId(int restaurantId);
 
     List<Notification> getAllNotificationsByTableId(int tableId);
 
     Notification updateNotification(int notificationId) throws Exception;
 
-    void deleteById(int notificationId) throws Exception;
+    void deleteById(int notificationId);
 
     void deleteAllNotificationsByTableId(int tableId);
 }

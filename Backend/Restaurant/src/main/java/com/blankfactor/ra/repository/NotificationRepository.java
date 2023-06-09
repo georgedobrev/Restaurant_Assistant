@@ -1,6 +1,5 @@
 package com.blankfactor.ra.repository;
 
-import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     List<Notification> findAllByAppTableId(Integer appTableId);
 
-    void deleteNotificationById (int notificationId);
+    void deleteNotificationById(int notificationId);
 
     void deleteAllByAppTableId(int tableId);
 }
