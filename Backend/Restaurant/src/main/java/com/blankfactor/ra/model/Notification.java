@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 
 @Data
 @Entity
@@ -34,4 +33,5 @@ public class Notification {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
 }

@@ -2,6 +2,7 @@ package com.blankfactor.ra.service.impl;
 
 
 import com.blankfactor.ra.dto.AppTableDto;
+import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
@@ -29,18 +30,15 @@ public class AppTableServiceImpl implements AppTableService {
     public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) throws Exception {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        List<AppTable> tables = appTables.stream()
-                .peek(t -> t.setRestaurant(restaurant))
-                .collect(Collectors.toList());
+        appTables.forEach(t -> t.setRestaurant(restaurant));
 
         try {
-            qrCodeService.createQRCodesForTables(restaurant, tables);
+            qrCodeService.createQRCodesForTables(restaurant, appTables);
         } catch (IOException | WriterException e) {
-            throw new RuntimeException(e);
+            throw new QRCodeException("Could not create QR codes");
         }
 
-        appTableRepository.saveAll(tables);
-        return tables;
+        return appTableRepository.saveAll(appTables);
     }
 
     @Override

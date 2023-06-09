@@ -7,14 +7,12 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -42,7 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
         List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
         List<Integer> appTableIds = new ArrayList<>();
 
-        for(AppTable appTable: appTables) {
+        for (AppTable appTable : appTables) {
             appTableIds.add(appTable.getId());
         }
 
@@ -55,5 +53,23 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findAllByAppTableId(tableId);
     }
 
+    @Override
+    public Notification updateNotification(int notificationId) throws Exception {
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new Exception("Notification"));
 
+        notification.setApproved(!notification.getApproved());
+        notification.setApproved(notification.getApproved());
+
+        return notificationRepository.save(notification);
+    }
+
+    @Override
+    public void deleteById(int notificationId) {
+        notificationRepository.deleteNotificationById(notificationId);
+    }
+
+    @Override
+    public void deleteAllNotificationsByTableId(int tableId) {
+        notificationRepository.deleteAllByAppTableId(tableId);
+    }
 }
