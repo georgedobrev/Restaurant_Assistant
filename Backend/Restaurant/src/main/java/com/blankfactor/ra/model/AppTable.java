@@ -21,14 +21,14 @@ public class AppTable {
     @Column(name = "table_number")
     private int tableNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
     @Column(name = "occupied")
     private boolean occupied;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
