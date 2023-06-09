@@ -39,8 +39,7 @@ public class AppTableServiceImpl implements AppTableService {
             throw new RuntimeException(e);
         }
 
-        appTableRepository.saveAll(appTables);
-        return appTables;
+        return appTableRepository.saveAll(appTables);
     }
 
     @Override
