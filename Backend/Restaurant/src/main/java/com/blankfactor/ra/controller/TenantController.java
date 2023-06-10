@@ -1,5 +1,6 @@
 package com.blankfactor.ra.controller;
 
+import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
@@ -18,21 +19,21 @@ public class TenantController {
     private final TenantService tenantService;
 
     @PostMapping("/create")
-    public ResponseEntity<Tenant> createTenant(@RequestBody Tenant tenant) {
-        Tenant createdTenant = tenantService.createTenant(tenant);
+    public ResponseEntity<Tenant> createTenant(@RequestBody TenantDto tenantDto) {
+        Tenant createdTenant = tenantService.createTenant(tenantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("id") int tenantId) throws Exception {
+    @PutMapping("/update/{tenant_id}")
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.updateTenant(tenantId);
 
         return ResponseEntity.ok(tenant);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Tenant> getTenant(@PathVariable("id") int tenantId) throws Exception {
+    @GetMapping("/get/{tenant_id}")
+    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
@@ -45,8 +46,8 @@ public class TenantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteTenant(@PathVariable("id") int tenantId) {
+    @DeleteMapping("/delete/{tenant_id}")
+    public ResponseEntity deleteTenant(@PathVariable("tenant_id") int tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.ok().build();
@@ -58,6 +59,4 @@ public class TenantController {
 
         return ResponseEntity.ok().build();
     }
-
-
 }
