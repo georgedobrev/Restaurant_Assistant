@@ -42,13 +42,12 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public Tenant getTenantById(int tenantId) throws Exception {
-
         return tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant not found."));
     }
 
     @Override
     public Tenant updateTenant(int tenantId) throws Exception {
-        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant not found"));
+        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant "+ tenantId + " not found"));
 
         tenant.setActive(!tenant.getActive());
         //tenant.setActive(tenant.getActive());
@@ -58,13 +57,11 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public void deleteTenant(int tenantId) {
-
         tenantRepository.deleteById(tenantId);
     }
 
     @Override
     public void deleteAll() {
-
         tenantRepository.deleteAll();
     }
 }
