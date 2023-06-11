@@ -1,84 +1,73 @@
-import { Button, Box, TextField } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
+import { Button } from "@mui/material";
 import styles from "./users.module.css";
-import { Role, roles } from "./rolesData";
+import { createUser } from "../../../services/UserService";
+import CustomInput from "./UserInputFields";
 
 const AddUser: React.FC = () => {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const userData = {
+      name: name,
+      surname: surname,
+      email: email,
+    };
+
+    try {
+      const response = await createUser(userData);
+      console.log(response);
+      setName("");
+      setSurname("");
+      setEmail("");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.newUser}>Add new user</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={styles.userDetails}>
           <div className={styles.flexColumn}>
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Name"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
-
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Surname"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
+            <CustomInput
+              value={name}
+              onChange={setName}
+              label="Enter Name"
+              fullWidth
+              required
+              marginBottom={"4%"}
+            />
+            <CustomInput
+              value={surname}
+              onChange={setSurname}
+              label="Enter Surname"
+              fullWidth
+              required
+              marginBottom={"4%"}
+            />
           </div>
 
           <div className={styles.flexColumn}>
-            <Box marginBottom={"1%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Email"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
-
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                className={styles.inputFields}
-                select
-                size="small"
-                label="Select"
-                color="warning"
-                fullWidth
-                helperText="Please select role"
-                style={{ width: "100%", marginLeft: 0 }}
-              >
-                {roles.map((option: Role) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box>
+            <CustomInput
+              value={email}
+              onChange={setEmail}
+              label="Enter Email"
+              fullWidth
+              required
+              marginBottom={"1%"}
+            />
           </div>
         </div>
 
         <div className={styles.flexColumn}>
-          <Button variant="contained" className={styles.button}>
+          <Button type="submit" variant="contained" className={styles.button}>
             Add User
           </Button>
         </div>

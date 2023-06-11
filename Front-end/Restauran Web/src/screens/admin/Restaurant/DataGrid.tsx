@@ -2,34 +2,31 @@ import { Button, ThemeProvider } from "@mui/material";
 import { GridCellParams, GridColDef } from "@mui/x-data-grid";
 import theme from "../../../colorTheme";
 
-interface RowData {
+interface RestaurantData {
   id: number;
   name: string;
-  tables_count: string;
+  tablesCount: number;
   address: string;
   email: string;
-  phone_number_1: string;
-  phone_number_2: string;
+  phoneNumber1: string;
+  phoneNumber2: string;
 }
 
-const GridColumns = (
-  onButtonClick: (e: React.MouseEvent<HTMLButtonElement>, row: RowData) => void
-): GridColDef[] => [
+const GridColumns = (): GridColDef[] => [
   { field: "id", headerName: "ID", width: 95, editable: true },
   { field: "name", headerName: "Restaurant", width: 150, editable: true },
-  { field: "tables_count", headerName: "Tables", width: 100, editable: true },
+  { field: "tablesCount", headerName: "Tables", width: 100, editable: true },
   { field: "address", headerName: "Address", width: 200, editable: true },
-  { field: "email", headerName: "E-mail Address", width: 200, editable: true },
   {
-    field: "phone_number_1",
+    field: "phoneNumber1",
     headerName: "Phone 1",
-    width: 200,
+    width: 120,
     editable: true,
   },
   {
-    field: "phone_number_2",
+    field: "phoneNumber2",
     headerName: "Phone 2",
-    width: 200,
+    width: 120,
     editable: true,
   },
   {
@@ -39,11 +36,7 @@ const GridColumns = (
     renderCell: (params: GridCellParams) => {
       return (
         <ThemeProvider theme={theme}>
-          <Button
-            className=""
-            onClick={(e) => onButtonClick(e, params.row as RowData)}
-            style={{ color: "var(--brown-color)" }}
-          >
+          <Button className="" style={{ color: "var(--brown-color)" }}>
             <i className="buttonEdit fa-solid fa-pen-to-square"></i>
           </Button>
         </ThemeProvider>
@@ -59,7 +52,6 @@ const GridColumns = (
         <ThemeProvider theme={theme}>
           <Button
             className="button-add-user"
-            onClick={(e) => onButtonClick(e, params.row as RowData)}
             style={{ color: theme.palette.error.main }}
           >
             <i className="fa-solid fa-trash"></i>

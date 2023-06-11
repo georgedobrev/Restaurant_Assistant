@@ -1,32 +1,25 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { mobileBreakPoint } from "../../mobileBreakPoint";
-import AddRestaurant from "./AddRestaurant";
-import styles from "./restaurant.module.css";
-import rows from "./mockData";
 import GridColumns from "./DataGrid";
+import styles from "./restaurant.module.css";
+import { mobileBreakPoint } from "../../mobileBreakPoint";
+import { getRestaurants } from "../../../services/restaurantService";
+import AddRestaurant from "./AddRestaurant";
 
-interface User {
+interface Restaurant {
   id: number;
   name: string;
   tables_count: string;
   address: string;
   phone_number_1: string;
+  phone_number_2: string;
 }
-const Restaurant: React.FC = () => {
-  const [clickedRow, setClickedRow] = useState<User | undefined>();
 
-  const onButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    row: User
-  ): void => {
-    e.stopPropagation();
-    setClickedRow(row);
-  };
-
-  const columns = GridColumns(onButtonClick);
-
+const RestaurantComponent: React.FC = () => {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+
+  const columns = GridColumns();
 
   useEffect(() => {
     const handleResize = (): void => {
@@ -39,6 +32,19 @@ const Restaurant: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const data = (await getRestaurants()) as Restaurant[];
+        setRestaurants(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRestaurants();
   }, []);
 
   return (
@@ -54,7 +60,7 @@ const Restaurant: React.FC = () => {
               color: "primary.main",
             },
           }}
-          rows={rows}
+          rows={restaurants}
           columns={columns}
         />
       </div>
@@ -63,4 +69,4 @@ const Restaurant: React.FC = () => {
   );
 };
 
-export default Restaurant;
+export default RestaurantComponent;

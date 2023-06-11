@@ -4,22 +4,36 @@ import theme from "../../../colorTheme";
 import "../../../App.css";
 import "./users.module.css";
 
-interface RowData {
+interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
   email: string;
+  name: string;
+  surname: string;
+  blacklisted: boolean;
+  active: boolean;
+  createdAt: string;
 }
 
-const GridColumns = (
-  onButtonClick: (e: React.MouseEvent<HTMLButtonElement>, row: RowData) => void
-): GridColDef[] => [
+const GridColumns = (): GridColDef[] => [
   { field: "id", headerName: "ID", width: 95, editable: true },
-  { field: "firstName", headerName: "Name", width: 150, editable: true },
-  { field: "lastName", headerName: "Surname", width: 150, editable: true },
-  { field: "role", headerName: "Role", width: 90, editable: true },
+  { field: "name", headerName: "Name", width: 150, editable: true },
+  { field: "surname", headerName: "Surname", width: 150, editable: true },
   { field: "email", headerName: "Email", width: 200, editable: true },
+  {
+    field: "blacklisted",
+    headerName: "Blacklisted",
+    width: 150,
+    editable: true,
+    type: "boolean",
+  },
+  {
+    field: "active",
+    headerName: "Active",
+    width: 150,
+    editable: true,
+    type: "boolean",
+  },
+  { field: "createdAt", headerName: "Created At", width: 150, editable: true },
   {
     field: "editRow",
     headerName: "Edit",
@@ -27,17 +41,14 @@ const GridColumns = (
     renderCell: (params: GridCellParams) => {
       return (
         <ThemeProvider theme={theme}>
-          <Button
-            className=""
-            onClick={(e) => onButtonClick(e, params.row as RowData)}
-            style={{ color: "var(--brown-color)" }}
-          >
+          <Button style={{ color: "var(--brown-color)" }}>
             <i className="buttonEdit fa-solid fa-pen-to-square"></i>
           </Button>
         </ThemeProvider>
       );
     },
   },
+
   {
     field: "deleteRow",
     headerName: "Delete",
@@ -45,11 +56,7 @@ const GridColumns = (
     renderCell: (params: GridCellParams) => {
       return (
         <ThemeProvider theme={theme}>
-          <Button
-            className="button-add-user"
-            onClick={(e) => onButtonClick(e, params.row as RowData)}
-            style={{ color: theme.palette.error.main }}
-          >
+          <Button style={{ color: theme.palette.error.main }}>
             <i className="fa-solid fa-trash"></i>
           </Button>
         </ThemeProvider>

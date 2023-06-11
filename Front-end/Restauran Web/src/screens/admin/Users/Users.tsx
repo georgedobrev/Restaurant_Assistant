@@ -4,29 +4,23 @@ import styles from "./users.module.css";
 import { mobileBreakPoint } from "../../mobileBreakPoint";
 import GridColumns from "./DataGrid";
 import AddUser from "./AddUser";
-import rows from "./mockData";
+import { fetchWrapper } from "../../../services/fetchWrapper";
 
 interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
   email: string;
+  name: string;
+  surname: string;
+  blacklisted: boolean;
+  active: boolean;
+  createdAt: string;
 }
 
 const Users: React.FC = () => {
-  const [clickedRow, setClickedRow] = useState<User | undefined>();
-
-  const onButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    row: User
-  ): void => {
-    setClickedRow(row);
-  };
-
-  const columns = GridColumns(onButtonClick);
-
+  const [user, setUser] = useState<User[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+
+  const columns = GridColumns();
 
   useEffect(() => {
     const handleResize = (): void => {
@@ -39,6 +33,21 @@ const Users: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = (await fetchWrapper.get(
+          "http://localhost:8080/user/14"
+        )) as User;
+        setUser([userData]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser();
   }, []);
 
   return (
@@ -54,7 +63,7 @@ const Users: React.FC = () => {
               color: "primary.main",
             },
           }}
-          rows={rows}
+          rows={user}
           columns={columns}
         />
       </div>
