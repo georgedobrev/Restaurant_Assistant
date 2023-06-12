@@ -1,8 +1,10 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.TenantDto;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
+import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TenantController {
     private final TenantService tenantService;
+    private final UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<Tenant> createTenant(@RequestBody TenantDto tenantDto) {
@@ -37,6 +40,18 @@ public class TenantController {
 
         return ResponseEntity.ok(restaurants);
     }
+//
+    @GetMapping("/getAdminByRole/{roleType}")
+    public ResponseEntity<AppUser> getAdminByRole(@PathVariable("roleType") String roleType) {
+        AppUser admin = userService.getAdminByRoleType(roleType);
+
+        if (admin == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(admin);
+    }
+
 
     @PutMapping("/update/{tenant_id}")
     public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {

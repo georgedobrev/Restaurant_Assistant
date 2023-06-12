@@ -36,6 +36,17 @@ public class UserController {
         return ResponseEntity.ok(appUser);
     }
 
+    @GetMapping("/getAdminByRole/{roleType}")
+    public ResponseEntity<AppUser> getAdminByRole(@PathVariable("roleType") String roleType) {
+        AppUser admin = userService .getAdminByRoleType(roleType);
+
+        if (admin == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(admin);
+    }
+
     @PutMapping("/{userId}")
     public ResponseEntity<AppUser> updateUserById(@PathVariable int userId,
                                                   @RequestBody UpdateUserDto updateUserDto) {

@@ -2,18 +2,22 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.RestaurantRepository;
+import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
@@ -59,5 +63,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant getRestaurantById(Integer restaurantId) {
         return restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurantsByAdmin(int adminId) {
+
+        return restaurantRepository.findAllById(adminId);
     }
 }

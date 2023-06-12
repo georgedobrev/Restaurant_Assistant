@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Data
 @Builder
@@ -46,4 +43,7 @@ public class Tenant {
     @Builder.Default
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
+
+    @Column(name = "is_admin")
+    private boolean isAdmin;
 }

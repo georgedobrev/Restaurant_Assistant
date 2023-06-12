@@ -13,5 +13,12 @@ public interface UserService {
 
     void deleteUserById(int id);
 
+//    AppUser getAdminByRole(String roleType);
+
+    AppUser getAdminByRoleType(String roleType);
+
+    AppUser getAdminRoleType(String roleType);
+
     AppUser updateUserById(int id, UpdateUserDto updateUserDto);
+
 }

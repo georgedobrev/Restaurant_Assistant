@@ -52,6 +52,16 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
     }
 
+    @Override
+    public AppUser getAdminRoleType(String roleType) {
+        UserRole adminRole =  userRepository.findByRoleType(roleType);
+
+        if(adminRole != null) {
+            return adminRole.getAppUser();
+        }
+        return null;
+    }
+
     @Transactional
     @Override
     public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
@@ -92,6 +102,16 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.deleteAll(userRoles);
         userRepository.deleteById(id);
     }
+
+    @Override
+    public AppUser getAdminByRoleType(String roleType) {
+        UserRole adminRole = userRoleRepository.findByRoleType(roleType);
+
+        if (adminRole == null) {
+            return null; // or throw an exception if necessary
+        }
+
+        return adminRole.getAppUser();    }
 
     private AppUser assignUserRole(UserDto userDto, AppUser appUser) {
         UserRole userRole = UserRole.builder()
