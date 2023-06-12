@@ -55,10 +55,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification updateNotification(int notificationId) throws Exception {
-        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new Exception("Notification"));
-
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new Exception("Notification" + notificationId + "not found."));
         notification.setApproved(!notification.getApproved());
-        notification.setApproved(notification.getApproved());
 
         return notificationRepository.save(notification);
     }
