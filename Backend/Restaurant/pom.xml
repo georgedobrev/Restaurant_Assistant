@@ -126,6 +126,10 @@
             <artifactId>jquery</artifactId>
             <version>3.1.1-1</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -144,5 +148,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

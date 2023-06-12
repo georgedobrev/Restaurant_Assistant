@@ -1,5 +1,6 @@
 CREATE TABLE qr_code
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
+    hashed_url VARCHAR(22) NOT NULL,
     qr_img VARBINARY(MAX) NOT NULL
 );

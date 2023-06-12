@@ -14,13 +14,14 @@ public class QrCode {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "hashed_url")
+    private String hashedUrl;
+
     @Column(name = "qr_img")
     private byte[] qrImg;
 
-    @OneToOne(mappedBy = "qr", fetch = FetchType.LAZY)
-    private AppTable appTable;
-
-    public QrCode(byte[] qrText) {
+    public QrCode(byte[] qrText, String hashedUrl) {
         this.qrImg = qrText;
+        this.hashedUrl = hashedUrl;
     }
 }

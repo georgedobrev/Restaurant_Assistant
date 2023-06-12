@@ -3,96 +3,139 @@
 		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
 		"name": "Restaurant Assistant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27618519",
-		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
+		"_exporter_id": "27763372",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27763372&source=collection_link"
 	},
 	"item": [
 		{
 			"name": "Notification",
 			"item": [
 				{
-					"name": "getAllNotifications Copy",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "createNotification Copy",
+					"name": "createNotification",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"time\": \"2023-06-05T07:44:54.512+00:00\",\n    \"requestType\": \"Menu\"\n    \"message\": \"this is a message\",\n    \"approved\": false\n}"
+							"raw": "{\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"appTable\": {\n  \"id\": 2\n  },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "localhost:8080/new-notification",
+							"raw": "localhost:8080/notification/create",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
-							"path": [
-								"new-notification"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete all notifications Copy",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080//delete-notifications",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"",
-								"delete-notifications"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteNotification Copy",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:1433/notification/id",
-							"host": [
-								"localhost"
-							],
-							"port": "1433",
 							"path": [
 								"notification",
-								"id"
+								"create"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "findNotificationById Copy",
+					"name": "getAllNotificationsByRestaurantId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080//notification/{id}",
+							"raw": "localhost:8080/notification/all/restaurant/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"",
 								"notification",
-								"{id}"
+								"all",
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllNotificationsByTableNumber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notification/all/table/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"all",
+								"table",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllNotificationsByTableId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notification/delete/all/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"delete",
+								"all",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNotification",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notification/delete/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateNotification",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/notification/update/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"update",
+								"2"
 							]
 						}
 					},
@@ -126,6 +169,26 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scanned QrCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/qrcode/iLH8IyDPDa7vq4NdEzcKbA",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"qrcode",
+								"iLH8IyDPDa7vq4NdEzcKbA"
+							]
+						},
+						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
 					},
 					"response": []
 				}
@@ -193,14 +256,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/1/tables/all",
+							"raw": "localhost:8080/tables/2/all",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"1",
 								"tables",
+								"2",
 								"all"
 							]
 						}
@@ -222,15 +285,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/1/tables/create",
+							"raw": "localhost:8080/tables/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"1",
 								"tables",
-								"create"
+								"1"
 							]
 						}
 					},
@@ -243,7 +305,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": true\r\n}",
+							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,15 +313,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/2/tables/13",
+							"raw": "localhost:8080/tables/2/10",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"2",
 								"tables",
-								"13"
+								"2",
+								"10"
 							]
 						}
 					},
@@ -271,15 +333,127 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/2/tables/12",
+							"raw": "localhost:8080/tables/2/13",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"2",
 								"tables",
-								"12"
+								"2",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Get restaurants by ID Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurant/1,2,3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"1,2,3"
+							],
+							"query": [
+								{
+									"key": "restaurantIds",
+									"value": "1,2,3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all restaurants Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Restaurant Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"happy\",\r\n    \"tablesCount\":50,\r\n    \"address\":\"mladost 00\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a restaurant Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"5"
 							]
 						}
 					},
@@ -297,7 +471,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 2,\n  \"restaurantId\": 1\n}",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -325,7 +499,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 1,\n  \"restaurantId\": 1\n}",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -368,6 +542,23 @@
 					"response": []
 				},
 				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user33333@example.com\",\n  \"name\": \"JohnyJohny\",\n  \"surname\": \"Doeeeeeee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurantId\": 1,\n  \"roleAfter\": \"WAITER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete User By Id",
 					"request": {
 						"method": "DELETE",
@@ -382,6 +573,154 @@
 							"path": [
 								"user",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "createTenant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"example@example.com\",\n  \"restaurantId\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"blacklisted\": false,\n  \"active\": true,\n  \"createdAt\": \"2023-06-08T12:34:56Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tenant/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/get/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTenantById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/get/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"get",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTenant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/tenant/update/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTenant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/delete/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllTenants",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/delete/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"delete",
+								"all"
 							]
 						}
 					},

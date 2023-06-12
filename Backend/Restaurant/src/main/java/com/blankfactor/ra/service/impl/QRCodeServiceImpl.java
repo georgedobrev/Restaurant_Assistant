@@ -1,6 +1,8 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.config.AppConfig;
+import com.blankfactor.ra.config.AppProp;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
+import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
@@ -19,7 +21,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -29,17 +35,33 @@ import java.util.zip.ZipOutputStream;
 public class QRCodeServiceImpl implements QRCodeService {
 
     private final QrCodeRepository qrCodeRepository;
-    private final AppConfig appConfig;
+    private final AppProp appProp;
     private final AppTableRepository appTableRepository;
 
-    public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws IOException, WriterException {
+    public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        byte[] hashBytes = digest.digest(originalURL.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(hashBytes);
+    }
+
+    public List<AppTable> createQRCodesForTables(Restaurant restaurant, List<AppTable> appTables) throws NoSuchAlgorithmException {
         List<QrCode> listOfQRCodes = new ArrayList<>();
 
-        String baseUrl = appConfig.getBaseUrl();
+        String baseUrl = appProp.getBaseUrl() + "/qrcode";
+
         for (AppTable table : appTables) {
-            String qrText = baseUrl + "/" + restaurant.getId() + "/?table=" + table.getTableNumber();
-            byte[] qrCodeImage = createQRCodeImage(qrText);
-            QrCode qrCode = new QrCode(qrCodeImage);
+            String originalURL = restaurant.getId() + "/?table=" + table.getTableNumber();
+            String hashedURL = createHashedURL(originalURL);
+
+            byte[] qrCodeImage;
+            try {
+                qrCodeImage = createQRCodeImage(baseUrl + "/" + hashedURL);
+            } catch (IOException | WriterException e) {
+                throw new QRCodeException("Error generating QR code for table " + table.getTableNumber(), e);
+            }
+
+            QrCode qrCode = new QrCode(qrCodeImage, hashedURL);
             table.setQr(qrCode);
             listOfQRCodes.add(qrCode);
         }
@@ -75,7 +97,11 @@ public class QRCodeServiceImpl implements QRCodeService {
         return new ByteArrayResource(baos.toByteArray());
     }
 
-    public Integer getTableNumberByQrCodeId(Integer qrId) throws Exception {
-        return appTableRepository.findByQrId(qrId).orElseThrow(Exception::new).getTableNumber();
+    @Override
+    public AppTable getTableFromQRHashUrl(String hashedUrl) {
+        QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
+        AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
+
+        return appTable;
     }
 }

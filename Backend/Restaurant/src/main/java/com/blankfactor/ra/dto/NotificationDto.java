@@ -2,17 +2,19 @@ package com.blankfactor.ra.dto;
 
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class NotificationDto {
-    private AppUser appUser;
+
     private AppTable appTable;
+    private AppUser appUser;
     private String requestType;
     private String message;
-    private Boolean approved;
+    private boolean approved;
+    private Instant createdAt;
 }
