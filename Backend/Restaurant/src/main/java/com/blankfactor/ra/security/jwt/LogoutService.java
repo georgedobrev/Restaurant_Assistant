@@ -1,4 +1,5 @@
 package com.blankfactor.ra.security.jwt;
+
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.repository.RefreshTokenRepository;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LogoutService implements LogoutHandler{
+public class LogoutService implements LogoutHandler {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -36,7 +37,7 @@ public class LogoutService implements LogoutHandler{
 
     @Transactional
     private void deleteUserToken(String username) {
-        AppUser appUser = userRepository.findAppUserByEmail(username).orElseThrow(()  -> new UserException("User not found"));
+        AppUser appUser = userRepository.findAppUserByEmail(username).orElseThrow(() -> new UserException("User not found"));
         refreshTokenRepository.deleteByAppUser(appUser);
     }
 }

@@ -22,7 +22,7 @@ public class RefreshToken {
     public boolean revoked;
     public boolean expired;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "app_user_id")
     public AppUser appUser;
 }
