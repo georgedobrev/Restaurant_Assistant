@@ -13,7 +13,7 @@ public class TenantDto {
     private String name;
     private String surname;
     private String email;
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
     private boolean blacklisted;
     private boolean active;
     private Instant createdAt;

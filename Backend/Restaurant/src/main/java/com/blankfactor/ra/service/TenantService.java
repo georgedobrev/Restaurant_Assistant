@@ -6,11 +6,11 @@ import com.blankfactor.ra.model.Tenant;
 import java.util.List;
 
 public interface TenantService {
-    List<Tenant> getAllTenants();
-
     Tenant createTenant(TenantDto tenantDto);
 
     Tenant getTenantById(int tenantId) throws Exception;
+
+    List<Tenant> getAllTenants();
 
     Tenant updateTenant(int tenantId) throws Exception;
 

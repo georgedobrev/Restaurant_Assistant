@@ -25,13 +25,6 @@ public class TenantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
-    @PutMapping("/update/{tenant_id}")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
-        Tenant tenant = tenantService.updateTenant(tenantId);
-
-        return ResponseEntity.ok(tenant);
-    }
-
     @GetMapping("/get/{tenant_id}")
     public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.getTenantById(tenantId);
@@ -44,6 +37,13 @@ public class TenantController {
         List<Tenant> restaurants = tenantService.getAllTenants();
 
         return ResponseEntity.ok(restaurants);
+    }
+
+    @PutMapping("/update/{tenant_id}")
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
+        Tenant tenant = tenantService.updateTenant(tenantId);
+
+        return ResponseEntity.ok(tenant);
     }
 
     @DeleteMapping("/delete/{tenant_id}")

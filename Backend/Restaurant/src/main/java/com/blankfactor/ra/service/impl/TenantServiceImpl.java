@@ -22,30 +22,21 @@ public class TenantServiceImpl implements TenantService {
         Tenant tenant = new Tenant();
 
         tenant.setEmail(tenantDto.getEmail());
-        tenant.setRestaurantId(tenantDto.getRestaurantId());
+        tenant.setRestaurant(tenantDto.getRestaurant());
         tenant.setName(tenantDto.getName());
         tenant.setSurname(tenantDto.getSurname());
-        tenant.setBlacklisted(tenantDto.isBlacklisted());
-        tenant.setActive(tenantDto.isActive());
-        tenant.setCreatedAt(Instant.now());
 
         return tenantRepository.save(tenant);
     }
 
     @Override
-    public List<Tenant> getAllTenants() {
-        List<Tenant> tenants = tenantRepository.findAll();
-        List<Integer> tenantIds = new ArrayList<>();
-
-        for (Tenant restaurant : tenants) {
-            tenantIds.add(restaurant.getId());
-        }
-        return tenantRepository.findAllById(tenantIds);
+    public Tenant getTenantById(int tenantId) throws Exception {
+        return tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found."));
     }
 
     @Override
-    public Tenant getTenantById(int tenantId) throws Exception {
-        return tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found."));
+    public List<Tenant> getAllTenants() {
+        return tenantRepository.findAll();
     }
 
     @Override
