@@ -10,9 +10,9 @@ public interface AppTableService {
 
     AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) throws Exception;
 
-    List<AppTableDto> getTablesByRestaurantId(Integer restaurantId);
+    List<AppTable> getTablesByRestaurantId(Integer restaurantId);
 
-    AppTableDto updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception;
+    AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception;
 
     void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception;
 }
