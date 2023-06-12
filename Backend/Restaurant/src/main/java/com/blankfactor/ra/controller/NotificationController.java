@@ -8,10 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RequestMapping("/notification")
@@ -49,7 +48,7 @@ public class NotificationController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteNotificationById(@PathVariable("id") int notificationId) throws Exception {
+    public ResponseEntity<?> deleteNotificationById(@PathVariable("id") int notificationId) {
         notificationService.deleteById(notificationId);
 
         return ResponseEntity.ok().build();
@@ -57,18 +56,10 @@ public class NotificationController {
 
 
     @DeleteMapping("/delete/all/{app_table_id}")
-    public ResponseEntity deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
+    public ResponseEntity<?> deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
         notificationService.deleteAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok().build();
-    }
-
-
-    @PostMapping()
-    public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationDto) {
-        Notification createdNotification = notificationService.createNotification(notificationDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdNotification);
     }
 
     @MessageMapping("/app/notify")

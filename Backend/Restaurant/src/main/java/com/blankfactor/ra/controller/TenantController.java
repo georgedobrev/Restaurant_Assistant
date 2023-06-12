@@ -1,7 +1,6 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.TenantDto;
-import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
 import lombok.AllArgsConstructor;
@@ -47,14 +46,14 @@ public class TenantController {
     }
 
     @DeleteMapping("/delete/{tenant_id}")
-    public ResponseEntity deleteTenant(@PathVariable("tenant_id") int tenantId) {
+    public ResponseEntity<?> deleteTenant(@PathVariable("tenant_id") int tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/all")
-    public ResponseEntity deleteAll() {
+    public ResponseEntity<?> deleteAll() {
         tenantService.deleteAll();
 
         return ResponseEntity.ok().build();
