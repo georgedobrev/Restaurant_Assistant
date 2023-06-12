@@ -29,24 +29,24 @@ public class UserController {
         return ResponseEntity.ok(createdAppUser);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable int id) {
-        AppUser appUser = userService.getUserById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<AppUser> getUserById(@PathVariable int userId) {
+        AppUser appUser = userService.getUserById(userId);
 
         return ResponseEntity.ok(appUser);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AppUser> updateUserById(@PathVariable int id,
+    @PutMapping("/{userId}")
+    public ResponseEntity<AppUser> updateUserById(@PathVariable int userId,
                                                   @RequestBody UpdateUserDto updateUserDto) {
-        AppUser updatedAppUser = userService.updateUserById(id, updateUserDto);
+        AppUser updatedAppUser = userService.updateUserById(userId, updateUserDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable int id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
+        userService.deleteUserById(userId);
 
         return ResponseEntity.ok().build();
     }

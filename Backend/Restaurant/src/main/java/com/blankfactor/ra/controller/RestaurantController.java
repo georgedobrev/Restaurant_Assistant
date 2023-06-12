@@ -40,8 +40,8 @@ public class RestaurantController {
     }
 
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<RestaurantDto> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) throws Exception {
-        RestaurantDto updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) throws Exception {
+        Restaurant updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
 
         return ResponseEntity.ok(updatedRestaurant);
     }
