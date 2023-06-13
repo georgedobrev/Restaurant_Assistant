@@ -39,6 +39,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(VirtualTableException.class)
+    public ResponseEntity<ExceptionResponse> virtualTableException(UserRoleException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Virtual Table Exception", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
