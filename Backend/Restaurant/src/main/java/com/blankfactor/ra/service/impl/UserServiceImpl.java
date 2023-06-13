@@ -1,8 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserDto;
-import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.UserRole;
@@ -23,27 +21,11 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
 
     @Override
-    public AppUser createUser(UserDto userDto) {
-        AppUser appUser = AppUser.builder()
-                .email(userDto.getEmail())
-                .name(userDto.getName())
-                .surname(userDto.getSurname())
-                .build();
+    public AppUser addRoleToUser(UpdateUserDto updateUserDto) {
+        AppUser appUser = userRepository.findAppUserByEmail(updateUserDto.getEmail())
+                .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
 
-        AppUser savedAppUser = userRepository.save(appUser);
-
-        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
-            assignUserRole(userDto, savedAppUser);
-        }
-
-        return savedAppUser;
-    }
-
-    @Override
-    public AppUser addRoleToUser(UserDto userDto) {
-        AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail()).orElseThrow(() -> new UserException("User with email " + userDto.getEmail() + " not found"));
-
-        return assignUserRole(userDto, appUser);
+        return assignUserRole(updateUserDto, appUser);
     }
 
     @Override
@@ -73,7 +55,7 @@ public class UserServiceImpl implements UserService {
         UserRole userRoleToUpdate = UserRole.builder()
                 .appUser(appUserToUpdate)
                 .restaurant(updateUserDto.getRestaurant())
-                .roleType(updateUserDto.getRoleAfter())
+                .roleType(updateUserDto.getRoleType())
                 .build();
 
         userRoleRepository.save(userRoleToUpdate);
@@ -93,11 +75,11 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    private AppUser assignUserRole(UserDto userDto, AppUser appUser) {
+    private AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
-                .roleType(userDto.getRoleType())
-                .restaurant(userDto.getRestaurant())
+                .roleType(updateUserDto.getRoleType())
+                .restaurant(updateUserDto.getRestaurant())
                 .build();
 
         userRoleRepository.save(userRole);
