@@ -2,9 +2,11 @@ package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @Entity
 @AllArgsConstructor
@@ -13,7 +15,7 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -34,5 +36,5 @@ public class Restaurant {
     private String phoneNumber3;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = true;
 }

@@ -1,19 +1,20 @@
 package com.blankfactor.ra.dto;
 
-import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.Restaurant;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserDto {
+import java.time.Instant;
 
-    private String email;
+@Data
+@NoArgsConstructor
+public class TenantDto {
+
     private String name;
     private String surname;
-    private RoleType roleType;
+    private String email;
     private Restaurant restaurant;
+    private boolean blacklisted;
+    private boolean active;
+    private Instant createdAt;
 }

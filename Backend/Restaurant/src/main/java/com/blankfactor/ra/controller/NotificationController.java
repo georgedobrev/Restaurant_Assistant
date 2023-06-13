@@ -3,18 +3,18 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.service.NotificationService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/notification")
 @AllArgsConstructor
-@Transactional
+@RequestMapping("/notification")
+@RestController
 public class NotificationController {
 
     private final NotificationService notificationService;
@@ -48,7 +48,7 @@ public class NotificationController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteNotificationById(@PathVariable("id") int notificationId) throws Exception {
+    public ResponseEntity<?> deleteNotificationById(@PathVariable("id") int notificationId) {
         notificationService.deleteById(notificationId);
 
         return ResponseEntity.ok().build();
@@ -56,11 +56,17 @@ public class NotificationController {
 
 
     @DeleteMapping("/delete/all/{app_table_id}")
-    public ResponseEntity deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
+    public ResponseEntity<?> deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
         notificationService.deleteAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok().build();
     }
 
+    @MessageMapping("/app/notify")
+    @SendTo("/topic/notifications")
+    public Notification sendNotification(NotificationDto notificationDto) throws InterruptedException {
+        Thread.sleep(2000);
 
+        return notificationService.createNotification(notificationDto);
+    }
 }
