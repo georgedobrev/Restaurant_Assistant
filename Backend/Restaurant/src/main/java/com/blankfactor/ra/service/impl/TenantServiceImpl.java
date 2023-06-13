@@ -23,7 +23,6 @@ public class TenantServiceImpl implements TenantService {
         tenant.setRestaurant(tenantDto.getRestaurant());
         tenant.setName(tenantDto.getName());
         tenant.setSurname(tenantDto.getSurname());
-        tenant.setAdmin(true);
 
         return tenantRepository.save(tenant);
     }
@@ -45,7 +44,6 @@ public class TenantServiceImpl implements TenantService {
         tenant.setActive(!tenant.getActive());
         tenant.setBlacklisted(!tenant.getBlacklisted());
         tenant.setEmail(tenant.getEmail());
-        tenant.setAdmin(!tenant.isAdmin());
 
         return tenantRepository.save(tenant);
     }

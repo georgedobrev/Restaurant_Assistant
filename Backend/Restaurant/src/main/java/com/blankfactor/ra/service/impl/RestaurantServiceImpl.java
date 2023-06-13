@@ -1,16 +1,17 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.RestaurantDto;
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
-import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
+import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -65,9 +66,28 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
     }
 
-    @Override
-    public List<Restaurant> getAllRestaurantsByAdmin(int adminId) {
+//    @Override
+//    public List<Restaurant> getAllRestaurantsByIdAndRole() {
+//        return restaurantRepository.findAllByIdAndRole(userId, RoleType.ADMIN);
+//    }
 
-        return restaurantRepository.findAllById(adminId);
+    @Override
+    public List<Restaurant> getAllRestaurantsByIdAndRole(int adminId, String roleType) {
+
+//        AppUser admin = userService.getAdminByRole("Admin");
+//
+//        if(admin == null) {
+//            System.out.println("The admin with id" + adminId + " not found.");
+//            return ResponseEntity.notFound().build();
+//        }
+        UserRole adminRole =  userRepository.findByRoleType(roleType);
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        if(adminRole != null) {
+            restaurants.add(adminRole.getRestaurant());
+          ///////  return adminRole.getRestaurant();
+        }
+       // return null;
+        return restaurantRepository.findAllByUserRoleIdAndRoleType(adminId, "ADMIN");
+
     }
 }

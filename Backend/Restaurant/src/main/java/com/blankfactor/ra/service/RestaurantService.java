@@ -18,5 +18,9 @@ public interface RestaurantService {
 
     Restaurant getRestaurantById(Integer restaurantId) throws Exception;
 
+    List<Restaurant> getAllRestaurantsByIdAndRole(int adminId, String roleType);
+
+    //List<Restaurant> getAllRestaurantsByAdmin(int adminId);
+
     //List<Restaurant> getAllRestaurantsByAdmin(AppUser admin);
 }

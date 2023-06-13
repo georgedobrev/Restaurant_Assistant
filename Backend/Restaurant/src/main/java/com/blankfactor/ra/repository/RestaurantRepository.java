@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    List<Restaurant> findAllByAdminId(int adminId);
+    //List<Restaurant> findAllByAdminId(int adminId);
+    List<Restaurant> findAllByUserRoleIdAndRoleType(int userId, String roleType);
 }

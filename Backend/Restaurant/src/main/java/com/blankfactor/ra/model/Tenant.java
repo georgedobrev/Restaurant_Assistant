@@ -44,6 +44,4 @@ public class Tenant {
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
-    @Column(name = "is_admin")
-    private boolean isAdmin;
 }

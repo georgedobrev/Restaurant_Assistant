@@ -38,15 +38,17 @@ public class RestaurantController {
 
     @GetMapping("/getAll/{user_id}")
     public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("user_id") int userId) {
-        AppUser admin = userService.getAdminByRole("Admin");
+//        AppUser admin = userService.getAdminByRole("Admin");
+//
+//        if(admin == null) {
+//            System.out.println("The admin with id" + adminId + " not found.");
+//            return ResponseEntity.notFound().build();
+//        }
 
-        if(admin == null) {
-            System.out.println("The admin with id" + adminId + " not found.");
-            return ResponseEntity.notFound().build();
-        }
-        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(admin);
+        List<Restaurant> restaurants =  restaurantService.getAllRestaurantsByIdAndRole(userId);
 
         return ResponseEntity.ok(restaurants);
+       // return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping("/{restaurantIds}")
