@@ -17,9 +17,10 @@ public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
+    @OneToOne
+    @JoinColumn(name = "app_user_id", unique = true)
+    public AppUser appUser;
     @Column(unique = true)
     public String token;
-    @OneToOne
-    @JoinColumn(name = "app_user_id")
-    public AppUser appUser;
+
 }
