@@ -1,11 +1,9 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping()
-    public ResponseEntity<AppUser> createUser(@RequestBody UserDto userDto) {
-        AppUser createdAppUser = userService.createUser(userDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
-    }
-
     @PostMapping("/addRole")
-    public ResponseEntity<AppUser> addRoleToUser(@RequestBody UserDto userDto) {
-        AppUser createdAppUser = userService.addRoleToUser(userDto);
+    public ResponseEntity<AppUser> addRoleToUser(@RequestBody UpdateUserDto updateUserDto) {
+        AppUser createdAppUser = userService.addRoleToUser(updateUserDto);
 
         return ResponseEntity.ok(createdAppUser);
     }
