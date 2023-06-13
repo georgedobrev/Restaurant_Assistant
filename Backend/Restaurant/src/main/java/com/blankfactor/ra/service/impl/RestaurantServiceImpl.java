@@ -7,7 +7,9 @@ import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
+import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
+import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,7 @@ import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
-    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
@@ -47,6 +49,24 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Restaurant getRestaurantById(Integer restaurantId) {
+        return restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurantsByAdmin(int adminId) {
+        List<UserRole> adminRoles = userRoleRepository.findByAppUser_IdAndRoleType(adminId, RoleType.ADMIN);
+        List<Restaurant> adminRestaurant = new ArrayList<>();
+
+        for(UserRole userRole: adminRoles) {
+            adminRestaurant.add(userRole.getRestaurant());
+        }
+
+        return adminRestaurant;
+    }
+
+    @Override
     public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
         Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
 
@@ -59,16 +79,5 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setActive(updatedRestaurant.getActive());
 
         return restaurantRepository.save(existingRestaurant);
-    }
-
-    @Override
-    public Restaurant getRestaurantById(Integer restaurantId) {
-        return restaurantRepository.findById(restaurantId)
-                .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
-    }
-
-    @Override
-    public List<Restaurant> getAllAdminRestaurants() {
-        return restaurantRepository.findAllByUserRolesRoleType(RoleType.ADMIN);
     }
 }

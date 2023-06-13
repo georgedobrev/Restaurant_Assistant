@@ -3,11 +3,14 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.model.AppUser;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RequestMapping("/user")
@@ -34,17 +37,6 @@ public class UserController {
         AppUser appUser = userService.getUserById(userId);
 
         return ResponseEntity.ok(appUser);
-    }
-
-    @GetMapping("/getAdminByRole/{roleType}")
-    public ResponseEntity<AppUser> getAdminByRole(@PathVariable("roleType") String roleType) {
-        AppUser admin = userService .getAdminByRoleType(roleType);
-
-        if (admin == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(admin);
     }
 
     @PutMapping("/{userId}")

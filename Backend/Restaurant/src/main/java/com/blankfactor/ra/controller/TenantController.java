@@ -40,19 +40,6 @@ public class TenantController {
 
         return ResponseEntity.ok(restaurants);
     }
-//
-    @GetMapping("/getAdminByRole/{roleType}")
-    public ResponseEntity<AppUser> getAdminByRole(@PathVariable("roleType") String roleType) {
-        AppUser admin = userService.getAdminByRoleType(roleType);
-
-        if (admin == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(admin);
-    }
-
-
     @PutMapping("/update/{tenant_id}")
     public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.updateTenant(tenantId);

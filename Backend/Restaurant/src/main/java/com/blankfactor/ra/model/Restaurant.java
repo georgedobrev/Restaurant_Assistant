@@ -41,6 +41,4 @@ public class Restaurant {
     @Column(name = "active")
     private Boolean active = true;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRole> userRoles = new ArrayList<>();
 }
