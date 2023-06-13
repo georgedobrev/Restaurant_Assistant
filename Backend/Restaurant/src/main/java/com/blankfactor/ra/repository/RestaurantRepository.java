@@ -1,5 +1,6 @@
 package com.blankfactor.ra.repository;
 
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    //List<Restaurant> findAllByAdminId(int adminId);
-    List<Restaurant> findAllByUserRoleIdAndRoleType(int userId, String roleType);
+    List<Restaurant> findAllByUserRolesRoleType(RoleType roleType);
 }

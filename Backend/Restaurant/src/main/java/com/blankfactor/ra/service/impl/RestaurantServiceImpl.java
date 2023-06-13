@@ -10,6 +10,7 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,28 +67,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
     }
 
-//    @Override
-//    public List<Restaurant> getAllRestaurantsByIdAndRole() {
-//        return restaurantRepository.findAllByIdAndRole(userId, RoleType.ADMIN);
-//    }
-
     @Override
-    public List<Restaurant> getAllRestaurantsByIdAndRole(int adminId, String roleType) {
-
-//        AppUser admin = userService.getAdminByRole("Admin");
-//
-//        if(admin == null) {
-//            System.out.println("The admin with id" + adminId + " not found.");
-//            return ResponseEntity.notFound().build();
-//        }
-        UserRole adminRole =  userRepository.findByRoleType(roleType);
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-        if(adminRole != null) {
-            restaurants.add(adminRole.getRestaurant());
-          ///////  return adminRole.getRestaurant();
-        }
-       // return null;
-        return restaurantRepository.findAllByUserRoleIdAndRoleType(adminId, "ADMIN");
-
+    public List<Restaurant> getAllAdminRestaurants() {
+        return restaurantRepository.findAllByUserRolesRoleType(RoleType.ADMIN);
     }
 }

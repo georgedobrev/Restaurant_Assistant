@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<AppUser, Integer> {
     Optional<AppUser> findAppUserByEmail(String email);
 
-    UserRole findByRoleType(String roleType);
 }

@@ -9,5 +9,4 @@ CREATE TABLE tenant
     active BIT,
     created_at DATETIMEOFFSET,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)
-    is_admin BIT
 );

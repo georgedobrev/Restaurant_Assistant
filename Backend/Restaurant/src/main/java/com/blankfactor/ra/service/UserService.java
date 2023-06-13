@@ -17,7 +17,7 @@ public interface UserService {
 
     AppUser getAdminByRoleType(String roleType);
 
-    AppUser getAdminRoleType(String roleType);
+    //AppUser getAdminRoleType(String roleType);
 
     AppUser updateUserById(int id, UpdateUserDto updateUserDto);
 

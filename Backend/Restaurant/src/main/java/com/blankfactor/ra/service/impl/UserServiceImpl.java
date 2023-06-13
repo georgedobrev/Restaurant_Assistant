@@ -52,15 +52,15 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
     }
 
-    @Override
-    public AppUser getAdminRoleType(String roleType) {
-        UserRole adminRole =  userRepository.findByRoleType(roleType);
-
-        if(adminRole != null) {
-            return adminRole.getAppUser();
-        }
-        return null;
-    }
+//    @Override
+//    public AppUser getAdminRoleType(String roleType) {
+//        UserRole adminRole =  userRepository.findByRoleType(roleType);
+//
+//        if(adminRole != null) {
+//            return adminRole.getAppUser();
+//        }
+//        return null;
+//    }
 
     @Transactional
     @Override

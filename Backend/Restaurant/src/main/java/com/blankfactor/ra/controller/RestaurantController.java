@@ -3,6 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
+import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
@@ -36,19 +37,11 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/getAll/{user_id}")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("user_id") int userId) {
-//        AppUser admin = userService.getAdminByRole("Admin");
-//
-//        if(admin == null) {
-//            System.out.println("The admin with id" + adminId + " not found.");
-//            return ResponseEntity.notFound().build();
-//        }
-
-        List<Restaurant> restaurants =  restaurantService.getAllRestaurantsByIdAndRole(userId);
+    @GetMapping("/getAllByAdmin")
+    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin() {
+        List<Restaurant> restaurants =  restaurantService.getAllAdminRestaurants();
 
         return ResponseEntity.ok(restaurants);
-       // return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping("/{restaurantIds}")

@@ -14,13 +14,9 @@ public interface RestaurantService {
 
     List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds);
 
+    List<Restaurant> getAllAdminRestaurants();
+
     Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception;
 
     Restaurant getRestaurantById(Integer restaurantId) throws Exception;
-
-    List<Restaurant> getAllRestaurantsByIdAndRole(int adminId, String roleType);
-
-    //List<Restaurant> getAllRestaurantsByAdmin(int adminId);
-
-    //List<Restaurant> getAllRestaurantsByAdmin(AppUser admin);
 }
