@@ -14,4 +14,6 @@ public class AppProp {
     private long jwtExpiration;
     private long jwtRefreshExpiration;
     private String baseUrl;
+    private String googlePassword;
+    private String clientId;
 }
