@@ -3,12 +3,12 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
-import com.blankfactor.ra.model.AppTable;
-import com.blankfactor.ra.model.QrCode;
-import com.blankfactor.ra.model.Restaurant;
+import com.blankfactor.ra.model.*;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.QrCodeRepository;
+import com.blankfactor.ra.repository.UserTableRepository;
 import com.blankfactor.ra.service.QRCodeService;
+import com.blankfactor.ra.service.UserTableService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -26,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -37,6 +38,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final QrCodeRepository qrCodeRepository;
     private final AppProp appProp;
     private final AppTableRepository appTableRepository;
+    private final UserTableService userTableService;
+    private final UserTableRepository userTableRepository;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -98,10 +101,22 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public AppTable getTableFromQRHashUrl(String hashedUrl) {
+    public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user, AppUser waiter) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
 
+        boolean isSeated = userTableService.isAppUserSeated(user, appTable);
+        if (!isSeated) {
+            UserTable userTable = new UserTable();
+            userTable.setAppUser(user);
+            userTable.setWaiter(waiter);
+            userTable.setAppTableId(appTable);
+            userTable.setStartTime(new Date().toInstant());
+
+            userTableRepository.save(userTable);
+
+            appTable.setOccupied(true);
+        }
         return appTable;
     }
 }

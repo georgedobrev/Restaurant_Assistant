@@ -2,6 +2,7 @@ package com.blankfactor.ra.controller;
 
 
 import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.QRCodeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -37,9 +38,14 @@ public class QRCodeController {
                 .body(zipFileResource);
     }
 
-    @GetMapping("/{hashedUrl}")
-    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl) throws Exception {
-        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl);
+    @PostMapping("/{hashedUrl}")
+    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
+        // how to get the User object after the authentication?
+        // how we go assign the Waiter object to the UserTable record
+        // Do we need restaurant sections so we can find the waiter by section?
+        // can we assign all waiters for all tables?
+        // todo
+        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user, user);
 
         return ResponseEntity.ok(response);
     }

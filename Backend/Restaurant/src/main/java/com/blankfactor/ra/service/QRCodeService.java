@@ -2,6 +2,7 @@ package com.blankfactor.ra.service;
 
 
 import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.google.zxing.WriterException;
 import org.springframework.core.io.Resource;
@@ -17,5 +18,5 @@ public interface QRCodeService {
 
     Resource downloadQRCodes(Integer restaurantId, List<Integer> tableNumbers) throws IOException;
 
-    AppTable getTableFromQRHashUrl(String hashedUrl) throws Exception;
+    AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user, AppUser waiter);
 }
