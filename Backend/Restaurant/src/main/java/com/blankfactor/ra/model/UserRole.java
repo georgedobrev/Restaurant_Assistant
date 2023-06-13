@@ -29,4 +29,7 @@ public class UserRole {
     @Id
     @Column(name = "role_type", nullable = false)
     private RoleType roleType;
+
+    @ManyToOne
+    private Tenant tenant;
 }
