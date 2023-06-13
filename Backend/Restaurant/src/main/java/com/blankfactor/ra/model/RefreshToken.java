@@ -15,14 +15,11 @@ import lombok.NoArgsConstructor;
 public class RefreshToken {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
     @Column(unique = true)
     public String token;
-    public boolean revoked;
-    public boolean expired;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "app_user_id")
     public AppUser appUser;
 }

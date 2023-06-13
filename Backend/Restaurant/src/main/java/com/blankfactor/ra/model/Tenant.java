@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Data
 @Builder
