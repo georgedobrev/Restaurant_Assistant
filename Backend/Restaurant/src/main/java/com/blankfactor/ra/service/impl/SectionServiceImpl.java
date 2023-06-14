@@ -1,6 +1,8 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
+import com.blankfactor.ra.exceptions.custom.SectionDuplicateException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
@@ -30,18 +32,30 @@ public class SectionServiceImpl implements SectionService {
         AppUser waiter = userRepository.findAppUserByEmail(sectionDto.getWaiterUsername())
                 .orElseThrow(() -> new UserException("User " + sectionDto.getWaiterUsername() + " not found"));
 
-        String tableNumbers = convertFromIntListToString(sectionDto.getTableNumbers());
-
         Section section = Section.builder()
                 .sectionNumber(sectionDto.getSectionNumber())
-                .tableNumbers(tableNumbers)
                 .restaurant(restaurant)
                 .waiter(waiter)
                 .build();
 
         assignSectionToTables(restaurantId, sectionDto.getTableNumbers(), section);
+        String tableNumbers = convertFromIntListToString(sectionDto.getTableNumbers());
+        section.setTableNumbers(tableNumbers);
 
         return sectionRepository.save(section);
+    }
+
+    private void assignSectionToTables(Integer restaurantId, List<Integer> tableNumbers, Section section) {
+        for (int tableNumber : tableNumbers) {
+            AppTable table = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+                    .orElseThrow(() -> new AppTableException("Table " + tableNumber + " not found"));
+
+            if (table.getSection() == null) {
+                table.setSection(section);
+            } else {
+                throw new SectionDuplicateException("Table " + table.getTableNumber() + " is already assigned to a section");
+            }
+        }
     }
 
     private String convertFromIntListToString(List<Integer> listToConvert) {
@@ -54,13 +68,9 @@ public class SectionServiceImpl implements SectionService {
     public List<Section> getAllSections(Integer restaurantId) throws Exception {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
+
         return allSections;
-
     }
 
-    private void assignSectionToTables(Integer restaurantId, List<Integer> tableNumbers, Section section) {
-        List<AppTable> appTables = appTableRepository.findByRestaurantIdAndTableNumberIn(restaurantId, tableNumbers);
 
-        appTables.forEach(table -> table.setSection(section));
-    }
 }

@@ -27,9 +27,4 @@ public class SectionController {
         List<Section> allSections = sectionService.getAllSections(restaurantId);
         return ResponseEntity.ok(allSections);
     }
-
-    @PutMapping("/update/{restaurantId}/")
-    public ResponseEntity<Section> updateSection(@PathVariable("restaurantId") Integer restaurantId, @RequestBody Section section) {
-        return ResponseEntity.ok(null);
-    }
 }

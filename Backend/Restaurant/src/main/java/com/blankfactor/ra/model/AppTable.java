@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Table(
         name = "app_table",
         uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
-})
+                @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
+        })
 public class AppTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

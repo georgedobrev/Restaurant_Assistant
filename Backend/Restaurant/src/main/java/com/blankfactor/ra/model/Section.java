@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity(name = "Section")
 @Table(
-        name="section",
-        uniqueConstraints=
-        @UniqueConstraint(columnNames={"table_numbers", "restaurant_id"})
+        name = "section",
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
 )
 public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
