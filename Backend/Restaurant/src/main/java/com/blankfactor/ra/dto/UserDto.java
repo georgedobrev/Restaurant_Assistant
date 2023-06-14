@@ -24,6 +24,7 @@ public class UserDto {
 
     @Size(max = 100, message = "Surname cannot be more than 100 characters")
     private String surname;
-    private String email;
+
+    @Size(max = 100, message = "Password cannot be more than 100 characters")
     private String password;
 }
