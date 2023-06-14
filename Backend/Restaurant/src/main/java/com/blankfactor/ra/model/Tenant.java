@@ -45,6 +45,4 @@ public class Tenant {
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
-    @OneToMany
-    private List<UserRole> userRoles;
 }
