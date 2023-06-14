@@ -13,7 +13,10 @@ public interface RestaurantService {
 
     List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds);
 
-    RestaurantDto updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception;
+    List<Restaurant> getAllRestaurantsByAdmin(int userId);
+
+    Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception;
 
     Restaurant getRestaurantById(Integer restaurantId) throws Exception;
+
 }

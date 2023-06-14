@@ -4,11 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 
 @Data
 @Entity
-@Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "notification")
 public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,4 +33,5 @@ public class Notification {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
 }

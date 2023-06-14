@@ -1,9 +1,9 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,37 +16,37 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public ResponseEntity<AppUser> createUser(@RequestBody UserDto userDto) {
-        AppUser createdAppUser = userService.createUser(userDto);
+    public ResponseEntity<AppUser> createUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
+        AppUser createdAppUser = userService.createUser(updateUserDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
     }
 
     @PostMapping("/addRole")
-    public ResponseEntity<AppUser> addRoleToUser(@RequestBody UserDto userDto) {
-        AppUser createdAppUser = userService.addRoleToUser(userDto);
+    public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
+        AppUser createdAppUser = userService.addRoleToUser(updateUserDto);
 
         return ResponseEntity.ok(createdAppUser);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable int id) {
-        AppUser appUser = userService.getUserById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<AppUser> getUserById(@PathVariable int userId) {
+        AppUser appUser = userService.getUserById(userId);
 
         return ResponseEntity.ok(appUser);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AppUser> updateUserById(@PathVariable int id,
+    @PutMapping("/{userId}")
+    public ResponseEntity<AppUser> updateUserById(@PathVariable int userId,
                                                   @RequestBody UpdateUserDto updateUserDto) {
-        AppUser updatedAppUser = userService.updateUserById(id, updateUserDto);
+        AppUser updatedAppUser = userService.updateUserById(userId, updateUserDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable int id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
+        userService.deleteUserById(userId);
 
         return ResponseEntity.ok().build();
     }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "virtual_table", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "virtual_table")
 public class VirtualTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

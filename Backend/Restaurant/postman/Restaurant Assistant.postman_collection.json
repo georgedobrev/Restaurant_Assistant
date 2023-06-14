@@ -471,7 +471,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 2,\n  \"restaurantId\": 1\n}",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -499,7 +499,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleId\": 1,\n  \"restaurantId\": 1\n}",
+							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -545,7 +545,16 @@
 					"name": "Update User",
 					"request": {
 						"method": "PUT",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user33333@example.com\",\n  \"name\": \"JohnyJohny\",\n  \"surname\": \"Doeeeeeee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurantId\": 1,\n  \"roleAfter\": \"WAITER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
 					},
 					"response": []
 				},
@@ -564,6 +573,154 @@
 							"path": [
 								"user",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "createTenant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"example@example.com\",\n  \"restaurantId\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"blacklisted\": false,\n  \"active\": true,\n  \"createdAt\": \"2023-06-08T12:34:56Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tenant/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/get/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTenantById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/get/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"get",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTenant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/tenant/update/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTenant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/delete/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllTenants",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tenant/delete/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"delete",
+								"all"
 							]
 						}
 					},
