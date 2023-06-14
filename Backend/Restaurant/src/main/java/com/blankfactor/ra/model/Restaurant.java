@@ -37,4 +37,5 @@ public class Restaurant {
 
     @Column(name = "active")
     private Boolean active = true;
+
 }
