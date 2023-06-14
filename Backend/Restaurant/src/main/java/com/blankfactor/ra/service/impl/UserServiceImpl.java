@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.UserRole;
@@ -19,6 +20,23 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+
+    @Override
+    public AppUser createUser(UpdateUserDto userDto) {
+        AppUser appUser = new AppUser();
+
+        appUser.setEmail(userDto.getEmail());
+        appUser.setName(userDto.getName());
+        appUser.setSurname(userDto.getSurname());
+
+        AppUser savedAppUser = userRepository.save(appUser);
+
+        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
+            assignUserRole(userDto, savedAppUser);
+        }
+
+        return savedAppUser;
+    }
 
     @Override
     public AppUser addRoleToUser(UpdateUserDto updateUserDto) {
