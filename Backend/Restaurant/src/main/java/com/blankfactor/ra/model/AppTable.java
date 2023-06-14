@@ -32,6 +32,10 @@ public class AppTable {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "section_id")
+    private Section section;
+
     @Column(name = "capacity")
     private int capacity;
 
