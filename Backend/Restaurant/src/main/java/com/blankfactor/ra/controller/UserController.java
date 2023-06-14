@@ -5,6 +5,7 @@ import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
     private final UserService userService;
+
+    @PostMapping()
+    public ResponseEntity<AppUser> createUser(@RequestBody UpdateUserDto updateUserDto) {
+        AppUser createdAppUser = userService.createUser(updateUserDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
+    }
 
     @PostMapping("/addRole")
     public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
