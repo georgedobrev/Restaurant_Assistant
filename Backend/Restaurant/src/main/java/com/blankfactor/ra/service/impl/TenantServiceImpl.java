@@ -2,9 +2,12 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.TenantRepository;
+import com.blankfactor.ra.repository.UserRepository;
+import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.TenantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,25 +18,25 @@ import java.util.List;
 @AllArgsConstructor
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
-
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
-        Tenant tenant = new Tenant();
-        UserRole adminRole = new UserRole();
+        Tenant tenant = Tenant.builder()
+                .name(tenantDto.getName())
+                .surname(tenantDto.getSurname())
+                .email(tenantDto.getEmail())
+                .restaurant(tenantDto.getRestaurant())
+                .build();
 
-        // Create a new UserRole instance and set the admin role
-        adminRole.setRoleType(RoleType.ADMIN);
-        adminRole.setTenant(tenant);
+        AppUser appUser = AppUser.builder()
+                .name(tenantDto.getName())
+                .surname(tenantDto.getSurname())
+                .email(tenantDto.getEmail())
+                .build();
 
-        tenant.setName(tenantDto.getName());
-        tenant.setEmail(tenantDto.getEmail());
-        tenant.setRestaurant(tenantDto.getRestaurant());
-        tenant.setSurname(tenantDto.getSurname());
-
-        // Associate the UserRole with the Tenant
-        tenant.getUserRoles().add(adminRole);
-
+               userRepository.save(appUser);
         return tenantRepository.save(tenant);
     }
 
