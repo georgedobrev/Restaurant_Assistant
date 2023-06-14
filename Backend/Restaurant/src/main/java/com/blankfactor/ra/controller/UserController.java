@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public ResponseEntity<AppUser> createUser(@RequestBody UpdateUserDto updateUserDto) {
+    public ResponseEntity<AppUser> createUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
         AppUser createdAppUser = userService.createUser(updateUserDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);

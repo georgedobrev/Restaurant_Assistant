@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user_role", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "user_role")
 @IdClass(UserRolePK.class)
 public class UserRole {
     @Id

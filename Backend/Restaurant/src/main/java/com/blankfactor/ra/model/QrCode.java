@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "qr_code", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "qr_code")
 @NoArgsConstructor
 public class QrCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
