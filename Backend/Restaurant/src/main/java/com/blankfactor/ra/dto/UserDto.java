@@ -1,14 +1,14 @@
 package com.blankfactor.ra.dto;
 
-import com.blankfactor.ra.enums.RoleType;
-import com.blankfactor.ra.model.Restaurant;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +24,6 @@ public class UserDto {
 
     @Size(max = 100, message = "Surname cannot be more than 100 characters")
     private String surname;
-
-    private RoleType roleType;
-
-    @NotNull(message = "Restaurant cannot not be null")
-    private Restaurant restaurant;
+    private String email;
+    private String password;
 }
