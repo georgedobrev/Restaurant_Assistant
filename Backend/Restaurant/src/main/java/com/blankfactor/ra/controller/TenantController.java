@@ -1,7 +1,6 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.TenantDto;
-import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
 import com.blankfactor.ra.service.UserService;
@@ -40,6 +39,7 @@ public class TenantController {
 
         return ResponseEntity.ok(restaurants);
     }
+
     @PutMapping("/update/{tenant_id}")
     public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.updateTenant(tenantId);

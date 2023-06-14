@@ -5,7 +5,6 @@ import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
-import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;

@@ -6,13 +6,10 @@ import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
-import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
-import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +52,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getAllRestaurantsByAdmin(int adminId) {
-        List<UserRole> adminRoles = userRoleRepository.findByAppUser_IdAndRoleType(adminId, RoleType.ADMIN);
-        List<Restaurant> adminRestaurant = new ArrayList<>();
+    public List<Restaurant> getAllRestaurantsByAdmin(int userId) {
+        List<UserRole> userRoles = userRoleRepository.findByAppUserIdAndRoleType(userId, RoleType.ADMIN);
+        List<Restaurant> userRestaurant = new ArrayList<>();
 
-        for(UserRole userRole: adminRoles) {
-            adminRestaurant.add(userRole.getRestaurant());
+        for (UserRole userRole : userRoles) {
+            userRestaurant.add(userRole.getRestaurant());
         }
 
-        return adminRestaurant;
+        return userRestaurant;
     }
 
     @Override

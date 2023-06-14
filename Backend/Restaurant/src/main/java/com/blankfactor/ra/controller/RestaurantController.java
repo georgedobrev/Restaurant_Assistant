@@ -1,16 +1,12 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.RestaurantDto;
-import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
-import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +18,6 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
-    private final UserService userService;
 
     @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
@@ -40,7 +35,7 @@ public class RestaurantController {
 
     @GetMapping("/getAllByAdmin/{admin_id}")
     public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
-        List<Restaurant> restaurants =  restaurantService.getAllRestaurantsByAdmin(userId);
+        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);
     }

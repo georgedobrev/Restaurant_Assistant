@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -42,7 +40,4 @@ public class AppUser {
     @Builder.Default
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
-
-//    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<UserRole> userRoles = new ArrayList<>();
 }

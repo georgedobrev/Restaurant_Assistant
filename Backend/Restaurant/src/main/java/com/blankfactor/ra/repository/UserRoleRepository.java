@@ -14,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> {
     List<UserRole> findByAppUser_Id(int id);
+
     Optional<UserRole> findByAppUserAndRestaurantAndRoleType(AppUser appUser, Restaurant restaurant, RoleType roleType);
-    List<UserRole> findByAppUser_IdAndRoleType(int adminId, RoleType roleType);
+
+    List<UserRole> findByAppUserIdAndRoleType(int adminId, RoleType roleType);
 }
