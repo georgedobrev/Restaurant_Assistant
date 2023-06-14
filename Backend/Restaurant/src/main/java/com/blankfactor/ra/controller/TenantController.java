@@ -3,6 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
+import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TenantController {
     private final TenantService tenantService;
+    private final UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<Tenant> createTenant(@RequestBody TenantDto tenantDto) {
