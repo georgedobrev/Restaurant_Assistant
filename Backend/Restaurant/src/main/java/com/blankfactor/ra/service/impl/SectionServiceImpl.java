@@ -28,7 +28,7 @@ public class SectionServiceImpl implements SectionService {
     public Section createSection(Integer restaurantId, SectionDto sectionDto) throws Exception {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         AppUser waiter = userRepository.findAppUserByEmail(sectionDto.getWaiterUsername())
-                .orElseThrow(() -> new UserException("User with " + sectionDto.getWaiterUsername() + " not found"));
+                .orElseThrow(() -> new UserException("User " + sectionDto.getWaiterUsername() + " not found"));
 
         String tableNumbers = convertFromIntListToString(sectionDto.getTableNumbers());
 

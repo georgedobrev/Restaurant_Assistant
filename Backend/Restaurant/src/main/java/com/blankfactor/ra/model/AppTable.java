@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "AppTable")
-@Table(name = "app_table", uniqueConstraints = {
+@Table(
+        name = "app_table",
+        uniqueConstraints = {
         @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
 })
 public class AppTable {
