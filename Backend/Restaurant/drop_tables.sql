@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS user_table;
 DROP TABLE IF EXISTS virtual_table;
 DROP TABLE IF EXISTS tenant;
 DROP TABLE IF EXISTS notification;
+DROP TABLE IF EXISTS refresh_token;
 DROP TABLE IF EXISTS app_user;
 DROP TABLE IF EXISTS app_table;
 DROP TABLE IF EXISTS restaurant;
