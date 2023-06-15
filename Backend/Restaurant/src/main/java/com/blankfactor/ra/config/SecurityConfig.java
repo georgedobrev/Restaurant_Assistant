@@ -35,7 +35,9 @@ public class SecurityConfig {
                         "/configuration/ui",
                         "/configuration/security",
                         "/swagger-ui/**",
-                        "/swagger-ui.html")
+                        "/swagger-ui.html",
+                        //TODO: specify endpoints
+                        "**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
