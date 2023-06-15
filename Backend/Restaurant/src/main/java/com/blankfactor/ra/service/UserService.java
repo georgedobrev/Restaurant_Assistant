@@ -5,6 +5,7 @@ import com.blankfactor.ra.model.AppUser;
 
 public interface UserService {
     AppUser createUser(UpdateUserDto updateUserDto);
+
     AppUser addRoleToUser(UpdateUserDto updateUserDto);
 
     AppUser getUserById(int id);

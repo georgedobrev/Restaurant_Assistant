@@ -39,11 +39,11 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/{restaurantIds}")
-    public ResponseEntity<List<Restaurant>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("restaurantId") Integer restaurantId) throws Exception {
+        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        return ResponseEntity.ok(restaurants);
+        return ResponseEntity.ok(restaurant);
     }
 
     @PutMapping("/{restaurantId}")
