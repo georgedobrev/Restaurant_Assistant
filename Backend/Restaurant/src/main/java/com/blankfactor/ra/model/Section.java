@@ -6,16 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity(name = "Section")
-//@Table(
-//        name = "section",
-//        uniqueConstraints =
-//        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
-//)
+@Table(
+        name = "section",
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
+)
 public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,7 +31,7 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-    @OneToOne
-    @JoinColumn(name = "waiter_id", unique = true)
-    private AppUser waiter;
+
+    @OneToMany(mappedBy = "section")
+    private Set<WaiterSection> waiters = new HashSet<>();
 }

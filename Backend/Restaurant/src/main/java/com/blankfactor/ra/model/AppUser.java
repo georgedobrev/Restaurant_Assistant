@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -46,6 +48,10 @@ public class AppUser implements UserDetails {
     @Builder.Default
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "waiter")
+    private Set<WaiterSection> waiterSections = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
