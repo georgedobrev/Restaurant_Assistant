@@ -10,6 +10,8 @@ public interface UserService {
 
     AppUser getUserById(int id);
 
+    AppUser getUserByEmail(String email);
+
     void deleteUserById(int id);
 
     AppUser updateUserById(int id, UpdateUserDto updateUserDto);
