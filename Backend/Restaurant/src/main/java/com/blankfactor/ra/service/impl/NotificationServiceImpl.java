@@ -1,13 +1,10 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
-import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
-import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
-import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,25 +24,21 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification createNotification(NotificationDto notificationDto) {
         Notification notification = new Notification();
-        UserRole userRole = new UserRole();
-
-        userRole.setRoleType(userRole.getRoleType());
 
         notification.setAppTable(notificationDto.getAppTable());
         notification.setAppUser(notificationDto.getAppUser());
         notification.setRequestType(notificationDto.getRequestType());
 
-                    if (notificationDto.getRequestType().equals("Menu")) {
-                        notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a menu to waiter " + notificationDto.getAppUser().getId());
-                    } else if (notificationDto.getRequestType().equals("Waiter")) {
-                        notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a waiter.");
-                    } else if ( notificationDto.getRequestType().equals("Bill")) {
-                        notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested the bill.");
-                    }
+        if (notificationDto.getRequestType().equals("Menu")) {
+            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a menu to waiter " + notificationDto.getAppUser().getId());
+        } else if (notificationDto.getRequestType().equals("Waiter")) {
+            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a waiter.");
+        } else if (notificationDto.getRequestType().equals("Bill")) {
+            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested the bill.");
+        }
 
         notification.setApproved(notificationDto.isApproved());
         notification.setCreatedAt(Instant.now());
-        System.out.println(notification.getMessage());
 
         return notificationRepository.save(notification);
     }
