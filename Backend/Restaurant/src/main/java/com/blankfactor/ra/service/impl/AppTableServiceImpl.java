@@ -2,6 +2,7 @@ package com.blankfactor.ra.service.impl;
 
 
 import com.blankfactor.ra.dto.AppTableDto;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
@@ -43,6 +44,12 @@ public class AppTableServiceImpl implements AppTableService {
     @Override
     public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) throws Exception {
         return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber).orElseThrow(Exception::new);
+    }
+
+    @Override
+    public AppTable getTableByRestaurantIdAndTableNumber(int tableNumber, Integer restaurantId) {
+        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+                .orElseThrow(() -> new AppTableException("Table " + tableNumber + " not found"));
     }
 
     @Override
