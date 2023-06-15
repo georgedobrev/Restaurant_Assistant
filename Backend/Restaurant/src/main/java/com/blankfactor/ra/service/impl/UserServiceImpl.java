@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
     }
 
+    @Override
+    public AppUser getUserByEmail(String email) {
+        return userRepository.findAppUserByEmail(email)
+                .orElseThrow(() -> new UserException("User with email " + email + " not found"));
+    }
+
     @Transactional
     @Override
     public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
