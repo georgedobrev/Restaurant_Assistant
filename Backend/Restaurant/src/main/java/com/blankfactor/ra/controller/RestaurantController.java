@@ -3,6 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
+import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,13 @@ public class RestaurantController {
     @GetMapping("/getAll")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+
+        return ResponseEntity.ok(restaurants);
+    }
+
+    @GetMapping("/getAllByAdmin/{admin_id}")
+    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
+        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);
     }
