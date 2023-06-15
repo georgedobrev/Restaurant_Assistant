@@ -29,14 +29,14 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setAppUser(notificationDto.getAppUser());
         notification.setRequestType(notificationDto.getRequestType());
 
-        if (notificationDto.getRequestType().equals("Menu")) {
-            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a menu to waiter " + notificationDto.getAppUser().getId());
-        } else if (notificationDto.getRequestType().equals("Waiter")) {
-            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested a waiter.");
-        } else if (notificationDto.getRequestType().equals("Bill")) {
-            notification.setMessage("From table " + notificationDto.getAppTable().getId() + " requested the bill.");
+        switch (notification.getRequestType()) {
+            case Waiter ->
+                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested a waiter.");
+            case Bill ->
+                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the bill.");
+            case Menu ->
+                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the menu.");
         }
-
         notification.setApproved(notificationDto.isApproved());
         notification.setCreatedAt(Instant.now());
 

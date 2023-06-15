@@ -1,5 +1,6 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.enums.RequestType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,7 +24,7 @@ public class Notification {
     private AppTable appTable;
 
     @Column(name = "request_type")
-    private String requestType;
+    private RequestType requestType;
 
     @Column(name = "message")
     private String message;
