@@ -43,4 +43,5 @@ public class Tenant {
     @Builder.Default
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
+
 }
