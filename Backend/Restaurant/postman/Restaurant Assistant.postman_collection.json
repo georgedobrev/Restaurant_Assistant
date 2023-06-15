@@ -3,8 +3,8 @@
 		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
 		"name": "Restaurant Assistant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27763372",
-		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27763372&source=collection_link"
+		"_exporter_id": "27618519",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
 	},
 	"item": [
 		{
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"appTable\": {\n  \"id\": 2\n  },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
+							"raw": "{\n     \"appTable\": {\n    \"id\": 5\n  },\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,7 +65,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/notification/all/table/3",
+							"raw": "localhost:8080/notification/all/table/1",
 							"host": [
 								"localhost"
 							],
@@ -74,7 +74,7 @@
 								"notification",
 								"all",
 								"table",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -86,7 +86,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/notification/delete/all/2",
+							"raw": "localhost:8080/notification/delete/all/1",
 							"host": [
 								"localhost"
 							],
@@ -95,7 +95,7 @@
 								"notification",
 								"delete",
 								"all",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -107,7 +107,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/notification/delete/3",
+							"raw": "localhost:8080/notification/delete/16",
 							"host": [
 								"localhost"
 							],
@@ -115,7 +115,7 @@
 							"path": [
 								"notification",
 								"delete",
-								"3"
+								"16"
 							]
 						}
 					},
@@ -127,7 +127,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/notification/update/2",
+							"raw": "localhost:8080/notification/update/1",
 							"host": [
 								"localhost"
 							],
@@ -135,7 +135,7 @@
 							"path": [
 								"notification",
 								"update",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -152,20 +152,20 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/1/qrcode/download?ids=11,12",
+							"raw": "localhost:8080/qrcode/download/1?ids=10,20",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"1",
 								"qrcode",
-								"download"
+								"download",
+								"1"
 							],
 							"query": [
 								{
 									"key": "ids",
-									"value": "11,12"
+									"value": "10,20"
 								}
 							]
 						}
@@ -256,14 +256,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/tables/2/all",
+							"raw": "localhost:8080/tables/1/all",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"tables",
-								"2",
+								"1",
 								"all"
 							]
 						}
@@ -313,14 +313,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/tables/2/10",
+							"raw": "localhost:8080/tables/1/10",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"tables",
-								"2",
+								"1",
 								"10"
 							]
 						}
@@ -333,14 +333,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/tables/2/13",
+							"raw": "localhost:8080/tables/1/13",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"tables",
-								"2",
+								"1",
 								"13"
 							]
 						}
@@ -364,14 +364,14 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/restaurant/1,2,3",
+							"raw": "localhost:8080/restaurant/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"restaurant",
-								"1,2,3"
+								"1"
 							],
 							"query": [
 								{
@@ -407,7 +407,19 @@
 					"name": "getAllRestaurantsByAdmin",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAllByAdmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAllByAdmin",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -445,7 +457,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -453,7 +465,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/restaurant/5",
+							"raw": "http://localhost:8080/restaurant/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -461,7 +473,7 @@
 							"port": "8080",
 							"path": [
 								"restaurant",
-								"5"
+								"1"
 							]
 						}
 					},
@@ -479,7 +491,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+							"raw": "{\n  \"email\": \"example@gmail.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"password\" : \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -609,7 +621,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"example@example.com\",\n  \"restaurantId\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"blacklisted\": false,\n  \"active\": true,\n  \"createdAt\": \"2023-06-08T12:34:56Z\"\n}",
+							"raw": "{\n  \"email\": \"first@lowl.com\",\n  \"restaurantId\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -774,13 +786,13 @@
 			"name": "Section",
 			"item": [
 				{
-					"name": "localhost:8080/section/1",
+					"name": "Create section",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sectionNumber\" : 10,\n    \"waiterUsername\": \"test@email.com\",\n    \"tableNumbers\" : [5, 6]\n}",
+							"raw": "{\n    \"sectionNumber\" : 10,\n    \"waiterUsername\": \"example@gmail.com\",\n    \"tableNumbers\" : [10, 20]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -795,6 +807,26 @@
 							"port": "8080",
 							"path": [
 								"section",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all sections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/section/getAll/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								"getAll",
 								"1"
 							]
 						}
