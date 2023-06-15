@@ -1,103 +1,87 @@
-import { Button, Box, TextField } from "@mui/material";
+import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import styles from "./restaurant.module.css";
+import {
+  createRestaurant,
+  Restaurant,
+} from "../../../services/restaurantService";
 
 const AddRestaurant: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [tablesCount, setTablesCount] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const restaurantData: Restaurant = {
+      name,
+      tablesCount: parseInt(tablesCount),
+      address,
+      phoneNumber,
+    };
+
+    try {
+      const response: Restaurant = await createRestaurant(restaurantData);
+      console.log(response);
+      setName("");
+      setAddress("");
+      setTablesCount("");
+      setPhoneNumber("");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <h2 className={styles.newRestaurant}>Add restaurant</h2>
+    <div>
+      <h2 className={styles.newRestaurant}>Add new restaurant</h2>
 
-      <form>
-        <div className={styles.userDetails}>
-          <div className={styles.flexColumn}>
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Restaurant Name"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
+      <form className={styles.submitForm} onSubmit={handleSubmit}>
+        <TextField
+          label="Restaurant Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          color="warning"
+          required
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                id="filled-basic"
-                label="Tables Count"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
+        <TextField
+          label="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                id="filled-basic"
-                label="Phone Number"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
-          </div>
+        <TextField
+          label="Tables Count"
+          value={tablesCount}
+          onChange={(e) => setTablesCount(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-          <div className={styles.flexColumn}>
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                id="filled-basic"
-                label="Address"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              >
-                Number
-              </TextField>
-            </Box>
+        <TextField
+          label="Phone Number"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                id="filled-basic"
-                label="Email Address"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
-
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                id="filled-basic"
-                label="Phone Number 2"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              >
-                Number
-              </TextField>
-            </Box>
-          </div>
-        </div>
-        <div className={styles.flexColumn}>
-          <Button className={styles.button} variant="contained">
-            Add Restaurant
-          </Button>
-        </div>
+        <Button type="submit" className={styles.btn} variant="contained">
+          Add new restaurant
+        </Button>
       </form>
     </div>
   );
