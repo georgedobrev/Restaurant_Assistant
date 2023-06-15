@@ -22,7 +22,6 @@ import java.util.List;
 public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final RestaurantService restaurantService;
-    private final UserRepository userRepository;
     private final AppTableService appTableService;
     private final UserService userService;
 
