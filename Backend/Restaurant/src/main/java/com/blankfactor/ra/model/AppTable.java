@@ -26,7 +26,7 @@ public class AppTable {
     private QrCode qr;
 
     @Column(name = "occupied")
-    private boolean occupied;
+    private boolean occupied = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -36,8 +36,8 @@ public class AppTable {
     private int capacity;
 
     @Column(name = "virtual_table")
-    private boolean isVirtualTable;
+    private boolean isVirtualTable = false;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 }
