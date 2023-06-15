@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    private AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {
+    public AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
                 .roleType(updateUserDto.getRoleType())
