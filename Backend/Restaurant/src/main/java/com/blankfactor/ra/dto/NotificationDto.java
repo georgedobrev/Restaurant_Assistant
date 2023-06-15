@@ -14,21 +14,18 @@ import java.time.Instant;
 @NoArgsConstructor
 public class NotificationDto {
 
-    @NotNull(message = "AppTable is required")
+    @NotNull(message = "AppTable is required for notifications")
     private AppTable appTable;
 
-    @NotNull(message = "AppUser is required")
+    @NotNull(message = "AppUser is required for notifications")
     private AppUser appUser;
 
-    @NotBlank(message = "Request type is required")
+    @NotBlank(message = "Request type is required for notifications")
     private String requestType;
 
-    @Size(max = 500, message = "Name cannot be more than 500 characters")
-    @NotBlank(message = "Message is required")
+    @Size(max = 255, message = "Name cannot be more than 255 characters")
+    @NotBlank(message = "Message is required for notifications")
     private String message;
-
     private boolean approved;
-
-    @NotNull(message = "Created at is required")
     private Instant createdAt;
 }

@@ -28,7 +28,7 @@ public class TenantController {
     }
 
     @GetMapping("/get/{tenant_id}")
-    public ResponseEntity<Tenant> getTenantById(@Valid @PathVariable("tenant_id") int tenantId) throws Exception {
+    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
