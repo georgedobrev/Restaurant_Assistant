@@ -23,7 +23,7 @@ public class NotificationDto {
     @NotBlank(message = "Request type is required for notifications")
     private String requestType;
 
-    @Size(max = 255, message = "Name cannot be more than 255 characters")
+    @Size(max = 50, message = "Name cannot be more than 50 characters")
     @NotBlank(message = "Message is required for notifications")
     private String message;
     private boolean approved;
