@@ -33,7 +33,4 @@ public class UserRole {
     @Column(name = "role_type", nullable = false)
     @NotNull
     private RoleType roleType;
-
-    @ManyToOne
-    private Tenant tenant;
 }

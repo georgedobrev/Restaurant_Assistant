@@ -14,7 +14,4 @@ public class TenantDto {
     private String surname;
     private String email;
     private Restaurant restaurant;
-    private boolean blacklisted;
-    private boolean active;
-    private Instant createdAt;
 }
