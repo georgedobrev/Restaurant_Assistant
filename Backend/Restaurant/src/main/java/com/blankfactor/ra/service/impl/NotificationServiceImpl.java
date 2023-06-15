@@ -38,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
                     notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the menu.");
         }
         notification.setApproved(notificationDto.isApproved());
-        notification.setCreatedAt(Instant.now());
+        notification.setCreatedAt(Instant.now()); //should be default
 
         return notificationRepository.save(notification);
     }
