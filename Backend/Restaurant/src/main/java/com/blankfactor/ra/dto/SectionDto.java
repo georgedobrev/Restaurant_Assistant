@@ -12,7 +12,7 @@ import java.util.List;
 public class SectionDto {
 
     private int sectionNumber;
-    private String waiterUsername;
+    private String waiterEmail;
     private List<Integer> tableNumbers;
 }
 

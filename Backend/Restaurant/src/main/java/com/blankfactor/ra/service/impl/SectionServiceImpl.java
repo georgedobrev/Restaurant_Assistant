@@ -2,7 +2,6 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
 import com.blankfactor.ra.exceptions.custom.SectionDuplicateException;
-import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
@@ -12,6 +11,7 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
+import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +24,12 @@ public class SectionServiceImpl implements SectionService {
     private final RestaurantService restaurantService;
     private final UserRepository userRepository;
     private final AppTableService appTableService;
+    private final UserService userService;
 
     @Override
     public Section createSection(Integer restaurantId, SectionDto sectionDto) throws Exception {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
-        AppUser waiter = userRepository.findAppUserByEmail(sectionDto.getWaiterUsername())
-                .orElseThrow(() -> new UserException("User " + sectionDto.getWaiterUsername() + " not found")); //TODO
+        AppUser waiter = userService.getUserByEmail(sectionDto.getWaiterEmail());
 
         Section section = Section.builder()
                 .sectionNumber(sectionDto.getSectionNumber())
