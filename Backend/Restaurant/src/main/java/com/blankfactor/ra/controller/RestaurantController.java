@@ -3,7 +3,6 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
-import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +39,11 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/{restaurantIds}")
-    public ResponseEntity<List<Restaurant>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("restaurantId") Integer restaurantId) throws Exception {
+        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        return ResponseEntity.ok(restaurants);
+        return ResponseEntity.ok(restaurant);
     }
 
     @PutMapping("/{restaurantId}")

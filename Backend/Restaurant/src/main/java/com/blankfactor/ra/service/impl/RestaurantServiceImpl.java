@@ -41,11 +41,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getRestaurantsByIds(List<Integer> restaurantIds) {
-        return restaurantRepository.findAllById(restaurantIds);
-    }
-
-    @Override
     public Restaurant getRestaurantById(Integer restaurantId) {
         return restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
