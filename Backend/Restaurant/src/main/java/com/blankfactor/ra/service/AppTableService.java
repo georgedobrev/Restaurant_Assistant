@@ -15,6 +15,4 @@ public interface AppTableService {
     AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) throws Exception;
 
     void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception;
-
-    AppTable getTableByRestaurantIdAndTableNumber(int tableNumber, Integer restaurantId);
 }

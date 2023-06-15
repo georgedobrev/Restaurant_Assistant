@@ -16,9 +16,9 @@ import java.util.List;
 public class SectionController {
     private final SectionService sectionService;
 
-    @PostMapping("/{restaurantId}")
-    public ResponseEntity<Section> createSection(@PathVariable("restaurantId") Integer restaurantId, @RequestBody SectionDto sectionDto) throws Exception {
-        Section createdSection = sectionService.createSection(restaurantId, sectionDto);
+    @PostMapping()
+    public ResponseEntity<Section> createSection(@RequestBody SectionDto sectionDto) throws Exception {
+        Section createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
 

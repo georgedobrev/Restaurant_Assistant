@@ -11,19 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity(name = "Section")
-@Table(
-        name = "section",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
-)
+//@Table(
+//        name = "section",
+//        uniqueConstraints =
+//        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
+//)
 public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
-    @Column(name = "section_number", unique = true)
-    private int sectionNumber;
-    @Column(name = "table_numbers", unique = true)
+    @Column(name = "section_name")
+    private String sectionName;
+    @Column(name = "table_numbers")
     private String tableNumbers;
     @ManyToOne
     @JoinColumn(name = "restaurant_id")

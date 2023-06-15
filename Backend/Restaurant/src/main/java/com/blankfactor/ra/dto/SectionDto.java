@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.model.AppTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class SectionDto {
 
-    private int sectionNumber;
+    private String sectionName;
     private String waiterEmail;
-    private List<Integer> tableNumbers;
+    private List<AppTable> appTables;
 }
 
