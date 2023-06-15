@@ -3,7 +3,6 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
-import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
