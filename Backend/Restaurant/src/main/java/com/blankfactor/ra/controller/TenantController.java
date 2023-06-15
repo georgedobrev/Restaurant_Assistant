@@ -4,6 +4,7 @@ import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
 import com.blankfactor.ra.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,14 @@ public class TenantController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<Tenant> createTenant(@RequestBody TenantDto tenantDto) {
+    public ResponseEntity<Tenant> createTenant(@Valid @RequestBody TenantDto tenantDto) {
         Tenant createdTenant = tenantService.createTenant(tenantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
     @GetMapping("/get/{tenant_id}")
-    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
+    public ResponseEntity<Tenant> getTenantById(@Valid @PathVariable("tenant_id") int tenantId) throws Exception {
         Tenant tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
