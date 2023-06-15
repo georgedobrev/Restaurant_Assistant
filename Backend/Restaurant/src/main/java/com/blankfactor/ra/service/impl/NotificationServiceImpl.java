@@ -38,8 +38,6 @@ public class NotificationServiceImpl implements NotificationService {
             case Menu ->
                     notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the menu.");
         }
-        notification.setApproved(notificationDto.isApproved());
-        notification.setCreatedAt(Instant.now()); //should be default
 
         sendNotificationToWaiter(notification);
 

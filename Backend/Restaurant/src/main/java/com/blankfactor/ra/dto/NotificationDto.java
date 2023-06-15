@@ -27,6 +27,5 @@ public class NotificationDto {
     @Size(max = 50, message = "Name cannot be more than 50 characters")
     @NotBlank(message = "Message is required for notifications")
     private String message;
-    private boolean approved;
-    private Instant createdAt;
+
 }
