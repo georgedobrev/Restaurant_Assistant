@@ -22,7 +22,7 @@ public class NotificationController {
     @PostMapping("/create")
     public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationDto) {
         Notification notification = notificationService.createNotification(notificationDto);
-
+        System.out.println(notification.getMessage());
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 
