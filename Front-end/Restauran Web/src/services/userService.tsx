@@ -12,17 +12,17 @@ export interface User {
 }
 
 export const getUsers = async (id: number): Promise<User | undefined> => {
-  return fetchWrapper.get<User | undefined>(`${usersEndpoint}/${id}`);
+  return fetchWrapper.get<User | undefined>(`${usersEndpoint}user/${id}`);
 };
 
 export const createUser = async (userData: User): Promise<User> => {
-  return fetchWrapper.post<User>(usersEndpoint, userData);
+  return fetchWrapper.post<User>(`${usersEndpoint}user`, userData);
 };
 
 export const editUser = async (userData: User, id: number): Promise<User> => {
-  return fetchWrapper.put<User>(`${usersEndpoint}/${id}`, userData);
+  return fetchWrapper.put<User>(`${usersEndpoint}user/${id}`, userData);
 };
 
 export const deleteUser = async (id: number): Promise<void> => {
-  return fetchWrapper.del<void>(`${usersEndpoint}/${id}`);
+  return fetchWrapper.del<void>(`${usersEndpoint}user/${id}`);
 };

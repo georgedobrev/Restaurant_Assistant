@@ -1,5 +1,5 @@
 {
-   "usersEndpoint": "http://localhost:8080/user",
-   "restaurantsEndpoint": "http://localhost:8080/restaurant"
+   "usersEndpoint": "http://localhost:8080/",
+   "restaurantsEndpoint": "http://localhost:8080/"
 }
 

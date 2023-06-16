@@ -25,16 +25,14 @@ const GetRestaurants = () => {
   }, []);
 
   useEffect(() => {
-    const fetchRestaurants = async () => {
+    (async () => {
       try {
         const data: Restaurant[] = await getRestaurants();
         setRestaurants(data);
       } catch (error) {
         return error;
       }
-    };
-
-    fetchRestaurants();
+    })();
   }, []);
 
   const columns: GridColDef[] = [

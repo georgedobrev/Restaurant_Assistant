@@ -10,18 +10,18 @@ export interface Restaurant {
 }
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
-  return fetchWrapper.get<Restaurant[]>(`${restaurantsEndpoint}/getAll`);
+  return fetchWrapper.get<Restaurant[]>(`${restaurantsEndpoint}restaurant/getAll`);
 };
 
 export const getRestaurantByID = async (id: number): Promise<Restaurant> => {
-  const response = await fetchWrapper.get<Restaurant[]>(`${restaurantsEndpoint}/${id}`);
+  const response = await fetchWrapper.get<Restaurant[]>(`${restaurantsEndpoint}restaurant/${id}`);
   return response[0];
 };
 
 export const editRestaurant = async (restaurantData: Restaurant): Promise<Restaurant> => {
-  return fetchWrapper.put<Restaurant>(`${restaurantsEndpoint}/${restaurantData.id}`, restaurantData);
+  return fetchWrapper.put<Restaurant>(`${restaurantsEndpoint}restaurant/${restaurantData.id}`, restaurantData);
 };
 
 export const createRestaurant = async (restaurantData: Restaurant): Promise<Restaurant> => {
-  return fetchWrapper.post<Restaurant>(`${restaurantsEndpoint}`, restaurantData);
+  return fetchWrapper.post<Restaurant>(`${restaurantsEndpoint}restaurant`, restaurantData);
 };

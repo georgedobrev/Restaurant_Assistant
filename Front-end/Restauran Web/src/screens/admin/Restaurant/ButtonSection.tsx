@@ -4,21 +4,22 @@ import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
 import EditRestaurantComponent from "./EditRestaurant";
 import GetRestaurants from "./GetRestaurants";
+import { RestaurantSections } from "../../constants";
 
-const ButtonSection = () => {
+const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addRestaurant");
 
-  const handleButtonClick = (componentName: any) => {
+  const handleButtonClick = (componentName: string) => {
     setRenderComponent(componentName);
   };
 
   const renderSelectedComponent = () => {
     switch (renderComponent) {
-      case "addUser":
+      case RestaurantSections.addRestaurant:
         return <AddRestaurant />;
-      case "editUser":
+      case RestaurantSections.editRestaurant:
         return <EditRestaurantComponent />;
-      case "deleteUser":
+      case RestaurantSections.getAllRestaurants:
         return <GetRestaurants />;
       default:
         return null;
@@ -31,33 +32,33 @@ const ButtonSection = () => {
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick("addRestaurant")}
+          onClick={() => handleButtonClick(RestaurantSections.addRestaurant)}
         >
           Add Restaurant
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick("editRestaurant")}
+          onClick={() => handleButtonClick(RestaurantSections.editRestaurant)}
         >
           Edit Restaurant
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick("allRestaurants")}
+          onClick={() => handleButtonClick(RestaurantSections.getAllRestaurants)}
         >
           All Restaurants
         </Button>
       </div>
 
-      <div>{renderComponent === "addRestaurant" && <AddRestaurant />}</div>
+      <div>{renderComponent === RestaurantSections.addRestaurant && <AddRestaurant />}</div>
 
       <div>
-        {renderComponent === "editRestaurant" && <EditRestaurantComponent />}
+        {renderComponent === RestaurantSections.editRestaurant && <EditRestaurantComponent />}
       </div>
 
-      <div>{renderComponent === "allRestaurants" && <GetRestaurants />}</div>
+      <div>{renderComponent === RestaurantSections.getAllRestaurants && <GetRestaurants />}</div>
     </div>
   );
 };
