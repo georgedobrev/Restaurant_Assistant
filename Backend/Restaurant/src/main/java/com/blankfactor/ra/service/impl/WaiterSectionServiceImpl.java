@@ -1,5 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
+import com.blankfactor.ra.dto.WaiterSectionDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
@@ -14,12 +15,13 @@ import org.springframework.stereotype.Service;
 public class WaiterSectionServiceImpl implements WaiterSectionService {
     private final WaiterSectionRepository waiterSectionRepository;
     @Override
-    public void createWaiterSection(Section section, AppUser waiter) {
-        WaiterSection waiterSection = WaiterSection.builder()
-                .section(section)
-                .waiter(waiter)
+    public WaiterSection createWaiterSection(WaiterSectionDto waiterSection) {
+        WaiterSection createdWaiterSection = WaiterSection.builder()
+                .section(waiterSection.getSection())
+                .waiter(waiterSection.getWaiter())
+                .shift(waiterSection.getShift())
                 .build();
 
-        waiterSectionRepository.save(waiterSection);
+        return waiterSectionRepository.save(createdWaiterSection);
     }
 }

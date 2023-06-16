@@ -1,8 +1,10 @@
 package com.blankfactor.ra.service;
 
+import com.blankfactor.ra.dto.WaiterSectionDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Section;
+import com.blankfactor.ra.model.WaiterSection;
 
 public interface WaiterSectionService {
-    void createWaiterSection(Section section, AppUser waiter);
+    WaiterSection createWaiterSection(WaiterSectionDto waiterSection);
 }

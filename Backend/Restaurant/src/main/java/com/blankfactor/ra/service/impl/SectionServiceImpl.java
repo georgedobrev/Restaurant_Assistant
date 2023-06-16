@@ -7,8 +7,6 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
-import com.blankfactor.ra.service.UserService;
-import com.blankfactor.ra.service.WaiterSectionService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,18 +19,18 @@ import java.util.stream.Collectors;
 public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final RestaurantService restaurantService;
-    private final UserService userService;
     private final AppTableRepository appTableRepository;
-    private final WaiterSectionService waiterSectionService;
 
     @Transactional
     @Override
     public Section createSection(SectionDto sectionDto) {
         Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
 
         Section section = Section.builder()
                 .sectionName(sectionDto.getSectionName())
                 .restaurant(restaurant)
+                .tableNumbers(tableNumbers)
                 .build();
 
         return sectionRepository.save(section);
@@ -49,7 +47,7 @@ public class SectionServiceImpl implements SectionService {
         }
     }
 
-    private String convertFromIntListToString(List<AppTable> tables) {
+    private String mapTableNumbersToString(List<AppTable> tables) {
         return tables.stream()
                 .map(table -> Integer.toString(table.getTableNumber()))
                 .collect(Collectors.joining(","));
