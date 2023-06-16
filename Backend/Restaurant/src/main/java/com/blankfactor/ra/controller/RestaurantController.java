@@ -32,11 +32,18 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/{restaurantIds}")
-    public ResponseEntity<List<Restaurant>> getRestaurantsById(@PathVariable("restaurantIds") List<Integer> restaurantIds) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByIds(restaurantIds);
+    @GetMapping("/getAllByAdmin/{admin_id}")
+    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
+        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);
+    }
+
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("restaurantId") Integer restaurantId) throws Exception {
+        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+
+        return ResponseEntity.ok(restaurant);
     }
 
     @PutMapping("/{restaurantId}")

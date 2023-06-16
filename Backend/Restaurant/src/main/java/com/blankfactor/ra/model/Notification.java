@@ -7,7 +7,7 @@ import java.time.Instant;
 
 @Data
 @Entity
-@Table(name = "notification", schema = "dbo", catalog = "restaurant_assistant")
+@Table(name = "notification")
 public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
