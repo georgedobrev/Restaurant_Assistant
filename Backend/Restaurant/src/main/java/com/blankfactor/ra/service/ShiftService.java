@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.ShiftDto;
+import com.blankfactor.ra.exceptions.custom.ShiftException;
 import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.Shift;
 
@@ -10,4 +11,8 @@ public interface ShiftService {
     Shift createShift(ShiftDto shiftDto);
 
     List<Shift> getAllShifts(Integer restaurantId);
+
+    Shift updateShift(Integer shiftId, ShiftDto shiftDto) throws ShiftException;
+
+    void deleteShift(Integer shiftId) throws ShiftException;
 }

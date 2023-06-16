@@ -58,9 +58,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(TenantException.class)
-//    public ResponseEntity<ExceptionResponse> handleTenantException(TenantException ex) {
-//        ExceptionResponse errorResponse = new ExceptionResponse("Tenant Not Found", ex.getMessage());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//    }
+    @ExceptionHandler(ShiftException.class)
+    public ResponseEntity<ExceptionResponse> handleShiftException(ShiftException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Shift Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TenantException.class)
+    public ResponseEntity<ExceptionResponse> handleTenantException(TenantException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Tenant Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }
