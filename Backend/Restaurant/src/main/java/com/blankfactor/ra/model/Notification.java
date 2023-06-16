@@ -25,8 +25,7 @@ public class Notification {
     private AppTable appTable;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "request_type")
-    @NotNull
+    @Column(name = "request_type", nullable = false)
     private RequestType requestType;
 
     @Column(name = "message")
