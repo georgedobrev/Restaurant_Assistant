@@ -16,7 +16,6 @@ const DeleteUserComponent: React.FC = () => {
 
       if (user && user.email === email) {
         await deleteUser(parseInt(id));
-        console.log("User deleted:", user);
         setId("");
         setEmail("");
       } else {

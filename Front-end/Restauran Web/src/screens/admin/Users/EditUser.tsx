@@ -25,8 +25,8 @@ const EditUserComponent: React.FC = () => {
         },
         parseInt(userId)
       );
-      return updatedUser;
       setRequestStatus("success");
+      return updatedUser;
     } catch (err) {
       setRequestStatus("failure");
     }

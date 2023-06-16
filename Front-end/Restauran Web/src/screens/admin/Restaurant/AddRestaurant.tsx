@@ -24,13 +24,13 @@ const AddRestaurant: React.FC = () => {
 
     try {
       const response: Restaurant = await createRestaurant(restaurantData);
-      console.log(response);
       setName("");
       setAddress("");
       setTablesCount("");
       setPhoneNumber("");
+      return response
     } catch (error) {
-      console.error(error);
+      return error;
     }
   };
 

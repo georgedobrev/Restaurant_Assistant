@@ -25,8 +25,8 @@ const EditRestaurantComponent: React.FC = () => {
         tablesCount,
         phoneNumber,
       });
-      return updatedRestaurant;
       setRequestStatus("success");
+      return updatedRestaurant;
     } catch (err) {
       setRequestStatus("failure");
     }
@@ -52,7 +52,6 @@ const EditRestaurantComponent: React.FC = () => {
         setRequestStatus("failure");
       }
     } catch (err) {
-      console.error(err);
       setRequestStatus("failure");
     }
   };
