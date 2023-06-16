@@ -4,7 +4,7 @@ import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
 import EditRestaurantComponent from "./EditRestaurant";
 import GetRestaurants from "./Restaurants";
-import { RestaurantSections } from "../../constants";
+import { restaurantSections } from "../../constants";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addRestaurant");
@@ -15,11 +15,11 @@ const ButtonSection: React.FC = () => {
 
   const renderSelectedComponent = () => {
     switch (renderComponent) {
-      case RestaurantSections.addRestaurant:
+      case restaurantSections.addRestaurant:
         return <AddRestaurant />;
-      case RestaurantSections.editRestaurant:
+      case restaurantSections.editRestaurant:
         return <EditRestaurantComponent />;
-      case RestaurantSections.getAllRestaurants:
+      case restaurantSections.getAllRestaurants:
         return <GetRestaurants />;
       default:
         return null;
@@ -32,14 +32,14 @@ const ButtonSection: React.FC = () => {
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(RestaurantSections.addRestaurant)}
+          onClick={() => handleButtonClick(restaurantSections.addRestaurant)}
         >
           Add Restaurant
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(RestaurantSections.editRestaurant)}
+          onClick={() => handleButtonClick(restaurantSections.editRestaurant)}
         >
           Edit Restaurant
         </Button>
@@ -47,7 +47,7 @@ const ButtonSection: React.FC = () => {
           className={styles.btns}
           variant="contained"
           onClick={() =>
-            handleButtonClick(RestaurantSections.getAllRestaurants)
+            handleButtonClick(restaurantSections.getAllRestaurants)
           }
         >
           All Restaurants
@@ -55,19 +55,19 @@ const ButtonSection: React.FC = () => {
       </div>
 
       <div>
-        {renderComponent === RestaurantSections.addRestaurant && (
+        {renderComponent === restaurantSections.addRestaurant && (
           <AddRestaurant />
         )}
       </div>
 
       <div>
-        {renderComponent === RestaurantSections.editRestaurant && (
+        {renderComponent === restaurantSections.editRestaurant && (
           <EditRestaurantComponent />
         )}
       </div>
 
       <div>
-        {renderComponent === RestaurantSections.getAllRestaurants && (
+        {renderComponent === restaurantSections.getAllRestaurants && (
           <GetRestaurants />
         )}
       </div>

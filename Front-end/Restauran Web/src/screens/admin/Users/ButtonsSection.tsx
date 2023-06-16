@@ -4,7 +4,7 @@ import AddUser from "./AddUser";
 import EditUserComponent from "./EditUser";
 import DeleteUserComponent from "./DeleteComponent";
 import styles from "./users.module.css";
-import { UsersSections } from "../../constants";
+import { usersSections } from "../../constants";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addUser");
@@ -15,11 +15,11 @@ const ButtonSection: React.FC = () => {
 
   const renderSelectedComponent = () => {
     switch (renderComponent) {
-      case UsersSections.addUser:
+      case usersSections.addUser:
         return <AddUser />;
-      case UsersSections.editUser:
+      case usersSections.editUser:
         return <EditUserComponent />;
-      case UsersSections.deleteUser:
+      case usersSections.deleteUser:
         return <DeleteUserComponent />;
       default:
         return null;
@@ -32,34 +32,34 @@ const ButtonSection: React.FC = () => {
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(UsersSections.addUser)}
+          onClick={() => handleButtonClick(usersSections.addUser)}
         >
           Add New User
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(UsersSections.editUser)}
+          onClick={() => handleButtonClick(usersSections.editUser)}
         >
           Edit User
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(UsersSections.deleteUser)}
+          onClick={() => handleButtonClick(usersSections.deleteUser)}
         >
           Delete User
         </Button>
       </div>
 
-      <div>{renderComponent === UsersSections.addUser && <AddUser />}</div>
+      <div>{renderComponent === usersSections.addUser && <AddUser />}</div>
 
       <div>
-        {renderComponent === UsersSections.editUser && <EditUserComponent />}
+        {renderComponent === usersSections.editUser && <EditUserComponent />}
       </div>
 
       <div>
-        {renderComponent === UsersSections.deleteUser && (
+        {renderComponent === usersSections.deleteUser && (
           <DeleteUserComponent />
         )}
       </div>

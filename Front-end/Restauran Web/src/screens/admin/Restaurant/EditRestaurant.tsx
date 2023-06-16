@@ -6,6 +6,7 @@ import {
   editRestaurant,
 } from "../../../services/restaurantService";
 import { Restaurant } from "../../../services/restaurantService";
+import { status } from "../../constants";
 
 const EditRestaurantComponent: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -25,10 +26,10 @@ const EditRestaurantComponent: React.FC = () => {
         tablesCount,
         phoneNumber,
       });
-      setRequestStatus("success");
+      setRequestStatus(status.successStatus);
       return updatedRestaurant;
     } catch (err) {
-      setRequestStatus("failure");
+      setRequestStatus(status.failureStatus);
     }
   };
 
@@ -46,13 +47,13 @@ const EditRestaurantComponent: React.FC = () => {
         setAddress(restaurantData.address);
         setTablesCount(restaurantData.tablesCount);
         setPhoneNumber(restaurantData.phoneNumber);
-        setRequestStatus("success");
+        setRequestStatus(status.successStatus);
       } else {
         setRestaurantExists(false);
-        setRequestStatus("failure");
+        setRequestStatus(status.failureStatus);
       }
     } catch (err) {
-      setRequestStatus("failure");
+      setRequestStatus(status.failureStatus);
     }
   };
 
@@ -134,7 +135,7 @@ const EditRestaurantComponent: React.FC = () => {
           </Button>
         </div>
       ) : (
-        requestStatus === "failure" && (
+        requestStatus === status.failureStatus && (
           <p className={styles.errorMsg}>Such restaurant does not exist</p>
         )
       )}

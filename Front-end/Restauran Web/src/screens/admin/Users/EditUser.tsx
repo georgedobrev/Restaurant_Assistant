@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
 import { editUser, User, getUsers } from "../../../services/UserService";
+import { status } from "../../constants";
 
 const EditUserComponent: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -25,10 +26,10 @@ const EditUserComponent: React.FC = () => {
         },
         parseInt(userId)
       );
-      setRequestStatus("success");
+      setRequestStatus(status.successStatus);
       return updatedUser;
     } catch (err) {
-      setRequestStatus("failure");
+      setRequestStatus(status.failureStatus);
     }
   };
 
@@ -41,13 +42,13 @@ const EditUserComponent: React.FC = () => {
         setName(user.name);
         setSurname(user.surname);
         setEmail(user.email);
-        setRequestStatus("success");
+        setRequestStatus(status.successStatus);
       } else {
         setUserExists(false);
-        setRequestStatus("failure");
+        setRequestStatus(status.failureStatus);
       }
     } catch (err) {
-      setRequestStatus("failure");
+      setRequestStatus(status.failureStatus);
     }
   };
 
@@ -124,7 +125,7 @@ const EditUserComponent: React.FC = () => {
           </Button>
         </div>
       ) : (
-        requestStatus === "failure" && (
+        requestStatus === status.failureStatus && (
           <p className={styles.errorMsg}>Such user does not exist</p>
         )
       )}
