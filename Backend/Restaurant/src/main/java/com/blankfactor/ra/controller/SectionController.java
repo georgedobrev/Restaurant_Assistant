@@ -6,6 +6,7 @@ import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.service.SectionService;
 import com.blankfactor.ra.service.WaiterSectionService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class SectionController {
     private final WaiterSectionService waiterSectionService;
 
     @PostMapping()
-    public ResponseEntity<Section> createSection(@RequestBody SectionDto sectionDto) throws Exception {
+    public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) throws Exception {
         Section createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
@@ -33,7 +34,7 @@ public class SectionController {
     }
 
     @PostMapping("/addWaiter")
-    public ResponseEntity<WaiterSection> assignWaiterToSection(@RequestBody WaiterSectionDto waiterSectionDto) {
+    public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
         // TODO Null Null Null
         WaiterSection createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
