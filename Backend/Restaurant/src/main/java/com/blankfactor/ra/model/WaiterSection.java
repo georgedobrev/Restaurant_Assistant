@@ -19,10 +19,14 @@ public class WaiterSection {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "section_id")
+    @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name = "waiter_id")
+    @JoinColumn(name = "waiter_id", nullable = false)
     private AppUser waiter;
+
+    @ManyToOne
+    @JoinColumn(name = "shift_id", nullable = false)
+    private Shift shift;
 }
