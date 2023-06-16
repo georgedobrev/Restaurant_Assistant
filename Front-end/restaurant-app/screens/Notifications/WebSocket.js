@@ -1,36 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Client } from "@stomp/stompjs";
+import { socketBaseURL, endpointRegister, topic } from "../../config.json";
 
-const SOCKET_URL = "ws://localhost:8080/ws-message";
+const WebSocket = () => {
+  const [messages, setMessages] = useState("Your server message here.");
 
-class App_Stomp extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      messages: "You server message here.",
-    };
-  }
+  useEffect(() => {
+    let client = null;
 
-  componentDidMount() {
-    let currentComponent = this;
-    let onConnected = () => {
-      client.subscribe("/topic/message", function (msg) {
+    const onConnected = () => {
+      client.subscribe(`${topic}`, (msg) => {
         if (msg.body) {
-          var jsonBody = JSON.parse(msg.body);
+          const jsonBody = JSON.parse(msg.body);
           if (jsonBody.message) {
-            currentComponent.setState({ messages: jsonBody.message });
+            setMessages(jsonBody.message);
           }
         }
       });
     };
 
-    let onDisconnected = () => {
+    const onDisconnected = () => {
       return "Disconnected!!";
     };
 
-    const client = new Client({
-      brokerURL: SOCKET_URL,
+    client = new Client({
+      brokerURL: `${socketBaseURL}${endpointRegister}`,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -39,15 +34,17 @@ class App_Stomp extends React.Component {
     });
 
     client.activate();
-  }
 
-  render() {
-    return (
-      <View>
-        <Text style={{ marginTop: "30%" }}>{this.state.messages}</Text>
-      </View>
-    );
-  }
-}
+    return () => {
+      client && client.deactivate();
+    };
+  }, []);
 
-export default App_Stomp;
+  return (
+    <View>
+      <Text>{messages}</Text>
+    </View>
+  );
+};
+
+export default WebSocket;
