@@ -1,7 +1,6 @@
 package com.blankfactor.ra.exceptions;
 
 import com.blankfactor.ra.exceptions.custom.*;
-import com.blankfactor.ra.model.Tenant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

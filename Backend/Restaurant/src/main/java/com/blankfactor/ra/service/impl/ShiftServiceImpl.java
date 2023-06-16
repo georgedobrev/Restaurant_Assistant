@@ -3,15 +3,14 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.ShiftDto;
 import com.blankfactor.ra.enums.DayType;
 import com.blankfactor.ra.exceptions.custom.ShiftException;
-import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.Shift;
 import com.blankfactor.ra.repository.ShiftRepository;
 import com.blankfactor.ra.service.ShiftService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ShiftServiceImpl implements ShiftService {

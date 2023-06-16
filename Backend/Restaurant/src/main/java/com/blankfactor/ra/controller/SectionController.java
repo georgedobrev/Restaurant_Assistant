@@ -4,7 +4,6 @@ import com.blankfactor.ra.dto.SectionDto;
 import com.blankfactor.ra.dto.WaiterSectionDto;
 import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
-import com.blankfactor.ra.model.WaiterSectionPK;
 import com.blankfactor.ra.service.SectionService;
 import com.blankfactor.ra.service.WaiterSectionService;
 import lombok.AllArgsConstructor;
@@ -33,15 +32,8 @@ public class SectionController {
         return ResponseEntity.ok(allSections);
     }
 
-    @PutMapping("/update/{restaurantId}")
-    public ResponseEntity<Section> updateSection(@PathVariable("restaurantId") Integer restaurantId, SectionDto sectionDto) {
-//        TODO how to find the existing section (findById)
-//        Section updatedSection = sectionService.updateSection(restaurantId, sectionDto);
-        return ResponseEntity.ok(null);
-    }
-
     @PostMapping("/addWaiter")
-    public ResponseEntity<WaiterSection> assignWaiterToSection(WaiterSectionDto waiterSectionDto) {
+    public ResponseEntity<WaiterSection> assignWaiterToSection(@RequestBody WaiterSectionDto waiterSectionDto) {
         // TODO Null Null Null
         WaiterSection createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);

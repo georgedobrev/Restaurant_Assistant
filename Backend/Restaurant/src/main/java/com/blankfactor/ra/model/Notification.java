@@ -2,7 +2,6 @@ package com.blankfactor.ra.model;
 
 import com.blankfactor.ra.enums.RequestType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.Instant;
