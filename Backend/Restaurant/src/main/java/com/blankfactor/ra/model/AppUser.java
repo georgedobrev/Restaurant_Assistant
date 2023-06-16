@@ -49,10 +49,6 @@ public class AppUser implements UserDetails {
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "waiter")
-    private Set<WaiterSection> waiterSections = new HashSet<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //todo fix this

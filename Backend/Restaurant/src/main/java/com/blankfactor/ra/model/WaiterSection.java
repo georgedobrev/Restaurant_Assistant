@@ -12,21 +12,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "waiter_section")
+@IdClass(WaiterSectionPK.class)
 public class WaiterSection {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    @ManyToOne
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "waiter_id", nullable = false)
     private AppUser waiter;
 
-    @ManyToOne
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shift_id", nullable = false)
     private Shift shift;
 }

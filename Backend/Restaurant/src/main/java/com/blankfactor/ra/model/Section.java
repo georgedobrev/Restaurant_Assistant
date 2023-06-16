@@ -31,7 +31,4 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-
-    @OneToMany(mappedBy = "section")
-    private Set<WaiterSection> waiters = new HashSet<>();
 }

@@ -28,7 +28,6 @@ public class SectionServiceImpl implements SectionService {
     @Transactional
     @Override
     public Section createSection(SectionDto sectionDto) {
-        AppUser waiter = userService.getUserByEmail(sectionDto.getWaiterEmail());
         Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
 
         Section section = Section.builder()
@@ -37,7 +36,7 @@ public class SectionServiceImpl implements SectionService {
                 .build();
         sectionRepository.save(section);
 
-        waiterSectionService.createWaiterSection(section, waiter);
+        //waiterSectionService.createWaiterSection(section, waiter);
 
         assignSectionToTables(sectionDto.getAppTables(), section);
         String tableNumbers = convertFromIntListToString(sectionDto.getAppTables());

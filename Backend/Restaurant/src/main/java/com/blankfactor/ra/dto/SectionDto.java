@@ -13,7 +13,6 @@ import java.util.List;
 public class SectionDto {
 
     private String sectionName;
-    private String waiterEmail;
     private List<AppTable> appTables;
 }
 

@@ -15,7 +15,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "shift")
+@Table(
+        name = "shift",
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"restaurant_id", "start_time", "end_time", "day_from", "day_to"})
+)
 public class Shift {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
