@@ -1,6 +1,7 @@
 {
    "baseUrl": "http://localhost:8080/",
    "usersEndpoint": "user",
-   "restaurantsEndpoint": "restaurant"
+   "restaurantsEndpoint": "restaurant",
+   "restaurants": "/getAll"
 }
 
