@@ -1,6 +1,7 @@
 package com.blankfactor.ra.exceptions;
 
 import com.blankfactor.ra.exceptions.custom.*;
+import com.blankfactor.ra.model.Tenant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -49,5 +50,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NotificationException.class)
+    public ResponseEntity<ExceptionResponse> handleNotificationException(NotificationException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Notification Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TenantException.class)
+    public ResponseEntity<ExceptionResponse> handleTenantException(TenantException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Tenant Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

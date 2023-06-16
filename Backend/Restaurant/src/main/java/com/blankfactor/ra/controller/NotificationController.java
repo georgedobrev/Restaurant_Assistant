@@ -16,13 +16,12 @@ import java.util.List;
 @RequestMapping("/notification")
 @RestController
 public class NotificationController {
-
+    
     private final NotificationService notificationService;
 
     @PostMapping("/create")
     public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationDto) {
         Notification notification = notificationService.createNotification(notificationDto);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 

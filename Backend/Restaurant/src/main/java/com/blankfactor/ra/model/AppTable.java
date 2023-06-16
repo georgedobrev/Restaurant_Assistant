@@ -2,9 +2,11 @@ package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,8 +27,9 @@ public class AppTable {
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
+    @Builder.Default
     @Column(name = "occupied")
-    private boolean occupied;
+    private boolean occupied = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -39,9 +42,11 @@ public class AppTable {
     @Column(name = "capacity")
     private int capacity;
 
+    @Builder.Default
     @Column(name = "virtual_table")
-    private boolean isVirtualTable;
+    private boolean isVirtualTable = false;
 
+    @Builder.Default
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 }
