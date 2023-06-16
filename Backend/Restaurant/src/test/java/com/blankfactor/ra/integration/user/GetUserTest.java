@@ -103,9 +103,9 @@ public class GetUserTest {
     }
 
     @Test
-    public void getUserPassesByEmail() {
+    public void getUserByEmail() {
         String testMapping = "/user";
-        String email = "martin.kanev@blankfactor.com";
+        String email = "petko@abv.bg";
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "Bearer " + token);
 

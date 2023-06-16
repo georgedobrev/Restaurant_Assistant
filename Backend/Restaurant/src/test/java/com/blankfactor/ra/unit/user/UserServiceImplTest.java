@@ -1,11 +1,13 @@
 package com.blankfactor.ra.unit.user;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
@@ -36,6 +38,11 @@ class UserServiceImplTest {
 
     @Mock
     private UserRoleRepository userRoleRepository;
+
+    @Mock
+    private RestaurantRepository restaurantRepository;
+
+    private UserService userService = new UserServiceImpl(userRepository, userRoleRepository);
 
     private AutoCloseable autoCloseable;
 
@@ -70,10 +77,31 @@ class UserServiceImplTest {
         verify(userRepository).save(any(AppUser.class));
     }
 
-    @Disabled
     @Test
-    void addRoleToUser() {
+    public void addRoleToUser_ShouldAssignRoleToUser() {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("Happy");
+        restaurantRepository.save(restaurant);
 
+        UpdateUserDto updateUserDto = new UpdateUserDto();
+        updateUserDto.setName("John");
+        updateUserDto.setSurname("Doe");
+        updateUserDto.setEmail("johndoe@example.com");
+        updateUserDto.setPassword("password");
+        updateUserDto.setRestaurant(restaurant);
+        updateUserDto.setRoleType(RoleType.ADMIN);
+
+        AppUser user = new AppUser();
+        user.setName(updateUserDto.getName());
+        user.setSurname(updateUserDto.getSurname());
+        user.setEmail(updateUserDto.getEmail());
+        user.setPassword(updateUserDto.getPassword());
+
+        UserRole expectedUserRole = new UserRole(user, restaurant, RoleType.ADMIN);
+        expectedUserRole.setRoleType(updateUserDto.getRoleType());
+        underTest.assignUserRole(updateUserDto, user);
+
+        verify(userRoleRepository).save(expectedUserRole);
     }
 
     @Test
@@ -109,7 +137,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getUserByEmail_UserNotFount() {
+    void getUserByEmail_UserNotFound() {
         String email = "test@abv.bg";
 
         when(userRepository.findAppUserByEmail(email)).thenReturn(Optional.empty());
