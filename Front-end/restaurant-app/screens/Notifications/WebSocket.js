@@ -15,7 +15,6 @@ class App_Stomp extends React.Component {
   componentDidMount() {
     let currentComponent = this;
     let onConnected = () => {
-      console.log("Connected!!");
       client.subscribe("/topic/message", function (msg) {
         if (msg.body) {
           var jsonBody = JSON.parse(msg.body);
@@ -27,7 +26,7 @@ class App_Stomp extends React.Component {
     };
 
     let onDisconnected = () => {
-      console.log("Disconnected!!");
+      return "Disconnected!!";
     };
 
     const client = new Client({
