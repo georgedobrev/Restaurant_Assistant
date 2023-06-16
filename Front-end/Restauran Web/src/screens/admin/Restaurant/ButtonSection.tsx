@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
 import EditRestaurantComponent from "./EditRestaurant";
-import GetRestaurants from "./GetRestaurants";
+import GetRestaurants from "./Restaurants";
 import { RestaurantSections } from "../../constants";
 
 const ButtonSection: React.FC = () => {
@@ -46,19 +46,31 @@ const ButtonSection: React.FC = () => {
         <Button
           className={styles.btns}
           variant="contained"
-          onClick={() => handleButtonClick(RestaurantSections.getAllRestaurants)}
+          onClick={() =>
+            handleButtonClick(RestaurantSections.getAllRestaurants)
+          }
         >
           All Restaurants
         </Button>
       </div>
 
-      <div>{renderComponent === RestaurantSections.addRestaurant && <AddRestaurant />}</div>
-
       <div>
-        {renderComponent === RestaurantSections.editRestaurant && <EditRestaurantComponent />}
+        {renderComponent === RestaurantSections.addRestaurant && (
+          <AddRestaurant />
+        )}
       </div>
 
-      <div>{renderComponent === RestaurantSections.getAllRestaurants && <GetRestaurants />}</div>
+      <div>
+        {renderComponent === RestaurantSections.editRestaurant && (
+          <EditRestaurantComponent />
+        )}
+      </div>
+
+      <div>
+        {renderComponent === RestaurantSections.getAllRestaurants && (
+          <GetRestaurants />
+        )}
+      </div>
     </div>
   );
 };

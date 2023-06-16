@@ -54,9 +54,15 @@ const ButtonSection: React.FC = () => {
 
       <div>{renderComponent === UsersSections.addUser && <AddUser />}</div>
 
-      <div>{renderComponent === UsersSections.editUser && <EditUserComponent />}</div>
+      <div>
+        {renderComponent === UsersSections.editUser && <EditUserComponent />}
+      </div>
 
-      <div>{renderComponent === UsersSections.deleteUser && <DeleteUserComponent />}</div>
+      <div>
+        {renderComponent === UsersSections.deleteUser && (
+          <DeleteUserComponent />
+        )}
+      </div>
     </div>
   );
 };

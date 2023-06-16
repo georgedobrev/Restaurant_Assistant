@@ -28,7 +28,7 @@ const AddRestaurant: React.FC = () => {
       setAddress("");
       setTablesCount("");
       setPhoneNumber("");
-      return response
+      return response;
     } catch (error) {
       return error;
     }
