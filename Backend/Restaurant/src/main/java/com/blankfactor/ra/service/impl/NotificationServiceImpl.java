@@ -7,6 +7,7 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
-
+    private final SimpMessagingTemplate template;
     private final NotificationRepository notificationRepository;
     private final AppTableRepository appTableRepository;
 
@@ -32,7 +33,14 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setApproved(notificationDto.isApproved());
         notification.setCreatedAt(Instant.now());
 
+        sendNotificationToWaiter(notification);
+
         return notificationRepository.save(notification);
+    }
+
+    // TODO: Fix for specific waiter
+    private void sendNotificationToWaiter(Notification notification) {
+        template.convertAndSend("/topic/message", notification);
     }
 
     @Override
