@@ -8,7 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Builder
 @AllArgsConstructor
@@ -32,10 +33,10 @@ public class Shift {
 
     //TODO format correctly
     @Column(name = "start_time", nullable = false)
-    private Instant startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    private Instant endTime;
+    private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_from", nullable = false)

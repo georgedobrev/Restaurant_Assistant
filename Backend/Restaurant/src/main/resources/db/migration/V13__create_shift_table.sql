@@ -1,10 +1,9 @@
-
 CREATE TABLE shift
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     restaurant_id INT NOT NULL,
-    start_time DATETIMEOFFSET NOT NULL,
-    end_time DATETIMEOFFSET NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
     day_from NVARCHAR(9) CHECK (day_from IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')) NOT NULL,
     day_to NVARCHAR(9) CHECK (day_to IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')) NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id),

@@ -34,13 +34,6 @@ public class SectionServiceImpl implements SectionService {
                 .sectionName(sectionDto.getSectionName())
                 .restaurant(restaurant)
                 .build();
-        sectionRepository.save(section);
-
-        //waiterSectionService.createWaiterSection(section, waiter);
-
-        assignSectionToTables(sectionDto.getAppTables(), section);
-        String tableNumbers = convertFromIntListToString(sectionDto.getAppTables());
-        section.setTableNumbers(tableNumbers);
 
         return sectionRepository.save(section);
     }
