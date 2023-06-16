@@ -6,9 +6,12 @@ import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RequestMapping("/user")
@@ -42,6 +45,13 @@ public class UserController {
         AppUser appUser = userService.getUserByEmail(userEmailDto.getEmail());
 
         return ResponseEntity.ok(appUser);
+    }
+
+    @GetMapping("/all-admins/{restaurantId}")
+    public ResponseEntity<List<AppUser>> getAllAdminsForRestaurant(@PathVariable("restaurantId") int restaurantId) {
+        List<AppUser> admins = userService.getAllAdminsByRestaurantId(restaurantId);
+
+        return ResponseEntity.ok(admins);
     }
 
     @PutMapping("/{userId}")
