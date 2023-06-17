@@ -16,5 +16,4 @@ public interface RestaurantService {
     Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception;
 
     Restaurant getRestaurantById(Integer restaurantId) throws Exception;
-
 }

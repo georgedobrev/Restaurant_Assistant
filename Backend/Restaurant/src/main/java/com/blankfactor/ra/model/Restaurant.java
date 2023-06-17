@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 @Builder
 @Data
@@ -20,8 +21,8 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "tables_count")
-    private Integer tablesCount;
+    @Formula(value = "(SELECT COUNT(*) FROM app_table WHERE restaurant_id = id)")    @Column(name = "tables_count")
+    private Integer tablesCount; //= setTablesCount(id);
 
     @Column(name = "address")
     private String address;
@@ -35,6 +36,7 @@ public class Restaurant {
     @Column(name = "phone_number3")
     private String phoneNumber3;
 
+    @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
 

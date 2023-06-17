@@ -3,8 +3,10 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
+import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
@@ -19,6 +21,7 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
+    private final AppTableRepository appTableRepository;
 
     @Override
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
@@ -32,7 +35,16 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .active(restaurantDto.getActive())
                 .build();
 
-        return restaurantRepository.save(restaurant);
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+
+        updateTablesCount(savedRestaurant);
+
+        return savedRestaurant;
+    }
+    private void updateTablesCount(Restaurant restaurant) {
+        int tablesCount = appTableRepository.countByRestaurantId(restaurant.getId());
+        restaurant.setTablesCount(tablesCount);
+        restaurantRepository.save(restaurant);
     }
 
     @Override
