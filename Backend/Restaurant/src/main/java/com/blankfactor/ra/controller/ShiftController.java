@@ -24,14 +24,15 @@ public class ShiftController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdShift);
     }
 
-    @GetMapping("/getAll/{restaurantId}")
+    @GetMapping("/all/{restaurantId}")
     public ResponseEntity<List<Shift>> getAllShifts(@PathVariable("restaurantId") Integer restaurantId) {
-        List<Shift> allSections = shiftService.getAllShifts(restaurantId);
-        return ResponseEntity.ok(allSections);
+        List<Shift> allShifts = shiftService.getAllShiftsByRestaurantId(restaurantId);
+        return ResponseEntity.ok(allShifts);
     }
 
     @PutMapping("/{shiftId}")
-    public ResponseEntity<Shift> updateShift(@PathVariable("shiftId") Integer shiftId, @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
+    public ResponseEntity<Shift> updateShift(@PathVariable("shiftId") Integer shiftId,
+                                             @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
         Shift updatedShift = shiftService.updateShift(shiftId, shiftDto);
         return ResponseEntity.ok(updatedShift);
     }

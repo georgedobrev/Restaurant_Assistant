@@ -15,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 public class SectionDto {
 
-    @Size(max = 255, message = "Section name cannot be more than 255 characters")
+    @Size(max = 50, message = "Section name cannot be more than 50 characters")
     private String sectionName;
 
+    // TODO remove @NotNull, app tables could be assigned after the initialization of the Section class
     @NotNull(message = "AppTables cannot be null")
     @Valid
     private List<AppTable> appTables;
 }
-

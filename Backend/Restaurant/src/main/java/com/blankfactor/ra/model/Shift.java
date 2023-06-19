@@ -29,7 +29,7 @@ public class Shift {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    //TODO format correctly
+    // TODO format correctly
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
 

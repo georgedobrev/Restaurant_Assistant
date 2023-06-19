@@ -9,6 +9,7 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,17 +37,22 @@ public class SectionServiceImpl implements SectionService {
                 .build();
 
         return sectionRepository.save(section);
-    }
 
-    private void assignSectionToTables(List<AppTable> tables, Section section) {
-        for (AppTable table : tables) {
-            if (table.getSection() == null) {
-                table.setSection(section);
-                appTableRepository.save(table);
-            } else {
-                throw new SectionDuplicateException("Table " + table.getTableNumber() + " is already assigned to a section!");
-            }
-        }
+        // TODO research how to implement object mapper to create section
+//        try {
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            Section section = mapper.convertValue(sectionDto, Section.class);
+//
+//            Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
+//            String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+//
+//            section.setRestaurant(restaurant);
+//            section.setTableNumbers(tableNumbers);
+//            return sectionRepository.save(section);
+//        } catch (IllegalArgumentException e) {
+//            throw new RuntimeException("Error mapping SectionDto to Section object");
+//        }
     }
 
     private String mapTableNumbersToString(List<AppTable> tables) {

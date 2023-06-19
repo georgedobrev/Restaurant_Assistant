@@ -9,7 +9,7 @@ import java.util.List;
 public interface ShiftService {
     Shift createShift(ShiftDto shiftDto);
 
-    List<Shift> getAllShifts(Integer restaurantId);
+    List<Shift> getAllShiftsByRestaurantId(Integer restaurantId);
 
     Shift updateShift(Integer shiftId, ShiftDto shiftDto) throws ShiftException;
 
