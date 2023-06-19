@@ -21,7 +21,7 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
-    @Formula(value = "(SELECT COUNT(*) FROM app_table WHERE restaurant_id = id)")    @Column(name = "tables_count")
+    //@Formula(value = "(SELECT COUNT(*) FROM app_table WHERE restaurant_id = id)")    @Column(name = "tables_count")
     private Integer tablesCount; //= setTablesCount(id);
 
     @Column(name = "address")

@@ -27,7 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                .tablesCount(restaurantDto.getTablesCount())
+                //.tablesCount(restaurantDto.getTablesCount())
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -35,14 +35,12 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .active(restaurantDto.getActive())
                 .build();
 
-        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+        updateTablesCount(restaurant);
 
-        updateTablesCount(savedRestaurant);
-
-        return savedRestaurant;
+        return restaurantRepository.save(restaurant);
     }
     private void updateTablesCount(Restaurant restaurant) {
-        int tablesCount = appTableRepository.countByRestaurantId(restaurant.getId());
+        int tablesCount = appTableRepository.findByRestaurantId(restaurant.getId()).size();
         restaurant.setTablesCount(tablesCount);
         restaurantRepository.save(restaurant);
     }
@@ -75,7 +73,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
 
         existingRestaurant.setName(updatedRestaurant.getName());
-        existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
+        updateTablesCount(existingRestaurant);
+        //existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
