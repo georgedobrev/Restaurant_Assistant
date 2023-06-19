@@ -41,7 +41,6 @@ public class AppTableServiceImpl implements AppTableService {
         }
 
         int tablesCount = appTableRepository.findByRestaurantId(restaurantId).size();//appTables.size();
-        //tablesCount += tablesCount;
 
         restaurant.setTablesCount(tablesCount);
         restaurantRepository.save(restaurant);

@@ -39,6 +39,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return restaurantRepository.save(restaurant);
     }
+
     private Integer updateTablesCount(Restaurant restaurant) {
         int tablesCount = appTableRepository.findByRestaurantId(restaurant.getId()).size();
         restaurant.setTablesCount(tablesCount);
@@ -75,7 +76,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         existingRestaurant.setName(updatedRestaurant.getName());
         updateTablesCount(existingRestaurant);
-        //existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
+        existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());

@@ -20,6 +20,7 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
     List<AppTable> findByRestaurantIdAndTableNumberIn(Integer restaurantId, List<Integer> tableNumbers);
 
     List<AppTable> findAllById(int tableId);
+
     int countByRestaurantId(int restaurantId);
 }
 
