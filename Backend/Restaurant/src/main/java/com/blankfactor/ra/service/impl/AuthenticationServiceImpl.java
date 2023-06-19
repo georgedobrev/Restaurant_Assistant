@@ -84,9 +84,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtTokenDto jwtFromRefreshToken(RefreshTokenDto refreshTokenDto) {
         String refreshToken = refreshTokenDto.getRefreshToken();
 
-        String username = jwtService.extractUsername(refreshToken);
+        String email = jwtService.extractUsername(refreshToken);
 
-        AppUser appUserFromClaims = userRepository.findAppUserByEmail(username)
+        AppUser appUserFromClaims = userRepository.findAppUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found"));
 
         return JwtTokenDto.builder()
