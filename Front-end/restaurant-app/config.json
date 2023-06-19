@@ -1,3 +1,6 @@
 {
-    "googleApi": "https://www.googleapis.com/userinfo/v2/me"
+  "googleApi": "https://www.googleapis.com/userinfo/v2/me",
+  "socketBaseURL": "ws://localhost:8080",
+  "endpointRegister": "/ws-message",
+  "topic": "/topic/message"
 }

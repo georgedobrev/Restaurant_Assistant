@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.enums.RequestType;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import jakarta.validation.constraints.NotBlank;
@@ -21,11 +22,10 @@ public class NotificationDto {
     private AppUser appUser;
 
     @NotBlank(message = "Request type is required for notifications")
-    private String requestType;
+    private RequestType requestType;
 
     @Size(max = 50, message = "Name cannot be more than 50 characters")
     @NotBlank(message = "Message is required for notifications")
     private String message;
-    private boolean approved;
-    private Instant createdAt;
+
 }
