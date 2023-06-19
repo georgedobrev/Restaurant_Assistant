@@ -27,7 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                //.tablesCount(restaurantDto.getTablesCount())
+                .tablesCount(restaurantDto.getTablesCount())
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -39,10 +39,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return restaurantRepository.save(restaurant);
     }
-    private void updateTablesCount(Restaurant restaurant) {
+    private Integer updateTablesCount(Restaurant restaurant) {
         int tablesCount = appTableRepository.findByRestaurantId(restaurant.getId()).size();
         restaurant.setTablesCount(tablesCount);
         restaurantRepository.save(restaurant);
+        return tablesCount;
     }
 
     @Override
