@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final RestaurantService restaurantService;
-    private final AppTableRepository appTableRepository;
 
     @Transactional
     @Override
@@ -60,7 +59,7 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public List<Section> getAllSections(Integer restaurantId) throws Exception {
+    public List<Section> getAllSections(Integer restaurantId) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 

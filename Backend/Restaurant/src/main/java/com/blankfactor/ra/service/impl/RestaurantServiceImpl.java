@@ -59,8 +59,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception {
-        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
+    public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) {
+        Restaurant existingRestaurant = getRestaurantById(restaurantId);
 
         existingRestaurant.setName(updatedRestaurant.getName());
         existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
