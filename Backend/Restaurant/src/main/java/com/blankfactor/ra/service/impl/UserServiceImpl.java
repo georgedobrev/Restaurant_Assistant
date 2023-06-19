@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserException("User with email " + email + " not found"));
     }
 
+    //TODO admins onboarding
     @Override
     public List<AppUser> getAllAdminsByRestaurantId(int restaurantId) {
         List<UserRole> userRoles = userRoleRepository.findAllByRestaurantIdAndRoleType(restaurantId, RoleType.ADMIN);
