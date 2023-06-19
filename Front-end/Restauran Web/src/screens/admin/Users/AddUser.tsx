@@ -1,87 +1,71 @@
-import { Button, Box, TextField } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { Role, roles } from "./rolesData";
+import { createUser, User } from "../../../services/UserService";
 
 const AddUser: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [surname, setSurname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const userData: User = {
+      name,
+      surname,
+      email,
+    };
+
+    try {
+      const response: User = await createUser(userData);
+      setName("");
+      setSurname("");
+      setEmail("");
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div>
       <h2 className={styles.newUser}>Add new user</h2>
 
-      <form>
-        <div className={styles.userDetails}>
-          <div className={styles.flexColumn}>
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Name"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
+      <form className={styles.submitForm} onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          color="warning"
+          required
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-            <Box marginBottom={"4%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Surname"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
-          </div>
+        <TextField
+          label="Surname"
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-          <div className={styles.flexColumn}>
-            <Box marginBottom={"1%"}>
-              <TextField
-                className={styles.inputFields}
-                label="Enter Email"
-                variant="outlined"
-                size="small"
-                color="warning"
-                required
-                fullWidth
-              />
-            </Box>
+        <TextField
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
 
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                className={styles.inputFields}
-                select
-                size="small"
-                label="Select"
-                color="warning"
-                fullWidth
-                helperText="Please select role"
-                style={{ width: "100%", marginLeft: 0 }}
-              >
-                {roles.map((option: Role) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box>
-          </div>
-        </div>
-
-        <div className={styles.flexColumn}>
-          <Button variant="contained" className={styles.button}>
-            Add User
-          </Button>
-        </div>
+        <Button type="submit" className={styles.btn} variant="contained">
+          Add new user
+        </Button>
       </form>
     </div>
   );
