@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/all-admins/{restaurantId}")
-    public ResponseEntity<List<AppUser>> getAllAdminsForRestaurant(@PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<List<AppUser>> getAllAdminsByRestaurant(@PathVariable("restaurantId") int restaurantId) {
         List<AppUser> admins = userService.getAllAdminsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(admins);
