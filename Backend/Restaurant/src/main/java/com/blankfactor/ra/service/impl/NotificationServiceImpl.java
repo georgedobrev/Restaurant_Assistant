@@ -2,15 +2,17 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +46,12 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.save(notification);
     }
 
-    // TODO: Fix for specific waiter
     private void sendNotificationToWaiter(Notification notification) {
-        template.convertAndSend("/topic/message", notification);
+        List<AppUser> waitersByTableId = appTableRepository.findWaiterByTableId(notification.getAppTable());
+
+        for (AppUser waiter : waitersByTableId) {
+            template.convertAndSendToUser(waiter.getEmail(), "/topic/message", notification);
+        }
     }
 
     @Override
