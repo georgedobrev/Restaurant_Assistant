@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.hibernate.annotations.Formula;
 
 @Builder
@@ -21,8 +22,8 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
-    //@Formula(value = "(SELECT COUNT(*) FROM app_table WHERE restaurant_id = id)")    @Column(name = "tables_count")
-    private Integer tablesCount; //= setTablesCount(id);
+    @Column(name = "tables_count")
+    private Integer tablesCount;
 
     @Column(name = "address")
     private String address;

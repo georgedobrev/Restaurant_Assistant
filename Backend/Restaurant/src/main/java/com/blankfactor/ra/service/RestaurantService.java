@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.RestaurantDto;
+import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.model.Restaurant;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface RestaurantService {
 
     List<Restaurant> getAllRestaurants();
 
-    List<Restaurant> getAllRestaurantsByAdmin(int userId);
+    List<Restaurant> getAllRestaurantsByAdmin(int userId) throws RestaurantException;
 
     Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) throws Exception;
 
-    Restaurant getRestaurantById(Integer restaurantId) throws Exception;
+    Restaurant getRestaurantById(Integer restaurantId) throws RestaurantException;
 }

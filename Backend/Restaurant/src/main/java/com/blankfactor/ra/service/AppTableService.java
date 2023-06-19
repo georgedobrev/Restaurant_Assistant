@@ -2,7 +2,6 @@ package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
 
@@ -17,5 +16,4 @@ public interface AppTableService {
 
     void removeTableByName(Integer restaurantId, Integer tableNumber) throws Exception;
 
-    //List<AppTable> getAllTablesByRestaurantId(int restaurantId);
 }

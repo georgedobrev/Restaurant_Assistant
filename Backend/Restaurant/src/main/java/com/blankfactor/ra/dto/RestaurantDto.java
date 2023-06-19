@@ -15,24 +15,23 @@ import org.hibernate.annotations.Formula;
 public class RestaurantDto {
 
     @Size(max = 100, message = "Name cannot be more than 100 characters")
-    @NotNull(message = "Email cannot not be null")
+    @NotNull(message = "Name cannot not be null")
     private String name;
 
-    //@Formula(value = "(SELECT COUNT(*) FROM app_table WHERE restaurant_id = id)")    @Column(name = "tables_count")
     private Integer tablesCount;
 
     @Size(max = 50, message = "Address cannot be more than 50 characters")
-    @NotNull(message = "Email cannot not be null")
+    @NotNull(message = "Address cannot not be null")
     private String address;
 
-    @Size(max = 12, message = "Number cannot be more than 12 characters")
-    @NotNull(message = "Email cannot not be null")
+    @Size(max = 13, min = 10, message = "Number cannot be more than 13 characters and less than 10")
+    @NotNull(message = "Phone Number 1 cannot not be null")
     private String phoneNumber1;
 
-    @Size(max = 12, message = "Number cannot be more than 12 characters")
+    @Size(max = 13, min = 10, message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber2;
 
-    @Size(max = 12, message = "Number cannot be more than 12 characters")
+    @Size(max = 13, min = 10, message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber3;
     private Boolean active;
 }

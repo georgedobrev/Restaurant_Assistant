@@ -21,6 +21,6 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
 
     List<AppTable> findAllById(int tableId);
 
-    int countByRestaurantId(int restaurantId);
+    Integer countByRestaurantId(int restaurantId);
 }
 
