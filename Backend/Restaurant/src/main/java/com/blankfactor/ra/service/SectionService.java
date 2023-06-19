@@ -6,7 +6,7 @@ import com.blankfactor.ra.model.Section;
 import java.util.List;
 
 public interface SectionService {
-    Section createSection(SectionDto sectionDto) throws Exception;
+    Section createSection(SectionDto sectionDto);
 
-    List<Section> getAllSections(Integer restaurantId) throws Exception;
+    List<Section> getAllSections(Integer restaurantId);
 }

@@ -22,13 +22,13 @@ public class SectionController {
     private final WaiterSectionService waiterSectionService;
 
     @PostMapping()
-    public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) throws Exception {
+    public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) {
         Section createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
 
     @GetMapping("/getAll/{restaurantId}")
-    public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) throws Exception {
+    public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) {
         List<Section> allSections = sectionService.getAllSections(restaurantId);
         return ResponseEntity.ok(allSections);
     }
