@@ -1,9 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.dto.AuthenticationRequestDto;
-import com.blankfactor.ra.dto.AuthenticationResponse;
-import com.blankfactor.ra.dto.GoogleTokenDto;
-import com.blankfactor.ra.dto.UserDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.security.jwt.JwtService;
@@ -80,6 +77,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Override
+    public JwtTokenDto jwtFromRefreshToken(RefreshTokenDto refreshTokenDto) {
+        String refreshToken = refreshTokenDto.getRefreshToken();
+
+        String email = jwtService.extractUsername(refreshToken);
+
+        AppUser appUserFromClaims = userRepository.findAppUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found"));
+
+        return JwtTokenDto.builder()
+                .jwtToken(jwtService.generateJwtToken(appUserFromClaims))
                 .build();
     }
 }

@@ -30,7 +30,7 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
-    public List<Shift> getAllShifts(Integer restaurantId) {
+    public List<Shift> getAllShiftsByRestaurantId(Integer restaurantId) {
         return shiftRepository.findByRestaurantId(restaurantId);
     }
 
@@ -51,6 +51,4 @@ public class ShiftServiceImpl implements ShiftService {
         Shift shift = shiftRepository.findById(shiftId).orElseThrow(() -> new ShiftException("Shift not found"));
         shiftRepository.delete(shift);
     }
-
-
 }

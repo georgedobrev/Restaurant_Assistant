@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
-import com.blankfactor.ra.exceptions.custom.SectionDuplicateException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final RestaurantService restaurantService;
-    private final AppTableRepository appTableRepository;
 
     @Transactional
     @Override
@@ -36,17 +34,22 @@ public class SectionServiceImpl implements SectionService {
                 .build();
 
         return sectionRepository.save(section);
-    }
 
-    private void assignSectionToTables(List<AppTable> tables, Section section) {
-        for (AppTable table : tables) {
-            if (table.getSection() == null) {
-                table.setSection(section);
-                appTableRepository.save(table);
-            } else {
-                throw new SectionDuplicateException("Table " + table.getTableNumber() + " is already assigned to a section!");
-            }
-        }
+        // TODO research how to implement object mapper to create section
+//        try {
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            Section section = mapper.convertValue(sectionDto, Section.class);
+//
+//            Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
+//            String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+//
+//            section.setRestaurant(restaurant);
+//            section.setTableNumbers(tableNumbers);
+//            return sectionRepository.save(section);
+//        } catch (IllegalArgumentException e) {
+//            throw new RuntimeException("Error mapping SectionDto to Section object");
+//        }
     }
 
     private String mapTableNumbersToString(List<AppTable> tables) {
@@ -56,7 +59,7 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public List<Section> getAllSections(Integer restaurantId) throws Exception {
+    public List<Section> getAllSections(Integer restaurantId) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 
