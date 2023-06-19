@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
-import com.blankfactor.ra.exceptions.custom.SectionDuplicateException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
@@ -9,7 +8,6 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

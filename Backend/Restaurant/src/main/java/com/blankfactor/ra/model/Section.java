@@ -21,10 +21,13 @@ public class Section {
     @Id
     @Column(name = "id")
     private int id;
+
     @Column(name = "section_name", nullable = false)
     private String sectionName;
+
     @Column(name = "table_numbers")
     private String tableNumbers;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
