@@ -101,15 +101,17 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user, AppUser waiter) {
+    public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
-
+        // TODO how to get the waiter that is assigned for the specific table
+        // Section section = sectionService
+        // TODO when the sections are done, find the waiter that is assigned to the section of the table
         boolean isSeated = userTableService.isAppUserSeated(user, appTable);
         if (!isSeated) {
             UserTable userTable = new UserTable();
             userTable.setAppUser(user);
-            userTable.setWaiter(waiter);
+//            userTable.setWaiter(waiter);
             userTable.setAppTableId(appTable);
             userTable.setStartTime(new Date().toInstant());
 

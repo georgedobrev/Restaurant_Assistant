@@ -10,6 +10,8 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,13 +41,10 @@ public class QRCodeController {
     }
 
     @PostMapping("/{hashedUrl}")
-    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
-        // how to get the User object after the authentication?
-        // how we go assign the Waiter object to the UserTable record
-        // Do we need restaurant sections so we can find the waiter by section?
-        // can we assign all waiters for all tables?
-        // todo
-        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user, user);
+    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = (AppUser) authentication.getPrincipal();
+        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user);
 
         return ResponseEntity.ok(response);
     }
