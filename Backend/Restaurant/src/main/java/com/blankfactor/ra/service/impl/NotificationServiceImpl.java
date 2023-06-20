@@ -77,7 +77,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void deleteById(int notificationId) {
-        notificationRepository.deleteNotificationById(notificationId);
+        notificationRepository.deleteById(notificationId);
     }
 
     @Override
