@@ -99,18 +99,19 @@ public class QRCodeServiceImpl implements QRCodeService {
         return new ByteArrayResource(baos.toByteArray());
     }
 
+    // TODO change the name of the method and separate the functionality
     @Override
     public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
 
-         List<Section> sections = getSectionsForTable(appTable);
-
+        List<Section> sections = getSectionsForTable(appTable);
+        String waiterIds = getWaitersFromSections(sections);
         boolean isSeated = userTableService.isAppUserSeated(user, appTable);
         if (!isSeated) {
             UserTable userTable = new UserTable();
             userTable.setAppUser(user);
-            userTable.setWaiterIds(getWaitersFromSections(sections));
+            userTable.setWaiterIds(waiterIds);
             userTable.setAppTableId(appTable);
             userTable.setStartTime(new Date().toInstant());
 
@@ -133,14 +134,18 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     public String getWaitersFromSections(List<Section> sections) {
-        return sections.stream()
-                .flatMap(section -> {
-                    List<WaiterSection> waiterSections = (List<WaiterSection>) waiterSectionRepository.findBySectionId(section.getId());
-                    if (waiterSections.isEmpty()) {
-                        throw new RuntimeException("No waiter section found");
-                    }
-                    return waiterSections.stream();
-                })
+        List<WaiterSection> waiterSections = new ArrayList<>();
+
+        for (Section section : sections) {
+            List<WaiterSection> waiterSectionsForSection = waiterSectionRepository.findBySectionId(section.getId());
+            waiterSections.addAll(waiterSectionsForSection);
+        }
+
+        if (waiterSections.isEmpty()) {
+            throw new RuntimeException("No waiter section found");
+        }
+
+        return waiterSections.stream()
                 .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
                 .collect(Collectors.joining(","));
     }
