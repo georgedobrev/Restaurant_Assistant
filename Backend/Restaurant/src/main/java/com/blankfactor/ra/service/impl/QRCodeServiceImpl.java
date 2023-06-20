@@ -25,10 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -106,13 +104,13 @@ public class QRCodeServiceImpl implements QRCodeService {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
         // TODO how to get the waiter that is assigned for the specific table
-        // Section section = sectionService
-        // TODO when the sections are done, find the waiter that is assigned to the section of the table
+        // Section section = getSectionsForTable(appTable);
+
         boolean isSeated = userTableService.isAppUserSeated(user, appTable);
         if (!isSeated) {
             UserTable userTable = new UserTable();
             userTable.setAppUser(user);
-//            userTable.setWaiter(waiter);
+//            userTable.setWaiterIds(getWaitersFromSections(sections));
             userTable.setAppTableId(appTable);
             userTable.setStartTime(new Date().toInstant());
 
@@ -122,4 +120,30 @@ public class QRCodeServiceImpl implements QRCodeService {
         }
         return appTable;
     }
+
+    // TODO uncomment when the section brunch is approved
+//    private List<Section> getSectionsForTable(AppTable table) {
+//        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
+//        int currentTableNum = table.getTableNumber();
+//
+//        return sections.stream()
+//                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
+//                        .map(Integer::valueOf)
+//                        .anyMatch(num -> num == currentTableNum))
+//                .collect(Collectors.toList());
+//    }
+//
+//    public String getWaitersFromSections(List<Section> sections) {
+//        List<WaiterSection> waiterSections = sections.stream()
+//                .map(section -> waiterSectionRepository.findBySectionId(section.getId()))
+//                .flatMap(List::stream)
+//                .toList();
+//        if (waiterSections.size() == 0) {
+//            throw new RuntimeException("No waiter section found");
+//        }
+//
+//        return waiterSections.stream()
+//                .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
+//                .collect(Collectors.joining(","));
+//    }
 }
