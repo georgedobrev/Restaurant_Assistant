@@ -18,9 +18,8 @@ public class UserTable {
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "waiter_id", nullable = false)
-    private AppUser waiter;
+    @Column(name = "waiter_ids")
+    private String waiterIds;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_table_id", nullable = false)
