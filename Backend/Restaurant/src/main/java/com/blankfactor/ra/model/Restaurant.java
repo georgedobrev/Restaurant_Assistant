@@ -22,8 +22,9 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
+    @Builder.Default
     @Column(name = "tables_count")
-    private Integer tablesCount;
+    private Integer tablesCount = 0;
 
     @Column(name = "address")
     private String address;
