@@ -35,7 +35,7 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
-    public Shift updateShift(Integer shiftId, ShiftDto shiftDto) throws ShiftException {
+    public Shift updateShiftById(Integer shiftId, ShiftDto shiftDto) throws ShiftException {
         Shift existingShift = shiftRepository.findById(shiftId).orElseThrow(() -> new ShiftException("Shift not found"));
 
         existingShift.setStartTime(shiftDto.getStartTime());
@@ -47,7 +47,7 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
-    public void deleteShift(Integer shiftId) throws ShiftException {
+    public void deleteShiftById(Integer shiftId) throws ShiftException {
         Shift shift = shiftRepository.findById(shiftId).orElseThrow(() -> new ShiftException("Shift not found"));
         shiftRepository.delete(shift);
     }

@@ -11,7 +11,7 @@ public interface ShiftService {
 
     List<Shift> getAllShiftsByRestaurantId(Integer restaurantId);
 
-    Shift updateShift(Integer shiftId, ShiftDto shiftDto) throws ShiftException;
+    Shift updateShiftById(Integer shiftId, ShiftDto shiftDto) throws ShiftException;
 
-    void deleteShift(Integer shiftId) throws ShiftException;
+    void deleteShiftById(Integer shiftId) throws ShiftException;
 }

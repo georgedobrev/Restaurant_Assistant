@@ -25,21 +25,21 @@ public class ShiftController {
     }
 
     @GetMapping("/all/{restaurantId}")
-    public ResponseEntity<List<Shift>> getAllShifts(@PathVariable("restaurantId") Integer restaurantId) {
+    public ResponseEntity<List<Shift>> getAllShiftsByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         List<Shift> allShifts = shiftService.getAllShiftsByRestaurantId(restaurantId);
         return ResponseEntity.ok(allShifts);
     }
 
     @PutMapping("/{shiftId}")
-    public ResponseEntity<Shift> updateShift(@PathVariable("shiftId") Integer shiftId,
+    public ResponseEntity<Shift> updateShiftById(@PathVariable("shiftId") Integer shiftId,
                                              @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
-        Shift updatedShift = shiftService.updateShift(shiftId, shiftDto);
+        Shift updatedShift = shiftService.updateShiftById(shiftId, shiftDto);
         return ResponseEntity.ok(updatedShift);
     }
 
     @DeleteMapping("/{shiftId}")
-    public ResponseEntity<?> deleteShift(@PathVariable("shiftId") Integer shiftId) throws ShiftException {
-        shiftService.deleteShift(shiftId);
+    public ResponseEntity<?> deleteShiftById(@PathVariable("shiftId") Integer shiftId) throws ShiftException {
+        shiftService.deleteShiftById(shiftId);
         return ResponseEntity.ok().build();
     }
 }
