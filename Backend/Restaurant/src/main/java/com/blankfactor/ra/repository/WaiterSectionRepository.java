@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WaiterSectionRepository extends JpaRepository<WaiterSection, Integer> {
+    Object findBySectionId(int sectionId);
 }

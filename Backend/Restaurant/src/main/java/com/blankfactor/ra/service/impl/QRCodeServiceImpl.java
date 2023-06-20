@@ -4,9 +4,7 @@ import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.*;
-import com.blankfactor.ra.repository.AppTableRepository;
-import com.blankfactor.ra.repository.QrCodeRepository;
-import com.blankfactor.ra.repository.UserTableRepository;
+import com.blankfactor.ra.repository.*;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.UserTableService;
 import com.google.zxing.BarcodeFormat;
@@ -39,6 +37,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppTableRepository appTableRepository;
     private final UserTableService userTableService;
     private final UserTableRepository userTableRepository;
+    private final SectionRepository sectionRepository;
+    private final WaiterSectionRepository waiterSectionRepository;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -103,14 +103,14 @@ public class QRCodeServiceImpl implements QRCodeService {
     public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
-        // TODO how to get the waiter that is assigned for the specific table
-        // Section section = getSectionsForTable(appTable);
+
+         List<Section> sections = getSectionsForTable(appTable);
 
         boolean isSeated = userTableService.isAppUserSeated(user, appTable);
         if (!isSeated) {
             UserTable userTable = new UserTable();
             userTable.setAppUser(user);
-//            userTable.setWaiterIds(getWaitersFromSections(sections));
+            userTable.setWaiterIds(getWaitersFromSections(sections));
             userTable.setAppTableId(appTable);
             userTable.setStartTime(new Date().toInstant());
 
@@ -121,29 +121,27 @@ public class QRCodeServiceImpl implements QRCodeService {
         return appTable;
     }
 
-    // TODO uncomment when the section brunch is approved
-//    private List<Section> getSectionsForTable(AppTable table) {
-//        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
-//        int currentTableNum = table.getTableNumber();
-//
-//        return sections.stream()
-//                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
-//                        .map(Integer::valueOf)
-//                        .anyMatch(num -> num == currentTableNum))
-//                .collect(Collectors.toList());
-//    }
-//
-//    public String getWaitersFromSections(List<Section> sections) {
-//        List<WaiterSection> waiterSections = sections.stream()
-//                .map(section -> waiterSectionRepository.findBySectionId(section.getId()))
-//                .flatMap(List::stream)
-//                .toList();
-//        if (waiterSections.size() == 0) {
-//            throw new RuntimeException("No waiter section found");
-//        }
-//
-//        return waiterSections.stream()
-//                .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
-//                .collect(Collectors.joining(","));
-//    }
+    private List<Section> getSectionsForTable(AppTable table) {
+        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
+        int currentTableNum = table.getTableNumber();
+
+        return sections.stream()
+                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
+                        .map(Integer::valueOf)
+                        .anyMatch(num -> num == currentTableNum))
+                .collect(Collectors.toList());
+    }
+
+    public String getWaitersFromSections(List<Section> sections) {
+        return sections.stream()
+                .flatMap(section -> {
+                    List<WaiterSection> waiterSections = (List<WaiterSection>) waiterSectionRepository.findBySectionId(section.getId());
+                    if (waiterSections.isEmpty()) {
+                        throw new RuntimeException("No waiter section found");
+                    }
+                    return waiterSections.stream();
+                })
+                .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
+                .collect(Collectors.joining(","));
+    }
 }
