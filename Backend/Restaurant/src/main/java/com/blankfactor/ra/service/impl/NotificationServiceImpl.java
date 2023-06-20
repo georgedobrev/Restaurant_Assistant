@@ -47,7 +47,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendNotificationToWaiter(Notification notification) {
-        List<AppUser> waitersByTableId = appTableRepository.findWaiterByTableId(notification.getAppTable());
+        List<AppUser> waitersByTableId = notificationRepository.findWaiterByTableId(notification.getAppTable().getId());
 
         for (AppUser waiter : waitersByTableId) {
             template.convertAndSendToUser(waiter.getEmail(), "/topic/message", notification);

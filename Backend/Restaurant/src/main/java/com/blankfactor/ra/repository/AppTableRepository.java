@@ -23,8 +23,5 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
     List<AppTable> findByRestaurantIdAndTableNumberIn(Integer restaurantId, List<Integer> tableNumbers);
 
     List<AppTable> findAllById(int tableId);
-
-    @Query("SELECT ut.waiter FROM UserTable ut WHERE ut.appTableId = :tableId")
-    List<AppUser> findWaiterByTableId(@Param("tableId") AppTable tableId);
 }
 
