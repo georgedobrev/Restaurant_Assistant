@@ -2,9 +2,12 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -20,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
     public AppUser createUser(UpdateUserDto userDto) {
@@ -28,6 +33,9 @@ public class UserServiceImpl implements UserService {
         appUser.setEmail(userDto.getEmail());
         appUser.setName(userDto.getName());
         appUser.setSurname(userDto.getSurname());
+
+        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurant().getId())
+                .orElseThrow(() -> new RestaurantException("No restaurant with id " + userDto.getRestaurant().getId()));
 
         AppUser savedAppUser = userRepository.save(appUser);
 
