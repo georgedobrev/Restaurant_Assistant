@@ -430,7 +430,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"happy\",\r\n    \"tablesCount\":50,\r\n    \"address\":\"mladost 00\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \"name\":\"morgan\",\r\n    \"tablesCount\":50,\r\n    \"address\":\"mladost 03\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -597,6 +597,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getAllAdminsByRestaurantId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/user/all-admins/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"all-admins",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -621,7 +641,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"first@lowl.com\",\n  \"restaurantId\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
+							"raw": "{\n  \"email\": \"valid@exampl1e.com\",\n  \"restaurant\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -792,7 +812,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sectionNumber\" : 10,\n    \"waiterUsername\": \"example@gmail.com\",\n    \"tableNumbers\" : [10, 20]\n}",
+							"raw": "{\n    \"sectionName\" : \"Hawai section\",\n    \"waiterEmail\": \"dame@gmail.com\",\n    \"appTables\" : [\n    {\n        \"id\": 13,\n        \"tableNumber\": 10,\n        \"qr\": {\n            \"id\": 13\n        },\n        \"restaurant\": {\n            \"id\": 3\n        }\n    },\n    {\n        \"id\": 14,\n        \"tableNumber\": 20,\n        \"qr\": {\n            \"id\": 14\n        },\n        \"restaurant\": {\n            \"id\": 3\n        }\n    }\n    ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -800,14 +820,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/section/1",
+							"raw": "localhost:8080/section",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"section",
-								"1"
+								"section"
 							]
 						}
 					},
@@ -828,6 +847,98 @@
 								"section",
 								"getAll",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Google Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"googleJwt\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjA1MTUwYTEzMjBiOTM5NWIwNTcxNjg3NzM3NjkyODUwOWJhYjQ0YWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2ODY4MzcyMTUsImF1ZCI6IjMyODg5NTY1MzQ2My1wdnUzdDg2a2Y3N2o0ZWY5bzhsbWFhZjFuMTF1MTEzaC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNjYyMjgwNjk4NDAxMTY0NTIzMSIsImhkIjoiYmxhbmtmYWN0b3IuY29tIiwiZW1haWwiOiJtYXJ0aW4ua2FuZXZAYmxhbmtmYWN0b3IuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjMyODg5NTY1MzQ2My1wdnUzdDg2a2Y3N2o0ZWY5bzhsbWFhZjFuMTF1MTEzaC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJNYXJ0aW4gS2FuZXYiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFjSFR0Y3JmMVpXWlBhbmJwUzJrYUx6TDJIRDhhZ0psclhmWEZwZVUyOGw9czk2LWMiLCJnaXZlbl9uYW1lIjoiTWFydGluICIsImZhbWlseV9uYW1lIjoiS2FuZXYiLCJpYXQiOjE2ODY4Mzc1MTUsImV4cCI6MTY4Njg0MTExNSwianRpIjoiZmFkMWI3NDE5ODgwZDkwNGUwNWExMTI4MjQxZjg4ODM1ZTNkZGI4MCJ9.Vy5lFlXfaEC7m3zZZrIABpRNorEGQdNCL2f0KhORr5a3VJqKORQUeQJHMHoy0FJz-KZ9kASZKA2rWQoAZ1Q4l2wfMd-dBQhCnLdtBiBqdI1KZzCOkmX-dIswbUqoQf7lvrsHyHPPnx5U6MzCjiWwSZg0ZxwNigNj1OaxmjaH_Z3ATK9iNuYzMsORys_OVpn8rqfC1VjgzDfTIaAxOREsQSdLKP2srehuXcGrmKzsdGfILZ0fkAMCOMLCdF3tZyK9rjaNbD9zcZBpvAGzj4zIstD0CHM4OmYxs0DU_XnG0fBoXFg8GAsskTIyx6dIqpXD5ByQEsWr7UWUQoPFnb45CQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"martin.kanev@blankfactor.com\",\n  \"password\": \"googlePass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"email\": \"user333@example.com\",\n  \"password\": \"alabala\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"register"
 							]
 						}
 					},

@@ -1,9 +1,6 @@
 package com.blankfactor.ra.service;
 
-import com.blankfactor.ra.dto.AuthenticationRequestDto;
-import com.blankfactor.ra.dto.AuthenticationResponse;
-import com.blankfactor.ra.dto.GoogleTokenDto;
-import com.blankfactor.ra.dto.UserDto;
+import com.blankfactor.ra.dto.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -14,4 +11,6 @@ public interface AuthenticationService {
     AuthenticationResponse register(UserDto userDto);
 
     AuthenticationResponse authenticate(AuthenticationRequestDto request);
+
+    JwtTokenDto jwtFromRefreshToken(RefreshTokenDto refreshTokenDto);
 }
