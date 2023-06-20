@@ -2,7 +2,6 @@ package com.blankfactor.ra.model;
 
 import com.blankfactor.ra.enums.RequestType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.Instant;
@@ -25,8 +24,7 @@ public class Notification {
     private AppTable appTable;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "request_type")
-    @NotNull
+    @Column(name = "request_type", nullable = false)
     private RequestType requestType;
 
     @Column(name = "message")

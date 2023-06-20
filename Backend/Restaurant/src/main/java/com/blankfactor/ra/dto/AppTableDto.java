@@ -14,5 +14,4 @@ public class AppTableDto {
     private int capacity;
     private boolean virtualTable;
     private boolean active;
-
 }
