@@ -40,11 +40,7 @@ public class AppTableServiceImpl implements AppTableService {
             throw new QRCodeException("Could not create QR codes");
         }
 
-        int tablesCount = appTableRepository.countByRestaurantId(restaurantId);
-        System.out.println(tablesCount);
-
-        restaurant.setTablesCount(tablesCount);
-        System.out.println(tablesCount);
+        restaurant.setTablesCount(restaurant.getTablesCount() + appTables.size());
         restaurantRepository.save(restaurant);
         return appTableRepository.saveAll(appTables);
     }

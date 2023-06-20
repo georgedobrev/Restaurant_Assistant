@@ -3,10 +3,8 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
-import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
-import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
@@ -21,13 +19,12 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
-    private final AppTableRepository appTableRepository;
 
     @Override
     public Restaurant createRestaurant(RestaurantDto restaurantDto) {
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                .tablesCount(restaurantDto.getTablesCount())
+                .tablesCount(0)
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -35,16 +32,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .active(restaurantDto.getActive())
                 .build();
 
-        updateTablesCount(restaurant);
-
         return restaurantRepository.save(restaurant);
-    }
-
-    private Integer updateTablesCount(Restaurant restaurant) {
-        int tablesCount = appTableRepository.findByRestaurantId(restaurant.getId()).size();
-        restaurant.setTablesCount(tablesCount);
-        restaurantRepository.save(restaurant);
-        return tablesCount;
     }
 
     @Override
@@ -75,7 +63,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(Exception::new);
 
         existingRestaurant.setName(updatedRestaurant.getName());
-        updateTablesCount(existingRestaurant);
         existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
