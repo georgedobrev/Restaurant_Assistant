@@ -1,8 +1,13 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.TenantDto;
+import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
+import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.TenantRepository;
+import com.blankfactor.ra.repository.UserRepository;
+import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.TenantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,17 +18,33 @@ import java.util.List;
 @AllArgsConstructor
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
-
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
-        Tenant tenant = new Tenant();
+        Tenant tenant = Tenant.builder()
+                .name(tenantDto.getName())
+                .surname(tenantDto.getSurname())
+                .email(tenantDto.getEmail())
+                .restaurant(tenantDto.getRestaurant())
+                .build();
 
-        tenant.setEmail(tenantDto.getEmail());
-        tenant.setRestaurant(tenantDto.getRestaurant());
-        tenant.setName(tenantDto.getName());
-        tenant.setSurname(tenantDto.getSurname());
+        AppUser appUser = AppUser.builder()
+                .name(tenantDto.getName())
+                .surname(tenantDto.getSurname())
+                .email(tenantDto.getEmail())
+                .build();
 
+        userRepository.save(appUser);
+
+        UserRole userRole = UserRole.builder()
+                .appUser(appUser)
+                .restaurant(tenantDto.getRestaurant())
+                .roleType(RoleType.ADMIN)
+                .build();
+
+        userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 

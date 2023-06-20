@@ -11,9 +11,7 @@ public class AppTableDto {
 
     private int tableNumber;
     private boolean occupied;
-    private int restaurantId;
     private int capacity;
     private boolean virtualTable;
     private boolean active;
-
 }

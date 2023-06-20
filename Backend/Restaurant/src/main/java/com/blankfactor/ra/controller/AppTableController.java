@@ -19,7 +19,7 @@ public class AppTableController {
 
     @PostMapping()
     public ResponseEntity<List<AppTable>> createTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                      @RequestBody List<AppTable> appTables) throws Exception {
+                                                      @RequestBody List<AppTable> appTables) {
         List<AppTable> createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
@@ -40,14 +40,14 @@ public class AppTableController {
     }
 
     @PutMapping("/{tableNumber}")
-    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) throws Exception {
+    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) {
         AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
         return ResponseEntity.ok(updatedTable);
     }
 
     @DeleteMapping("/{tableNumber}")
-    public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
+    public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         appTableService.removeTableByName(restaurantId, tableNumber);
         return ResponseEntity.ok().build();
     }
