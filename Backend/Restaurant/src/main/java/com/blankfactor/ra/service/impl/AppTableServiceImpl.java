@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Service
@@ -27,14 +28,14 @@ public class AppTableServiceImpl implements AppTableService {
     private final RestaurantService restaurantService;
 
     @Override
-    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) throws Exception {
+    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
         appTables.forEach(t -> t.setRestaurant(restaurant));
 
         try {
             qrCodeService.createQRCodesForTables(restaurant, appTables);
-        } catch (IOException | WriterException e) {
+        } catch (IOException | WriterException | NoSuchAlgorithmException e) {
             throw new QRCodeException("Could not create QR codes");
         }
 

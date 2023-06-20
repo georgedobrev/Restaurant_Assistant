@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void deleteById(int notificationId) {
-        notificationRepository.deleteNotificationById(notificationId);
+        notificationRepository.deleteById(notificationId);
     }
 
     @Override
