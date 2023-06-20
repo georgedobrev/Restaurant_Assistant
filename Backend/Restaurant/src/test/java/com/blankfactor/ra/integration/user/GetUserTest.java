@@ -102,6 +102,7 @@ public class GetUserTest {
         userService.createUser(updateUserDto);
     }
 
+    //TODO: fix getUserByEmail test
     @Test
     public void getUserByEmail() {
         String testMapping = "/user";
