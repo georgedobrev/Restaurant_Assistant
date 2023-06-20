@@ -9,8 +9,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Data
 @NoArgsConstructor
 public class TenantDto {
