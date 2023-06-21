@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppUser;
 
@@ -19,4 +20,6 @@ public interface UserService {
 
     AppUser updateUserById(int id, UpdateUserDto updateUserDto);
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
+
+    AppUser createWaiter(WaiterDto waiterDto);
 }
