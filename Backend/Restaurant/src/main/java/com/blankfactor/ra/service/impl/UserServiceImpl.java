@@ -1,5 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
+import com.blankfactor.ra.dto.AdminDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
@@ -18,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -29,23 +29,13 @@ public class UserServiceImpl implements UserService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public AppUser createUser(UpdateUserDto userDto) {
-        AppUser appUser = new AppUser();
+    public AppUser createWaiter(WaiterDto waiterDto) {
+        return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
+    }
 
-        appUser.setEmail(userDto.getEmail());
-        appUser.setName(userDto.getName());
-        appUser.setSurname(userDto.getSurname());
-
-        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurant().getId())
-                .orElseThrow(() -> new RestaurantException("No restaurant with id " + userDto.getRestaurant().getId()));
-
-        AppUser savedAppUser = userRepository.save(appUser);
-
-        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
-            assignUserRole(userDto, savedAppUser);
-        }
-
-        return savedAppUser;
+    @Override
+    public AppUser createAdmin(AdminDto adminDto) {
+        return createUserWithEmailAndRoleType(adminDto.getEmail(), RoleType.ADMIN, adminDto.getRestaurant());
     }
 
     @Override
@@ -102,6 +92,7 @@ public class UserServiceImpl implements UserService {
         return admins;
     }
 
+    //TODO See if we need to delete this functionality
     @Transactional
     @Override
     public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
@@ -131,8 +122,6 @@ public class UserServiceImpl implements UserService {
         return appUserToUpdate;
     }
 
-
-
     @Override
     public void deleteUserById(int id) {
         List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
@@ -155,5 +144,25 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return appUser;
+    }
+
+    private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
+        AppUser user = AppUser.builder()
+                .email(email)
+                .build();
+
+        Restaurant restaurantRetrieved = restaurantRepository.findById(restaurant.getId())
+                .orElseThrow(() -> new RestaurantException("No restaurant with id " + restaurant.getId()));
+
+        UserRole userRole = UserRole.builder()
+                .appUser(user)
+                .roleType(roleType)
+                .restaurant(restaurantRetrieved)
+                .build();
+
+        AppUser savedAppUser = userRepository.save(user);
+        userRoleRepository.save(userRole);
+
+        return savedAppUser;
     }
 }
