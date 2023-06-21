@@ -29,26 +29,6 @@ public class UserServiceImpl implements UserService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public AppUser createUser(UpdateUserDto userDto) {
-        AppUser appUser = new AppUser();
-
-        appUser.setEmail(userDto.getEmail());
-        appUser.setName(userDto.getName());
-        appUser.setSurname(userDto.getSurname());
-
-        Restaurant restaurant = restaurantRepository.findById(userDto.getRestaurant().getId())
-                .orElseThrow(() -> new RestaurantException("No restaurant with id " + userDto.getRestaurant().getId()));
-
-        AppUser savedAppUser = userRepository.save(appUser);
-
-        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
-            assignUserRole(userDto, savedAppUser);
-        }
-
-        return savedAppUser;
-    }
-
-    @Override
     public AppUser createWaiter(WaiterDto waiterDto) {
         return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
     }

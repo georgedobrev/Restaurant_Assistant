@@ -21,14 +21,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping()
-    @Operation(summary = "Create user")
-    public ResponseEntity<AppUser> createUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
-        AppUser createdAppUser = userService.createUser(updateUserDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
-    }
-
     @PostMapping("/waiter")
     @Operation(summary = "Create waiter")
     public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
