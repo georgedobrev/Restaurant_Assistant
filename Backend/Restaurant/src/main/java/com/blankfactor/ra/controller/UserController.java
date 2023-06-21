@@ -1,5 +1,6 @@
 package com.blankfactor.ra.controller;
 
+import com.blankfactor.ra.dto.AdminDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserEmailDto;
 import com.blankfactor.ra.dto.WaiterDto;
@@ -31,6 +32,13 @@ public class UserController {
         AppUser createdWaiter = userService.createWaiter(waiterDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
+    }
+
+    @PostMapping("/admin")
+    public ResponseEntity<AppUser> createAdmin(@Valid @RequestBody AdminDto adminDto) {
+        AppUser createdAdmin = userService.createAdmin(adminDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
     }
 
     @PostMapping("/addRole")
