@@ -18,5 +18,5 @@ public interface QRCodeService {
 
     Resource downloadQRCodes(Integer restaurantId, List<Integer> tableNumbers) throws IOException;
 
-    AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user);
+    AppTable setUserAsSeatedAtTableFromQRHashedUrl(String hashedUrl, AppUser user);
 }

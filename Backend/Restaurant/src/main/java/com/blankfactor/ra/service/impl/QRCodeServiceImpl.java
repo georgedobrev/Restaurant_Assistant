@@ -3,7 +3,10 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
-import com.blankfactor.ra.model.*;
+import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
+import com.blankfactor.ra.model.QrCode;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.*;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.UserTableService;
@@ -22,8 +25,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -100,7 +104,7 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     // TODO change the name of the method and separate the functionality
     @Override
-    public AppTable getTableFromQRHashUrl(String hashedUrl, AppUser user) {
+    public AppTable setUserAsSeatedAtTableFromQRHashedUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
 

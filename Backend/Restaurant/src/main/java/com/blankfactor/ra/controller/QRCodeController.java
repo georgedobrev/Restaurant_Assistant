@@ -39,8 +39,8 @@ public class QRCodeController {
     }
 
     @PostMapping("/{hashedUrl}")
-    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
-        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user);
+    public ResponseEntity<AppTable> setUserAsSeatedAtTableFromQRHashedUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
+        AppTable response = qrCodeService.setUserAsSeatedAtTableFromQRHashedUrl(hashedUrl, user);
 
         return ResponseEntity.ok(response);
     }

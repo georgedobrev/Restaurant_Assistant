@@ -34,7 +34,7 @@ public class UserTableServiceImpl implements UserTableService {
             UserTable userTable = UserTable.builder()
                     .appUser(user)
                     .waiterIds(waiterIds)
-                    .appTableId(appTable)
+                    .appTable(appTable)
                     .startTime(new Date().toInstant())
                     .build();
 
@@ -68,8 +68,7 @@ public class UserTableServiceImpl implements UserTableService {
         List<WaiterSection> waiterSections = new ArrayList<>();
 
         for (Section section : sections) {
-            List<WaiterSection> waiterSectionsForSection = waiterSectionRepository.findBySectionId(section.getId());
-            waiterSections.addAll(waiterSectionsForSection);
+            waiterSections.addAll(waiterSectionRepository.findBySectionId(section.getId()));
         }
 
         if (waiterSections.isEmpty()) {

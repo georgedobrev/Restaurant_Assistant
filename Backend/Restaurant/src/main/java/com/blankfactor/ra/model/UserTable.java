@@ -29,7 +29,7 @@ public class UserTable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_table_id", nullable = false)
-    private AppTable appTableId;
+    private AppTable appTable;
 
     @Column(name = "start_time")
     private Instant startTime;
