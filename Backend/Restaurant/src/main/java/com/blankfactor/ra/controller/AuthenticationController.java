@@ -1,16 +1,10 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.AuthenticationRequestDto;
-import com.blankfactor.ra.dto.AuthenticationResponse;
-import com.blankfactor.ra.dto.GoogleTokenDto;
-import com.blankfactor.ra.dto.UserDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -35,5 +29,10 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequestDto request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @GetMapping("/jwt")
+    public ResponseEntity<JwtTokenDto> jwtFromRefreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
+        return ResponseEntity.ok(authenticationService.jwtFromRefreshToken(refreshTokenDto));
     }
 }

@@ -1,5 +1,6 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.enums.RequestType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,16 +23,17 @@ public class Notification {
     @JoinColumn(name = "app_table_id", nullable = false)
     private AppTable appTable;
 
-    @Column(name = "request_type")
-    private String requestType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "request_type", nullable = false)
+    private RequestType requestType;
 
     @Column(name = "message")
     private String message;
 
     @Column(name = "approved")
-    private Boolean approved;
+    private Boolean approved = false;
 
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
 }

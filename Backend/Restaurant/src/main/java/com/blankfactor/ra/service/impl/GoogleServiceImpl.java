@@ -3,7 +3,6 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.dto.UserDto;
 import com.blankfactor.ra.exceptions.custom.AuthenticationException;
-import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.service.GoogleService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;

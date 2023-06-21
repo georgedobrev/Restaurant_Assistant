@@ -36,15 +36,15 @@ public class TenantServiceImpl implements TenantService {
                 .email(tenantDto.getEmail())
                 .build();
 
-               userRepository.save(appUser);
+        userRepository.save(appUser);
 
-               UserRole userRole = UserRole.builder()
-                       .appUser(appUser)
-                       .restaurant(tenantDto.getRestaurant())
-                       .roleType(RoleType.ADMIN)
-                       .build();
+        UserRole userRole = UserRole.builder()
+                .appUser(appUser)
+                .restaurant(tenantDto.getRestaurant())
+                .roleType(RoleType.ADMIN)
+                .build();
 
-               userRoleRepository.save(userRole);
+        userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
