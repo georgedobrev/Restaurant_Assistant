@@ -2,11 +2,11 @@ package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserEmailDto;
+import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +24,13 @@ public class UserController {
         AppUser createdAppUser = userService.createUser(updateUserDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
+    }
+
+    @PostMapping("/waiter")
+    public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
+        AppUser createdWaiter = userService.createWaiter(waiterDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
     }
 
     @PostMapping("/addRole")

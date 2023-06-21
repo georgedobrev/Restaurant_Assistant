@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
@@ -43,6 +44,29 @@ public class UserServiceImpl implements UserService {
         if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
             assignUserRole(userDto, savedAppUser);
         }
+
+        return savedAppUser;
+    }
+
+    @Override
+    public AppUser createWaiter(WaiterDto waiterDto) {
+        AppUser waiter = AppUser.builder()
+                .email(waiterDto.getEmail())
+                .build();
+
+        Restaurant restaurant = restaurantRepository.findById(waiterDto.getRestaurant().getId())
+                .orElseThrow(() -> new RestaurantException("No restaurant with id " + waiterDto.getRestaurant().getId()));
+
+        //TODO: Later check to extract the logic into a method
+        UserRole userRole = UserRole.builder()
+                .appUser(waiter)
+                .roleType(RoleType.WAITER)
+                .restaurant(restaurant)
+                .build();
+
+        AppUser savedAppUser = userRepository.save(waiter);
+
+        userRoleRepository.save(userRole);
 
         return savedAppUser;
     }
