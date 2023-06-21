@@ -21,22 +21,18 @@ public class Reporting {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-    @Column(name = "table_id")
-    private AppTable tableId;
+    @JoinColumn(name = "table_id", nullable = false)
+    private AppTable table;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
-    @Column(name = "restaurant_id")
-    private Restaurant restaurantId;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
     @ManyToOne
-    @JoinColumn(name = "report_from", referencedColumnName = "id", nullable = false)
-    @Column(name = "report_from")
+    @JoinColumn(name = "report_from", nullable = false)
     private AppUser reportFrom;
 
     @ManyToOne
-    @JoinColumn(name = "report_to", referencedColumnName = "id", nullable = false)
-    @Column(name = "report_to")
+    @JoinColumn(name = "report_to", nullable = false)
     private AppUser reportTo;
 }
