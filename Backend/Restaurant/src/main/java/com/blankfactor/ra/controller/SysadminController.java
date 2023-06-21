@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("sysadmin")
+@RequestMapping("/sysadmin")
 @AllArgsConstructor
+@RestController
 public class SysadminController {
     private final SysadminService sysadminService;
 
@@ -27,7 +27,7 @@ public class SysadminController {
     }
 
     @GetMapping("/{sysadminId}")
-    public ResponseEntity<Sysadmin> getSysadminById(@PathVariable("sysadminId") int sysadminId) throws SysadminException {
+    public ResponseEntity<Sysadmin> getSysadminById(@PathVariable("sysadminId") int sysadminId) {
         Sysadmin sysadmin = sysadminService.getSysadminById(sysadminId);
         return ResponseEntity.ok().body(sysadmin);
     }
@@ -47,7 +47,7 @@ public class SysadminController {
 
     @DeleteMapping("/{sysadminId}")
     public ResponseEntity<?> deleteSysadmin(@PathVariable("sysadminId") int sysadminId) {
-         sysadminService.deleteSysadminById(sysadminId);
+        sysadminService.deleteSysadminById(sysadminId);
         return ResponseEntity.ok().build();
     }
 
