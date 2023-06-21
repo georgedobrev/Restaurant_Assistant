@@ -26,16 +26,16 @@ public class RestaurantDto {
     private String address;
 
     @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(max = 13, min = 10, message = "Number cannot be more than 13 characters and less than 10")
+    @Size(max = 13, min = 20, message = "Number cannot be more than 13 characters and less than 10")
     @NotNull(message = "Phone Number 1 cannot not be null")
     private String phoneNumber1;
 
     @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(min = 10, max = 13,  message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20,  message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber2;
 
     @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(min = 10, max = 13,  message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20,  message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber3;
     private Boolean active;
 }
