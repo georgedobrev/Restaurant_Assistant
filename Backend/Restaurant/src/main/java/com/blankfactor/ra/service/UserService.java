@@ -18,5 +18,8 @@ public interface UserService {
     void deleteUserById(int id);
 
     AppUser updateUserById(int id, UpdateUserDto updateUserDto);
+
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
+
+    AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser);
 }

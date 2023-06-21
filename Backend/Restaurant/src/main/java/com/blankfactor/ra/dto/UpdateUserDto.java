@@ -2,6 +2,7 @@ package com.blankfactor.ra.dto;
 
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.Restaurant;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
