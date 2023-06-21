@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
         return admins;
     }
 
+    //TODO See if we need to delete this functionality
     @Transactional
     @Override
     public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
