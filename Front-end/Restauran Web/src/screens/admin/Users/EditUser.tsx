@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { editUser, User, getUsers } from "../../../services/UserService";
+import { editUser, User, getUsers } from "../../../services/userService";
 import { status } from "../../constants";
 
 const EditUserComponent: React.FC = () => {
@@ -23,6 +23,7 @@ const EditUserComponent: React.FC = () => {
           blacklisted: false,
           active: true,
           createdAt: "",
+
         },
         parseInt(userId)
       );
@@ -35,7 +36,7 @@ const EditUserComponent: React.FC = () => {
 
   const handleCheckUserExists = async () => {
     try {
-      const user: User | undefined = await getUsers(parseInt(userId));
+      const user: User | undefined = await getUsers(email);
 
       if (user && user.email === email) {
         setUserExists(true);
@@ -58,15 +59,6 @@ const EditUserComponent: React.FC = () => {
 
       {!userExists ? (
         <>
-          <TextField
-            label="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            color="warning"
-            fullWidth
-            required
-            margin="normal"
-          />
 
           <TextField
             label="Email"

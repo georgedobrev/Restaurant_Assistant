@@ -5,8 +5,8 @@ const get = async <T,>(url: string): Promise<T> => {
   return response.data;
 };
 
-const post = async <T,>(url: string, data: T): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.post(url, data);
+const post = async <T, R = any>(url: string, data: T): Promise<R> => {
+  const response: AxiosResponse<R> = await axios.post(url, data);
   return response.data;
 };
 

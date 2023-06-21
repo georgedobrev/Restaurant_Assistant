@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
+  getRestaurantsByAdminID,
   getRestaurants,
   Restaurant,
 } from "../../../services/restaurantService";
@@ -24,11 +25,18 @@ const GetRestaurants = () => {
     };
   }, []);
 
+  const userId = localStorage.getItem("userId")
+
   useEffect(() => {
     (async () => {
       try {
-        const data: Restaurant[] = await getRestaurants();
-        setRestaurants(data);
+        if (userId) {
+          const restaurants = await getRestaurantsByAdminID(Number(userId));
+          console.log(restaurants); 
+          setRestaurants(restaurants)
+        } else {
+          console.log('User ID not found in local storage.');
+        }
       } catch (error) {
         return error;
       }

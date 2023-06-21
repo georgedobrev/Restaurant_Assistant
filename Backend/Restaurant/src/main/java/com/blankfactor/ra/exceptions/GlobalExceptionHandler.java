@@ -49,11 +49,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
-        ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
+//        ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @ExceptionHandler(NotificationException.class)
     public ResponseEntity<ExceptionResponse> handleNotificationException(NotificationException ex) {

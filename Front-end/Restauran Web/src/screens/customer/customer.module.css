@@ -1,0 +1,128 @@
+.section {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .greyPart {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    background-size: cover;
+    background-position: right bottom;
+  }
+  
+  .whitePart {
+    background-color: var(--white-color);
+    height: 20%;
+    width: 100%;
+    display: flex;
+    text-align: center;
+  }
+  
+  .splitLeft,
+  .splitRight {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title {
+    font-family: "MarckScripts", sans-serif;
+    font-weight: 200;
+    color: var(--primary-color);
+    margin-top: 8%;
+    margin-bottom: 20%;
+    text-align: center;
+  }
+  
+  .image {
+    position: absolute;
+    height: 100%;
+    width: 34%;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  }
+  
+  .message {
+    position: absolute;
+    font-family: "MarckScripts", sans-serif;
+    font-size: 1.5rem;
+    color: var(--black-color);
+    right: 4%;
+    bottom: 10%;
+  }
+  
+  .centered .buttons {
+    margin-bottom: 15px;
+    width: 80%;
+    color: var(--primary-color);
+    background-color: "none";
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .span {
+    content: "";
+    position: "absolute";
+    left: 0;
+    right: 0;
+    bottom: -2;
+    height: 2;
+    background-color: "white";
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 100px;
+    }
+  
+    .text {
+      font-size: 2rem;
+    }
+  
+    .message {
+      font-size: 1.2rem;
+    }
+  
+    .image {
+      width: 50%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .title {
+      font-size: 4rem;
+    }
+  
+    .text {
+      font-size: 1.6rem;
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+  
+    .message {
+      font-size: 1.25rem;
+    }
+  
+    .image {
+      width: 70%;
+    }
+  
+    .greyPart,
+    .whitePart {
+      flex-direction: column;
+    }
+  
+    .splitLeft,
+    .splitRight {
+      width: 100%;
+    }
+  }

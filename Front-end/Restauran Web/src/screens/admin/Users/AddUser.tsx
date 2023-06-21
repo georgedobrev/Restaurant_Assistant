@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { createUser, User } from "../../../services/UserService";
+import { createUser, User } from "../../../services/userService";
 
 const AddUser: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,6 +16,7 @@ const AddUser: React.FC = () => {
       name,
       surname,
       email,
+      password
     };
 
     try {
@@ -22,6 +24,7 @@ const AddUser: React.FC = () => {
       setName("");
       setSurname("");
       setEmail("");
+      setPassword("");
       return response;
     } catch (error) {
       return error;
@@ -30,7 +33,7 @@ const AddUser: React.FC = () => {
 
   return (
     <div>
-      <h2 className={styles.newUser}>Add new user</h2>
+      <h2 className={styles.newUser}>Add new admin</h2>
 
       <form className={styles.submitForm} onSubmit={handleSubmit}>
         <TextField
@@ -63,8 +66,19 @@ const AddUser: React.FC = () => {
           className={styles.inputFields}
         />
 
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
+
         <Button type="submit" className={styles.btn} variant="contained">
-          Add new user
+          Add new admin
         </Button>
       </form>
     </div>

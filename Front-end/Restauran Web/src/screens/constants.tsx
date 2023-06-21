@@ -8,6 +8,7 @@ export const usersSections = {
   addUser: "addUser",
   editUser: "editUser",
   deleteUser: "deleteUser",
+  addUserRole: "addRole"
 };
 
 export const status = {

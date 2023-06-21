@@ -1,7 +1,12 @@
 {
-   "baseUrl": "http://localhost:8080/",
-   "usersEndpoint": "user",
-   "restaurantsEndpoint": "restaurant",
-   "restaurants": "/getAll"
-}
+  "baseUrl": "http://localhost:8080/",
+  "usersEndpoint": "user",
+  "restaurantsEndpoint": "restaurant",
+  "notificationEndpoint": "notification",
 
+  "restaurants": "/getAll",
+  "createNotification": "/create",
+  "auth": "auth",
+  "loginEndpoint": "/login",
+  "getRestaurantsByAdmin": "/getAllByAdmin"
+}
