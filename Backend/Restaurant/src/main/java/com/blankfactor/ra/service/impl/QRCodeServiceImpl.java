@@ -100,7 +100,6 @@ public class QRCodeServiceImpl implements QRCodeService {
         return new ByteArrayResource(baos.toByteArray());
     }
 
-    // TODO change the name of the method and separate the functionality
     @Override
     public AppTable setUserAsSeatedAtTableFromQRHashedUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
