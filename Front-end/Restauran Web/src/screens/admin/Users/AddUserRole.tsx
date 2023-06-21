@@ -7,7 +7,7 @@ const AddRoles: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [roleType, setRoleType] = useState<string>("ADMIN");
+  const [roleType, setRoleType] = useState<string>("WAITER");
   const [restaurant, setRestaurant] = useState<{ id: number }>({ id: 0 });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

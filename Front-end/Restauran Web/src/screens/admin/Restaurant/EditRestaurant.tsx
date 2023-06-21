@@ -47,7 +47,7 @@ const EditRestaurantComponent: React.FC = () => {
         setAddress(restaurantData.address);
         setTablesCount(restaurantData.tablesCount);
         setPhoneNumber(restaurantData.phoneNumber);
-        setRequestStatus(status.successStatus);
+        setRequestStatus(status.successStatus);              
       } else {
         setRestaurantExists(false);
         setRequestStatus(status.failureStatus);

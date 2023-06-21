@@ -19,11 +19,11 @@ const EditUserComponent: React.FC = () => {
           id: parseInt(userId),
           name,
           surname,
+          password,
           email,
           blacklisted: false,
           active: true,
           createdAt: "",
-
         },
         parseInt(userId)
       );
@@ -36,7 +36,7 @@ const EditUserComponent: React.FC = () => {
 
   const handleCheckUserExists = async () => {
     try {
-      const user: User | undefined = await getUsers(email);
+      const user: User | undefined = await getUsers(parseInt(userId));
 
       if (user && user.email === email) {
         setUserExists(true);
@@ -59,6 +59,15 @@ const EditUserComponent: React.FC = () => {
 
       {!userExists ? (
         <>
+          <TextField
+            label="User ID"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            color="warning"
+            fullWidth
+            required
+            margin="normal"
+          />
 
           <TextField
             label="Email"

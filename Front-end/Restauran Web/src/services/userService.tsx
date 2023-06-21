@@ -4,14 +4,13 @@ import { baseUrl, usersEndpoint } from "./config.json";
 export interface User {
   id?: number;
   email: string;
-  name?: string;
-  surname?: string;
+  name: string;
+  surname: string;
   password?: string;
   blacklisted?: boolean;
   active?: boolean;
   createdAt?: string;
 }
-
 export interface Roles {
   email: string,
   name: string,
@@ -22,15 +21,9 @@ export interface Roles {
 }
 }
 
-export const getUsers = async (email: string): Promise<User | undefined> => {
-  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}`);
+export const getUsers = async (id: number): Promise<User | undefined> => {
+  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}/${id}`);
 };
-
-export const getUsersByEmail = async (email: string): Promise<User[] | undefined> => {
-  const response = await fetchWrapper.get<User[] | undefined>(`${baseUrl}${usersEndpoint}?email=${email}`);
-  return response;
-};
-
 
 export const createUser = async (userData: User): Promise<User> => {
   return fetchWrapper.post<User>("http://localhost:8080/auth/register", userData);
