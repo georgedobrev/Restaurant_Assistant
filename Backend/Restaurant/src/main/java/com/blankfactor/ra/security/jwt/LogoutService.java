@@ -36,7 +36,7 @@ public class LogoutService implements LogoutHandler {
     }
 
     @Transactional
-    private void deleteUserToken(String username) {
+    public void deleteUserToken(String username) {
         AppUser appUser = userRepository.findAppUserByEmail(username).orElseThrow(() -> new UserException("User not found"));
         refreshTokenRepository.deleteByAppUser(appUser);
     }

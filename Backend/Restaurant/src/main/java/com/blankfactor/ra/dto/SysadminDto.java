@@ -19,6 +19,4 @@ public class SysadminDto {
     @Size(max = 100, message = "Email cannot be more than 100 characters")
     @NotNull(message = "Email cannot not be null")
     private String email;
-
-    private Integer restaurantId;
 }

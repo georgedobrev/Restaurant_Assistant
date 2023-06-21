@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
-
 import java.time.Instant;
 
 @Entity
@@ -23,18 +21,11 @@ public class Sysadmin {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "restaurant_id")
-    private Integer restaurantId;
-
     @Column(name = "name")
     private String name;
 
     @Column(name = "surname")
     private String surname;
-
-    @Builder.Default
-    @Column(name = "blacklisted")
-    private Boolean blacklisted = false;
 
     @Builder.Default
     @Column(name = "active")
