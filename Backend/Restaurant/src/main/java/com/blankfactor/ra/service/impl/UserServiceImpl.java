@@ -39,29 +39,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser createWaiter(WaiterDto waiterDto) {
-        AppUser waiter = AppUser.builder()
-                .email(waiterDto.getEmail())
-                .build();
-
-        Restaurant restaurant = restaurantRepository.findById(waiterDto.getRestaurant().getId())
-                .orElseThrow(() -> new RestaurantException("No restaurant with id " + waiterDto.getRestaurant().getId()));
-
-        //TODO: Later check to extract the logic into a method
-        UserRole userRole = UserRole.builder()
-                .appUser(waiter)
-                .roleType(RoleType.WAITER)
-                .restaurant(restaurant)
-                .build();
-
-        AppUser savedAppUser = userRepository.save(waiter);
-
-        userRoleRepository.save(userRole);
-
-        return savedAppUser;
-    }
-
-    @Override
     public AppUser addRoleToUser(UpdateUserDto updateUserDto) {
         AppUser appUser = userRepository.findAppUserByEmail(updateUserDto.getEmail())
                 .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));

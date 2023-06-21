@@ -37,13 +37,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
     }
 
-    @PostMapping("/waiter")
-    public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
-        AppUser createdWaiter = userService.createWaiter(waiterDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
-    }
-
     @PostMapping("/addRole")
     @Operation(summary = "Add role to existing user")
     public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
