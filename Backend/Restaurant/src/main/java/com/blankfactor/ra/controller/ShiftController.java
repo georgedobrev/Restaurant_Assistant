@@ -32,7 +32,7 @@ public class ShiftController {
 
     @PutMapping("/{shiftId}")
     public ResponseEntity<Shift> updateShiftById(@PathVariable("shiftId") Integer shiftId,
-                                             @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
+                                                 @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
         Shift updatedShift = shiftService.updateShiftById(shiftId, shiftDto);
         return ResponseEntity.ok(updatedShift);
     }

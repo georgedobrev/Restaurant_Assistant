@@ -1,13 +1,19 @@
 package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+@Builder
 @Data
 @Entity
 @Table(name = "user_table")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

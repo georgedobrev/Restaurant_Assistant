@@ -10,8 +10,6 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,9 +40,6 @@ public class QRCodeController {
 
     @PostMapping("/{hashedUrl}")
     public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
-        // TODO when the login is configured in security, delete the @RequestBody and uncomment the 2 rows below
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        AppUser user = (AppUser) authentication.getPrincipal();
         AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user);
 
         return ResponseEntity.ok(response);

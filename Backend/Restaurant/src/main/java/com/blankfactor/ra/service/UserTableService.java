@@ -4,5 +4,5 @@ import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 
 public interface UserTableService {
-    boolean isAppUserSeated(AppUser user, AppTable appTable);
+    void createUserTable(AppTable appTable, AppUser user);
 }
