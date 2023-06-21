@@ -3,6 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.service.AppTableService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class AppTableController {
     private final AppTableService appTableService;
 
     @PostMapping()
+    @Operation(summary = "Create tables for existing restaurant")
     public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
                                                                     @RequestBody List<AppTable> appTables) {
         List<AppTable> createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
@@ -26,6 +28,7 @@ public class AppTableController {
     }
 
     @GetMapping("/{tableNumber}")
+    @Operation(summary = "Get table by table number")
     public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
@@ -33,6 +36,7 @@ public class AppTableController {
     }
 
     @GetMapping("/all")
+    @Operation(summary = "Get all tables for a specific restaurant")
     public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         List<AppTable> appTables = appTableService.getTablesByRestaurantId(restaurantId);
 
@@ -40,6 +44,7 @@ public class AppTableController {
     }
 
     @PutMapping("/{tableNumber}")
+    @Operation(summary = "Update table by table number")
     public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) {
         AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
@@ -47,6 +52,7 @@ public class AppTableController {
     }
 
     @DeleteMapping("/{tableNumber}")
+    @Operation(summary = "Delete table by table number")
     public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         appTableService.removeTableByName(restaurantId, tableNumber);
         return ResponseEntity.ok().build();
