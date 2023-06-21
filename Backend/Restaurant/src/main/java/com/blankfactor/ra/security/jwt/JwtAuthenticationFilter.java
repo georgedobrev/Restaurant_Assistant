@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
 @Component
@@ -33,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
-            return;
+            throw new AuthenticationException("Error with the bearer token");
         }
 
         jwt = authHeader.substring(7);
