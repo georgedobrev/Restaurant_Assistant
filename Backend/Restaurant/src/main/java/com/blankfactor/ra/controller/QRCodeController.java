@@ -42,14 +42,7 @@ public class QRCodeController {
 
     @PostMapping("/{hashedUrl}")
     public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
-        /*
-        TODO localhost:8080/qrcode/{hashedUrl}
-         How to redirect the user from the hashed url to the login page
-         Authenticate true -> redirect to home page(3 buttons)
-         Authenticate false -> stay on the login page
-         */
-
-        // TODO get user details
+        // TODO when the login is configured in security, delete the @RequestBody and uncomment the 2 rows below
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        AppUser user = (AppUser) authentication.getPrincipal();
         AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl, user);
@@ -57,4 +50,3 @@ public class QRCodeController {
         return ResponseEntity.ok(response);
     }
 }
-
