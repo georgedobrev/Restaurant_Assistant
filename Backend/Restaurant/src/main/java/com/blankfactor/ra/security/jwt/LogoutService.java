@@ -35,6 +35,7 @@ public class LogoutService implements LogoutHandler {
         SecurityContextHolder.clearContext();
     }
 
+    //TODO: Research if we need to delete the refresh token
     @Transactional
     private void deleteUserToken(String username) {
         AppUser appUser = userRepository.findAppUserByEmail(username).orElseThrow(() -> new UserException("User not found"));
