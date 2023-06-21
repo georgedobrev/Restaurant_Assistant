@@ -28,11 +28,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 0,
-    marginBottom: 10,
+    marginBottom: 4,
+  },
+  sectionTitleOldNotifications: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 14,
+    marginBottom: 6,
   },
   requestItem: {
     backgroundColor: globalStyles.lightColor,
-    padding: 16,
+    padding: 10,
     borderRadius: 8,
     marginBottom: 0,
     borderWidth: 1,
@@ -42,9 +48,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
     elevation: 2,
+    marginVertical: 10,
   },
   requestText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 4,
   },
@@ -82,6 +89,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 16,
     fontWeight: "bold",
+  },
+  approveButton: {
+    color: globalStyles.orangeColor,
+    fontWeight: "bold",
+    alignSelf: "flex-end",
   },
 });
 
