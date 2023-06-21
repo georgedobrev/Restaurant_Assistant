@@ -16,6 +16,7 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    // Todo mak esure the second time we call the /login we receive the same refresh from db
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody GoogleTokenDto googleJwt) throws GeneralSecurityException, IOException {
         return ResponseEntity.ok(authenticationService.login(googleJwt));
