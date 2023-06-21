@@ -32,9 +32,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
+        //Todo make sure it doesnt break if we set up Bearer token even for login
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
-            throw new AuthenticationException("Error with the bearer token");
+            return;
+//            throw new AuthenticationException("Error with the bearer token");
         }
 
         jwt = authHeader.substring(7);
