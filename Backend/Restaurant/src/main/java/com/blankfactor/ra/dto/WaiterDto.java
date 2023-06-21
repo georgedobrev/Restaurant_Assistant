@@ -20,5 +20,6 @@ public class WaiterDto {
     @NotNull(message = "Email cannot not be null")
     private String email;
 
+    @NotNull(message = "Restaurant cannot be null")
     private Restaurant restaurant;
 }
