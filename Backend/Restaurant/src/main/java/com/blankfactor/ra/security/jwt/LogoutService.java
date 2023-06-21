@@ -32,7 +32,6 @@ public class LogoutService implements LogoutHandler {
         String username = jwtService.extractUsername(jwt);
 
         deleteUserToken(username);
-        SecurityContextHolder.clearContext();
     }
 
     //TODO: Research if we need to delete the refresh token
