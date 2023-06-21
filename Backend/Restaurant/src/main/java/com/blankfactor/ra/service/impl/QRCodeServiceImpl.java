@@ -7,7 +7,8 @@ import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
-import com.blankfactor.ra.repository.*;
+import com.blankfactor.ra.repository.AppTableRepository;
+import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.UserTableService;
 import com.google.zxing.BarcodeFormat;
@@ -39,9 +40,6 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final AppProp appProp;
     private final AppTableRepository appTableRepository;
     private final UserTableService userTableService;
-    private final UserTableRepository userTableRepository;
-    private final SectionRepository sectionRepository;
-    private final WaiterSectionRepository waiterSectionRepository;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
