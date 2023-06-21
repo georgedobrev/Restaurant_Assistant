@@ -1,11 +1,15 @@
 package com.blankfactor.ra.service.impl;
 
+import com.blankfactor.ra.dto.AdminDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
@@ -22,22 +26,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
-    public AppUser createUser(UpdateUserDto userDto) {
-        AppUser appUser = new AppUser();
+    public AppUser createWaiter(WaiterDto waiterDto) {
+        return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
+    }
 
-        appUser.setEmail(userDto.getEmail());
-        appUser.setName(userDto.getName());
-        appUser.setSurname(userDto.getSurname());
-
-        AppUser savedAppUser = userRepository.save(appUser);
-
-        if (userDto.getRoleType() == RoleType.ADMIN || userDto.getRoleType() == RoleType.WAITER) {
-            assignUserRole(userDto, savedAppUser);
-        }
-
-        return savedAppUser;
+    @Override
+    public AppUser createAdmin(AdminDto adminDto) {
+        return createUserWithEmailAndRoleType(adminDto.getEmail(), RoleType.ADMIN, adminDto.getRestaurant());
     }
 
     @Override
@@ -71,6 +69,7 @@ public class UserServiceImpl implements UserService {
         return admins;
     }
 
+    //TODO See if we need to delete this functionality
     @Transactional
     @Override
     public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
@@ -100,8 +99,6 @@ public class UserServiceImpl implements UserService {
         return appUserToUpdate;
     }
 
-
-
     @Override
     public void deleteUserById(int id) {
         List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
@@ -124,5 +121,25 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return appUser;
+    }
+
+    private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
+        AppUser user = AppUser.builder()
+                .email(email)
+                .build();
+
+        Restaurant restaurantRetrieved = restaurantRepository.findById(restaurant.getId())
+                .orElseThrow(() -> new RestaurantException("No restaurant with id " + restaurant.getId()));
+
+        UserRole userRole = UserRole.builder()
+                .appUser(user)
+                .roleType(roleType)
+                .restaurant(restaurantRetrieved)
+                .build();
+
+        AppUser savedAppUser = userRepository.save(user);
+        userRoleRepository.save(userRole);
+
+        return savedAppUser;
     }
 }
