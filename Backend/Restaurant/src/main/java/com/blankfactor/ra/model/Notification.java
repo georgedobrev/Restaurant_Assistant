@@ -2,13 +2,18 @@ package com.blankfactor.ra.model;
 
 import com.blankfactor.ra.config.InstantSerializer;
 import com.blankfactor.ra.enums.RequestType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "notification")
@@ -33,9 +38,11 @@ public class Notification {
     @Column(name = "message")
     private String message;
 
+    @Builder.Default
     @Column(name = "approved")
     private Boolean approved = false;
 
+    @Builder.Default
     @Column(name = "created_at")
     @JsonSerialize(using = InstantSerializer.class)
     private Instant createdAt = Instant.now();
