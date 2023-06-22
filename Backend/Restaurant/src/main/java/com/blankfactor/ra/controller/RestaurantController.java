@@ -1,5 +1,6 @@
 package com.blankfactor.ra.controller;
 
+import com.blankfactor.ra.dto.CreateRestaurantDto;
 import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.service.RestaurantService;
@@ -21,8 +22,8 @@ public class RestaurantController {
 
     @PostMapping()
     @Operation(summary = "Create restaurant")
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        Restaurant createdRestaurant = restaurantService.createRestaurant(restaurantDto);
+    public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantDto createRestaurantDto) {
+        Restaurant createdRestaurant = restaurantService.createRestaurant(createRestaurantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
