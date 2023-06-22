@@ -6,10 +6,10 @@ export interface User {
   email: string;
   name: string;
   surname: string;
-  password?: string;
-  blacklisted?: boolean;
-  active?: boolean;
-  createdAt?: string;
+  roleType: string;
+  restaurant?: {
+    id: number,
+  }
 }
 export interface Roles {
   email: string,
@@ -20,6 +20,10 @@ export interface Roles {
     id: number
 }
 }
+
+export const editUser = async (userData: User): Promise<User> => {
+  return fetchWrapper.put<User>(`${baseUrl}${usersEndpoint}`, userData);
+};
 
 export const addUserRole = async (rolesData: Roles): Promise<Roles> => {
   return fetchWrapper.post<Roles>("http://localhost:8080/user/addRole", rolesData) 
@@ -34,11 +38,7 @@ export const createAdmin = async (rolesData: Roles): Promise<Roles> => {
 };
 
 export const getUsers = async (id: number): Promise<User | undefined> => {
-  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}/${id}`);
-};
-
-export const editUser = async (userData: User, id: number): Promise<User> => {
-  return fetchWrapper.put<User>(`${baseUrl}${usersEndpoint}/${id}`, userData);
+  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}/${id}/1`);
 };
 
 export const deleteUser = async (id: number): Promise<void> => {

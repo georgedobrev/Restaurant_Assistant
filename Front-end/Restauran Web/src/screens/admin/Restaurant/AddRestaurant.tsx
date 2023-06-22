@@ -29,7 +29,7 @@ const AddRestaurant: React.FC = () => {
     };
 
     const restaurantObj: RestaurantObj = {
-      restaurant : restaurantData,
+      restaurantDto : restaurantData,
       userId
     }
 

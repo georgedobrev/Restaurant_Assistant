@@ -5,38 +5,50 @@ import { editUser, User, getUsers } from "../../../services/userService";
 import { status } from "../../constants";
 
 const EditUserComponent: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
+  const [restaurantId, setRestaurantId] = useState<number>(0);
+  const [roleType, setRoleType] = useState<string>("");
+  const [userId, setUserId] = useState<number | undefined>(undefined);
   const [userExists, setUserExists] = useState<boolean>(false);
   const [requestStatus, setRequestStatus] = useState<string>("idle");
 
   const handleEditUser = async () => {
+    if (userId === undefined) return; 
+  
+    const userData: User = {
+      email,
+      name,
+      surname,
+      roleType,
+      restaurant: {
+        id: restaurantId,
+      }
+    };
+  
     try {
-      const updatedUser: User = await editUser(
-        {
-          id: parseInt(userId),
-          name,
-          surname,
-          email,
-          blacklisted: false,
-          active: true,
-          createdAt: "",
-        },
-        parseInt(userId)
-      );
-      setRequestStatus(status.successStatus);
-      return updatedUser;
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+      const response: User = await editUser(userData);
+      setEmail("");
+      setName("");
+      setSurname("");
+      setRoleType("")
+      setRestaurantId(1);
+      //set restaurant id to 1 needs to be changed later on
+      return response;
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const handleCheckUserExists = async () => {
     try {
-      const user: User | undefined = await getUsers(parseInt(userId));
-
+      if (userId === undefined) {
+        return;
+      }
+  
+      const user: User | undefined = await getUsers(userId);
+  
       if (user && user.email === email) {
         setUserExists(true);
         setName(user.name);
@@ -51,6 +63,7 @@ const EditUserComponent: React.FC = () => {
       setRequestStatus(status.failureStatus);
     }
   };
+  
 
   return (
     <div>
@@ -61,7 +74,7 @@ const EditUserComponent: React.FC = () => {
           <TextField
             label="User ID"
             value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setUserId(parseInt(e.target.value) || undefined)}
             color="warning"
             fullWidth
             required
@@ -114,6 +127,16 @@ const EditUserComponent: React.FC = () => {
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            color="warning"
+            fullWidth
+            required
+            margin="normal"
+          />
+
+          <TextField
+            label="Role Type"
+            value={roleType}
+            onChange={(e) => setRoleType(e.target.value)}
             color="warning"
             fullWidth
             required

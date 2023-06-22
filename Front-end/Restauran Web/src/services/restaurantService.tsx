@@ -10,7 +10,7 @@ export interface Restaurant {
 }
 
 export interface RestaurantObj {
-  restaurant: Restaurant,
+  restaurantDto: Restaurant,
   userId: number
 }
 

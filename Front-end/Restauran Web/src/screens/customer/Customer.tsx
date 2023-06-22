@@ -21,7 +21,7 @@ const Customer = () => {
           id: 1,
         },
         appTable: {
-          id: 5,
+          id: 1,
         },
         requestType: requestType, // Use the requestType variable here
         message: `Please ${requestType.toLowerCase()}.`,

@@ -1,9 +1,11 @@
-const Tables = () => {
-  return (
-    <div>
-      <h2>Tables</h2>
-    </div>
-  );
-};
+// import ButtonSection from "./ButtonSection";
 
-export default Tables;
+// const Tenants: React.FC = () => {
+//   return (
+//     <div>
+//       <ButtonSection />
+//     </div>
+//   );
+// };
+
+// export default Tenants;
