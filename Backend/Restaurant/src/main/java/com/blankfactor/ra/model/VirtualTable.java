@@ -12,8 +12,8 @@ public class VirtualTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "tables_ids")
-    private String tablesIds;
+    @Column(name = "table_numbers")
+    private String tableNumbers;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)

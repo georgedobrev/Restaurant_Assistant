@@ -13,6 +13,8 @@ import com.blankfactor.ra.service.VirtualTableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -39,14 +41,14 @@ public class VirtualTableServiceImpl implements VirtualTableService {
 
     @Override
     public VirtualTable getVirtualTableByTableIdsAndRestaurantId(String tableIds, Integer restaurantId) {
-        return virtualTableRepository.findByTablesIdsAndRestaurantId(tableIds, restaurantId)
+        return virtualTableRepository.findByTableNumbersAndRestaurantId(tableIds, restaurantId)
                 .orElseThrow(() -> new VirtualTableException("Virtual table not found"));
     }
 
     @Override
     public VirtualTable updateVirtualTableByTableNumbers(Integer restaurantId, String tableNumbers, VirtualTable updatedVirtualTable) {
         VirtualTable existingVirtual = getVirtualTableByTableIdsAndRestaurantId(tableNumbers, restaurantId);
-        existingVirtual.setTablesIds(updatedVirtualTable.getTablesIds());
+        existingVirtual.setTableNumbers(updatedVirtualTable.getTableNumbers());
         virtualTableRepository.save(existingVirtual);
         return existingVirtual;
     }
@@ -60,7 +62,7 @@ public class VirtualTableServiceImpl implements VirtualTableService {
 
     @Override
     public void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
-        VirtualTable existingVirtualTable = getVirtualTableByTableIdsAndRestaurantId(virtualTable.getTablesIds(), restaurantId);
+        VirtualTable existingVirtualTable = getVirtualTableByTableIdsAndRestaurantId(virtualTable.getTableNumbers(), restaurantId);
 
         setOccupiedForEachTableInVirtualTable(restaurantId, virtualTable, false);
 
@@ -68,10 +70,15 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     }
 
     private void setOccupiedForEachTableInVirtualTable(Integer restaurantId, VirtualTable virtualTable, boolean isOccupied) {
-        for (char c : virtualTable.getTablesIds().toCharArray()) {
-            int tableNum = Character.getNumericValue(c);
 
-            AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNum);
+        List<Integer> tableNumbers = Arrays.stream(virtualTable.getTableNumbers().split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .toList();
+
+        for (int tableNumber : tableNumbers) {
+
+            AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
             appTable.setVirtualTable(isOccupied);
             appTableRepository.save(appTable);

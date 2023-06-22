@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface VirtualTableRepository extends JpaRepository<VirtualTable, Integer> {
-    Optional<VirtualTable> findByTablesIdsAndRestaurantId(String tableIds, Integer restaurantId);
+    Optional<VirtualTable> findByTableNumbersAndRestaurantId(String tableIds, Integer restaurantId);
 
     List<VirtualTable> findByRestaurantId(Integer restaurantId);
 }
