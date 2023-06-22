@@ -13,9 +13,9 @@ import com.blankfactor.ra.service.VirtualTableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -53,14 +53,9 @@ public class VirtualTableServiceImpl implements VirtualTableService {
 
     @Override
     public Map<Integer, VirtualTable> getAllVirtualTablesByRestaurantId(Integer restaurantId) {
-        List<VirtualTable> virtualTables = virtualTableRepository.findByRestaurantId(restaurantId);
-
-        Map<Integer, VirtualTable> mappedVirtualTables = new HashMap<>();
-
-        for (VirtualTable table : virtualTables) {
-            mappedVirtualTables.put(table.getId(), table);
-        }
-        return mappedVirtualTables;
+        return virtualTableRepository.findByRestaurantId(restaurantId)
+                .stream()
+                .collect(Collectors.toMap(VirtualTable::getId, Function.identity()));
     }
 
     @Override
