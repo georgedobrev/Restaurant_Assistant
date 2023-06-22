@@ -85,4 +85,10 @@ public class GlobalExceptionHandler {
         ExceptionResponse errorResponse = new ExceptionResponse("Tenant Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(SysadminException.class)
+    public ResponseEntity<ExceptionResponse> handleSysadminException(SysadminException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Sysadmin Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }
