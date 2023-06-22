@@ -21,12 +21,20 @@ export interface Roles {
 }
 }
 
-export const getUsers = async (id: number): Promise<User | undefined> => {
-  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}/${id}`);
+export const addUserRole = async (rolesData: Roles): Promise<Roles> => {
+  return fetchWrapper.post<Roles>("http://localhost:8080/user/addRole", rolesData) 
+}
+
+export const createWaiter = async (rolesData: Roles): Promise<Roles> => {
+  return fetchWrapper.post<Roles>("http://localhost:8080/user/waiter", rolesData);
 };
 
-export const createUser = async (userData: User): Promise<User> => {
-  return fetchWrapper.post<User>("http://localhost:8080/auth/register", userData);
+export const createAdmin = async (rolesData: Roles): Promise<Roles> => {
+  return fetchWrapper.post<Roles>("http://localhost:8080/user/admin", rolesData);
+};
+
+export const getUsers = async (id: number): Promise<User | undefined> => {
+  return fetchWrapper.get<User | undefined>(`${baseUrl}${usersEndpoint}/${id}`);
 };
 
 export const editUser = async (userData: User, id: number): Promise<User> => {
@@ -37,6 +45,3 @@ export const deleteUser = async (id: number): Promise<void> => {
   return fetchWrapper.del<void>(`${baseUrl}${usersEndpoint}/${id}`);
 };
 
-export const addUserRole = async (rolesData: Roles): Promise<Roles> => {
-  return fetchWrapper.post<Roles>("http://localhost:8080/user/addRole", rolesData) 
-}

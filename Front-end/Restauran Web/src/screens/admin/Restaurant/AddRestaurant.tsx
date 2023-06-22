@@ -10,7 +10,7 @@ const AddRestaurant: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [tablesCount, setTablesCount] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumber1, setPhoneNumber1] = useState<string>("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ const AddRestaurant: React.FC = () => {
       name,
       tablesCount: parseInt(tablesCount),
       address,
-      phoneNumber,
+      phoneNumber1,
     };
 
     try {
@@ -27,7 +27,7 @@ const AddRestaurant: React.FC = () => {
       setName("");
       setAddress("");
       setTablesCount("");
-      setPhoneNumber("");
+      setPhoneNumber1("");
       return response;
     } catch (error) {
       return error;
@@ -71,8 +71,8 @@ const AddRestaurant: React.FC = () => {
 
         <TextField
           label="Phone Number"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          value={phoneNumber1}
+          onChange={(e) => setPhoneNumber1(e.target.value)}
           required
           color="warning"
           margin="normal"

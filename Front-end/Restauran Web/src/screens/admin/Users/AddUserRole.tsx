@@ -1,32 +1,44 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { Roles, addUserRole } from "../../../services/userService";
+import { Roles, addUserRole, createWaiter } from "../../../services/userService";
 
 const AddRoles: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [roleType, setRoleType] = useState<string>("WAITER");
-  const [restaurant, setRestaurant] = useState<{ id: number }>({ id: 0 });
+  const [restaurant, setRestaurant] = useState<{ id: number }>({ id: 1 });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const rolesData: Roles = {
+    const user: Roles = {
       name,
       surname,
       email,
       roleType,
-      restaurant,
+      restaurant
     };
 
     try {
-      const response: Roles = await addUserRole(rolesData);
-      setName("");
-      setSurname("");
-      setEmail("");
-      return response;
+            const createdUser: Roles = await createWaiter(user);
+
+      const roleData: Roles = {
+        name,
+        surname,
+        email: createdUser.email,
+        roleType,
+        restaurant,
+      };
+
+      try {
+        const response: Roles = await addUserRole(roleData);
+        setEmail("");
+        return response;
+      } catch (error) {
+        return error;
+      }
     } catch (error) {
       return error;
     }
@@ -34,7 +46,7 @@ const AddRoles: React.FC = () => {
 
   return (
     <div>
-      <h2 className={styles.newUser}>Add role type</h2>
+      <h2 className={styles.newUser}>Add new waiter</h2>
 
       <form className={styles.submitForm} onSubmit={handleSubmit}>
 
@@ -71,7 +83,7 @@ const AddRoles: React.FC = () => {
         />
 
         <Button type="submit" className={styles.btn} variant="contained">
-          Add user Role
+          Add new waiter
         </Button>
       </form>
     </div>

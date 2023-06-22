@@ -19,7 +19,6 @@ const EditUserComponent: React.FC = () => {
           id: parseInt(userId),
           name,
           surname,
-          password,
           email,
           blacklisted: false,
           active: true,

@@ -12,7 +12,7 @@ const EditRestaurantComponent: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [tablesCount, setTablesCount] = useState<number>(0);
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumber1, setPhoneNumber1] = useState<string>("");
   const [restaurantId, setRestaurantId] = useState<string>("");
   const [restaurantExists, setRestaurantExists] = useState<boolean>(false);
   const [requestStatus, setRequestStatus] = useState<string>("idle");
@@ -24,8 +24,12 @@ const EditRestaurantComponent: React.FC = () => {
         name,
         address,
         tablesCount,
-        phoneNumber,
+        phoneNumber1,
       });
+      setName("");
+      setAddress("");
+      setTablesCount(0);
+      setPhoneNumber1("")
       setRequestStatus(status.successStatus);
       return updatedRestaurant;
     } catch (err) {
@@ -46,7 +50,7 @@ const EditRestaurantComponent: React.FC = () => {
         setName(restaurantData.name);
         setAddress(restaurantData.address);
         setTablesCount(restaurantData.tablesCount);
-        setPhoneNumber(restaurantData.phoneNumber);
+        setPhoneNumber1(restaurantData.phoneNumber1);
         setRequestStatus(status.successStatus);              
       } else {
         setRestaurantExists(false);
@@ -122,8 +126,8 @@ const EditRestaurantComponent: React.FC = () => {
 
           <TextField
             label="Phone Number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber1}
+            onChange={(e) => setPhoneNumber1(e.target.value)}
             color="warning"
             fullWidth
             required

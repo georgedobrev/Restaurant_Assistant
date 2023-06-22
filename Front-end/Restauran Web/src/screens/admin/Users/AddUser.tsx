@@ -1,31 +1,44 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { createUser, User } from "../../../services/userService";
+import { Roles, addUserRole, createWaiter } from "../../../services/userService";
 
-const AddUser: React.FC = () => {
+const AddRoles: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [roleType, setRoleType] = useState<string>("ADMIN");
+  const [restaurant, setRestaurant] = useState<{ id: number }>({ id: 1 });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const userData: User = {
+    const user: Roles = {
       name,
       surname,
       email,
-      password
+      roleType,
+      restaurant
     };
 
     try {
-      const response: User = await createUser(userData);
-      setName("");
-      setSurname("");
-      setEmail("");
-      setPassword("");
-      return response;
+      const createdUser: Roles = await createWaiter(user);
+
+      const roleData: Roles = {
+        name,
+        surname,
+        email: createdUser.email,
+        roleType,
+        restaurant,
+      };
+
+      try {
+        const response: Roles = await addUserRole(roleData);
+        setEmail("");
+        return response;
+      } catch (error) {
+        return error;
+      }
     } catch (error) {
       return error;
     }
@@ -36,25 +49,6 @@ const AddUser: React.FC = () => {
       <h2 className={styles.newUser}>Add new admin</h2>
 
       <form className={styles.submitForm} onSubmit={handleSubmit}>
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          color="warning"
-          required
-          margin="normal"
-          className={styles.inputFields}
-        />
-
-        <TextField
-          label="Surname"
-          value={surname}
-          onChange={(e) => setSurname(e.target.value)}
-          required
-          color="warning"
-          margin="normal"
-          className={styles.inputFields}
-        />
 
         <TextField
           label="Email"
@@ -67,10 +61,21 @@ const AddUser: React.FC = () => {
         />
 
         <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          label="User role"
+          value={roleType}
+          onChange={(e) => setRoleType(e.target.value)}
+          required
+          color="warning"
+          margin="normal"
+          className={styles.inputFields}
+        />
+
+        <TextField
+          label="Restaurant ID"
+          value={restaurant.id}
+          onChange={(e) =>
+            setRestaurant({ id: parseInt(e.target.value) || 0 })
+          }
           required
           color="warning"
           margin="normal"
@@ -85,4 +90,4 @@ const AddUser: React.FC = () => {
   );
 };
 
-export default AddUser;
+export default AddRoles;

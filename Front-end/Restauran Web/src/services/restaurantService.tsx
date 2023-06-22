@@ -6,7 +6,7 @@ export interface Restaurant {
   name: string;
   tablesCount: number;
   address: string;
-  phoneNumber: string;
+  phoneNumber1: string;
 }
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
@@ -15,16 +15,15 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
   );
 };
 
-export const getRestaurantByID = async (id: number): Promise<Restaurant> => {
-  const response = await fetchWrapper.get<Restaurant[]>(
+export const getRestaurantByID = async (id: number) => {
+  return fetchWrapper.get<Restaurant[]>(
     `${baseUrl}${restaurantsEndpoint}/${id}`
   );
-  return response[0];
 };
 
-export const getRestaurantsByAdminID = async (userId: number): Promise<Restaurant[]> => {
+export const getRestaurantsByAdminID = async (): Promise<Restaurant[]> => {
   const response = await fetchWrapper.get<Restaurant[]>(
-    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/${userId}`
+    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/1`
   );
   return response;
 };

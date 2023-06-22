@@ -37,7 +37,14 @@ const ButtonSection: React.FC = () => {
           variant="contained"
           onClick={() => handleButtonClick(usersSections.addUser)}
         >
-          Add New Admin
+          Add Admin
+        </Button>
+        <Button
+          className={styles.btns}
+          variant="contained"
+          onClick={() => handleButtonClick(usersSections.addUserRole)}
+        >
+          Add Waiter
         </Button>
         <Button
           className={styles.btns}
@@ -52,14 +59,6 @@ const ButtonSection: React.FC = () => {
           onClick={() => handleButtonClick(usersSections.deleteUser)}
         >
           Delete User
-        </Button>
-
-        <Button
-          className={styles.btns}
-          variant="contained"
-          onClick={() => handleButtonClick(usersSections.addUserRole)}
-        >
-          Add User Role
         </Button>
       </div>
 
