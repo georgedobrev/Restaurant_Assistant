@@ -8,7 +8,8 @@ const EditUserComponent: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
-  const [restaurantId, setRestaurantId] = useState<number>(0);
+  //todo fix with dynamic restairant ID
+  const [restaurantId, setRestaurantId] = useState<number>(1);
   const [roleType, setRoleType] = useState<string>("");
   const [userId, setUserId] = useState<number | undefined>(undefined);
   const [userExists, setUserExists] = useState<boolean>(false);
@@ -33,8 +34,6 @@ const EditUserComponent: React.FC = () => {
       setName("");
       setSurname("");
       setRoleType("")
-      setRestaurantId(1);
-      //set restaurant id to 1 needs to be changed later on
       return response;
     } catch (error) {
       console.error(error);
@@ -54,6 +53,7 @@ const EditUserComponent: React.FC = () => {
         setName(user.name);
         setSurname(user.surname);
         setEmail(user.email);
+        setRoleType(user.roleType);
         setRequestStatus(status.successStatus);
       } else {
         setUserExists(false);
@@ -67,7 +67,7 @@ const EditUserComponent: React.FC = () => {
 
   return (
     <div>
-      <h2 className={styles.newUser}>Edit User</h2>
+      <h2 className={styles.newUser}>Edit Employee</h2>
 
       {!userExists ? (
         <>

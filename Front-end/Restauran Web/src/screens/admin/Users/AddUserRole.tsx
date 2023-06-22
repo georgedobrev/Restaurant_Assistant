@@ -22,8 +22,7 @@ const AddRoles: React.FC = () => {
     };
 
     try {
-            const createdUser: Roles = await createWaiter(user);
-
+      const createdUser: Roles = await createWaiter(user);
       const roleData: Roles = {
         name,
         surname,

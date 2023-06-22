@@ -26,9 +26,9 @@ export const getRestaurantByID = async (id: number) => {
   );
 };
 
-export const getRestaurantsByAdminID = async (): Promise<Restaurant[]> => {
+export const getRestaurantsByAdminID = async (userId: number): Promise<Restaurant[]> => {
   const response = await fetchWrapper.get<Restaurant[]>(
-    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/1`
+    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/${userId}`
   );
   return response;
 };

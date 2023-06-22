@@ -51,7 +51,7 @@ const ButtonSection: React.FC = () => {
           variant="contained"
           onClick={() => handleButtonClick(usersSections.editUser)}
         >
-          Edit User
+          Edit Employee
         </Button>
         <Button
           className={styles.btns}

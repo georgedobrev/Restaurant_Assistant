@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { Roles, addUserRole, createWaiter } from "../../../services/userService";
+import { Roles, addUserRole, createAdmin } from "../../../services/userService";
 
 const AddRoles: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -22,7 +22,7 @@ const AddRoles: React.FC = () => {
     };
 
     try {
-      const createdUser: Roles = await createWaiter(user);
+      const createdUser: Roles = await createAdmin(user);
 
       const roleData: Roles = {
         name,

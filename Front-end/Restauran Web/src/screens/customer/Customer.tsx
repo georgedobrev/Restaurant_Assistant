@@ -16,14 +16,13 @@ const Customer = () => {
   const sendRequest = (requestType: string) => {
     axios
       .post(`${baseUrl}${notificationEndpoint}${createNotification}`, {
-        id: 1,
         appUser: {
           id: 1,
         },
         appTable: {
           id: 1,
         },
-        requestType: requestType, // Use the requestType variable here
+        requestType: requestType, 
         message: `Please ${requestType.toLowerCase()}.`,
       })
       .then((response) => {

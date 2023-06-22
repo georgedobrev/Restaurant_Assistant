@@ -7,7 +7,7 @@ export interface User {
   name: string;
   surname: string;
   roleType: string;
-  restaurant?: {
+  restaurant: {
     id: number,
   }
 }
