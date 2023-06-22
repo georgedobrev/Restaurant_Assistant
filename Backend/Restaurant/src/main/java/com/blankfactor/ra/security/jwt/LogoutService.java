@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +31,9 @@ public class LogoutService implements LogoutHandler {
         String username = jwtService.extractUsername(jwt);
 
         deleteUserToken(username);
-        SecurityContextHolder.clearContext();
     }
 
+    //TODO: Research if we need to delete the refresh token
     @Transactional
     public void deleteUserToken(String username) {
         AppUser appUser = userRepository.findAppUserByEmail(username).orElseThrow(() -> new UserException("User not found"));

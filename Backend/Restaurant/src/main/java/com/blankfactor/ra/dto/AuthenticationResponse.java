@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.model.AppUser;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,4 +9,5 @@ import lombok.Data;
 public class AuthenticationResponse {
     private String token;
     private String refreshToken;
+    private AppUser appUser;
 }

@@ -4,11 +4,13 @@ import com.blankfactor.ra.config.AppProp;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.QrCode;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.QrCodeRepository;
 import com.blankfactor.ra.service.QRCodeService;
+import com.blankfactor.ra.service.UserTableService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -37,6 +39,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final QrCodeRepository qrCodeRepository;
     private final AppProp appProp;
     private final AppTableRepository appTableRepository;
+    private final UserTableService userTableService;
 
     public static String createHashedURL(String originalURL) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -98,9 +101,11 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public AppTable getTableFromQRHashUrl(String hashedUrl) {
+    public AppTable setUserAsSeatedAtTableFromQRHashedUrl(String hashedUrl, AppUser user) {
         QrCode qrCode = qrCodeRepository.findByHashedUrl(hashedUrl).orElseThrow(() -> new QRCodeException("No QR code with this hashed url"));
         AppTable appTable = appTableRepository.findByQrId(qrCode.getId()).orElseThrow(() -> new AppTableException("No table with such QR code"));
+
+        userTableService.createUserTable(appTable, user);
 
         return appTable;
     }

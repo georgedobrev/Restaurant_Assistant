@@ -4,7 +4,6 @@ import com.blankfactor.ra.dto.SectionDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
-import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;

@@ -2,6 +2,7 @@ package com.blankfactor.ra.controller;
 
 
 import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.QRCodeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -37,11 +38,10 @@ public class QRCodeController {
                 .body(zipFileResource);
     }
 
-    @GetMapping("/{hashedUrl}")
-    public ResponseEntity<AppTable> getTableFromQRHashUrl(@PathVariable("hashedUrl") String hashedUrl) throws Exception {
-        AppTable response = qrCodeService.getTableFromQRHashUrl(hashedUrl);
+    @PostMapping("/{hashedUrl}")
+    public ResponseEntity<AppTable> setUserAsSeatedAtTableFromQRHashedUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
+        AppTable response = qrCodeService.setUserAsSeatedAtTableFromQRHashedUrl(hashedUrl, user);
 
         return ResponseEntity.ok(response);
     }
 }
-
