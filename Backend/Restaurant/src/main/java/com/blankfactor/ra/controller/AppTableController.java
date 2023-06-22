@@ -18,15 +18,15 @@ public class AppTableController {
     private final AppTableService appTableService;
 
     @PostMapping()
-    public ResponseEntity<List<AppTable>> createTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                      @RequestBody List<AppTable> appTables) {
+    public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
+                                                                    @RequestBody List<AppTable> appTables) {
         List<AppTable> createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }
 
     @GetMapping("/{tableNumber}")
-    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
+    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
         return ResponseEntity.ok(appTable);
