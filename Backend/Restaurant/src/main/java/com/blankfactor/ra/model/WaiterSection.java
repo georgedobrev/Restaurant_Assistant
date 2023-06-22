@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "waiter_section")
 @IdClass(WaiterSectionPK.class)
 public class WaiterSection {
-
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "section_id", nullable = false)
