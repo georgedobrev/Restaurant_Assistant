@@ -69,18 +69,11 @@ public class UserServiceImpl implements UserService {
         return admins;
     }
 
-    //TODO See if we need to delete this functionality
     @Transactional
     @Override
-    public AppUser updateUserById(int userId, UpdateUserDto updateUserDto) {
-        AppUser appUserToUpdate = userRepository.findById(userId)
-                .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
-
-        UserRole userRoleToDelete = userRoleRepository
-                .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), updateUserDto.getRoleType())
-                .orElseThrow(() -> new UserException("No such record in UserRole table"));
-
-        userRoleRepository.delete(userRoleToDelete);
+    public AppUser updateUserByEmail(String email, UpdateUserDto updateUserDto) {
+        AppUser appUserToUpdate = userRepository.findAppUserByEmail(email)
+                .orElseThrow(() -> new UserException("User with email " + email + " not found"));
 
         appUserToUpdate.setEmail(updateUserDto.getEmail());
         appUserToUpdate.setName(updateUserDto.getName());
@@ -88,13 +81,21 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(appUserToUpdate);
 
-        UserRole userRoleToUpdate = UserRole.builder()
-                .appUser(appUserToUpdate)
-                .restaurant(updateUserDto.getRestaurant())
-                .roleType(updateUserDto.getRoleType())
-                .build();
+        if (updateUserDto.getRoleType() != null) {
+            UserRole userRoleToDelete = userRoleRepository
+                    .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), updateUserDto.getRoleType())
+                    .orElseThrow(() -> new UserException("No such record in UserRole table"));
 
-        userRoleRepository.save(userRoleToUpdate);
+            userRoleRepository.delete(userRoleToDelete);
+
+            UserRole userRoleToUpdate = UserRole.builder()
+                    .appUser(appUserToUpdate)
+                    .restaurant(updateUserDto.getRestaurant())
+                    .roleType(updateUserDto.getRoleType())
+                    .build();
+
+            userRoleRepository.save(userRoleToUpdate);
+        }
 
         return appUserToUpdate;
     }

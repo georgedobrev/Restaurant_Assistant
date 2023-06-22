@@ -16,7 +16,7 @@ public interface UserService {
 
     void deleteUserById(int id);
 
-    AppUser updateUserById(int id, UpdateUserDto updateUserDto);
+    AppUser updateUserByEmail(String email, UpdateUserDto updateUserDto);
 
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
 

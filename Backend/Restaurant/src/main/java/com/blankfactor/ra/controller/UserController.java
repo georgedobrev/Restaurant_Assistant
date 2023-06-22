@@ -69,11 +69,11 @@ public class UserController {
         return ResponseEntity.ok(admins);
     }
 
-    @PutMapping("/{userId}")
-    @Operation(summary = "Update user by id")
-    public ResponseEntity<AppUser> updateUserById(@PathVariable int userId,
-                                                  @RequestBody UpdateUserDto updateUserDto) {
-        AppUser updatedAppUser = userService.updateUserById(userId, updateUserDto);
+    @PutMapping("/{email}")
+    @Operation(summary = "Update user by email")
+    public ResponseEntity<AppUser> updateUserByEmail(@PathVariable String email,
+                                                     @RequestBody UpdateUserDto updateUserDto) {
+        AppUser updatedAppUser = userService.updateUserByEmail(email, updateUserDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }
