@@ -6,6 +6,7 @@ import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.service.SectionService;
 import com.blankfactor.ra.service.WaiterSectionService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,18 +23,21 @@ public class SectionController {
     private final WaiterSectionService waiterSectionService;
 
     @PostMapping()
+    @Operation(summary = "Create section for a specific restaurant")
     public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) {
         Section createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
 
     @GetMapping("/getAll/{restaurantId}")
+    @Operation(summary = "Get all sections from a specific restaurant")
     public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) {
         List<Section> allSections = sectionService.getAllSections(restaurantId);
         return ResponseEntity.ok(allSections);
     }
 
     @PostMapping("/addWaiter")
+    @Operation(summary = "Assign waiter to a section with a shift")
     public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
         // TODO Null Null Null
         WaiterSection createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
