@@ -1,5 +1,8 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.InstantSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,8 +35,10 @@ public class UserTable {
     private AppTable appTable;
 
     @Column(name = "start_time")
+    @JsonSerialize(using = InstantSerializer.class)
     private Instant startTime;
 
     @Column(name = "end_time")
+    @JsonSerialize(using = InstantSerializer.class)
     private Instant endTime;
 }

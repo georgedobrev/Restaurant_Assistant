@@ -11,7 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class UserRolePK implements Serializable {
-
     private static final Long serialVersionUID = 1L;
     private Integer appUser;
     private Integer restaurant;

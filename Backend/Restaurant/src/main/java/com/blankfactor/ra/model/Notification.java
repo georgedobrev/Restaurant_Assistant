@@ -1,6 +1,9 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.InstantSerializer;
 import com.blankfactor.ra.enums.RequestType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -34,6 +37,6 @@ public class Notification {
     private Boolean approved = false;
 
     @Column(name = "created_at")
+    @JsonSerialize(using = InstantSerializer.class)
     private Instant createdAt = Instant.now();
-
 }
