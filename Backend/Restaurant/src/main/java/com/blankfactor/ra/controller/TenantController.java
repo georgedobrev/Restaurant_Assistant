@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class TenantController {
     private final TenantService tenantService;
-    private final UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<Tenant> createTenant(@Valid @RequestBody TenantDto tenantDto) {
