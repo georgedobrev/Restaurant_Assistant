@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "refresh_token")
 public class RefreshToken {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
+
     @OneToOne
     @JoinColumn(name = "app_user_id", unique = true)
     public AppUser appUser;
+
     @Column(name = "token", unique = true)
     public String token;
-
 }
