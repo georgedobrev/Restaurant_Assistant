@@ -45,6 +45,15 @@ public class UserTableServiceImpl implements UserTableService {
         }
     }
 
+    @Override
+    public void setEndTimeForATable(AppTable appTable) {
+        List<UserTable> userTables = userTableRepository.findByAppTableIdAndEndTimeIsNull(appTable.getId());
+        userTables.forEach(userTable -> {
+            userTable.setEndTime(new Date().toInstant());
+            userTableRepository.save(userTable);
+        });
+    }
+
     public boolean isAppUserSeated(AppUser user, AppTable appTable) {
         UserTable userTable = userTableRepository.findByAppUserIdAndAppTableId(user.getId(), appTable).orElse(null);
         if (userTable == null) {
@@ -79,6 +88,4 @@ public class UserTableServiceImpl implements UserTableService {
                 .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
                 .collect(Collectors.joining(","));
     }
-
-
 }

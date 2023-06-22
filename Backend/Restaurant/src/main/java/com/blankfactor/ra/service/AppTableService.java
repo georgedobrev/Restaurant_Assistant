@@ -15,4 +15,6 @@ public interface AppTableService {
     AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto);
 
     void removeTableByName(Integer restaurantId, Integer tableNumber);
+
+    AppTable updateTableRecordsToFinished(AppTable appTable);
 }

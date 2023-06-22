@@ -10,6 +10,7 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.RestaurantService;
+import com.blankfactor.ra.service.UserTableService;
 import com.google.zxing.WriterException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class AppTableServiceImpl implements AppTableService {
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
     private final RestaurantService restaurantService;
+    private final UserTableService userTableService;
 
     @Override
     public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) {
@@ -68,6 +70,14 @@ public class AppTableServiceImpl implements AppTableService {
     public void removeTableByName(Integer restaurantId, Integer tableNumber) {
         AppTable existingTable = getTableByTableNumber(restaurantId, tableNumber);
         appTableRepository.delete(existingTable);
+    }
+
+    @Override
+    public AppTable updateTableRecordsToFinished(AppTable appTable) {
+        userTableService.setEndTimeForATable(appTable);
+
+        appTable.setOccupied(false);
+        return appTableRepository.save(appTable);
     }
 
     @Override

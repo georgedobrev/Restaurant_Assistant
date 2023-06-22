@@ -5,4 +5,6 @@ import com.blankfactor.ra.model.AppUser;
 
 public interface UserTableService {
     void createUserTable(AppTable appTable, AppUser user);
+
+    void setEndTimeForATable(AppTable appTable);
 }

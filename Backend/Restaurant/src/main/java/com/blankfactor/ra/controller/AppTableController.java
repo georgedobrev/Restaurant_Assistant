@@ -51,4 +51,11 @@ public class AppTableController {
         appTableService.removeTableByName(restaurantId, tableNumber);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/clear")
+    public ResponseEntity<AppTable> updateTableRecordsToFinished(@RequestBody AppTable appTable) {
+        AppTable updatedAppTable = appTableService.updateTableRecordsToFinished(appTable);
+
+        return ResponseEntity.ok(updatedAppTable);
+    }
 }
