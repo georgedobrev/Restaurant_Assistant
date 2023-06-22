@@ -1,5 +1,8 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.InstantSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +28,7 @@ public class Reservation {
     private Integer peopleCount;
 
     @Column(name = "reservation_time")
+    @JsonSerialize(using = InstantSerializer.class)
     private Instant reservationTime;
 
     @Column(name = "client_phone_number")

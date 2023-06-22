@@ -20,4 +20,6 @@ public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> 
     List<UserRole> findByAppUserIdAndRoleType(int adminId, RoleType roleType);
 
     List<UserRole> findAllByRestaurantIdAndRoleType(int restaurantId, RoleType roleType);
+
+    Optional<UserRole> findByAppUserAndRestaurant(AppUser appUser, Restaurant restaurant);
 }
