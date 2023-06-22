@@ -9,6 +9,11 @@ export interface Restaurant {
   phoneNumber1: string;
 }
 
+export interface RestaurantObj {
+  restaurant: Restaurant,
+  userId: number
+}
+
 export const getRestaurants = async (): Promise<Restaurant[]> => {
   return fetchWrapper.get<Restaurant[]>(
     `${baseUrl}${restaurantsEndpoint}${restaurants}`
@@ -38,9 +43,9 @@ export const editRestaurant = async (
 };
 
 export const createRestaurant = async (
-  restaurantData: Restaurant
-): Promise<Restaurant> => {
-  return fetchWrapper.post<Restaurant>(
+  restaurantData: RestaurantObj
+): Promise<RestaurantObj> => {
+  return fetchWrapper.post<RestaurantObj>(
     `${baseUrl}${restaurantsEndpoint}`,
     restaurantData
   );

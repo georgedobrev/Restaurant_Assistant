@@ -4,6 +4,7 @@ import styles from "./restaurant.module.css";
 import {
   createRestaurant,
   Restaurant,
+  RestaurantObj,
 } from "../../../services/restaurantService";
 
 const AddRestaurant: React.FC = () => {
@@ -11,6 +12,11 @@ const AddRestaurant: React.FC = () => {
   const [address, setAddress] = useState<string>("");
   const [tablesCount, setTablesCount] = useState<string>("");
   const [phoneNumber1, setPhoneNumber1] = useState<string>("");
+  const storedUserId = localStorage.getItem('userId');
+  const initialUserId = storedUserId ? parseInt(storedUserId) : 0;
+  const [userId, setUserId] = useState<number>(initialUserId);
+
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,11 +25,16 @@ const AddRestaurant: React.FC = () => {
       name,
       tablesCount: parseInt(tablesCount),
       address,
-      phoneNumber1,
+      phoneNumber1
     };
 
+    const restaurantObj: RestaurantObj = {
+      restaurant : restaurantData,
+      userId
+    }
+
     try {
-      const response: Restaurant = await createRestaurant(restaurantData);
+      const response: RestaurantObj = await createRestaurant(restaurantObj);
       setName("");
       setAddress("");
       setTablesCount("");

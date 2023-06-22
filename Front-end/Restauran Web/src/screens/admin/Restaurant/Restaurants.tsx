@@ -31,7 +31,7 @@ const GetRestaurants = () => {
     (async () => {
       try {
         if (userId) {
-          const restaurants = await getRestaurantsByAdminID(Number(userId));
+          const restaurants = await getRestaurantsByAdminID(parseInt(userId));
           console.log(restaurants); 
           setRestaurants(restaurants)
         } else {
@@ -44,16 +44,16 @@ const GetRestaurants = () => {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "tablesCount", headerName: "Tables Count", width: 150 },
-    { field: "address", headerName: "Address", width: 300 },
+    { field: "id", headerName: "ID", width: 50 },
+    { field: "name", headerName: "Name", width: 100 },
+    { field: "tablesCount", headerName: "Tables Count", width: 120 },
+    { field: "address", headerName: "Address", width: 200 },
     { field: "phoneNumber1", headerName: "Phone Number", width: 150 },
   ];
 
   return (
     <div className={isMobile ? styles.dataGridMobile : styles.dataGrid}>
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 400, width: "85%" }}>
         <DataGrid rows={restaurants} columns={columns} />
       </div>
     </div>
