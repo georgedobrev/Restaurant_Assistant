@@ -3,8 +3,8 @@
 		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
 		"name": "Restaurant Assistant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27755902",
-		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27755902&source=collection_link"
+		"_exporter_id": "27763372",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27763372&source=collection_link"
 	},
 	"item": [
 		{
@@ -175,36 +175,11 @@
 				{
 					"name": "Get Scanned QrCode",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/qrcode/iLH8IyDPDa7vq4NdEzcKbA",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"qrcode",
-								"iLH8IyDPDa7vq4NdEzcKbA"
-							]
-						},
-						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Roles",
-			"item": [
-				{
-					"name": "Create Role",
-					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"Waiter\"\n}",
+							"raw": "{\n    \"id\" : 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -212,36 +187,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/role",
-							"protocol": "http",
+							"raw": "localhost:8080/qrcode/putdSjVSpxdYp51PEmZCgA",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"role"
+								"qrcode",
+								"putdSjVSpxdYp51PEmZCgA"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Role",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/user/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user",
-								"1"
-							]
-						}
+						},
+						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
 					},
 					"response": []
 				}
@@ -493,13 +449,13 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Create User",
+					"name": "Create Waiter",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"example@gmail.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"password\" : \"1234\"\n}",
+							"raw": "{\n  \"email\": \"waiter@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -507,14 +463,38 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user",
+							"raw": "http://localhost:8080/user/waiter",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"user"
+								"user",
+								"waiter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "Create Admin",
+							"host": [
+								"Create Admin"
 							]
 						}
 					},
@@ -649,7 +629,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"valid@exampl1e.com\",\n  \"restaurant\": {\n    \"id\": 1\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
+							"raw": "{\n  \"email\": \"validation@exampl1e.com\",\n  \"restaurant\": {\n    \"id\": 2\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1106,6 +1086,135 @@
 							"path": [
 								"shift",
 								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sysadmin",
+			"item": [
+				{
+					"name": "createSysadmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"email\": \"john.rrdoe@example.com\",\n  \"restaurantId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/sysadmin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSysAdminById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSysadmins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/all/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"all",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSysadminById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSysadminById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllSysadmins",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/all/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"all",
+								"1"
 							]
 						}
 					},
