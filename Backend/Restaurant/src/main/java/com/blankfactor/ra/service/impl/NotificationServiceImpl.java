@@ -31,11 +31,11 @@ public class NotificationServiceImpl implements NotificationService {
         String notificationMessage = "";
         switch (notificationDto.getRequestType()) {
             case Waiter ->
-                    notificationMessage = "Table " + notificationDto.getAppTable().getTableNumber() + " requested a waiter.";
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
             case Bill ->
-                    notificationMessage = "Table " + notificationDto.getAppTable().getTableNumber() + " requested the bill.";
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
             case Menu ->
-                    notificationMessage = "Table " + notificationDto.getAppTable().getTableNumber() + " requested the menu.";
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
         }
 
         Notification notification = Notification.builder()
