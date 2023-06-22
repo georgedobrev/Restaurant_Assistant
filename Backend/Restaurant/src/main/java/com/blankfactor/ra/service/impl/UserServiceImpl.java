@@ -6,6 +6,7 @@ import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
+import com.blankfactor.ra.exceptions.custom.UserRoleException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
@@ -14,11 +15,14 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -47,9 +51,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser getUserById(int userId) {
-        return userRepository.findById(userId)
+    public UpdateUserDto getUserById(int userId, int restaurantId) {
+        AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
+
+        UserRole userRole = userRoleRepository.findByAppUserAndRestaurant(appUser, restaurant)
+                .orElseThrow(() -> new UserRoleException("No user/restaurant found"));
+
+
+        UpdateUserDto updateUserDto = UpdateUserDto.builder()
+                .email(appUser.getEmail())
+                .name(appUser.getName())
+                .surname(appUser.getSurname())
+                .roleType(userRole.getRoleType())
+                .build();
+
+        return updateUserDto;
     }
 
     @Override
@@ -71,19 +91,24 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public AppUser updateUserByEmail(String email, UpdateUserDto updateUserDto) {
-        AppUser appUserToUpdate = userRepository.findAppUserByEmail(email)
-                .orElseThrow(() -> new UserException("User with email " + email + " not found"));
+    public AppUser updateUserByEmail(UpdateUserDto updateUserDto) {
+        AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserDto.getEmail())
+                .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
 
-        appUserToUpdate.setEmail(updateUserDto.getEmail());
         appUserToUpdate.setName(updateUserDto.getName());
         appUserToUpdate.setSurname(updateUserDto.getSurname());
 
         userRepository.save(appUserToUpdate);
 
+        RoleType oldRoleType;
         if (updateUserDto.getRoleType() != null) {
+            if (updateUserDto.getRoleType() == RoleType.ADMIN) {
+                oldRoleType = RoleType.WAITER;
+            } else {
+                oldRoleType = RoleType.ADMIN;
+            }
             UserRole userRoleToDelete = userRoleRepository
-                    .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), updateUserDto.getRoleType())
+                    .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), oldRoleType)
                     .orElseThrow(() -> new UserException("No such record in UserRole table"));
 
             userRoleRepository.delete(userRoleToDelete);
