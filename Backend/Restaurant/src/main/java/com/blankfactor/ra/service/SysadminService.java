@@ -8,9 +8,14 @@ import java.util.List;
 
 public interface SysadminService {
     Sysadmin createSysadmin(SysadminDto sysadminDto);
+
     Sysadmin getSysadminById(int sysadminId) throws SysadminException;
+
     List<Sysadmin> getAllSysadmins();
+
     Sysadmin updateSysadminById(int sysadminId, SysadminDto sysadminDto) throws SysadminException;
+
     void deleteSysadminById(int sysadminId);
+
     void deleteAll();
 }

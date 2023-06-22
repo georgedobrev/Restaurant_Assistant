@@ -1,7 +1,6 @@
 package com.blankfactor.ra.model;
 
 import com.blankfactor.ra.config.InstantSerializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
