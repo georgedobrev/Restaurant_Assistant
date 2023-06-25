@@ -22,6 +22,7 @@ public class NotificationDto {
     @NotBlank(message = "Request type is required for notifications")
     private RequestType requestType;
 
+    //TODO message not needed
     @Size(max = 50, message = "Name cannot be more than 50 characters")
     @NotBlank(message = "Message is required for notifications")
     private String message;

@@ -22,10 +22,6 @@ public class Tenant {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
-
     @Column(name = "name")
     private String name;
 

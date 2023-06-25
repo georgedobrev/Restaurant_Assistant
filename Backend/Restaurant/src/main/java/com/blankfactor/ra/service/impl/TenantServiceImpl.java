@@ -19,7 +19,7 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
+  //  private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
@@ -27,7 +27,6 @@ public class TenantServiceImpl implements TenantService {
                 .name(tenantDto.getName())
                 .surname(tenantDto.getSurname())
                 .email(tenantDto.getEmail())
-                .restaurant(tenantDto.getRestaurant())
                 .build();
 
         AppUser appUser = AppUser.builder()
@@ -37,14 +36,14 @@ public class TenantServiceImpl implements TenantService {
                 .build();
 
         userRepository.save(appUser);
+//
+//        UserRole userRole = UserRole.builder()
+//                .appUser(appUser)
+////                .restaurant(null)
+//                .roleType(RoleType.ADMIN)
+//                .build();
 
-        UserRole userRole = UserRole.builder()
-                .appUser(appUser)
-                .restaurant(tenantDto.getRestaurant())
-                .roleType(RoleType.ADMIN)
-                .build();
-
-        userRoleRepository.save(userRole);
+        //userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
