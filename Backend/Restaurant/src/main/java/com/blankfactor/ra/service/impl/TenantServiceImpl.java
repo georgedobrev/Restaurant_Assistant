@@ -19,7 +19,6 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
-  //  private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
@@ -36,14 +35,6 @@ public class TenantServiceImpl implements TenantService {
                 .build();
 
         userRepository.save(appUser);
-//
-//        UserRole userRole = UserRole.builder()
-//                .appUser(appUser)
-////                .restaurant(null)
-//                .roleType(RoleType.ADMIN)
-//                .build();
-
-        //userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
