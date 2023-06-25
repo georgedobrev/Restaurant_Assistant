@@ -2,22 +2,21 @@ import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
 import { editUser, User, getUsers } from "../../../services/userService";
-import { status } from "../../constants";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
 const EditUserComponent: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
-  //todo fix with dynamic restairant ID
+  //todo fix with dynamic restaurant ID
   const [restaurantId, setRestaurantId] = useState<number>(1);
   const [roleType, setRoleType] = useState<string>("");
   const [userId, setUserId] = useState<number | undefined>(undefined);
   const [userExists, setUserExists] = useState<boolean>(false);
-  const [requestStatus, setRequestStatus] = useState<string>("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleEditUser = async () => {
-    if (userId === undefined) return; 
-  
+    if (userId === undefined) return;
     const userData: User = {
       email,
       name,
@@ -25,18 +24,18 @@ const EditUserComponent: React.FC = () => {
       roleType,
       restaurant: {
         id: restaurantId,
-      }
+      },
     };
-  
+
     try {
       const response: User = await editUser(userData);
       setEmail("");
       setName("");
       setSurname("");
-      setRoleType("")
+      setRoleType("");
       return response;
-    } catch (error) {
-      console.error(error);
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -45,25 +44,21 @@ const EditUserComponent: React.FC = () => {
       if (userId === undefined) {
         return;
       }
-  
+
       const user: User | undefined = await getUsers(userId);
-  
       if (user && user.email === email) {
         setUserExists(true);
         setName(user.name);
         setSurname(user.surname);
         setEmail(user.email);
         setRoleType(user.roleType);
-        setRequestStatus(status.successStatus);
       } else {
         setUserExists(false);
-        setRequestStatus(status.failureStatus);
       }
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
-  
 
   return (
     <div>
@@ -148,9 +143,7 @@ const EditUserComponent: React.FC = () => {
           </Button>
         </div>
       ) : (
-        requestStatus === status.failureStatus && (
-          <p className={styles.errorMsg}>Such user does not exist</p>
-        )
+        errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>
       )}
     </div>
   );

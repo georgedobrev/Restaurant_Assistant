@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
 import { deleteUser, getUsers, User } from "../../../services/userService";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
 const DeleteUserComponent: React.FC = () => {
   const [id, setId] = useState<string>("");
@@ -13,16 +14,13 @@ const DeleteUserComponent: React.FC = () => {
 
     try {
       const user: User | undefined = await getUsers(parseInt(id));
-
       if (user && user.email === email) {
         await deleteUser(parseInt(id));
         setId("");
         setEmail("");
-      } else {
-        setErrorMsg("There is no such user");
       }
-    } catch (err) {
-      setErrorMsg("Error occurred while deleting user");
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 

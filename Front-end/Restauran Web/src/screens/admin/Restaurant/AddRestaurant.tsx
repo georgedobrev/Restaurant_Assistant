@@ -6,32 +6,33 @@ import {
   Restaurant,
   RestaurantObj,
 } from "../../../services/restaurantService";
+import { storedUserId } from "../../constants";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
 const AddRestaurant: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [tablesCount, setTablesCount] = useState<string>("");
   const [phoneNumber1, setPhoneNumber1] = useState<string>("");
-  const storedUserId = localStorage.getItem('userId');
   const initialUserId = storedUserId ? parseInt(storedUserId) : 0;
   const [userId, setUserId] = useState<number>(initialUserId);
-
-
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorMsg("");
 
     const restaurantData: Restaurant = {
       name,
       tablesCount: parseInt(tablesCount),
       address,
-      phoneNumber1
+      phoneNumber1,
     };
 
     const restaurantObj: RestaurantObj = {
-      restaurantDto : restaurantData,
-      userId
-    }
+      restaurantDto: restaurantData,
+      userId,
+    };
 
     try {
       const response: RestaurantObj = await createRestaurant(restaurantObj);
@@ -40,8 +41,8 @@ const AddRestaurant: React.FC = () => {
       setTablesCount("");
       setPhoneNumber1("");
       return response;
-    } catch (error) {
-      return error;
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -89,6 +90,7 @@ const AddRestaurant: React.FC = () => {
           margin="normal"
           className={styles.inputFields}
         />
+        {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
 
         <Button type="submit" className={styles.btn} variant="contained">
           Add new restaurant

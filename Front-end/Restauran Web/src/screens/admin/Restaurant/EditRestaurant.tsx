@@ -7,6 +7,7 @@ import {
 } from "../../../services/restaurantService";
 import { Restaurant } from "../../../services/restaurantService";
 import { status } from "../../constants";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
 const EditRestaurantComponent: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -15,11 +16,11 @@ const EditRestaurantComponent: React.FC = () => {
   const [phoneNumber1, setPhoneNumber1] = useState<string>("");
   const [restaurantId, setRestaurantId] = useState<string>("");
   const [restaurantExists, setRestaurantExists] = useState<boolean>(false);
-  const [requestStatus, setRequestStatus] = useState<string>("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleEditRestaurant = async () => {
     try {
-      const updatedRestaurant: Restaurant = await editRestaurant({
+      const updatedRestaurant: Restaurant | undefined = await editRestaurant({
         id: parseInt(restaurantId),
         name,
         address,
@@ -29,11 +30,10 @@ const EditRestaurantComponent: React.FC = () => {
       setName("");
       setAddress("");
       setTablesCount(0);
-      setPhoneNumber1("")
-      setRequestStatus(status.successStatus);
+      setPhoneNumber1("");
       return updatedRestaurant;
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -51,13 +51,11 @@ const EditRestaurantComponent: React.FC = () => {
         setAddress(restaurantData.address);
         setTablesCount(restaurantData.tablesCount);
         setPhoneNumber1(restaurantData.phoneNumber1);
-        setRequestStatus(status.successStatus);              
       } else {
         setRestaurantExists(false);
-        setRequestStatus(status.failureStatus);
       }
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -139,9 +137,7 @@ const EditRestaurantComponent: React.FC = () => {
           </Button>
         </div>
       ) : (
-        requestStatus === status.failureStatus && (
-          <p className={styles.errorMsg}>Such restaurant does not exist</p>
-        )
+        errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>
       )}
     </div>
   );

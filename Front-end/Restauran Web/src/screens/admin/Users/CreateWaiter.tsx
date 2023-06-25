@@ -1,45 +1,40 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { Roles, addUserRole, createWaiter } from "../../../services/userService";
+import {
+  Roles,
+  addUserRole,
+  createWaiter,
+} from "../../../services/userService";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
-const AddRoles: React.FC = () => {
-  const [name, setName] = useState<string>("");
-  const [surname, setSurname] = useState<string>("");
+const AddWaiter: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [roleType, setRoleType] = useState<string>("WAITER");
   const [restaurant, setRestaurant] = useState<{ id: number }>({ id: 1 });
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorMsg("");
 
     const user: Roles = {
-      name,
-      surname,
       email,
       roleType,
-      restaurant
+      restaurant,
     };
 
     try {
-      const createdUser: Roles = await createWaiter(user);
+      const createUser: Roles = await createWaiter(user);
       const roleData: Roles = {
-        name,
-        surname,
-        email: createdUser.email,
+        email: createUser.email,
         roleType,
         restaurant,
       };
-
-      try {
-        const response: Roles = await addUserRole(roleData);
-        setEmail("");
-        return response;
-      } catch (error) {
-        return error;
-      }
-    } catch (error) {
-      return error;
+      const addRole: Roles = await addUserRole(roleData);
+      setEmail("");
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -48,7 +43,6 @@ const AddRoles: React.FC = () => {
       <h2 className={styles.newUser}>Add new waiter</h2>
 
       <form className={styles.submitForm} onSubmit={handleSubmit}>
-
         <TextField
           label="Email"
           value={email}
@@ -72,14 +66,13 @@ const AddRoles: React.FC = () => {
         <TextField
           label="Restaurant ID"
           value={restaurant.id}
-          onChange={(e) =>
-            setRestaurant({ id: parseInt(e.target.value) || 0 })
-          }
+          onChange={(e) => setRestaurant({ id: parseInt(e.target.value) || 0 })}
           required
           color="warning"
           margin="normal"
           className={styles.inputFields}
         />
+        {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
 
         <Button type="submit" className={styles.btn} variant="contained">
           Add new waiter
@@ -89,4 +82,4 @@ const AddRoles: React.FC = () => {
   );
 };
 
-export default AddRoles;
+export default AddWaiter;

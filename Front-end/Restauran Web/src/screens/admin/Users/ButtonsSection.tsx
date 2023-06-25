@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
-import AddUser from "./AddUser";
+import AddUser from "./CreateAdmin";
 import EditUserComponent from "./EditUser";
 import DeleteUserComponent from "./DeleteComponent";
 import styles from "./users.module.css";
 import { usersSections } from "../../constants";
-import AddRoles from "./AddUserRole";
+import AddRoles from "./CreateWaiter";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addUser");

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import styles from "./login.module.css";
 import { BasicLogin } from "./BasicLogin";
 import { LoginResponse, sendJWT } from "../../services/loginService";
 import { useNavigate } from "react-router-dom";
+import { getServerErrorMessage } from "../../services/ErrorHandling";
+import { loginScreenImage } from "../constants";
 
 interface LoginScreenProps {
   setLoggedIn: (loggedIn: boolean) => void;
@@ -15,8 +18,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
 }) => {
   const navigate = useNavigate();
   const responseMessage = async (response: CredentialResponse) => {
-    console.log(response);
     const JWT = response.credential;
+    const [errorMsg, setErrorMsg] = useState<string>("");
 
     if (JWT) {
       setLoggedIn(true);
@@ -30,11 +33,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userId", responseData.appUser.id.toString());
         return navigate("/dashboard");
-      } catch (error) {
-        return error;
+      } catch (err: any) {
+        setErrorMsg(getServerErrorMessage(err));
       }
-    } else {
-      return "JWT is undefiend";
     }
   };
 
@@ -46,7 +47,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
     <div className={styles.loginContainer}>
       <div className={styles.imageSection}>
         <h2 className={styles.titleOverImage}>Food Paradise</h2>
-        <img src="src/assets/restaurant-banner.jpeg" alt="Restaurant" />
+        <img src={loginScreenImage} alt="Restaurant" />
       </div>
 
       <div className={styles.formSection}>

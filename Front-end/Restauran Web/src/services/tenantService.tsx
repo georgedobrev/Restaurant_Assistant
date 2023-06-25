@@ -1,12 +1,19 @@
 import { fetchWrapper } from "./fetchWrapper";
+import {
+  baseUrl,
+  tenantsEndpoint,
+  create,
+  auth,
+  registerEndpoint,
+} from "./config.json";
 
 export interface Tenant {
-    email: string,
-    restaurant: {
-      id?: string
-    },
-    name: string,
-    surname: string
+  email: string;
+  restaurant: {
+    id?: string;
+  };
+  name: string;
+  surname: string;
 }
 
 export interface Admin {
@@ -21,11 +28,15 @@ export interface Admin {
 }
 
 export const createTenant = async (tenantData: Tenant): Promise<Tenant> => {
-  return fetchWrapper.post<Tenant>("http://localhost:8080/tenant/create", tenantData);
+  return fetchWrapper.post<Tenant>(
+    `${baseUrl}${tenantsEndpoint}${create}`,
+    tenantData
+  );
 };
 
 export const createAdmin = async (adminData: Admin): Promise<Admin> => {
-  return fetchWrapper.post<Admin>("http://localhost:8080/auth/register", adminData);
+  return fetchWrapper.post<Admin>(
+    `${baseUrl}${auth}${registerEndpoint}`,
+    adminData
+  );
 };
-
-

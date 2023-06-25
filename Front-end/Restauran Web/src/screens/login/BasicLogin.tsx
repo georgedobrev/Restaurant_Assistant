@@ -7,8 +7,9 @@ export const BasicLogin: React.FC<LoginScreenProps> = ({
   setLoggedIn,
   setUserType,
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -21,22 +22,21 @@ export const BasicLogin: React.FC<LoginScreenProps> = ({
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    //TODO implement basic login with back-end
     if (username === "admin" && password === "admin123") {
       setLoggedIn(true);
       setUserType("admin");
     } else if (username === "user" && password === "user123") {
       setLoggedIn(true);
       setUserType("user");
-    }
-      else if (username === "sys-admin" && password === "sys-admin123") {
-        setLoggedIn(true);
-        setUserType("sys-admin");
+    } else if (username === "sys-admin" && password === "sys-admin123") {
+      setLoggedIn(true);
+      setUserType("sys-admin");
     } else if (username === "tenant" && password === "tenant123") {
       setLoggedIn(true);
       setUserType("tenant");
-  }  
-    else {
-      console.log("Invalid username or password");
+    } else {
+      setErrorMsg("Wrong username or password");
     }
   };
 
@@ -62,6 +62,8 @@ export const BasicLogin: React.FC<LoginScreenProps> = ({
         fullWidth
         required
       />
+      {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+
       <Button
         className={styles.button}
         variant="contained"

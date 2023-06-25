@@ -1,5 +1,10 @@
 import { fetchWrapper } from "./fetchWrapper";
-import { baseUrl, restaurantsEndpoint, restaurants, getRestaurantsByAdmin } from "./config.json";
+import {
+  baseUrl,
+  restaurantsEndpoint,
+  restaurants,
+  getRestaurantsByAdmin,
+} from "./config.json";
 
 export interface Restaurant {
   id?: number;
@@ -10,8 +15,8 @@ export interface Restaurant {
 }
 
 export interface RestaurantObj {
-  restaurantDto: Restaurant,
-  userId: number
+  restaurantDto: Restaurant;
+  userId: number;
 }
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
@@ -26,7 +31,9 @@ export const getRestaurantByID = async (id: number) => {
   );
 };
 
-export const getRestaurantsByAdminID = async (userId: number): Promise<Restaurant[]> => {
+export const getRestaurantsByAdminID = async (
+  userId: number
+): Promise<Restaurant[]> => {
   const response = await fetchWrapper.get<Restaurant[]>(
     `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/${userId}`
   );

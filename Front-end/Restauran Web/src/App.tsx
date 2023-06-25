@@ -10,8 +10,6 @@ import Transactions from "./screens/admin/Transactions/Transactions";
 import Users from "./screens/admin/Users/Users";
 import Customer from "./screens/customer/Customer";
 import LoginScreen from "./screens/login/LoginScreen";
-import Tenants from "./screens/sys-admin/Tenants";
-import Admins from "./screens/tenant/Admins";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,29 +27,10 @@ function App() {
     if (userType === "user") {
       return (
         <div>
-          <Customer />
+          <Customer appUserId={1} appTableId={1} />
         </div>
       );
-    } else if (userType === "sys-admin") {
-      return (
-        <div>
-          <Sidebar />
-          <Routes>
-            <Route path="/dashboard" element={<Tenants />} />
-          </Routes>
-        </div>
-      );
-    } else if (userType === "tenant") {
-      return (
-        <div>
-          <Sidebar />
-          <Routes>
-            <Route path="/dashboard" element={<Admins />} />
-          </Routes>
-        </div>
-      );
-    } 
-    else {
+    } else {
       return (
         <div>
           <Sidebar />

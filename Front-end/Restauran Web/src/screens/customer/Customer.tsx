@@ -1,36 +1,34 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
-import axios from "axios";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import styles from "./customer.module.css";
 import backgroundImage from "../../assets/background.jpg";
 import MenuBtns from "./MenuBtns";
-import {
-  baseUrl,
-  notificationEndpoint,
-  createNotification,
-} from "../../services/config.json";
+import { sendNotification } from "../../services/customerServices";
+import { getServerErrorMessage } from "../../services/ErrorHandling";
 
-const Customer = () => {
-  const sendRequest = (requestType: string) => {
-    axios
-      .post(`${baseUrl}${notificationEndpoint}${createNotification}`, {
-        appUser: {
-          id: 1,
-        },
-        appTable: {
-          id: 1,
-        },
-        requestType: requestType, 
-        message: `Please ${requestType.toLowerCase()}.`,
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error;
-      });
+interface CustomerProps {
+  appUserId: number;
+  appTableId: number;
+}
+const Customer: React.FC<CustomerProps> = ({ appUserId, appTableId }) => {
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
+  const sendRequest = async (requestType: string) => {
+    const message = `Please ${requestType.toLowerCase()}.`;
+    try {
+      const response = await sendNotification(
+        appUserId,
+        appTableId,
+        requestType,
+        message
+      );
+      return response;
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
+    }
   };
 
   return (
@@ -63,6 +61,7 @@ const Customer = () => {
             >
               Request a Bill
             </MenuBtns>
+            {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
 
             <Box />
           </div>

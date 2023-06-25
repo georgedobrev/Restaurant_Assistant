@@ -13,6 +13,7 @@
   --buttons-color: #011936;
   --dataGrid-color: #c1c1c1;
   --input-fields-color: #fffcf6;
+  --error-color: #c43333;
 
   background-color: var(--input-fields-color);
 }

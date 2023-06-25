@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
   getRestaurantsByAdminID,
-  getRestaurants,
   Restaurant,
 } from "../../../services/restaurantService";
-import { mobileBreakPoint } from "../../mobileBreakPoint";
+import { mobileBreakPoint } from "../../constants";
 import styles from "./restaurant.module.css";
+import { storedUserId } from "../../constants";
 
 const GetRestaurants = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -25,17 +25,14 @@ const GetRestaurants = () => {
     };
   }, []);
 
-  const userId = localStorage.getItem("userId")
-
   useEffect(() => {
     (async () => {
       try {
-        if (userId) {
-          const restaurants = await getRestaurantsByAdminID(parseInt(userId));
-          console.log(restaurants); 
-          setRestaurants(restaurants)
-        } else {
-          console.log('User ID not found in local storage.');
+        if (storedUserId) {
+          const restaurants = await getRestaurantsByAdminID(
+            parseInt(storedUserId)
+          );
+          setRestaurants(restaurants);
         }
       } catch (error) {
         return error;
