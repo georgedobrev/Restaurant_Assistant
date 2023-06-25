@@ -40,14 +40,14 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     }
 
     @Override
-    public VirtualTable getVirtualTableByTableIdsAndRestaurantId(String tableIds, Integer restaurantId) {
-        return virtualTableRepository.findByTableNumbersAndRestaurantId(tableIds, restaurantId)
+    public VirtualTable getVirtualTableByTableNumbersAndRestaurantId(String tableNumbers, Integer restaurantId) {
+        return virtualTableRepository.findByTableNumbersAndRestaurantId(tableNumbers, restaurantId)
                 .orElseThrow(() -> new VirtualTableException("Virtual table not found"));
     }
 
     @Override
     public VirtualTable updateVirtualTableByTableNumbers(Integer restaurantId, String tableNumbers, VirtualTable updatedVirtualTable) {
-        VirtualTable existingVirtual = getVirtualTableByTableIdsAndRestaurantId(tableNumbers, restaurantId);
+        VirtualTable existingVirtual = getVirtualTableByTableNumbersAndRestaurantId(tableNumbers, restaurantId);
         existingVirtual.setTableNumbers(updatedVirtualTable.getTableNumbers());
         virtualTableRepository.save(existingVirtual);
         return existingVirtual;
@@ -62,7 +62,7 @@ public class VirtualTableServiceImpl implements VirtualTableService {
 
     @Override
     public void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
-        VirtualTable existingVirtualTable = getVirtualTableByTableIdsAndRestaurantId(virtualTable.getTableNumbers(), restaurantId);
+        VirtualTable existingVirtualTable = getVirtualTableByTableNumbersAndRestaurantId(virtualTable.getTableNumbers(), restaurantId);
 
         setOccupiedForEachTableInVirtualTable(restaurantId, virtualTable, false);
 

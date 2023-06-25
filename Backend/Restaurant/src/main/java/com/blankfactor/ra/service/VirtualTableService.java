@@ -8,7 +8,7 @@ import java.util.Map;
 public interface VirtualTableService {
     VirtualTable createVirtualTable(Integer restaurantId, VirtualTable virtualTable);
 
-    VirtualTable getVirtualTableByTableIdsAndRestaurantId(String tableIds, Integer restaurantId) throws VirtualTableException;
+    VirtualTable getVirtualTableByTableNumbersAndRestaurantId(String tableIds, Integer restaurantId) throws VirtualTableException;
 
     VirtualTable updateVirtualTableByTableNumbers(Integer restaurantId, String tableNumbers, VirtualTable virtualTable) throws VirtualTableException;
 

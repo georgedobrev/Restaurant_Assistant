@@ -23,25 +23,24 @@ public class VirtualTableController {
         return ResponseEntity.status(HttpStatus.CREATED).body(virtualTable);
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<VirtualTable> getVirtualTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                        @RequestBody String tableIds) {
-        VirtualTable virtualTable = virtualTableService.getVirtualTableByTableIdsAndRestaurantId(tableIds, restaurantId);
+    @GetMapping()
+    public ResponseEntity<VirtualTable> getVirtualTableByTableNumbersAndRestaurantId(@PathVariable("restaurantId") Integer restaurantId,
+                                                                                     @RequestBody String tableIds) {
+        VirtualTable virtualTable = virtualTableService.getVirtualTableByTableNumbersAndRestaurantId(tableIds, restaurantId);
         return ResponseEntity.ok(virtualTable);
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<Map<Integer, VirtualTable>> getAllVirtualTables(@PathVariable("restaurantId") Integer restaurantId) {
+    @GetMapping("/all")
+    public ResponseEntity<Map<Integer, VirtualTable>> getAllVirtualTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         Map<Integer, VirtualTable> allVirtualTables = virtualTableService.getAllVirtualTablesByRestaurantId(restaurantId);
         return ResponseEntity.ok(allVirtualTables);
     }
 
     @PutMapping("/{tableNumbers}")
-    public ResponseEntity<VirtualTable> updateVirtualTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                           @PathVariable("tableNumbers") String tableNumbers,
-                                                           @RequestBody VirtualTable virtualTable) {
-        VirtualTable updatedVirtualTable = virtualTableService
-                .updateVirtualTableByTableNumbers(restaurantId, tableNumbers, virtualTable);
+    public ResponseEntity<VirtualTable> updateVirtualTableByTableNumbers(@PathVariable("restaurantId") Integer restaurantId,
+                                                                         @PathVariable("tableNumbers") String tableNumbers,
+                                                                         @RequestBody VirtualTable virtualTable) {
+        VirtualTable updatedVirtualTable = virtualTableService.updateVirtualTableByTableNumbers(restaurantId, tableNumbers, virtualTable);
         return ResponseEntity.ok(updatedVirtualTable);
     }
 
