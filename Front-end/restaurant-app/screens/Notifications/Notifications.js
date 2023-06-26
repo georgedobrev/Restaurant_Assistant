@@ -3,7 +3,11 @@ import { Text, View, FlatList, Image, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import styles from "./stylesNotifications";
 import { Client } from "@stomp/stompjs";
-import { baseURL, endpointRegister, topic } from "../../config.json";
+import { websocketBaseURL, endpointRegister, topic } from "../../config.json";
+import {
+  deleteNotifications,
+  getNotifications,
+} from "../services/notificationsService";
 
 const useWebSocket = (setMessages) => {
   useEffect(() => {
@@ -20,12 +24,13 @@ const useWebSocket = (setMessages) => {
       });
     };
 
+    //TODO error message
     const onDisconnected = () => {
       return "Disconnected!!";
     };
 
     client = new Client({
-      brokerURL: `${baseURL}${endpointRegister}`,
+      brokerURL: `${websocketBaseURL}${endpointRegister}`,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -43,7 +48,6 @@ const useWebSocket = (setMessages) => {
 
 export function Notifications() {
   const [notifications, setNotifications] = useState([]);
-  const [incomingRequests, setIncomingRequests] = useState();
   const [messages, setMessages] = useState([]);
 
   const route = useRoute();
@@ -51,24 +55,26 @@ export function Notifications() {
   useWebSocket(setMessages);
 
   useEffect(() => {
-    notificationsService.getNotifications().then((data) => {
+    getNotifications().then((data) => {
       setNotifications(data);
     });
   }, []);
 
-  const deleteNotifications = async (id) => {
+  const deleteNot = async (id) => {
     try {
-      await notificationsService.deleteNotification(id);
+      await deleteNotifications(id);
       setNotifications((prev) =>
         prev.filter((notification) => notification.id !== id)
       );
     } catch (error) {
+      //TODO display error message from back-end
       return "Failed to delete notification: ", error;
     }
   };
 
   useEffect(() => {
-    getNotificationsByRestaurantId(1).then((data) => {
+    //TODO dynamic restaurant notifications
+    getNotifications(1).then((data) => {
       setNotifications(data);
     });
   }, []);

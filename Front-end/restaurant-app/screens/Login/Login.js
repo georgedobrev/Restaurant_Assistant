@@ -32,7 +32,7 @@ export const Login = () => {
           setUser(userInfo);
         })
         .catch((error) => {
-          console.log(error);
+          return error;
         });
     }
   }, [response]);
