@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "app_table", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
 })
-public class AppTable {
+public class AppTable extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
