@@ -2,18 +2,17 @@ package com.blankfactor.ra.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
-import java.util.Objects;
 
-@Builder
+@MappedSuperclass
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 public class Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
