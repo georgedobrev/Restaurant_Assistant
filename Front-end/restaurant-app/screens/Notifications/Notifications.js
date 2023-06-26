@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, FlatList, Image, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import styles from "./stylesNotifications";
 import { Client } from "@stomp/stompjs";
+import styles from "./stylesNotifications";
 import { websocketBaseURL, endpointRegister, topic } from "../../config.json";
 import {
   deleteNotifications,
