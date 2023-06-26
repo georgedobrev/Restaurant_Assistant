@@ -6,10 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
 
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,7 +20,7 @@ import java.time.LocalTime;
         uniqueConstraints =
         @UniqueConstraint(columnNames = {"restaurant_id", "start_time", "end_time", "day_from", "day_to"})
 )
-public class Shift {
+public class Shift extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
