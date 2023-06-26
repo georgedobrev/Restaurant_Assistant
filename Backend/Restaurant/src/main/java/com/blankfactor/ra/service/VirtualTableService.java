@@ -10,7 +10,7 @@ public interface VirtualTableService {
 
     VirtualTable getVirtualTableByTableNumbersAndRestaurantId(String tableIds, Integer restaurantId) throws VirtualTableException;
 
-    VirtualTable updateVirtualTableByTableNumbers(Integer restaurantId, String tableNumbers, VirtualTable virtualTable) throws VirtualTableException;
+    VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable virtualTable) throws VirtualTableException;
 
     Map<Integer, VirtualTable> getAllVirtualTablesByRestaurantId(Integer restaurantId);
 

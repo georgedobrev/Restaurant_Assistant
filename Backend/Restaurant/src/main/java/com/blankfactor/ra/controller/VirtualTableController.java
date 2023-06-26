@@ -36,11 +36,11 @@ public class VirtualTableController {
         return ResponseEntity.ok(allVirtualTables);
     }
 
-    @PutMapping("/{tableNumbers}")
-    public ResponseEntity<VirtualTable> updateVirtualTableByTableNumbers(@PathVariable("restaurantId") Integer restaurantId,
-                                                                         @PathVariable("tableNumbers") String tableNumbers,
+    @PutMapping("/{virtualTableId}")
+    public ResponseEntity<VirtualTable> updateVirtualTableByVirtualTableId(@PathVariable("restaurantId") Integer restaurantId,
+                                                                         @PathVariable("virtualTableId") Integer virtualTableId,
                                                                          @RequestBody VirtualTable virtualTable) {
-        VirtualTable updatedVirtualTable = virtualTableService.updateVirtualTableByTableNumbers(restaurantId, tableNumbers, virtualTable);
+        VirtualTable updatedVirtualTable = virtualTableService.updateVirtualTableByVirtualTableId(restaurantId, virtualTableId, virtualTable);
         return ResponseEntity.ok(updatedVirtualTable);
     }
 

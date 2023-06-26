@@ -46,8 +46,10 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     }
 
     @Override
-    public VirtualTable updateVirtualTableByTableNumbers(Integer restaurantId, String tableNumbers, VirtualTable updatedVirtualTable) {
-        VirtualTable existingVirtual = getVirtualTableByTableNumbersAndRestaurantId(tableNumbers, restaurantId);
+    public VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable updatedVirtualTable) {
+        VirtualTable existingVirtual = virtualTableRepository.findById(virtualTableId)
+                .orElseThrow(() -> new VirtualTableException("Virtual table not found"));
+//        VirtualTable existingVirtual = getVirtualTableByTableNumbersAndRestaurantId(tableNumbers, restaurantId);
         existingVirtual.setTableNumbers(updatedVirtualTable.getTableNumbers());
         virtualTableRepository.save(existingVirtual);
         return existingVirtual;
