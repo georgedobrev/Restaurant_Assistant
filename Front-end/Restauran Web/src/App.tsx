@@ -10,6 +10,7 @@ import Transactions from "./screens/admin/Transactions/Transactions";
 import Users from "./screens/admin/Users/Users";
 import Customer from "./screens/customer/Customer";
 import LoginScreen from "./screens/login/LoginScreen";
+import loginData from "./screens/login/loginData";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -24,7 +25,7 @@ function App() {
   };
 
   if (loggedIn) {
-    if (userType === "user") {
+    if (userType === loginData.user.role) {
       return (
         <div>
           <Customer appUserId={1} appTableId={1} />

@@ -10,15 +10,7 @@ const MenuBtns: React.FC<MenuBtnsProps> = ({ onClick, children, ...props }) => {
     <Button className={styles.buttons} onClick={onClick} {...props}>
       {children}
       <span
-        style={{
-          content: '""',
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: -2,
-          height: 2,
-          backgroundColor: "white",
-        }}
+     className={styles.span}
       ></span>
     </Button>
   );

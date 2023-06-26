@@ -1,20 +1,20 @@
-const loginData = [
-  {
+const loginData = {
+  admin: {
     role: "admin",
     password: "admin123",
   },
-  {
+  tenant: {
     role: "tenant",
     password: "tenant123",
   },
-  {
-    role: "sis-admin",
+  "sys-admin": {
+    role: "sys-admin",
     password: "sis-admin123",
   },
-  {
+  user: {
     role: "user",
     password: "user123",
   },
-];
+}
 
 export default loginData;

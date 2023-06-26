@@ -13,6 +13,7 @@ interface CustomerProps {
   appUserId: number;
   appTableId: number;
 }
+
 const Customer: React.FC<CustomerProps> = ({ appUserId, appTableId }) => {
   const [errorMsg, setErrorMsg] = useState<string>("");
 

@@ -2,6 +2,7 @@ import { TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { LoginScreenProps } from "../../services/loginService";
 import styles from "./login.module.css";
+import loginData from "./loginData";
 
 export const BasicLogin: React.FC<LoginScreenProps> = ({
   setLoggedIn,
@@ -23,18 +24,18 @@ export const BasicLogin: React.FC<LoginScreenProps> = ({
     e.preventDefault();
 
     //TODO implement basic login with back-end
-    if (username === "admin" && password === "admin123") {
+    if (username === loginData.admin.role && password === loginData.admin.password) {
       setLoggedIn(true);
-      setUserType("admin");
-    } else if (username === "user" && password === "user123") {
+      setUserType(loginData.admin.role);
+    } else if (username === loginData.user.role && password === loginData.user.password) {
       setLoggedIn(true);
-      setUserType("user");
-    } else if (username === "sys-admin" && password === "sys-admin123") {
+      setUserType(loginData.user.role);
+    } else if (username === loginData["sys-admin"].role && password === loginData["sys-admin"].password) {
       setLoggedIn(true);
-      setUserType("sys-admin");
-    } else if (username === "tenant" && password === "tenant123") {
+      setUserType(loginData["sys-admin"].role);
+    } else if (username === loginData.tenant.role && password === loginData.tenant.password) {
       setLoggedIn(true);
-      setUserType("tenant");
+      setUserType(loginData.tenant.role);
     } else {
       setErrorMsg("Wrong username or password");
     }

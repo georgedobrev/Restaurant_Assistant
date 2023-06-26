@@ -16,10 +16,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   setLoggedIn,
   setUserType,
 }) => {
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const navigate = useNavigate();
   const responseMessage = async (response: CredentialResponse) => {
     const JWT = response.credential;
-    const [errorMsg, setErrorMsg] = useState<string>("");
 
     if (JWT) {
       setLoggedIn(true);
@@ -32,7 +32,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         localStorage.setItem("refreshToken", responseData.refreshToken);
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userId", responseData.appUser.id.toString());
-        return navigate("/dashboard");
+        navigate("/dashboard");
       } catch (err: any) {
         setErrorMsg(getServerErrorMessage(err));
       }

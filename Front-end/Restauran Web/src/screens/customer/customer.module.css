@@ -70,12 +70,12 @@
 
 .span {
   content: "";
-  position: "absolute";
+  position: absolute;
   left: 0;
   right: 0;
-  bottom: -2;
-  height: 2;
-  background-color: "white";
+  bottom: -2px;
+  height: 2px;
+  background-color: var(--input-fields-color);
 }
 
 .errorMsg {
