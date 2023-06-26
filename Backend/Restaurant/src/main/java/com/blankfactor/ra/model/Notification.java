@@ -24,8 +24,12 @@ public class Notification {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "app_user_id", nullable = false)
-    private AppUser appUser;
+    @JoinColumn(name = "created_by", nullable = false)
+    private AppUser createdBy;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "updated_by")
+    private AppUser updatedBy;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_table_id", nullable = false)
@@ -46,4 +50,9 @@ public class Notification {
     @Column(name = "created_at")
     @JsonSerialize(using = InstantSerializer.class)
     private Instant createdAt = Instant.now();
+
+    @Builder.Default
+    @Column(name = "updated_at")
+    @JsonSerialize(using = InstantSerializer.class)
+    private Instant updatedAt = Instant.now();
 }

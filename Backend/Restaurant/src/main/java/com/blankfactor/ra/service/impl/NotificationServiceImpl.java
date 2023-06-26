@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         Notification notification = Notification.builder()
-                .appUser(notificationDto.getAppUser())
+                .createdBy(notificationDto.getAppUser())
                 .appTable(appTable)
                 .requestType(notificationDto.getRequestType())
                 .message(notificationMessage)
