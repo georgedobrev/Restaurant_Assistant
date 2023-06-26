@@ -1,55 +1,87 @@
-import React, { useState } from "react";
-import { Text, View, FlatList, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, FlatList, Image, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import styles from "./stylesNotifications";
-import requests from "./mock";
+import { Client } from "@stomp/stompjs";
+import { websocketBaseURL, endpointRegister, topic } from "../../config.json";
+import {
+  deleteNotifications,
+  getNotifications,
+} from "../services/notificationsService";
+
+const useWebSocket = (setMessages) => {
+  useEffect(() => {
+    let client = null;
+
+    const onConnected = () => {
+      client.subscribe(`${topic}`, (msg) => {
+        if (msg.body) {
+          const jsonBody = JSON.parse(msg.body);
+          if (jsonBody.message) {
+            setMessages((prevMessages) => [...prevMessages, jsonBody.message]);
+          }
+        }
+      });
+    };
+
+    //TODO error message on disconect
+    const onDisconnected = () => {
+      return "Disconnected!!";
+    };
+
+    client = new Client({
+      brokerURL: `${websocketBaseURL}${endpointRegister}`,
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+      onConnect: onConnected,
+      onDisconnect: onDisconnected,
+    });
+
+    client.activate();
+
+    return () => {
+      client && client.deactivate();
+    };
+  }, []);
+};
 
 export function Notifications() {
   const [notifications, setNotifications] = useState([]);
-  const [incomingRequests, setIncomingRequests] = useState(requests);
+  const [messages, setMessages] = useState([]);
 
   const route = useRoute();
   const { email, accessToken, user } = route.params;
+  useWebSocket(setMessages);
 
-  const handleRequestNotification = (request) => {
-    const notification = `${request.request} - ${request.table}`;
-    setNotifications((prevNotifications) => [
-      ...prevNotifications,
-      notification,
-    ]);
+  useEffect(() => {
+    getNotifications().then((data) => {
+      setNotifications(data);
+    });
+  }, []);
 
-    setIncomingRequests((prevRequests) =>
-      prevRequests.filter((prevReq) => prevReq.id !== request.id)
-    );
+  const deleteNot = async (id) => {
+    try {
+      await deleteNotifications(id);
+      setNotifications((prev) =>
+        prev.filter((notification) => notification.id !== id)
+      );
+    } catch (error) {
+      //TODO display error message from back-end
+      return "Failed to delete notification: ", error;
+    }
   };
 
-  const handleRequestClear = (request) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification !== request)
-    );
-  };
-
-  const handleDeleteAll = () => {
-    setNotifications([]);
-  };
+  useEffect(() => {
+    //TODO dynamic restaurant notifications
+    getNotifications(1).then((data) => {
+      setNotifications(data);
+    });
+  }, []);
 
   const renderNoNotificationsMessage = () => {
     return <Text>No notifications</Text>;
   };
-
-  const renderIncomingRequestItem = ({ item }) => (
-    <View style={styles.requestItem}>
-      <Text style={styles.requestText}>{item.request}</Text>
-      <Text>Table: {item.table}</Text>
-      <Text>Time: {item.time}</Text>
-      <Text
-        style={styles.requestButton}
-        onPress={() => handleRequestNotification(item)}
-      >
-        Approve
-      </Text>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
@@ -57,40 +89,49 @@ export function Notifications() {
         {accessToken && <Image source={{ uri: user?.profilePicture }} />}
         <Text style={styles.welcomeMsg}>Welcome, {email}!</Text>
       </View>
+
       <View style={styles.content}>
         <Text style={styles.sectionTitle}>Latest Notifications:</Text>
-        {incomingRequests.length === 0 ? (
-          renderNoNotificationsMessage()
-        ) : (
-          <FlatList
-            data={incomingRequests}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={renderIncomingRequestItem}
-          />
-        )}
-        {notifications.length > 0 && (
-          <>
-            <Text style={styles.sectionTitle}>Approved Notifications:</Text>
-            <FlatList
-              data={notifications}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.notificationItem}>
-                  <Text>{item}</Text>
+        <View>
+          {messages.map((message, index) => (
+            <View style={styles.requestItem} key={index}>
+              <Text style={styles.messageText}>{message}</Text>
+              <Text
+                style={styles.approveButton}
+                onPress={() => deleteNotifications(notification.id)}
+              >
+                Approve
+              </Text>
+            </View>
+          ))}
+        </View>
+        <ScrollView style={{ height: "25%" }}>
+          <Text style={styles.sectionTitleOldNotifications}>
+            Old Notifications:
+          </Text>
+          {notifications.length === 0
+            ? renderNoNotificationsMessage()
+            : [...notifications].reverse().map((notification, index) => (
+                <View style={styles.requestItem} key={index}>
+                  <Text style={styles.requestText}>
+                    {`${notification.requestType} request`}
+                  </Text>
+                  <Text style={styles.tableNumberText}>
+                    Table: {notification.appTable.tableNumber}
+                  </Text>
+                  <Text style={styles.timeText}>
+                    Time: {notification.createdAt}
+                  </Text>
+
                   <Text
-                    style={styles.clearButton}
-                    onPress={() => handleRequestClear(item)}
+                    style={styles.approveButton}
+                    onPress={() => deleteNotifications(notification.id)}
                   >
-                    Clear
+                    Approve
                   </Text>
                 </View>
-              )}
-            />
-            <Text style={styles.deleteAllButton} onPress={handleDeleteAll}>
-              Delete All
-            </Text>
-          </>
-        )}
+              ))}
+        </ScrollView>
       </View>
     </View>
   );
