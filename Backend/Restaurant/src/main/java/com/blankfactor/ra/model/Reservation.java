@@ -4,13 +4,19 @@ import com.blankfactor.ra.config.InstantSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-public class Reservation {
+public class Reservation extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
