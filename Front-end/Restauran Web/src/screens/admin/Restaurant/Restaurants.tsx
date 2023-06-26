@@ -4,7 +4,7 @@ import {
   getRestaurants,
   Restaurant,
 } from "../../../services/restaurantService";
-import { mobileBreakPoint } from "../../mobileBreakPoint";
+import { mobileBreakPoint } from "../../constants";
 import styles from "./restaurant.module.css";
 
 const GetRestaurants = () => {
