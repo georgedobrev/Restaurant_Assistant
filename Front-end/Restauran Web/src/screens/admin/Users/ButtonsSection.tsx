@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
-import AddUser from "./AddUser";
+import AddUser from "./CreateAdmin";
 import EditUserComponent from "./EditUser";
 import DeleteUserComponent from "./DeleteComponent";
 import styles from "./users.module.css";
 import { usersSections } from "../../constants";
+import AddRoles from "./CreateWaiter";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addUser");
@@ -21,6 +22,8 @@ const ButtonSection: React.FC = () => {
         return <EditUserComponent />;
       case usersSections.deleteUser:
         return <DeleteUserComponent />;
+        case usersSections.addUserRole:
+          return <AddRoles/>
       default:
         return null;
     }
@@ -34,14 +37,21 @@ const ButtonSection: React.FC = () => {
           variant="contained"
           onClick={() => handleButtonClick(usersSections.addUser)}
         >
-          Add New User
+          Add Admin
+        </Button>
+        <Button
+          className={styles.btns}
+          variant="contained"
+          onClick={() => handleButtonClick(usersSections.addUserRole)}
+        >
+          Add Waiter
         </Button>
         <Button
           className={styles.btns}
           variant="contained"
           onClick={() => handleButtonClick(usersSections.editUser)}
         >
-          Edit User
+          Edit Employee
         </Button>
         <Button
           className={styles.btns}
@@ -62,7 +72,16 @@ const ButtonSection: React.FC = () => {
         {renderComponent === usersSections.deleteUser && (
           <DeleteUserComponent />
         )}
+
+        
       </div>
+
+      <div>
+        {renderComponent === usersSections.addUserRole && (
+          <AddRoles />
+        )}
+      </div>
+
     </div>
   );
 };

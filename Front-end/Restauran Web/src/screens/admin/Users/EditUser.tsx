@@ -1,81 +1,89 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { editUser, User, getUsers } from "../../../services/UserService";
-import { status } from "../../constants";
+import { editUser, User, getUsers } from "../../../services/userService";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
 const EditUserComponent: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
+  //todo fix with dynamic restaurant ID
+  const [restaurantId, setRestaurantId] = useState<number>(1);
+  const [roleType, setRoleType] = useState<string>("");
+  const [userId, setUserId] = useState<number | undefined>(undefined);
   const [userExists, setUserExists] = useState<boolean>(false);
-  const [requestStatus, setRequestStatus] = useState<string>("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleEditUser = async () => {
+    if (userId === undefined) return;
+    const userData: User = {
+      email,
+      name,
+      surname,
+      roleType,
+      restaurant: {
+        id: restaurantId,
+      },
+    };
+
     try {
-      const updatedUser: User = await editUser(
-        {
-          id: parseInt(userId),
-          name,
-          surname,
-          email,
-          blacklisted: false,
-          active: true,
-          createdAt: "",
-        },
-        parseInt(userId)
-      );
-      setRequestStatus(status.successStatus);
-      return updatedUser;
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+      const response: User = await editUser(userData);
+      setEmail("");
+      setName("");
+      setSurname("");
+      setRoleType("");
+      return response;
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
   const handleCheckUserExists = async () => {
     try {
-      const user: User | undefined = await getUsers(parseInt(userId));
+      if (userId === undefined) {
+        return;
+      }
 
+      const user: User | undefined = await getUsers(userId);
       if (user && user.email === email) {
         setUserExists(true);
         setName(user.name);
         setSurname(user.surname);
         setEmail(user.email);
-        setRequestStatus(status.successStatus);
+        setRoleType(user.roleType);
       } else {
         setUserExists(false);
-        setRequestStatus(status.failureStatus);
       }
-    } catch (err) {
-      setRequestStatus(status.failureStatus);
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
   return (
     <div>
-      <h2 className={styles.newUser}>Edit User</h2>
+      <h2 className={styles.newUser}>Edit Employee</h2>
 
       {!userExists ? (
         <>
           <TextField
             label="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
             color="warning"
+            margin="normal"
+            value={userId}
+            onChange={(e) => setUserId(parseInt(e.target.value) || undefined)}
             fullWidth
             required
-            margin="normal"
           />
 
           <TextField
             label="Email"
+            color="warning"
+            margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            color="warning"
             fullWidth
             required
-            margin="normal"
           />
 
           <Button
@@ -92,32 +100,42 @@ const EditUserComponent: React.FC = () => {
         <div>
           <TextField
             label="Name"
+            color="warning"
+            margin="normal"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            color="warning"
             fullWidth
             required
-            margin="normal"
           />
 
           <TextField
             label="Surname"
+            color="warning"
+            margin="normal"
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
-            color="warning"
             fullWidth
             required
-            margin="normal"
           />
 
           <TextField
             label="Email"
+            color="warning"
+            margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            color="warning"
             fullWidth
             required
+          />
+
+          <TextField
+            label="Role Type"
+            color="warning"
             margin="normal"
+            value={roleType}
+            onChange={(e) => setRoleType(e.target.value)}
+            fullWidth
+            required
           />
 
           <Button variant="contained" onClick={handleEditUser}>
@@ -125,9 +143,7 @@ const EditUserComponent: React.FC = () => {
           </Button>
         </div>
       ) : (
-        requestStatus === status.failureStatus && (
-          <p className={styles.errorMsg}>Such user does not exist</p>
-        )
+        errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>
       )}
     </div>
   );

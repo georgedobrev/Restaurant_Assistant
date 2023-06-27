@@ -35,5 +35,5 @@ export const sendNotification = async (
     message: message,
   };
 
-  return fetchWrapper.post<NotificationData, any>(url, data);
+  return fetchWrapper.post<NotificationData>(url, data);
 };
