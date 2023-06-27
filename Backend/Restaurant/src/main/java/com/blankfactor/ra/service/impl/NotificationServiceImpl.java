@@ -3,7 +3,6 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.model.AppTable;
-import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
@@ -39,13 +38,15 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         Notification notification = Notification.builder()
-                .createdBy(notificationDto.getAppUser())
+                //.createdBy(notificationDto.getAppUser())
                 .appTable(appTable)
                 .requestType(notificationDto.getRequestType())
                 .message(notificationMessage)
                 .build();
 
+
         sendNotificationToWaiter(notification);
+
 
         return notificationRepository.save(notification);
     }

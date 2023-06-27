@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
 
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,7 +24,7 @@ public class Shift extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)

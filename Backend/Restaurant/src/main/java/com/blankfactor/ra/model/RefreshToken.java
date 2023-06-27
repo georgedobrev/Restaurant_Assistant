@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class RefreshToken extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Integer id;
 
     @OneToOne
     @JoinColumn(name = "app_user_id", unique = true)

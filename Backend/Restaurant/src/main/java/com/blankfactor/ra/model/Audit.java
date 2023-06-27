@@ -1,35 +1,39 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.InstantSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
+@Getter
+@Setter
 @MappedSuperclass
-@SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@EntityListeners(AuditingEntityListener.class)
 public class Audit {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id")
-    private int id;
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by", referencedColumnName = "id")
-    private AppUser createdBy;
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
-    @ManyToOne
-    @JoinColumn(name = "updated_by", referencedColumnName = "id")
-    private AppUser updatedBy;
-
+    @CreatedDate
+    @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
+    @LastModifiedDate
+    @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private Instant updatedAt = Instant.now();
 }

@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 
-@SuperBuilder()
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,7 +22,7 @@ public class Notification extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_table_id", nullable = false)

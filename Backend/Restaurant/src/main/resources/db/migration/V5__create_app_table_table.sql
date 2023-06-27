@@ -6,8 +6,8 @@ CREATE TABLE app_table
     occupied BIT,
     restaurant_id INT NOT NULL,
     section_id INT,
-    created_by INT NOT NULL,
-    updated_by INT,
+    created_by NVARCHAR(100) NOT NULL,
+    updated_by NVARCHAR(100),
     capacity INT,
     virtual_table BIT,
     active BIT,
@@ -17,6 +17,4 @@ CREATE TABLE app_table
     FOREIGN KEY (qr_id) REFERENCES qr_code (id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id),
     FOREIGN KEY (section_id) REFERENCES section (id),
-    FOREIGN KEY (created_by) REFERENCES app_user (id),
-    FOREIGN KEY(updated_by) REFERENCES app_user (id)
 );

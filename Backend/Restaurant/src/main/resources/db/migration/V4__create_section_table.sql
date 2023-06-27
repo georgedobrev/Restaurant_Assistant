@@ -4,12 +4,10 @@ CREATE TABLE section
     section_name NVARCHAR(50),
     table_numbers NVARCHAR(30),
     restaurant_id INT,
-    created_by INT NOT NULL,
-    updated_by INT,
+    created_by NVARCHAR(100) NOT NULL,
+    updated_by NVARCHAR(100),
     created_at DATETIMEOFFSET NOT NULL,
     updated_at DATETIMEOFFSET,
     CONSTRAINT UQ_section_table_numbers_restaurant_id UNIQUE (table_numbers, restaurant_id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id),
-    FOREIGN KEY (created_by) REFERENCES app_user (id),
-    FOREIGN KEY(updated_by) REFERENCES app_user (id)
 );
