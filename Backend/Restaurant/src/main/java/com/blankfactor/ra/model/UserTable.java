@@ -33,6 +33,7 @@ public class UserTable {
     @JoinColumn(name = "app_table_id")
     private AppTable appTable;
 
+    // TODO change it to VirtualTable, change in the database migration as well
     @Column(name = "table_numbers")
     private String tableNumbers;
 

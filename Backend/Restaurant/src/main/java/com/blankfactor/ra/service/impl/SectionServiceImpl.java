@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,5 +64,17 @@ public class SectionServiceImpl implements SectionService {
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 
         return allSections;
+    }
+
+    @Override
+    public List<Section> getSectionsForTable(AppTable table) {
+        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
+        int currentTableNum = table.getTableNumber();
+
+        return sections.stream()
+                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
+                        .map(Integer::valueOf)
+                        .anyMatch(num -> num == currentTableNum))
+                .collect(Collectors.toList());
     }
 }

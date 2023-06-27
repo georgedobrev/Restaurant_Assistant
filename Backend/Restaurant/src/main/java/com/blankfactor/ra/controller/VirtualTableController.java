@@ -23,13 +23,6 @@ public class VirtualTableController {
         return ResponseEntity.status(HttpStatus.CREATED).body(virtualTable);
     }
 
-    @GetMapping()
-    public ResponseEntity<VirtualTable> getVirtualTableByTableNumbersAndRestaurantId(@PathVariable("restaurantId") Integer restaurantId,
-                                                                                     @RequestBody String tableIds) {
-        VirtualTable virtualTable = virtualTableService.getVirtualTableByTableNumbersAndRestaurantId(tableIds, restaurantId);
-        return ResponseEntity.ok(virtualTable);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<Map<Integer, VirtualTable>> getAllVirtualTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         Map<Integer, VirtualTable> allVirtualTables = virtualTableService.getAllVirtualTablesByRestaurantId(restaurantId);
@@ -38,8 +31,8 @@ public class VirtualTableController {
 
     @PutMapping("/{virtualTableId}")
     public ResponseEntity<VirtualTable> updateVirtualTableByVirtualTableId(@PathVariable("restaurantId") Integer restaurantId,
-                                                                         @PathVariable("virtualTableId") Integer virtualTableId,
-                                                                         @RequestBody VirtualTable virtualTable) {
+                                                                           @PathVariable("virtualTableId") Integer virtualTableId,
+                                                                           @RequestBody VirtualTable virtualTable) {
         VirtualTable updatedVirtualTable = virtualTableService.updateVirtualTableByVirtualTableId(restaurantId, virtualTableId, virtualTable);
         return ResponseEntity.ok(updatedVirtualTable);
     }

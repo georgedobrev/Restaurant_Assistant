@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(VirtualTableException.class)
-    public ResponseEntity<ExceptionResponse> virtualTableException(UserRoleException ex) {
+    public ResponseEntity<ExceptionResponse> handleVirtualTableException(VirtualTableException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Virtual Table Exception", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -55,11 +55,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
-        ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
+//        ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @ExceptionHandler(NotificationException.class)
     public ResponseEntity<ExceptionResponse> handleNotificationException(NotificationException ex) {
@@ -75,7 +75,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
