@@ -29,12 +29,9 @@ public class NotificationServiceImpl implements NotificationService {
 
         String notificationMessage = "";
         switch (notificationDto.getRequestType()) {
-            case Waiter ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
-            case Bill ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
-            case Menu ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
+            case Waiter -> notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
+            case Bill -> notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
+            case Menu -> notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
         }
 
         Notification notification = Notification.builder()

@@ -5,14 +5,16 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
-import com.blankfactor.ra.model.*;
-import com.blankfactor.ra.repository.*;
-import com.blankfactor.ra.service.RestaurantService;
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
+import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.RestaurantRepository;
+import com.blankfactor.ra.repository.UserRepository;
+import com.blankfactor.ra.repository.UserRoleRepository;
+import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +92,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
         existingRestaurant.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
         existingRestaurant.setActive(updatedRestaurant.getActive());
-       // existingRestaurant.setUpdatedAt(Instant.now());
+        // existingRestaurant.setUpdatedAt(Instant.now());
 
         return restaurantRepository.save(existingRestaurant);
     }

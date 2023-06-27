@@ -2,10 +2,11 @@ package com.blankfactor.ra.model;
 
 import com.blankfactor.ra.config.InstantSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.api.client.util.DateTime;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;

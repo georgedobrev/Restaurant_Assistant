@@ -15,14 +15,11 @@ import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -84,7 +81,7 @@ public class UserServiceImpl implements UserService {
         List<UserRole> userRoles = userRoleRepository.findAllByRestaurantIdAndRoleType(restaurantId, RoleType.ADMIN);
         List<AppUser> admins = new ArrayList<>();
 
-        userRoles.forEach(userRole ->  admins.add(userRole.getAppUser()));
+        userRoles.forEach(userRole -> admins.add(userRole.getAppUser()));
 
         return admins;
     }
