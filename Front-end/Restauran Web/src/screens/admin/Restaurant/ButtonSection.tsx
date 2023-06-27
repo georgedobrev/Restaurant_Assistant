@@ -7,7 +7,7 @@ import GetRestaurants from "./Restaurants";
 import { restaurantSections } from "../../constants";
 
 const ButtonSection: React.FC = () => {
-  const [renderComponent, setRenderComponent] = useState("addRestaurant");
+  const [renderComponent, setRenderComponent] = useState("");
 
   const handleButtonClick = (componentName: string) => {
     setRenderComponent(componentName);
@@ -19,8 +19,6 @@ const ButtonSection: React.FC = () => {
         return <AddRestaurant />;
       case restaurantSections.editRestaurant:
         return <EditRestaurantComponent />;
-      case restaurantSections.getAllRestaurants:
-        return <GetRestaurants />;
       default:
         return null;
     }
@@ -28,6 +26,7 @@ const ButtonSection: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <GetRestaurants />
       <div className={styles.buttonSection}>
         <Button
           className={styles.btns}
@@ -43,15 +42,6 @@ const ButtonSection: React.FC = () => {
         >
           Edit Restaurant
         </Button>
-        <Button
-          className={styles.btns}
-          variant="contained"
-          onClick={() =>
-            handleButtonClick(restaurantSections.getAllRestaurants)
-          }
-        >
-          All Restaurants
-        </Button>
       </div>
 
       <div>
@@ -63,12 +53,6 @@ const ButtonSection: React.FC = () => {
       <div>
         {renderComponent === restaurantSections.editRestaurant && (
           <EditRestaurantComponent />
-        )}
-      </div>
-
-      <div>
-        {renderComponent === restaurantSections.getAllRestaurants && (
-          <GetRestaurants />
         )}
       </div>
     </div>

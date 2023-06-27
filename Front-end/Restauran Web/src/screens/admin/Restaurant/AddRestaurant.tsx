@@ -92,7 +92,7 @@ const AddRestaurant: React.FC = () => {
         />
         {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
 
-        <Button type="submit" className={styles.btn} variant="contained">
+        <Button type="submit" className={styles.btns} variant="contained">
           Add new restaurant
         </Button>
       </form>

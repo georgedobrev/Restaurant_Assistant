@@ -17,9 +17,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   setUserType,
 }) => {
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const responseMessage = async (response: CredentialResponse) => {
     const JWT = response.credential;
-    const [errorMsg, setErrorMsg] = useState<string>("");
 
     if (JWT) {
       setLoggedIn(true);

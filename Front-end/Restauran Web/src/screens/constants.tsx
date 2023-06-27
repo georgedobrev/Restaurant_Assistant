@@ -19,5 +19,6 @@ export const status = {
 export const storedUserId = localStorage.getItem("userId");
 export const storedJWT = localStorage.getItem("token");
 export const storedRefreshToken = localStorage.getItem("refreshToken");
+export const storedRestaurantID = localStorage.getItem("restaurantID");
 export const mobileBreakPoint = 768;
 export const loginScreenImage = "src/assets/restaurant-banner.jpeg";

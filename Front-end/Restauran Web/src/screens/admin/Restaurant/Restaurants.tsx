@@ -1,29 +1,19 @@
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
 import {
   getRestaurantsByAdminID,
-  Restaurant,
+  Restaurant as BaseRestaurant,
 } from "../../../services/restaurantService";
-import { mobileBreakPoint } from "../../constants";
 import styles from "./restaurant.module.css";
 import { storedUserId } from "../../constants";
 
+interface Restaurant extends BaseRestaurant {
+  isSelected?: boolean;
+}
+
 const GetRestaurants = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = (): void => {
-      setIsMobile(window.innerWidth <= mobileBreakPoint);
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -32,7 +22,12 @@ const GetRestaurants = () => {
           const restaurants = await getRestaurantsByAdminID(
             parseInt(storedUserId)
           );
-          setRestaurants(restaurants);
+          setRestaurants(
+            restaurants.map((restaurant) => ({
+              ...restaurant,
+              isSelected: false,
+            }))
+          );
         }
       } catch (error) {
         return error;
@@ -40,19 +35,51 @@ const GetRestaurants = () => {
     })();
   }, []);
 
-  const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 50 },
-    { field: "name", headerName: "Name", width: 100 },
-    { field: "tablesCount", headerName: "Tables Count", width: 120 },
-    { field: "address", headerName: "Address", width: 200 },
-    { field: "phoneNumber1", headerName: "Phone Number", width: 150 },
-  ];
+  useEffect(() => {
+    if (selectedId) {
+      localStorage.setItem("restaurantID", selectedId.toString());
+    }
+  }, [selectedId]);
+
+  const handleSelect = (id: number) => {
+    setSelectedId(id);
+    const updatedRestaurants = restaurants.map((restaurant) => ({
+      ...restaurant,
+      isSelected: restaurant.id === id,
+    }));
+    setRestaurants(updatedRestaurants);
+  };
 
   return (
-    <div className={isMobile ? styles.dataGridMobile : styles.dataGrid}>
-      <div style={{ height: 400, width: "85%" }}>
-        <DataGrid rows={restaurants} columns={columns} />
-      </div>
+    <div className={styles.restaurantsSection}>
+      {restaurants.map((restaurant) => (
+        <div
+          key={restaurant.id}
+          className={`${styles.restaurantContainer} ${
+            restaurant.isSelected ? styles.containerSelected : ""
+          }`}
+        >
+          <div className={styles.flexRow}>
+            <div className={styles.boxName}>
+              <span className={styles.restaurantName}>{restaurant.name}</span>
+            </div>
+            <div className={styles.boxRestaurant}>
+              <span className={styles.restaurantAddress}>
+                {restaurant.address}
+              </span>
+            </div>
+          </div>
+          <div>
+            <Button
+              className={styles.btns}
+              variant="contained"
+              onClick={() => restaurant.id && handleSelect(restaurant.id)}
+            >
+              Select
+            </Button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
