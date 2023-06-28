@@ -5,5 +5,6 @@ CREATE TABLE section
     table_numbers NVARCHAR(30),
     restaurant_id INT,
     CONSTRAINT UQ_section_table_numbers_restaurant_id UNIQUE (table_numbers, restaurant_id),
+    CONSTRAINT UQ_section_section_name_restaurant_id UNIQUE (section_name, restaurant_id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
 );

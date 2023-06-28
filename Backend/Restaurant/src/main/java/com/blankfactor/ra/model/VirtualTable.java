@@ -21,13 +21,13 @@ public class VirtualTable {
     @Column(name = "table_numbers")
     private String tableNumbers;
 
-    @Builder.Default
-    @Column(name = "occupied")
-    private boolean occupied = false;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    @Builder.Default
+    @Column(name = "occupied")
+    private boolean occupied = false;
 
     @Builder.Default
     @Column(name = "active")

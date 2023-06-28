@@ -1,5 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
+import com.blankfactor.ra.dto.VirtualTableDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.VirtualTableException;
@@ -10,6 +11,7 @@ import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.VirtualTableRepository;
 import com.blankfactor.ra.service.VirtualTableService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,35 +30,21 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     private final VirtualTableRepository virtualTableRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Transactional
     @Override
-    public VirtualTable createVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
+    public VirtualTable createVirtualTable(Integer restaurantId, VirtualTableDto virtualTableDto) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
 
-        List<Integer> tableNumbers = mapVirtualTableNumbersToInteger(virtualTable);
+        checkIfTableNumbersExistsAndSetVirtualTable(virtualTableDto.getTableNumbers(), restaurantId, true);
 
-        for (int tableNumber : tableNumbers) {
+        String tableNumbers = mapTableNumbersToString(virtualTableDto.getTableNumbers());
+        VirtualTable virtualTable = VirtualTable.builder()
+                .tableNumbers(tableNumbers)
+                .restaurant(restaurant)
+                .build();
 
-            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                    .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
-
-            if (appTable.isVirtualTable()) {
-                throw new VirtualTableException("Table " + tableNumber + " is already assigned as virtual table");
-            }
-
-            appTable.setVirtualTable(true);
-            appTableRepository.save(appTable);
-        }
-
-        virtualTable.setRestaurant(restaurant);
         return virtualTableRepository.save(virtualTable);
-    }
-
-    private List<Integer> mapVirtualTableNumbersToInteger(VirtualTable virtualTable) {
-        return Arrays.stream(virtualTable.getTableNumbers().split(","))
-                .map(String::trim)
-                .map(Integer::parseInt)
-                .toList();
     }
 
     @Override
@@ -85,14 +73,7 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     public void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
         List<Integer> tableNumbers = mapVirtualTableNumbersToInteger(virtualTable);
 
-        for (int tableNumber : tableNumbers) {
-
-            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                    .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
-
-            appTable.setVirtualTable(false);
-            appTableRepository.save(appTable);
-        }
+        checkIfTableNumbersExistsAndSetVirtualTable(tableNumbers, restaurantId, false);
 
         virtualTableRepository.delete(virtualTable);
     }
@@ -110,5 +91,35 @@ public class VirtualTableServiceImpl implements VirtualTableService {
             }
         }
         throw new VirtualTableException("Virtual table with table " + tableNumber + " in it, not found");
+    }
+
+    private void checkIfTableNumbersExistsAndSetVirtualTable(List<Integer> tableNumbers, Integer restaurantId, boolean isVirtual) {
+        for (int tableNumber : tableNumbers) {
+
+            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+                    .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
+
+            if (isVirtual) {
+                if (appTable.isVirtualTable()) {
+                    throw new VirtualTableException("Table " + tableNumber + " is already assigned as virtual table");
+                }
+            }
+
+            appTable.setVirtualTable(isVirtual);
+            appTableRepository.save(appTable);
+        }
+    }
+
+    private String mapTableNumbersToString(List<Integer> tableNumbers) {
+        return tableNumbers.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+    }
+
+    private List<Integer> mapVirtualTableNumbersToInteger(VirtualTable virtualTable) {
+        return Arrays.stream(virtualTable.getTableNumbers().split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .toList();
     }
 }

@@ -71,6 +71,7 @@ public class SectionServiceImpl implements SectionService {
         List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
         int currentTableNum = table.getTableNumber();
 
+        // TODO check if we can make it with objectMapper
         return sections.stream()
                 .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
                         .map(Integer::valueOf)

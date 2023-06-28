@@ -1,5 +1,6 @@
 package com.blankfactor.ra.controller;
 
+import com.blankfactor.ra.dto.VirtualTableDto;
 import com.blankfactor.ra.model.VirtualTable;
 import com.blankfactor.ra.service.VirtualTableService;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,9 @@ public class VirtualTableController {
 
     @PostMapping()
     public ResponseEntity<VirtualTable> createVirtualTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                           @RequestBody VirtualTable virtualTable) {
-        VirtualTable createdVirtualTable = virtualTableService.createVirtualTable(restaurantId, virtualTable);
-        return ResponseEntity.status(HttpStatus.CREATED).body(virtualTable);
+                                                           @RequestBody VirtualTableDto virtualTableDto) {
+        VirtualTable createdVirtualTable = virtualTableService.createVirtualTable(restaurantId, virtualTableDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdVirtualTable);
     }
 
     @GetMapping("/all")

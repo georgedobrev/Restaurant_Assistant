@@ -27,17 +27,9 @@ public class AppTable {
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
-    @Builder.Default
-    @Column(name = "occupied")
-    private boolean occupied = false;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "section_id")
-    private Section section;
 
     @Column(name = "capacity")
     private int capacity;
@@ -45,6 +37,10 @@ public class AppTable {
     @Builder.Default
     @Column(name = "virtual_table")
     private boolean isVirtualTable = false;
+
+    @Builder.Default
+    @Column(name = "occupied")
+    private boolean occupied = false;
 
     @Builder.Default
     @Column(name = "active")
