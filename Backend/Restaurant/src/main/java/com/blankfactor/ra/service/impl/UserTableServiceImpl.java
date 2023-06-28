@@ -69,41 +69,10 @@ public class UserTableServiceImpl implements UserTableService {
     public boolean isAppUserSeated(AppUser user, AppTable appTable) {
         UserTable userTable = userTableRepository.findByAppUserAndAppTableAndEndTimeIsNull(user, appTable).orElse(null);
         return userTable != null;
-//        if (userTable == null) {
-//            return false;
-//        }
-//        return userTable.getEndTime() == null;
     }
 
     public boolean isAppUserSeated(AppUser user, VirtualTable virtualTable) {
         UserTable userTable = userTableRepository.findByAppUserAndVirtualTableAndEndTimeIsNull(user, virtualTable).orElse(null);
         return userTable != null;
     }
-
-//    private List<Section> getSectionsForTable(AppTable table) {
-//        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
-//        int currentTableNum = table.getTableNumber();
-//
-//        return sections.stream()
-//                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
-//                        .map(Integer::valueOf)
-//                        .anyMatch(num -> num == currentTableNum))
-//                .collect(Collectors.toList());
-//    }
-
-//    public String getWaitersFromSections(List<Section> sections) {
-//        List<WaiterSection> waiterSections = new ArrayList<>();
-//
-//        for (Section section : sections) {
-//            waiterSections.addAll(waiterSectionRepository.findBySectionId(section.getId()));
-//        }
-//
-//        if (waiterSections.isEmpty()) {
-//            throw new RuntimeException("No waiter section found");
-//        }
-//
-//        return waiterSections.stream()
-//                .map(waiterSection -> String.valueOf(waiterSection.getWaiter().getId()))
-//                .collect(Collectors.joining(","));
-//    }
 }

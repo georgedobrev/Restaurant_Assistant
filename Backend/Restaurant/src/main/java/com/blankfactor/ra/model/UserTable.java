@@ -33,7 +33,6 @@ public class UserTable {
     @JoinColumn(name = "app_table_id")
     private AppTable appTable;
 
-    // TODO change it to VirtualTable, change in the database migration as well
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "virtual_table_id")
     private VirtualTable virtualTable;
