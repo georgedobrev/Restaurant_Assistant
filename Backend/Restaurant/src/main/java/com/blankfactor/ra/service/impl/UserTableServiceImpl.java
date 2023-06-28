@@ -32,26 +32,27 @@ public class UserTableServiceImpl implements UserTableService {
         String waiterIds = waiterSectionService.getWaitersFromSections(sections);
 
 
-//        if (!isAppUserSeated(user, appTable)) {
         if (appTable.isVirtualTable()) {
             VirtualTable virtualTable = virtualTableService.getVirtualTableByAppTableNumber(appTable.getRestaurant().getId(), appTable.getTableNumber());
 
-            createUserTableRecord(user, waiterIds, virtualTable.getTableNumbers(), null, virtualTable);
-        } else {
-            createUserTableRecord(user, waiterIds, null, appTable, null);
+            if (!isAppUserSeated(user, virtualTable)) {
+                createUserTableRecord(user, waiterIds, null, virtualTable);
+            }
 
-            appTable.setOccupied(true);
-            appTableRepository.save(appTable);
+        } else {
+
+            if (!isAppUserSeated(user, appTable)) {
+                createUserTableRecord(user, waiterIds, appTable, null);
+            }
         }
     }
-//    }
 
-    public void createUserTableRecord(AppUser user, String waiterIds, String tableNumbers, AppTable appTable, VirtualTable virtualTable) {
+    public void createUserTableRecord(AppUser user, String waiterIds, AppTable appTable, VirtualTable virtualTable) {
         UserTable userTable = UserTable.builder()
                 .appUser(user)
                 .waiterIds(waiterIds)
                 .appTable(appTable)
-                .tableNumbers(tableNumbers)
+                .virtualTable(virtualTable)
                 .startTime(new Date().toInstant())
                 .build();
 
@@ -67,16 +68,16 @@ public class UserTableServiceImpl implements UserTableService {
 
     public boolean isAppUserSeated(AppUser user, AppTable appTable) {
         UserTable userTable = userTableRepository.findByAppUserAndAppTableAndEndTimeIsNull(user, appTable).orElse(null);
-        if (userTable == null) {
-            return false;
-        }
-        return userTable.getEndTime() == null;
+        return userTable != null;
+//        if (userTable == null) {
+//            return false;
+//        }
+//        return userTable.getEndTime() == null;
     }
 
     public boolean isAppUserSeated(AppUser user, VirtualTable virtualTable) {
-        UserTable userTable = userTableRepository.findByAppUserAndVirtualTableAndEndTimeIsNull(virtualTable);
-        // TODO
-        return true;
+        UserTable userTable = userTableRepository.findByAppUserAndVirtualTableAndEndTimeIsNull(user, virtualTable).orElse(null);
+        return userTable != null;
     }
 
 //    private List<Section> getSectionsForTable(AppTable table) {

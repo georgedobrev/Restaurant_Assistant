@@ -34,8 +34,9 @@ public class UserTable {
     private AppTable appTable;
 
     // TODO change it to VirtualTable, change in the database migration as well
-    @Column(name = "table_numbers")
-    private String tableNumbers;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "virtual_table_id")
+    private VirtualTable virtualTable;
 
     @Column(name = "start_time")
     @JsonSerialize(using = InstantSerializer.class)

@@ -11,10 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserTableRepository extends JpaRepository<UserTable, Integer> {
-    Optional<UserTable> findByAppUserIdAndAppTableId(Integer appUserId, AppTable appTableId);
-
     Optional<UserTable> findByAppUserAndAppTableAndEndTimeIsNull(AppUser appUser, AppTable appTable);
 
-    // TODO check if this works
-    UserTable findByAppUserAndVirtualTableAndEndTimeIsNull(VirtualTable virtualTable);
+    Optional<UserTable> findByAppUserAndVirtualTableAndEndTimeIsNull(AppUser appUser, VirtualTable virtualTable);
 }
