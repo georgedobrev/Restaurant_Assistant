@@ -42,11 +42,11 @@ public class TenantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @PutMapping("/update/{tenant_id}")
-    @Operation(summary = "Update tenant by id")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId,
+    @PutMapping("/update/{user_id}")
+    @Operation(summary = "Update tenant by email")
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("user_id") int userId,
                                                @RequestBody UpdateTenantDto updateTenantDto) throws Exception {
-        Tenant tenant = tenantService.updateTenant(tenantId, updateTenantDto);
+        Tenant tenant = tenantService.updateTenant(userId, updateTenantDto);
 
         return ResponseEntity.ok(tenant);
     }

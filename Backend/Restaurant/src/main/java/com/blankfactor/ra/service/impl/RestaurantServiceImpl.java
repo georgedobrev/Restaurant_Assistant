@@ -30,7 +30,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 
     //TODO check if the userId matches for tenant
-    //TODO update tables tenant column restaurants
     @Override
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
         RestaurantDto restaurantDto = createRestaurantDto.getRestaurantDto();
@@ -46,9 +45,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         Restaurant restaurant1 = restaurantRepository.save(restaurant);
 
-        //TODO maybe improve exception message
         AppUser appUser = userRepository.findById(createRestaurantDto.getUserId())
-                .orElseThrow(() -> new UserException("User not found"));
+                .orElseThrow(() -> new UserException(""));
 
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)

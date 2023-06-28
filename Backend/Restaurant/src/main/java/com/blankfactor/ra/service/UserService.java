@@ -24,5 +24,4 @@ public interface UserService {
     AppUser createWaiter(WaiterDto waiterDto);
 
     AppUser createAdmin(AdminDto adminDto);
-    //AppUser createTenant(TenantDto tenantDto);
 }

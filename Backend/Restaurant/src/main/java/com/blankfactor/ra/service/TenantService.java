@@ -13,7 +13,7 @@ public interface TenantService {
 
     List<Tenant> getAllTenants();
 
-    Tenant updateTenant(int tenantId, UpdateTenantDto updateTenantDto) throws Exception;
+    Tenant updateTenant(int userId, UpdateTenantDto updateTenantDto) throws Exception;
 
     void deleteTenant(int tenantId);
 

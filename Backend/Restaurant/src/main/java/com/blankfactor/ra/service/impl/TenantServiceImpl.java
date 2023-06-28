@@ -20,7 +20,6 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
@@ -47,11 +46,17 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int tenantId, UpdateTenantDto updateTenantDto) throws Exception {
-        Tenant tenantToUpdate = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new Exception("Tenant " + tenantId + " not found"));
+    public Tenant updateTenant(int userId, UpdateTenantDto updateTenantDto) throws Exception {
+      //  user by userId
+                //find tenant by email
+        AppUser appUserToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        Tenant tenantToUpdate = tenantRepository.findTenantByEmail(updateTenantDto.getOldEmail())
+                .orElseThrow(() -> new Exception("Tenant not found"));
 
         tenantToUpdate.setEmail(updateTenantDto.getEmail());
+        appUserToUpdate.setEmail(updateTenantDto.getEmail());
 
         return tenantRepository.save(tenantToUpdate);
     }

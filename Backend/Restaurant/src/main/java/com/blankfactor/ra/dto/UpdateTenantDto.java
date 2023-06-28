@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class UpdateTenantDto {
+    private String oldEmail;
     private String email;
 }
