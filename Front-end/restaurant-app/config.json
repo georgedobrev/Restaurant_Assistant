@@ -1,6 +1,11 @@
 {
   "googleApi": "https://www.googleapis.com/userinfo/v2/me",
-  "socketBaseURL": "ws://localhost:8080",
+  "websocketBaseURL": "ws://localhost:8080",
+  "baseURL": "http://localhost:8080/",
   "endpointRegister": "/ws-message",
-  "topic": "/topic/message"
+  "topic": "/topic/message",
+
+  "notificationsEndpoint": "notification",
+  "getAllNotifications": "/all/restaurant/1",
+  "deleteNotification": "/delete"
 }

@@ -16,8 +16,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     List<Notification> findAllByAppTableId(Integer appTableId);
 
-    void deleteNotificationById(int notificationId);
-
     void deleteAllByAppTableId(int tableId);
 
     @Query("SELECT ut.waiter FROM UserTable ut WHERE ut.appTableId.id = :tableId")

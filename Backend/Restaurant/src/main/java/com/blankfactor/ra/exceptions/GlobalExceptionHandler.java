@@ -1,11 +1,14 @@
 package com.blankfactor.ra.exceptions;
 
 import com.blankfactor.ra.exceptions.custom.*;
-import com.blankfactor.ra.model.Tenant;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,6 +43,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SectionDuplicateException.class)
+    public ResponseEntity<ExceptionResponse> handleSectionDuplicateException(SectionDuplicateException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Section duplicate exception", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Internal Server Error", ex.getMessage());
@@ -52,9 +61,34 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ShiftException.class)
+    public ResponseEntity<ExceptionResponse> handleShiftException(ShiftException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Shift Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+
+        List<String> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+
+        ExceptionResponse errorResponse = new ExceptionResponse("Method Argument Not Valid", errors.toString());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(TenantException.class)
     public ResponseEntity<ExceptionResponse> handleTenantException(TenantException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Tenant Not Found", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SysadminException.class)
+    public ResponseEntity<ExceptionResponse> handleSysadminException(SysadminException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Sysadmin Not Found", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

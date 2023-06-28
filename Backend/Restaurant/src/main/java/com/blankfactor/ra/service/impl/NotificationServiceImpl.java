@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Notification;
@@ -26,20 +27,25 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification createNotification(NotificationDto notificationDto) {
-        Notification notification = new Notification();
+        AppTable appTable = appTableRepository.findById(notificationDto.getAppTable().getId())
+                .orElseThrow(() -> new AppTableException("App table " + notificationDto.getAppTable().getId() + " not found"));
 
-        notification.setAppTable(notificationDto.getAppTable());
-        notification.setAppUser(notificationDto.getAppUser());
-        notification.setRequestType(notificationDto.getRequestType());
-
-        switch (notification.getRequestType()) {
+        String notificationMessage = "";
+        switch (notificationDto.getRequestType()) {
             case Waiter ->
-                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested a waiter.");
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
             case Bill ->
-                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the bill.");
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
             case Menu ->
-                    notification.setMessage("Table " + notificationDto.getAppTable().getTableNumber() + " requested the menu.");
+                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
         }
+
+        Notification notification = Notification.builder()
+                .appUser(notificationDto.getAppUser())
+                .appTable(appTable)
+                .requestType(notificationDto.getRequestType())
+                .message(notificationMessage)
+                .build();
 
         sendNotificationToWaiter(notification);
 
@@ -82,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void deleteById(int notificationId) {
-        notificationRepository.deleteNotificationById(notificationId);
+        notificationRepository.deleteById(notificationId);
     }
 
     @Override
