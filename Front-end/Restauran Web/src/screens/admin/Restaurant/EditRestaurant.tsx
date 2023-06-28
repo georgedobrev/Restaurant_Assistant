@@ -22,8 +22,9 @@ const EditRestaurantComponent: React.FC = () => {
     if (!isNaN(storedRestaurantIdNum)) {
       const loadRestaurantData = async () => {
         try {
-          const restaurantData: Restaurant | undefined =
+          const [restaurantData]: Restaurant[] | undefined =
             await getRestaurantByID(storedRestaurantIdNum);
+          await getRestaurantByID(storedRestaurantIdNum);
           if (restaurantData) {
             setName(restaurantData.name);
             setAddress(restaurantData.address);
