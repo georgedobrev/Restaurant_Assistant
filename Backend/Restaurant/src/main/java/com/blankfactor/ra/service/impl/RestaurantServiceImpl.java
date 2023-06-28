@@ -82,17 +82,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return userRestaurant;
     }
-    @Override
-    public List<Restaurant> getAllRestaurantsByTenant(int userId) {
-        List<UserRole> userRoles = userRoleRepository.findByAppUserIdAndRoleType(userId, RoleType.TENANT);
-        List<Restaurant> userRestaurant = new ArrayList<>();
-
-        for (UserRole userRole : userRoles) {
-            userRestaurant.add(userRole.getRestaurant());
-        }
-
-        return userRestaurant;
-    }
 
     @Override
     public List<String> getAllPhoneNumbersByRestaurantId(int restaurantId) {

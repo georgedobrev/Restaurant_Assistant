@@ -43,12 +43,6 @@ public class RestaurantController {
 
         return ResponseEntity.ok(restaurants);
     }
-    @GetMapping("/getAllByTenant/{tenant_id}")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantsByTenant(@PathVariable("tenant_id")int userId) {
-        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByTenant(userId);
-
-        return ResponseEntity.ok(restaurants);
-    }
 
     @GetMapping("/{restaurantId}")
     @Operation(summary = "Get restaurant by id")

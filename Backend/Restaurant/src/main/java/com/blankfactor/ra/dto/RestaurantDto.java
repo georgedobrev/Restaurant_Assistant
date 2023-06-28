@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestaurantDto {
-
     private String name;
     private Integer tablesCount;
     private String address;

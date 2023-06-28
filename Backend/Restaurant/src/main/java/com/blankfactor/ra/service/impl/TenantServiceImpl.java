@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.TenantDto;
+import com.blankfactor.ra.dto.UpdateTenantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
@@ -32,14 +33,6 @@ public class TenantServiceImpl implements TenantService {
                 .build();
 
         userRepository.save(appUser);
-
-//        UserRole userRole = UserRole.builder()
-//                .appUser(appUser)
-//                .restaurant(tenantDto.getRestaurant())
-//                .roleType(RoleType.TENANT)
-//                .build();
-//
-//        userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
@@ -54,12 +47,13 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int tenantId) throws Exception {
-        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found"));
+    public Tenant updateTenant(int tenantId, UpdateTenantDto updateTenantDto) throws Exception {
+        Tenant tenantToUpdate = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new Exception("Tenant " + tenantId + " not found"));
 
-        tenant.setEmail(tenant.getEmail());
+        tenantToUpdate.setEmail(updateTenantDto.getEmail());
 
-        return tenantRepository.save(tenant);
+        return tenantRepository.save(tenantToUpdate);
     }
 
     @Override
