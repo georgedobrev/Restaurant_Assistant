@@ -20,6 +20,10 @@ public class Notification extends Audit {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_table_id", nullable = false)
     private AppTable appTable;
 
