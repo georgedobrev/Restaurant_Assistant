@@ -31,10 +31,10 @@ public class Audit {
     @CreatedDate
     @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    private Instant createdAt;
 
     @LastModifiedDate
     @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "updated_at")
-    private Instant updatedAt = Instant.now();
+    private Instant updatedAt;
 }
