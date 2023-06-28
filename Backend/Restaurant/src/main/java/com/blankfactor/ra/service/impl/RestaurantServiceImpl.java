@@ -43,7 +43,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
                 .phoneNumber3(restaurantDto.getPhoneNumber3())
                 .active(restaurantDto.getActive())
-                //.createdBy(appUser)
                 .build();
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);

@@ -11,5 +11,5 @@ CREATE TABLE notification
     created_at DATETIMEOFFSET NOT NULL,
     updated_at DATETIMEOFFSET,
     FOREIGN KEY (app_table_id) REFERENCES app_table (id),
-    FOREIGN KEY (app_user_id) REFERENCES app_user (id),
+    FOREIGN KEY (app_user_id) REFERENCES app_user (id)
 );

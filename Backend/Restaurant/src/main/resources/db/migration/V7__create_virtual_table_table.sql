@@ -5,5 +5,5 @@ CREATE TABLE virtual_table
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET,
+    updated_at DATETIMEOFFSET
 );
