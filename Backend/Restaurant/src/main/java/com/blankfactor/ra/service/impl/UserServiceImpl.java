@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.AdminDto;
+import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
@@ -135,6 +136,22 @@ public class UserServiceImpl implements UserService {
                 .appUser(user)
                 .roleType(roleType)
                 .restaurant(restaurantRetrieved)
+                .build();
+
+        AppUser savedAppUser = userRepository.save(user);
+        userRoleRepository.save(userRole);
+
+        return savedAppUser;
+    }
+    private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType) {
+        AppUser user = AppUser.builder()
+                .email(email)
+                .build();
+
+
+        UserRole userRole = UserRole.builder()
+                .appUser(user)
+                .roleType(roleType)
                 .build();
 
         AppUser savedAppUser = userRepository.save(user);

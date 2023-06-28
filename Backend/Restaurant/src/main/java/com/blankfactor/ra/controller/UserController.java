@@ -1,9 +1,6 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.AdminDto;
-import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserEmailDto;
-import com.blankfactor.ra.dto.WaiterDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

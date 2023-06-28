@@ -42,7 +42,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
                 .phoneNumber3(restaurantDto.getPhoneNumber3())
-                .active(restaurantDto.getActive())
                 .build();
 
         Restaurant restaurant1 = restaurantRepository.save(restaurant);
@@ -83,6 +82,29 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return userRestaurant;
     }
+    @Override
+    public List<Restaurant> getAllRestaurantsByTenant(int userId) {
+        List<UserRole> userRoles = userRoleRepository.findByAppUserIdAndRoleType(userId, RoleType.TENANT);
+        List<Restaurant> userRestaurant = new ArrayList<>();
+
+        for (UserRole userRole : userRoles) {
+            userRestaurant.add(userRole.getRestaurant());
+        }
+
+        return userRestaurant;
+    }
+
+    @Override
+    public List<String> getAllPhoneNumbersByRestaurantId(int restaurantId) {
+        List<String> phoneNumbers = new ArrayList<>();
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantException("Restaurant not found."));
+
+        phoneNumbers.add(restaurant.getPhoneNumber1());
+        phoneNumbers.add(restaurant.getPhoneNumber2());
+        phoneNumbers.add(restaurant.getPhoneNumber3());
+
+        return phoneNumbers;
+    }
 
     @Override
     public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) {
@@ -94,7 +116,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
         existingRestaurant.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
-        existingRestaurant.setActive(updatedRestaurant.getActive());
 
         return restaurantRepository.save(existingRestaurant);
     }

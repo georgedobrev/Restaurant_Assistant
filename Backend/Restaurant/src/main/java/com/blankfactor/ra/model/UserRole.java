@@ -24,7 +24,7 @@ public class UserRole {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id")
     @NotNull
     private Restaurant restaurant;
 

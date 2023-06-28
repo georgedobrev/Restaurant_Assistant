@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.AdminDto;
+import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.model.AppUser;
@@ -23,4 +24,5 @@ public interface UserService {
     AppUser createWaiter(WaiterDto waiterDto);
 
     AppUser createAdmin(AdminDto adminDto);
+    //AppUser createTenant(TenantDto tenantDto);
 }

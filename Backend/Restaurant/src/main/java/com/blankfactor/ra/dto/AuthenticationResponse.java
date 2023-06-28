@@ -1,5 +1,6 @@
 package com.blankfactor.ra.dto;
 
+import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppUser;
 import lombok.Builder;
 import lombok.Data;
@@ -10,4 +11,5 @@ public class AuthenticationResponse {
     private String token;
     private String refreshToken;
     private AppUser appUser;
+    //private RoleType roleType;
 }

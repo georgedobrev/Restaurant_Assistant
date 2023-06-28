@@ -15,5 +15,4 @@ public class RestaurantDto {
     private String phoneNumber1;
     private String phoneNumber2;
     private String phoneNumber3;
-    private Boolean active;
 }

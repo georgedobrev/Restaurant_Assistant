@@ -19,22 +19,27 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
         Tenant tenant = Tenant.builder()
-                .name(tenantDto.getName())
-                .surname(tenantDto.getSurname())
                 .email(tenantDto.getEmail())
                 .build();
 
         AppUser appUser = AppUser.builder()
-                .name(tenantDto.getName())
-                .surname(tenantDto.getSurname())
                 .email(tenantDto.getEmail())
                 .build();
 
         userRepository.save(appUser);
+
+//        UserRole userRole = UserRole.builder()
+//                .appUser(appUser)
+//                .restaurant(tenantDto.getRestaurant())
+//                .roleType(RoleType.TENANT)
+//                .build();
+//
+//        userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
@@ -52,8 +57,6 @@ public class TenantServiceImpl implements TenantService {
     public Tenant updateTenant(int tenantId) throws Exception {
         Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found"));
 
-        tenant.setActive(!tenant.getActive());
-        tenant.setBlacklisted(!tenant.getBlacklisted());
         tenant.setEmail(tenant.getEmail());
 
         return tenantRepository.save(tenant);
