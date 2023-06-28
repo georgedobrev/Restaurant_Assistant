@@ -22,11 +22,11 @@ import java.time.Instant;
 public class Audit {
     @CreatedBy
     @Column(name = "created_by")
-    private String createdBy;
+    private Integer createdBy;
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private String updatedBy;
+    private Integer updatedBy;
 
     @CreatedDate
     @JsonSerialize(using = InstantSerializer.class)

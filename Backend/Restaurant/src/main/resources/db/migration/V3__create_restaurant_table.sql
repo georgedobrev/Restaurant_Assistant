@@ -2,8 +2,8 @@ CREATE TABLE restaurant
 (
     id INT IDENTITY(1,1) PRIMARY KEY ,
     name NVARCHAR(255) NOT NULL,
-    created_by NVARCHAR(100) NOT NULL,
-    updated_by NVARCHAR(100),
+    created_by INT NOT NULL,
+    updated_by INT,
     tables_count INT,
     address NVARCHAR(255),
     phone_number1 NVARCHAR(20),

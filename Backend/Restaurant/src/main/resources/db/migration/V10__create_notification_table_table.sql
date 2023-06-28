@@ -2,8 +2,8 @@ CREATE TABLE notification
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     app_user_id INT NOT NULL,
-    created_by NVARCHAR(100) NOT NULL,
-    updated_by NVARCHAR(100),
+    created_by INT NOT NULL,
+    updated_by INT,
     app_table_id INT NOT NULL,
     request_type NVARCHAR(6) CHECK (request_type IN ('Menu', 'Bill', 'Waiter')) NOT NULL,
     message NVARCHAR(255),

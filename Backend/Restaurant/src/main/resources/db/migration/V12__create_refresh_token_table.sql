@@ -1,7 +1,7 @@
 CREATE TABLE refresh_token (
     id INT PRIMARY KEY IDENTITY,
-    created_by NVARCHAR(100) NOT NULL,
-    updated_by NVARCHAR(100),
+    created_by INT NOT NULL,
+    updated_by INT,
     app_user_id INT UNIQUE,
     token NVARCHAR(255) UNIQUE NOT NULL,
     created_at DATETIMEOFFSET NOT NULL,
