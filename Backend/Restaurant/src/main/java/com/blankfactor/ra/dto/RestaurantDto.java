@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,11 +30,11 @@ public class RestaurantDto {
     private String phoneNumber1;
 
     @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(min = 10, max = 20,  message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber2;
 
     @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(min = 10, max = 20,  message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber3;
     private Boolean active;
 }
