@@ -310,6 +310,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Clear table",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\" : 3,\n    \"tableNumber\" : 3,\n    \"qrId\" : {\n        \"id\" : 3\n    },\n    \"occupied\" : true,\n    \"restaurant\" : {\n        \"id\" : 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tables/1/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1",
+								"clear"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -323,7 +352,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"morgan\",\r\n    \"address\":\"mladost 03\",\r\n    \"phoneNumber1\": \"+359123123123\",\r\n    \"phoneNumber2\": \"\",\r\n    \"phoneNumber3\": \"\",\r\n    \"active\": true\r\n}",
+							"raw": "{ \r\n    \"restaurantDto\": {\r\n        \"name\":\"Starsdt\",\r\n        \"address\":\"druzhba 99\",\r\n        \"phoneNumber1\": \"+3598993394330\",\r\n        \"phoneNumber2\": \"+44344455\",\r\n        \"phoneNumber3\": \"+777-777\",\r\n        \"active\": true\r\n    },\r\n    \"userId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1103,7 +1132,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"email\": \"john.rrdoe@example.com\",\n  \"restaurantId\": 1\n}",
+							"raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"email\": \"john.rrdoe@example.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

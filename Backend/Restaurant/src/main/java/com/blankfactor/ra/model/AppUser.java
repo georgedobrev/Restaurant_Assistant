@@ -1,5 +1,7 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.InstantSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +46,7 @@ public class AppUser implements UserDetails {
     private Boolean active = true;
 
     @Builder.Default
+    @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
