@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import AddRestaurant from "./AddRestaurant";
 import styles from "./restaurant.module.css";
 import EditRestaurantComponent from "./EditRestaurant";
-import GetRestaurants from "./Restaurants";
+import GetRestaurants from "./DisplayRestaurants";
 import { restaurantSections } from "../../constants";
 
 const ButtonSection: React.FC = () => {

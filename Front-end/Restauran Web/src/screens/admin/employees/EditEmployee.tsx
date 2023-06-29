@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
-import styles from "./users.module.css";
+import styles from "./employees.module.css";
 import { editUser, User, getUsers } from "../../../services/userService";
 import { getServerErrorMessage } from "../../../services/ErrorHandling";
 
-const EditUserComponent: React.FC = () => {
+const EditEmployee: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
@@ -149,4 +149,4 @@ const EditUserComponent: React.FC = () => {
   );
 };
 
-export default EditUserComponent;
+export default EditEmployee;

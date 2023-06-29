@@ -9,7 +9,7 @@ import {
   editRestaurant,
 } from "../../../services/restaurantService";
 
-const EditRestaurantComponent: React.FC = () => {
+const EditRestaurant: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [tablesCount, setTablesCount] = useState<number>(0);
@@ -126,4 +126,4 @@ const EditRestaurantComponent: React.FC = () => {
   );
 };
 
-export default EditRestaurantComponent;
+export default EditRestaurant;

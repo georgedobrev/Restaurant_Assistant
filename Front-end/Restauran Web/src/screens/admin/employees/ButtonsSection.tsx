@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
-import AddUser from "./CreateAdmin";
-import EditUserComponent from "./EditUser";
-import DeleteUserComponent from "./DeleteComponent";
-import styles from "./users.module.css";
+import AddUser from "./AddAdmin";
+import EditUserComponent from "./EditEmployee";
+import DeleteUserComponent from "./DeleteEmployee";
+import styles from "./employees.module.css";
 import { usersSections } from "../../constants";
-import AddRoles from "./CreateWaiter";
+import AddRoles from "./AddWaiter";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addUser");
@@ -22,8 +22,8 @@ const ButtonSection: React.FC = () => {
         return <EditUserComponent />;
       case usersSections.deleteUser:
         return <DeleteUserComponent />;
-        case usersSections.addUserRole:
-          return <AddRoles/>
+      case usersSections.addUserRole:
+        return <AddRoles />;
       default:
         return null;
     }
@@ -72,16 +72,9 @@ const ButtonSection: React.FC = () => {
         {renderComponent === usersSections.deleteUser && (
           <DeleteUserComponent />
         )}
-
-        
       </div>
 
-      <div>
-        {renderComponent === usersSections.addUserRole && (
-          <AddRoles />
-        )}
-      </div>
-
+      <div>{renderComponent === usersSections.addUserRole && <AddRoles />}</div>
     </div>
   );
 };

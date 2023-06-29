@@ -58,7 +58,7 @@
 
 .restaurantsSection {
   padding: 4% 2%;
-  border-radius: 25px;
+  border-radius: 24px;
   margin-bottom: 6%;
   background-color: var(--bg-color);
   border: 1px solid var(--borders-color);
@@ -102,7 +102,7 @@
 
 .containerSelected {
   border-color: var(--second-color);
-  border-width: 3px;
+  border-width: 2px;
 }
 
 .restaurantName {

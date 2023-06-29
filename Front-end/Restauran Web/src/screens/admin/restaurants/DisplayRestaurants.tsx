@@ -11,7 +11,7 @@ interface Restaurant extends BaseRestaurant {
   isSelected?: boolean;
 }
 
-const GetRestaurants = () => {
+const DisplayRestaurants: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -84,4 +84,4 @@ const GetRestaurants = () => {
   );
 };
 
-export default GetRestaurants;
+export default DisplayRestaurants;

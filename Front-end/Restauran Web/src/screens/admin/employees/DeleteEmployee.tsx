@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
-import styles from "./users.module.css";
 import { deleteUser, getUsers, User } from "../../../services/userService";
 import { getServerErrorMessage } from "../../../services/ErrorHandling";
+import styles from "./employees.module.css";
 
-const DeleteUserComponent: React.FC = () => {
+const DeleteEmployee: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -59,4 +59,4 @@ const DeleteUserComponent: React.FC = () => {
   );
 };
 
-export default DeleteUserComponent;
+export default DeleteEmployee;
