@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./users.module.css";
-import { createUser, User } from "../../../services/UserService";
+import { createUser, User } from "../../../services/userService";
 
 const AddUser: React.FC = () => {
   const [name, setName] = useState<string>("");

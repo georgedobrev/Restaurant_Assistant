@@ -11,13 +11,13 @@ import java.util.List;
 public interface UserService {
     AppUser addRoleToUser(UpdateUserDto updateUserDto);
 
-    AppUser getUserById(int id);
+    UpdateUserDto getUserById(int id, int restaurantId);
 
     AppUser getUserByEmail(String email);
 
     void deleteUserById(int id);
 
-    AppUser updateUserById(int id, UpdateUserDto updateUserDto);
+    AppUser updateUserByEmail(UpdateUserDto updateUserDto);
 
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
 
