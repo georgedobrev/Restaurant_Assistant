@@ -91,7 +91,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
         existingRestaurant.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
         existingRestaurant.setActive(updatedRestaurant.getActive());
-        // existingRestaurant.setUpdatedAt(Instant.now());
 
         return restaurantRepository.save(existingRestaurant);
     }
