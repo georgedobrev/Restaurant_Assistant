@@ -14,9 +14,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class ShiftDto {
 
-    @NotNull(message = "Restaurant cannot be null")
-    private Restaurant restaurant;
-
     @NotNull(message = "StartTime cannot be null")
     private LocalTime startTime;
 

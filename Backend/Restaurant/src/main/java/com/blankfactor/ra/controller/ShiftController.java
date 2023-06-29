@@ -19,10 +19,10 @@ import java.util.List;
 public class ShiftController {
     private final ShiftService shiftService;
 
-    @PostMapping()
+    @PostMapping("/{restaurantId}")
     @Operation(summary = "Create shift for a specific restaurant")
-    public ResponseEntity<Shift> createShift(@Valid @RequestBody ShiftDto shiftDto) {
-        Shift createdShift = shiftService.createShift(shiftDto);
+    public ResponseEntity<Shift> createShift(@PathVariable("restaurantId") Integer restaurantId, @Valid @RequestBody ShiftDto shiftDto) {
+        Shift createdShift = shiftService.createShift(restaurantId, shiftDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdShift);
     }
 
