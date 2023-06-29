@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RestaurantDto {
     private String name;
-    private Integer tablesCount;
     private String address;
     private String phoneNumber1;
     private String phoneNumber2;

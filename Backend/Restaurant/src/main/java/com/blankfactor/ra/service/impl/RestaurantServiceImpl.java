@@ -5,17 +5,14 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
-import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
-import com.blankfactor.ra.repository.TenantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,7 +33,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                .tablesCount(restaurantDto.getTablesCount())
+                //.tablesCount(restaurantDto.getTablesCount())
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -98,7 +95,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant existingRestaurant = getRestaurantById(restaurantId);
 
         existingRestaurant.setName(updatedRestaurant.getName());
-        existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
+        //existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());

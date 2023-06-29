@@ -4,7 +4,6 @@ import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.dto.UpdateTenantDto;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
-import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,9 +42,9 @@ public class TenantController {
     }
 
     @PutMapping("/update/{user_id}")
-    @Operation(summary = "Update tenant by email")
+    @Operation(summary = "Update tenant")
     public ResponseEntity<Tenant> updateTenant(@PathVariable("user_id") int userId,
-                                               @RequestBody UpdateTenantDto updateTenantDto) throws Exception {
+                                               @RequestBody UpdateTenantDto updateTenantDto) {
         Tenant tenant = tenantService.updateTenant(userId, updateTenantDto);
 
         return ResponseEntity.ok(tenant);
