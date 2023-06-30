@@ -20,7 +20,7 @@ public class RestaurantDto {
 
     private Integer tablesCount;
 
-    @Size(max = 255, message = "Address cannot be more than 100 characters")
+    @Size(max = 255, message = "Address cannot be more than 255 characters")
     @NotNull(message = "Address cannot not be null")
     private String address;
 
