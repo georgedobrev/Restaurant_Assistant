@@ -1,6 +1,5 @@
 package com.blankfactor.ra.dto;
 
-import com.blankfactor.ra.model.Restaurant;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
