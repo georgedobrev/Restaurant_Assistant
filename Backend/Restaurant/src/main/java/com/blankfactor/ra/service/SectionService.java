@@ -12,4 +12,8 @@ public interface SectionService {
     List<Section> getAllSections(Integer restaurantId);
 
     List<Section> getSectionsForTable(AppTable table);
+
+    Section updateSectionById(Integer sectionId, SectionDto sectionDto);
+
+    void deleteSectionById(Integer sectionId);
 }

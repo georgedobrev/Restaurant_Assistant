@@ -23,7 +23,7 @@ public class AppTable extends Audit {
     @Column(name = "table_number")
     private int tableNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
