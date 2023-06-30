@@ -33,7 +33,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                //.tablesCount(restaurantDto.getTablesCount())
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -78,24 +77,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         return userRestaurant;
     }
 
-    @Override
-    public List<String> getAllPhoneNumbersByRestaurantId(int restaurantId) {
-        List<String> phoneNumbers = new ArrayList<>();
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantException("Restaurant not found."));
 
-        phoneNumbers.add(restaurant.getPhoneNumber1());
-        phoneNumbers.add(restaurant.getPhoneNumber2());
-        phoneNumbers.add(restaurant.getPhoneNumber3());
-
-        return phoneNumbers;
-    }
 
     @Override
     public Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant) {
         Restaurant existingRestaurant = getRestaurantById(restaurantId);
 
         existingRestaurant.setName(updatedRestaurant.getName());
-        //existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());

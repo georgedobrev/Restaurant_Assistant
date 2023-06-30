@@ -1,16 +1,12 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.TenantDto;
-import com.blankfactor.ra.dto.UpdateTenantDto;
-import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.TenantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
-import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.TenantRepository;
 import com.blankfactor.ra.repository.UserRepository;
-import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.TenantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,16 +44,16 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int userId, UpdateTenantDto updateTenantDto) {
+    public Tenant updateTenant(int userId, TenantDto tenantDto) {
 
         AppUser appUserToUpdate = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(""));
 
-        Tenant tenantToUpdate = tenantRepository.findTenantByEmail(updateTenantDto.getOldEmail())
+        Tenant tenantToUpdate = tenantRepository.findTenantByEmail(appUserToUpdate.getEmail())
                 .orElseThrow(() -> new TenantException(""));
 
-        tenantToUpdate.setEmail(updateTenantDto.getEmail());
-        appUserToUpdate.setEmail(updateTenantDto.getEmail());
+        tenantToUpdate.setEmail(tenantDto.getEmail());
+        appUserToUpdate.setEmail(tenantDto.getEmail());
 
         return tenantRepository.save(tenantToUpdate);
     }

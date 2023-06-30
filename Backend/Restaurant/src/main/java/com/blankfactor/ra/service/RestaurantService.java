@@ -18,6 +18,5 @@ public interface RestaurantService {
     Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant);
 
     Restaurant getRestaurantById(Integer restaurantId) throws RestaurantException;
-    List<String> getAllPhoneNumbersByRestaurantId(int restaurantId);
 
 }

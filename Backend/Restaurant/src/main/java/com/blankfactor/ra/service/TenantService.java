@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.TenantDto;
-import com.blankfactor.ra.dto.UpdateTenantDto;
 import com.blankfactor.ra.model.Tenant;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface TenantService {
 
     List<Tenant> getAllTenants();
 
-    Tenant updateTenant(int userId, UpdateTenantDto updateTenantDto);
+    Tenant updateTenant(int userId, TenantDto updateTenantDto);
 
     void deleteTenant(int tenantId);
 

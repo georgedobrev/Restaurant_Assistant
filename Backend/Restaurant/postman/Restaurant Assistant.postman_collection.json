@@ -3,10 +3,699 @@
 		"_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
 		"name": "Restaurant Assistant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27763372",
-		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27763372&source=collection_link"
+		"_exporter_id": "27618519",
+		"_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
 	},
 	"item": [
+		{
+			"name": "Sysadmin",
+			"item": [
+				{
+					"name": "createSysadmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"email\": \"john.ddddd@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/sysadmin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSysAdminById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSysadmins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/all/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"all",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSysadminById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSysadminById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllSysadmins",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sysadmin/all/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysadmin",
+								"all",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Create new Restaurant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"restaurantDto\": {\r\n        \"name\":\"Starsdt\",\r\n        \"address\":\"druzhba 99\",\r\n        \"phoneNumber1\": \"+3598993394330\",\r\n        \"phoneNumber2\": \"+44344455\",\r\n        \"phoneNumber3\": \"+777-777\",\r\n        \"active\": true\r\n    },\r\n    \"userId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get restaurants by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"1"
+							],
+							"query": [
+								{
+									"key": "restaurantIds",
+									"value": "1,2,3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllRestaurantsByAdmin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAllByAdmin/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAllByAdmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all phone numbers by restaurant id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurant/getAllPhoneNumbers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"getAllPhoneNumbers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a restaurant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shift",
+			"item": [
+				{
+					"name": "Create new Shift",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startTime\" : \"09:00\",\r\n    \"endTime\" : \"16:00\",\r\n    \"dayFrom\" : \"Sunday\",\r\n    \"dayTo\" : \"Monday\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/shift/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shift",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Shifts By Restaurant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shift/getAll/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shift",
+								"getAll",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Shift By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startTime\" : \"04:00\",\r\n    \"endTime\" : \"11:00\",\r\n    \"dayFrom\" : \"Tuesday\",\r\n    \"dayTo\" : \"Monday\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/shift/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shift",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Shift By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shift/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shift",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "QRCodes",
+			"item": [
+				{
+					"name": "Download QrCodes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/qrcode/download/1?ids=10,20",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"qrcode",
+								"download",
+								"1"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "10,20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scanned QrCode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/qrcode/zjDmIwlUFMr_IKUhQUekZw",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"qrcode",
+								"zjDmIwlUFMr_IKUhQUekZw"
+							]
+						},
+						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Table",
+			"item": [
+				{
+					"name": "Create new Table/s",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"tableNumber\": 1,\r\n    \"capacity\": 4\r\n    },\r\n  {\r\n    \"tableNumber\": 2,\r\n    \"capacity\": 2\r\n  },\r\n    {\r\n    \"tableNumber\": 3,\r\n    \"capacity\": 2\r\n  },\r\n    {\r\n    \"tableNumber\": 4,\r\n    \"capacity\": 2\r\n  },\r\n    {\r\n    \"tableNumber\": 5,\r\n    \"capacity\": 2\r\n  },\r\n    {\r\n    \"tableNumber\": 6,\r\n    \"capacity\": 2\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tables/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tables from a single restaurant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tables/1/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update existing table",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tables/1/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta a table",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/tables/1/13",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear table",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\" : 3,\n    \"tableNumber\" : 3,\n    \"qrId\" : {\n        \"id\" : 3\n    },\n    \"occupied\" : true,\n    \"restaurant\" : {\n        \"id\" : 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tables/1/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tables",
+								"1",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Virtual Table",
+			"item": [
+				{
+					"name": "Create Virtual Table",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableNumbers\" : [4,5]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/virtual/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"virtual",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Virtual Table",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 1,\r\n    \"tableNumbers\" : \"1,2,3,4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/virtual/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"virtual",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Virtual By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tableNumbers\": \"1,2,3,4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/virtual/1/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"virtual",
+								"1",
+								"1"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Virtual Tables",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/virtual/1/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"virtual",
+								"1",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Notification",
 			"item": [
@@ -144,337 +833,6 @@
 			]
 		},
 		{
-			"name": "QRCodes",
-			"item": [
-				{
-					"name": "Download QrCodes",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/qrcode/download/1?ids=10,20",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"qrcode",
-								"download",
-								"1"
-							],
-							"query": [
-								{
-									"key": "ids",
-									"value": "10,20"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Scanned QrCode",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\" : 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/qrcode/putdSjVSpxdYp51PEmZCgA",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"qrcode",
-								"putdSjVSpxdYp51PEmZCgA"
-							]
-						},
-						"description": "With this request you can check what does the hashed url encodes. The method will return an array of int[2] = {restaurantId, tableNumber}."
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Table",
-			"item": [
-				{
-					"name": "Create new Table/s",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\r\n  {\r\n    \"tableNumber\": 1,\r\n    \"occupied\": false,\r\n    \"capacity\": 4,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n  {\r\n    \"tableNumber\": 2,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 3,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 4,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 5,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  },\r\n    {\r\n    \"tableNumber\": 6,\r\n    \"occupied\": false,\r\n    \"capacity\": 2,\r\n    \"active\": true,\r\n    \"virtualTable\": false\r\n  }\r\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/tables/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"tables",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all tables from a single restaurant",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/tables/1/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"tables",
-								"1",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Update existing table",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tableNumber\": 13,\r\n    \"occupied\": true,\r\n    \"capacity\": 20,\r\n    \"active\": false,\r\n    \"virtualTable\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/tables/1/10",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"tables",
-								"1",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deleta a table",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/tables/1/13",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"tables",
-								"1",
-								"13"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clear table",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\" : 3,\n    \"tableNumber\" : 3,\n    \"qrId\" : {\n        \"id\" : 3\n    },\n    \"occupied\" : true,\n    \"restaurant\" : {\n        \"id\" : 1\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/tables/1/clear",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"tables",
-								"1",
-								"clear"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Restaurant",
-			"item": [
-				{
-					"name": "Create new Restaurant",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \r\n    \"restaurantDto\": {\r\n        \"name\":\"Starsdt\",\r\n        \"address\":\"druzhba 99\",\r\n        \"phoneNumber1\": \"+3598993394330\",\r\n        \"phoneNumber2\": \"+44344455\",\r\n        \"phoneNumber3\": \"+777-777\",\r\n        \"active\": true\r\n    },\r\n    \"userId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/restaurant",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurant"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get restaurants by ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "localhost:8080/restaurant/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurant",
-								"1"
-							],
-							"query": [
-								{
-									"key": "restaurantIds",
-									"value": "1,2,3",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all restaurants",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/restaurant/getAll",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurant",
-								"getAll"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllRestaurantsByAdmin",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/restaurant/getAllByAdmin/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurant",
-								"getAllByAdmin",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update a restaurant",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Updated Restaurant\",\r\n    \"tablesCount\": 10,\r\n    \"address\": \"Updated Address\",\r\n    \"phoneNumber1\": \"1234567890\",\r\n    \"phoneNumber2\": \"9876543210\",\r\n    \"phoneNumber3\": \"5555555555\",\r\n    \"active\": true\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/restaurant/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurant",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Users",
 			"item": [
 				{
@@ -484,7 +842,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"waiter@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+							"raw": "{\n  \"email\": \"waiter111@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,7 +894,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user3@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -559,12 +917,40 @@
 					"response": []
 				},
 				{
+					"name": "Create Tenant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"hristiyana.shopova@gmail.com\",\n  \"name\": \"Hristiyana\",\n  \"surname\": \"Shopova\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tenant/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get User By Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/user/1",
+							"raw": "http://localhost:8080/user/1/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -572,7 +958,39 @@
 							"port": "8080",
 							"path": [
 								"user",
+								"1",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user333@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
 							]
 						}
 					},
@@ -605,7 +1023,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user33333@example.com\",\n  \"name\": \"JohnyJohny\",\n  \"surname\": \"Doeeeeeee\",\n  \"roleType\": \"ADMIN\",\n  \"restaurantId\": 1,\n  \"roleAfter\": \"WAITER\"\n}",
+							"raw": "{\n  \"email\": \"waiter@example.com\",\n  \"name\": \"JohnyJohnyeeee\",\n  \"surname\": \"Doe\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -658,7 +1076,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"validation@exampl1e.com\",\n  \"restaurant\": {\n    \"id\": 2\n  },\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
+							"raw": "{\n  \"email\": \"validation@exampl1e.com\",\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -726,10 +1144,15 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"oldEmail\": \"hristiyana.shopova@abv.bg\",\n    \"email\": \"boiko.bforisov@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "localhost:8080/tenant/update/2",
+							"raw": "localhost:8080/tenant/update/1",
 							"host": [
 								"localhost"
 							],
@@ -737,7 +1160,7 @@
 							"path": [
 								"tenant",
 								"update",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -769,14 +1192,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/tenant/delete/all",
+							"raw": "localhost:8080/tenant/all",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"tenant",
-								"delete",
 								"all"
 							]
 						}
@@ -896,6 +1318,53 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Section By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/section/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Section by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sectionName\" : \"Test section\",\n    \"appTables\" : [\n        {\n            \"id\" : 1,\n            \"tableNumber\" : 1\n        },\n        {\n            \"id\" : 2,\n            \"tableNumber\" : 2\n        },\n        {\n            \"id\" : 6,\n            \"tableNumber\" : 6\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/section/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"section",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -963,11 +1432,21 @@
 				{
 					"name": "Register",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMzMzQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg3MzI5NDA1LCJleHAiOjIwNDczMjk0MDV9.fM7tz-HMZrwz5E2K6095McgL4_7SH24ZVF1aIBQX1Fg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"email\": \"user333@example.com\",\n  \"password\": \"alabala\"\n}",
+							"raw": "{\n  \"name\": \"Mike\",\n  \"surname\": \"Doee\",\n  \"email\": \"user333@example.com\",\n  \"password\": \"alabala\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1016,234 +1495,6 @@
 							"path": [
 								"auth",
 								"jwt"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Shift",
-			"item": [
-				{
-					"name": "Create new Shift",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"restaurant\" : {\r\n        \"id\": 1\r\n    },\r\n    \"startTime\" : \"09:00\",\r\n    \"endTime\" : \"16:00\",\r\n    \"dayFrom\" : \"Sunday\",\r\n    \"dayTo\" : \"Monday\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/shift",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"shift"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Shifts By Restaurant",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/shift/getAll/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"shift",
-								"getAll",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Shift By ID",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"restaurant\" : {\r\n        \"id\": 2\r\n    },\r\n    \"startTime\" : \"04:00\",\r\n    \"endTime\" : \"11:00\",\r\n    \"dayFrom\" : \"Tuesday\",\r\n    \"dayTo\" : \"Monday\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/shift/3",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"shift",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Shift By Id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/shift/3",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"shift",
-								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Sysadmin",
-			"item": [
-				{
-					"name": "createSysadmin",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"email\": \"john.rrdoe@example.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/sysadmin",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getSysAdminById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/sysadmin/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllSysadmins",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/sysadmin/all/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin",
-								"all",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateSysadminById",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/sysadmin/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteSysadminById",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/sysadmin/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteAllSysadmins",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/sysadmin/all/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"sysadmin",
-								"all",
-								"1"
 							]
 						}
 					},
