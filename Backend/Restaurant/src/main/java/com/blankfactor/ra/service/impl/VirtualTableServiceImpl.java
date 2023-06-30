@@ -48,34 +48,10 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     }
 
     @Override
-    public void save(VirtualTable virtualTable) {
-        virtualTableRepository.save(virtualTable);
-    }
-
-    @Override
-    public VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable updatedVirtualTable) {
-        VirtualTable existingVirtual = virtualTableRepository.findById(virtualTableId)
-                .orElseThrow(() -> new VirtualTableException("Virtual table not found"));
-
-        existingVirtual.setTableNumbers(updatedVirtualTable.getTableNumbers());
-        virtualTableRepository.save(existingVirtual);
-        return existingVirtual;
-    }
-
-    @Override
     public Map<Integer, VirtualTable> getAllVirtualTablesByRestaurantId(Integer restaurantId) {
         return virtualTableRepository.findByRestaurantId(restaurantId)
                 .stream()
                 .collect(Collectors.toMap(VirtualTable::getId, Function.identity()));
-    }
-
-    @Override
-    public void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
-        List<Integer> tableNumbers = mapVirtualTableNumbersToInteger(virtualTable);
-
-        checkIfTableNumbersExistsAndSetVirtualTable(tableNumbers, restaurantId, false);
-
-        virtualTableRepository.delete(virtualTable);
     }
 
     @Override
@@ -91,6 +67,25 @@ public class VirtualTableServiceImpl implements VirtualTableService {
             }
         }
         throw new VirtualTableException("Virtual table with table " + tableNumber + " in it, not found");
+    }
+
+    @Override
+    public VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable updatedVirtualTable) {
+        VirtualTable existingVirtual = virtualTableRepository.findById(virtualTableId)
+                .orElseThrow(() -> new VirtualTableException("Virtual table not found"));
+
+        existingVirtual.setTableNumbers(updatedVirtualTable.getTableNumbers());
+        virtualTableRepository.save(existingVirtual);
+        return existingVirtual;
+    }
+
+    @Override
+    public void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable) {
+        List<Integer> tableNumbers = mapVirtualTableNumbersToInteger(virtualTable);
+
+        checkIfTableNumbersExistsAndSetVirtualTable(tableNumbers, restaurantId, false);
+
+        virtualTableRepository.delete(virtualTable);
     }
 
     private void checkIfTableNumbersExistsAndSetVirtualTable(List<Integer> tableNumbers, Integer restaurantId, boolean isVirtual) {

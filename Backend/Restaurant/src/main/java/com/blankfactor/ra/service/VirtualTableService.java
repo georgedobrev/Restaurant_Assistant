@@ -9,13 +9,11 @@ import java.util.Map;
 public interface VirtualTableService {
     VirtualTable createVirtualTable(Integer restaurantId, VirtualTableDto virtualTableDto);
 
-    VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable virtualTable) throws VirtualTableException;
-
     VirtualTable getVirtualTableByAppTableNumber(Integer restaurantId, Integer tableNumber);
 
     Map<Integer, VirtualTable> getAllVirtualTablesByRestaurantId(Integer restaurantId);
 
-    void save(VirtualTable virtualTable);
+    VirtualTable updateVirtualTableByVirtualTableId(Integer restaurantId, Integer virtualTableId, VirtualTable virtualTable) throws VirtualTableException;
 
     void deleteVirtualTable(Integer restaurantId, VirtualTable virtualTable);
 }
