@@ -20,20 +20,17 @@ public class RestaurantDto {
 
     private Integer tablesCount;
 
-    @Size(max = 50, message = "Address cannot be more than 50 characters")
+    @Size(max = 100, message = "Address cannot be more than 50 characters")
     @NotNull(message = "Address cannot not be null")
     private String address;
 
-    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(max = 13, min = 20, message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be more than 20 characters and less than 10")
     @NotNull(message = "Phone Number 1 cannot not be null")
     private String phoneNumber1;
 
-    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
-    @Size(min = 10, max = 20, message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be more than 20 characters and less than 10")
     private String phoneNumber2;
 
-    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10,13}$", message = "Invalid phone number format")
     @Size(min = 10, max = 20, message = "Number cannot be more than 13 characters and less than 10")
     private String phoneNumber3;
     private Boolean active;
