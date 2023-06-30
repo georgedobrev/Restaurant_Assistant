@@ -51,6 +51,7 @@ public class RestaurantController {
 
         return ResponseEntity.ok(restaurant);
     }
+
     @PutMapping("/{restaurantId}")
     @Operation(summary = "Update restaurant by id")
     public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId,

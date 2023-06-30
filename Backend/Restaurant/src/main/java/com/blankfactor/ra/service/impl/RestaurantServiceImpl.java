@@ -24,7 +24,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
-    
+
     @Override
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
         RestaurantDto restaurantDto = createRestaurantDto.getRestaurantDto();
