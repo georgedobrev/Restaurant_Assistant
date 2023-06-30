@@ -5,17 +5,14 @@ import com.blankfactor.ra.dto.RestaurantDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
-import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.RestaurantRepository;
-import com.blankfactor.ra.repository.TenantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +29,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
         RestaurantDto restaurantDto = createRestaurantDto.getRestaurantDto();
 
+        AppUser appUser = userRepository.findById(createRestaurantDto.getUserId())
+                .orElseThrow(() -> new UserException("User with id " + createRestaurantDto.getUserId() + " not found"));
+
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
                 .tablesCount(0)
@@ -42,20 +42,16 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .active(restaurantDto.getActive())
                 .build();
 
-        Restaurant restaurant1 = restaurantRepository.save(restaurant);
-
-        //TODO maybe improve exception message
-        AppUser appUser = userRepository.findById(createRestaurantDto.getUserId())
-                .orElseThrow(() -> new UserException("User not found"));
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
 
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
-                .restaurant(restaurant1)
+                .restaurant(savedRestaurant)
                 .roleType(RoleType.ADMIN)
                 .build();
         userRoleRepository.save(userRole);
 
-        return restaurant1;
+        return savedRestaurant;
     }
 
     @Override

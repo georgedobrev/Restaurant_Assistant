@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "app_table", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
 })
-public class AppTable {
+public class AppTable extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "table_number")
     private int tableNumber;

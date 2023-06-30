@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user_role")
 @IdClass(UserRolePK.class)
-public class UserRole {
+public class UserRole extends Audit {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", nullable = false)

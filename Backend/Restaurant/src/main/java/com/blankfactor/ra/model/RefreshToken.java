@@ -6,13 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Entity
 @Table(name = "refresh_token")
-public class RefreshToken {
+public class RefreshToken extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;

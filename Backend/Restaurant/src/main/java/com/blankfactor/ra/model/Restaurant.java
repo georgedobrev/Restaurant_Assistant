@@ -6,12 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Builder
-@Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Restaurant {
+@Data
+@Entity
+public class Restaurant extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

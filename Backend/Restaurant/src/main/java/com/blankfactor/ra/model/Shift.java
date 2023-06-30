@@ -19,11 +19,11 @@ import java.time.LocalTime;
         uniqueConstraints =
         @UniqueConstraint(columnNames = {"restaurant_id", "start_time", "end_time", "day_from", "day_to"})
 )
-public class Shift {
+public class Shift extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)

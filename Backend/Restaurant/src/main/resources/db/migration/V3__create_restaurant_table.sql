@@ -1,5 +1,3 @@
--- TODO research address length
-
 CREATE TABLE restaurant
 (
     id INT IDENTITY(1,1) PRIMARY KEY ,
@@ -9,5 +7,9 @@ CREATE TABLE restaurant
     phone_number1 NVARCHAR(20),
     phone_number2 NVARCHAR(20),
     phone_number3 NVARCHAR(20),
-    active BIT
+    active BIT,
+    created_by INT NOT NULL,
+    updated_by INT,
+    created_at DATETIMEOFFSET NOT NULL,
+    updated_at DATETIMEOFFSET
 );

@@ -1,15 +1,11 @@
 package com.blankfactor.ra.model;
 
-import com.blankfactor.ra.config.InstantSerializer;
 import com.blankfactor.ra.enums.RequestType;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Builder
 @AllArgsConstructor
@@ -17,11 +13,11 @@ import java.time.Instant;
 @Data
 @Entity
 @Table(name = "notification")
-public class Notification {
+public class Notification extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "app_user_id", nullable = false)
@@ -41,9 +37,4 @@ public class Notification {
     @Builder.Default
     @Column(name = "approved")
     private Boolean approved = false;
-
-    @Builder.Default
-    @Column(name = "created_at")
-    @JsonSerialize(using = InstantSerializer.class)
-    private Instant createdAt = Instant.now();
 }
