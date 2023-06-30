@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class RestaurantDto {
 
     private String name;
-    private Integer tablesCount;
     private String address;
 
     @Size(min = 10, max = 20, message = "Number cannot be less than 10 and more than 20 characters")

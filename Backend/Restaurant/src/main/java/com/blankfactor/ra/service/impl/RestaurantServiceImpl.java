@@ -27,10 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
-
-
-    //TODO check if the userId matches for tenant
-    //TODO update tables tenant column restaurants
+    
     @Override
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
         RestaurantDto restaurantDto = createRestaurantDto.getRestaurantDto();
@@ -89,7 +86,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant existingRestaurant = getRestaurantById(restaurantId);
 
         existingRestaurant.setName(updatedRestaurant.getName());
-        existingRestaurant.setTablesCount(updatedRestaurant.getTablesCount());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
