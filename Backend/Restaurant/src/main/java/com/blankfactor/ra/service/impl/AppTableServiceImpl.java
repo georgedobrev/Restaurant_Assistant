@@ -7,6 +7,7 @@ import com.blankfactor.ra.exceptions.custom.QRCodeException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
+import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.RestaurantService;
@@ -26,6 +27,7 @@ public class AppTableServiceImpl implements AppTableService {
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
     private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
     public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) {
@@ -39,6 +41,8 @@ public class AppTableServiceImpl implements AppTableService {
             throw new QRCodeException("Could not create QR codes");
         }
 
+        restaurant.setTablesCount(restaurant.getTablesCount() + appTables.size());
+        restaurantRepository.save(restaurant);
         return appTableRepository.saveAll(appTables);
     }
 

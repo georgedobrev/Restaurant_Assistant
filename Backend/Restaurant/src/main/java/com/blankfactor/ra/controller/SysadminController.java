@@ -4,11 +4,9 @@ import com.blankfactor.ra.dto.SysadminDto;
 import com.blankfactor.ra.exceptions.custom.SysadminException;
 import com.blankfactor.ra.model.Sysadmin;
 import com.blankfactor.ra.service.SysadminService;
-import com.blankfactor.ra.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
