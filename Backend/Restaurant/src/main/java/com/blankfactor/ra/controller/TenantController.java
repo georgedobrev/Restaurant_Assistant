@@ -3,7 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.TenantDto;
 import com.blankfactor.ra.model.Tenant;
 import com.blankfactor.ra.service.TenantService;
-import com.blankfactor.ra.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
