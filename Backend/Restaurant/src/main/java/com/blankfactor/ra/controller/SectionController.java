@@ -2,6 +2,7 @@ package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.SectionDto;
 import com.blankfactor.ra.dto.WaiterSectionDto;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.service.SectionService;
@@ -42,5 +43,19 @@ public class SectionController {
         // TODO Null Null Null
         var createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
+    }
+
+    @PutMapping("/{sectionId}")
+    @Operation(summary = "Update section by id")
+    public ResponseEntity<Section> updateSectionById(@PathVariable("sectionId") Integer sectionId, @RequestBody SectionDto sectionDto) {
+        Section section = sectionService.updateSectionById(sectionId, sectionDto);
+        return ResponseEntity.ok(section);
+    }
+
+    @DeleteMapping("/{sectionId}")
+    @Operation(summary = "Delete section by id")
+    public ResponseEntity<?> deleteSectionById(@PathVariable("sectionId") Integer sectionId) {
+        sectionService.deleteSectionById(sectionId);
+        return ResponseEntity.ok().build();
     }
 }

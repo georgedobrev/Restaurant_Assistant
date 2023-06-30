@@ -7,7 +7,7 @@ import com.blankfactor.ra.model.Shift;
 import java.util.List;
 
 public interface ShiftService {
-    Shift createShift(ShiftDto shiftDto);
+    Shift createShift(Integer restaurantId, ShiftDto shiftDto);
 
     List<Shift> getAllShiftsByRestaurantId(Integer restaurantId);
 

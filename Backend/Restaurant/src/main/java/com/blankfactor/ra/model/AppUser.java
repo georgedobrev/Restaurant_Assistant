@@ -19,7 +19,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "app_user")
-public class AppUser implements UserDetails {
+public class AppUser extends Audit implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -44,11 +44,6 @@ public class AppUser implements UserDetails {
     @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
-
-    @Builder.Default
-    @JsonSerialize(using = InstantSerializer.class)
-    @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

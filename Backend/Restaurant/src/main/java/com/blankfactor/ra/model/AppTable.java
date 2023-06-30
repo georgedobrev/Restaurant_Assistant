@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "app_table", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"restaurant_id", "table_number"})
 })
-public class AppTable {
+public class AppTable extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "table_number")
     private int tableNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
@@ -34,10 +34,6 @@ public class AppTable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "section_id")
-    private Section section;
 
     @Column(name = "capacity")
     private int capacity;

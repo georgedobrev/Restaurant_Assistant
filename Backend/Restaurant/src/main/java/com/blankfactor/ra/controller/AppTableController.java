@@ -55,6 +55,7 @@ public class AppTableController {
     @Operation(summary = "Delete table by table number")
     public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         appTableService.removeTableByName(restaurantId, tableNumber);
+
         return ResponseEntity.ok().build();
     }
 }

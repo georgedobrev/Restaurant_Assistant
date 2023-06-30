@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user_role")
 @IdClass(UserRolePK.class)
-public class UserRole {
+public class UserRole extends Audit {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", nullable = false)
@@ -24,7 +24,7 @@ public class UserRole {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id")
     @NotNull
     private Restaurant restaurant;
 

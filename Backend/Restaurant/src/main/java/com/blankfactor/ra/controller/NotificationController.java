@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/notification")
 @RestController
 public class NotificationController {
-
     private final NotificationService notificationService;
 
     @PostMapping("/create")
