@@ -27,12 +27,11 @@ public class NotificationServiceImpl implements NotificationService {
         AppTable appTable = appTableRepository.findById(notificationDto.getAppTable().getId())
                 .orElseThrow(() -> new AppTableException("App table " + notificationDto.getAppTable().getId() + " not found"));
 
-        String notificationMessage = "";
-        switch (notificationDto.getRequestType()) {
-            case Waiter -> notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
-            case Bill -> notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
-            case Menu -> notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
-        }
+        String notificationMessage = switch (notificationDto.getRequestType()) {
+            case Waiter -> "Table " + appTable.getTableNumber() + " requested a waiter.";
+            case Bill -> "Table " + appTable.getTableNumber() + " requested the bill.";
+            case Menu -> "Table " + appTable.getTableNumber() + " requested the menu.";
+        };
 
         Notification notification = Notification.builder()
                 .appUser(notificationDto.getAppUser())
@@ -40,7 +39,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .requestType(notificationDto.getRequestType())
                 .message(notificationMessage)
                 .build();
-
 
         sendNotificationToWaiter(notification);
 
