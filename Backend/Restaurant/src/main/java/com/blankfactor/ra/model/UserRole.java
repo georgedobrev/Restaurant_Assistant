@@ -24,7 +24,7 @@ public class UserRole extends Audit {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id")
     @NotNull
     private Restaurant restaurant;
 

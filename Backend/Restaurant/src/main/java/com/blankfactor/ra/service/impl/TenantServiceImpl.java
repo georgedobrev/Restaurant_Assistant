@@ -1,13 +1,12 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.TenantDto;
-import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.exceptions.custom.TenantException;
+import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Tenant;
-import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.TenantRepository;
 import com.blankfactor.ra.repository.UserRepository;
-import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.TenantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,32 +18,18 @@ import java.util.List;
 public class TenantServiceImpl implements TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
 
     @Override
     public Tenant createTenant(TenantDto tenantDto) {
         Tenant tenant = Tenant.builder()
-                .name(tenantDto.getName())
-                .surname(tenantDto.getSurname())
                 .email(tenantDto.getEmail())
-                .restaurant(tenantDto.getRestaurant())
                 .build();
 
         AppUser appUser = AppUser.builder()
-                .name(tenantDto.getName())
-                .surname(tenantDto.getSurname())
                 .email(tenantDto.getEmail())
                 .build();
 
         userRepository.save(appUser);
-
-        UserRole userRole = UserRole.builder()
-                .appUser(appUser)
-                .restaurant(tenantDto.getRestaurant())
-                .roleType(RoleType.ADMIN)
-                .build();
-
-        userRoleRepository.save(userRole);
         return tenantRepository.save(tenant);
     }
 
@@ -59,14 +44,18 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int tenantId) throws Exception {
-        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found"));
+    public Tenant updateTenant(int userId, TenantDto tenantDto) {
 
-        tenant.setActive(!tenant.getActive());
-        tenant.setBlacklisted(!tenant.getBlacklisted());
-        tenant.setEmail(tenant.getEmail());
+        AppUser appUserToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(""));
 
-        return tenantRepository.save(tenant);
+        Tenant tenantToUpdate = tenantRepository.findTenantByEmail(appUserToUpdate.getEmail())
+                .orElseThrow(() -> new TenantException(""));
+
+        tenantToUpdate.setEmail(tenantDto.getEmail());
+        appUserToUpdate.setEmail(tenantDto.getEmail());
+
+        return tenantRepository.save(tenantToUpdate);
     }
 
     @Override

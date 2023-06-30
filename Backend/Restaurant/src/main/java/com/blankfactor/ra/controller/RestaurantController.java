@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("restaurant")
+@RequestMapping("/restaurant")
 @AllArgsConstructor
 public class RestaurantController {
 
@@ -36,7 +36,7 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/getAllByAdmin/{admin_id}")
+    @GetMapping("/allByAdmin/{admin_id}")
     @Operation(summary = "Get all restaurants by specific admin")
     public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
         List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
@@ -51,7 +51,6 @@ public class RestaurantController {
 
         return ResponseEntity.ok(restaurant);
     }
-
     @PutMapping("/{restaurantId}")
     @Operation(summary = "Update restaurant by id")
     public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) {

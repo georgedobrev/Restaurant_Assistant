@@ -12,7 +12,7 @@ public interface TenantService {
 
     List<Tenant> getAllTenants();
 
-    Tenant updateTenant(int tenantId) throws Exception;
+    Tenant updateTenant(int userId, TenantDto updateTenantDto);
 
     void deleteTenant(int tenantId);
 
