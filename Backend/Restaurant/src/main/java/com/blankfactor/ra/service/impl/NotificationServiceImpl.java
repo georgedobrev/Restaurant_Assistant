@@ -2,11 +2,11 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
-import com.blankfactor.ra.model.AppTable;
-import com.blankfactor.ra.model.AppUser;
-import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.model.*;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
+import com.blankfactor.ra.repository.SectionRepository;
+import com.blankfactor.ra.repository.WaiterSectionRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -24,6 +24,8 @@ public class NotificationServiceImpl implements NotificationService {
     private final SimpMessagingTemplate template;
     private final NotificationRepository notificationRepository;
     private final AppTableRepository appTableRepository;
+    private final SectionRepository sectionRepository;
+    private final WaiterSectionRepository waiterSectionRepository;
 
     @Override
     public Notification createNotification(NotificationDto notificationDto) {
@@ -53,10 +55,17 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendNotificationToWaiter(Notification notification) {
-        List<AppUser> waitersByTableId = notificationRepository.findWaiterByTableId(notification.getAppTable().getId());
+        List<WaiterSection> waiterSections = new ArrayList<>();
 
-        for (AppUser waiter : waitersByTableId) {
-            template.convertAndSendToUser(waiter.getEmail(), "/topic/message", notification);
+        String tableNumber = String.valueOf(notification.getAppTable().getTableNumber());
+        List<Section> sectionsFromTable = sectionRepository.findAllByTableNumbersContains(tableNumber);
+
+        for (Section section : sectionsFromTable) {
+            waiterSections = waiterSectionRepository.findBySectionId(section.getId());
+        }
+
+        for (WaiterSection waiterSection : waiterSections) {
+            template.convertAndSendToUser(waiterSection.getWaiter().getEmail(), "/topic/message", notification);
         }
     }
 

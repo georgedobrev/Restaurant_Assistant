@@ -1,5 +1,6 @@
 package com.blankfactor.ra.repository;
 
+import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,5 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
 //            AND (table_numbers LIKE '%:tableNumber%');
 //            """, nativeQuery = true)
 //    List<Section> findByRestaurantIdAndTableNumberInSection(@Param("restaurantId") Integer restaurantId, @Param("tableNumber") Integer tableNumber);
-
+    List<Section> findAllByTableNumbersContains(String tableId);
 }
