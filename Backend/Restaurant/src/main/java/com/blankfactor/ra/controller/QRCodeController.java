@@ -28,7 +28,7 @@ public class QRCodeController {
     public ResponseEntity<Resource> downloadQRCodes(@PathVariable("restaurantId") Integer restaurantId,
                                                     @RequestParam("ids") List<Integer> tableNumbers) throws Exception {
 
-        Resource zipFileResource = qrCodeService.downloadQRCodes(restaurantId, tableNumbers);
+        var zipFileResource = qrCodeService.downloadQRCodes(restaurantId, tableNumbers);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -43,7 +43,7 @@ public class QRCodeController {
     @PostMapping("/{hashedUrl}")
     @Operation(summary = "Set user as seated after the QR code is scanned")
     public ResponseEntity<AppTable> setUserAsSeatedAtTableFromQRHashedUrl(@PathVariable("hashedUrl") String hashedUrl, @RequestBody AppUser user) {
-        AppTable response = qrCodeService.setUserAsSeatedAtTableFromQRHashedUrl(hashedUrl, user);
+        var response = qrCodeService.setUserAsSeatedAtTableFromQRHashedUrl(hashedUrl, user);
 
         return ResponseEntity.ok(response);
     }

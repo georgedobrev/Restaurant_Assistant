@@ -19,26 +19,26 @@ public class SysadminController {
 
     @PostMapping()
     public ResponseEntity<Sysadmin> createSysadmin(@RequestBody SysadminDto sysadminDto) {
-        Sysadmin createdSysadmin = sysadminService.createSysadmin(sysadminDto);
+        var createdSysadmin = sysadminService.createSysadmin(sysadminDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSysadmin);
     }
 
     @GetMapping("/{sysadminId}")
     public ResponseEntity<Sysadmin> getSysadminById(@PathVariable("sysadminId") int sysadminId) {
-        Sysadmin sysadmin = sysadminService.getSysadminById(sysadminId);
+        var sysadmin = sysadminService.getSysadminById(sysadminId);
         return ResponseEntity.ok().body(sysadmin);
     }
 
     @PutMapping("/{sysadminId}")
     public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") int sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
-        Sysadmin sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
+        var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
         return ResponseEntity.ok(sysadmin);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Sysadmin>> getAllSysadminsByRestaurantId() {
-        List<Sysadmin> sysadmins = sysadminService.getAllSysadmins();
+        var sysadmins = sysadminService.getAllSysadmins();
 
         return ResponseEntity.ok(sysadmins);
     }
