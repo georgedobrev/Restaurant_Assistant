@@ -23,7 +23,7 @@ public class RestaurantController {
     @PostMapping()
     @Operation(summary = "Create restaurant")
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantDto createRestaurantDto) {
-        Restaurant createdRestaurant = restaurantService.createRestaurant(createRestaurantDto);
+        var createdRestaurant = restaurantService.createRestaurant(createRestaurantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
@@ -31,7 +31,7 @@ public class RestaurantController {
     @GetMapping("/getAll")
     @Operation(summary = "Get all restaurants")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
-        List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+        var restaurants = restaurantService.getAllRestaurants();
 
         return ResponseEntity.ok(restaurants);
     }
@@ -39,7 +39,7 @@ public class RestaurantController {
     @GetMapping("/getAllByAdmin/{admin_id}")
     @Operation(summary = "Get all restaurants by specific admin")
     public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
-        List<Restaurant> restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
+        var restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);
     }
@@ -47,15 +47,16 @@ public class RestaurantController {
     @GetMapping("/{restaurantId}")
     @Operation(summary = "Get restaurant by id")
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("restaurantId") Integer restaurantId) {
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
 
         return ResponseEntity.ok(restaurant);
     }
 
     @PutMapping("/{restaurantId}")
     @Operation(summary = "Update restaurant by id")
-    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId, @RequestBody RestaurantDto restaurant) {
-        Restaurant updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
+    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable("restaurantId") Integer restaurantId,
+                                                           @RequestBody RestaurantDto restaurant) {
+        var updatedRestaurant = restaurantService.updateRestaurantById(restaurantId, restaurant);
 
         return ResponseEntity.ok(updatedRestaurant);
     }

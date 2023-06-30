@@ -21,7 +21,7 @@ public class UserController {
     @PostMapping("/waiter")
     @Operation(summary = "Create waiter")
     public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
-        AppUser createdWaiter = userService.createWaiter(waiterDto);
+        var createdWaiter = userService.createWaiter(waiterDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
     }
@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping("/admin")
     @Operation(summary = "Create admin")
     public ResponseEntity<AppUser> createAdmin(@Valid @RequestBody AdminDto adminDto) {
-        AppUser createdAdmin = userService.createAdmin(adminDto);
+        var createdAdmin = userService.createAdmin(adminDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
     }
@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/addRole")
     @Operation(summary = "Add role to existing user")
     public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
-        AppUser createdAppUser = userService.addRoleToUser(updateUserDto);
+        var createdAppUser = userService.addRoleToUser(updateUserDto);
 
         return ResponseEntity.ok(createdAppUser);
     }
@@ -46,7 +46,7 @@ public class UserController {
     @Operation(summary = "Get user by id")
     public ResponseEntity<UpdateUserDto> getUserById(@PathVariable int userId,
                                                      @PathVariable int restaurantId) {
-        UpdateUserDto appUser = userService.getUserById(userId, restaurantId);
+        var appUser = userService.getUserById(userId, restaurantId);
 
         return ResponseEntity.ok(appUser);
     }
@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping("")
     @Operation(summary = "Get user by email")
     public ResponseEntity<AppUser> getUserByEmail(@Valid @RequestBody UserEmailDto userEmailDto) {
-        AppUser appUser = userService.getUserByEmail(userEmailDto.getEmail());
+        var appUser = userService.getUserByEmail(userEmailDto.getEmail());
 
         return ResponseEntity.ok(appUser);
     }
@@ -62,7 +62,7 @@ public class UserController {
     @GetMapping("/all-admins/{restaurantId}")
     @Operation(summary = "Get all admins for a specific restaurant")
     public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-        List<AppUser> admins = userService.getAllAdminsByRestaurantId(restaurantId);
+        var admins = userService.getAllAdminsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(admins);
     }
@@ -70,7 +70,7 @@ public class UserController {
     @PutMapping("")
     @Operation(summary = "Update user by email")
     public ResponseEntity<AppUser> updateUserByEmail(@RequestBody UpdateUserDto updateUserDto) {
-        AppUser updatedAppUser = userService.updateUserByEmail(updateUserDto);
+        var updatedAppUser = userService.updateUserByEmail(updateUserDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }

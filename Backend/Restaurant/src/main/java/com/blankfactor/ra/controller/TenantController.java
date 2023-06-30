@@ -21,28 +21,28 @@ public class TenantController {
 
     @PostMapping("/create")
     public ResponseEntity<Tenant> createTenant(@Valid @RequestBody TenantDto tenantDto) {
-        Tenant createdTenant = tenantService.createTenant(tenantDto);
+        var createdTenant = tenantService.createTenant(tenantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
     @GetMapping("/get/{tenant_id}")
     public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
-        Tenant tenant = tenantService.getTenantById(tenantId);
+        var tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
     }
 
     @GetMapping("/get/all")
     public ResponseEntity<List<Tenant>> getAllTenants() {
-        List<Tenant> restaurants = tenantService.getAllTenants();
+        var restaurants = tenantService.getAllTenants();
 
         return ResponseEntity.ok(restaurants);
     }
 
     @PutMapping("/update/{tenant_id}")
     public ResponseEntity<Tenant> updateTenant(@PathVariable("tenant_id") int tenantId) throws Exception {
-        Tenant tenant = tenantService.updateTenant(tenantId);
+        var tenant = tenantService.updateTenant(tenantId);
 
         return ResponseEntity.ok(tenant);
     }

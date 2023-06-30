@@ -21,27 +21,27 @@ public class NotificationController {
 
     @PostMapping("/create")
     public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationDto) {
-        Notification notification = notificationService.createNotification(notificationDto);
+        var notification = notificationService.createNotification(notificationDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 
     @GetMapping("/all/restaurant/{restaurant_id}")
     public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable("restaurant_id") int restaurantId) {
-        List<Notification> notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
+        var notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(notifications);
     }
 
     @GetMapping("/all/table/{table_id}")
     public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@PathVariable("table_id") int tableId) {
-        List<Notification> notifications = notificationService.getAllNotificationsByTableId(tableId);
+        var notifications = notificationService.getAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok(notifications);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId) throws Exception {
-        Notification notification = notificationService.updateNotification(notificationId);
+        var notification = notificationService.updateNotification(notificationId);
 
         return ResponseEntity.ok(notification);
     }

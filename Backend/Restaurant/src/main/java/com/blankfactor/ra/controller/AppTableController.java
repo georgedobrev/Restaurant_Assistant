@@ -22,7 +22,7 @@ public class AppTableController {
     @Operation(summary = "Create tables for existing restaurant")
     public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
                                                                     @RequestBody List<AppTable> appTables) {
-        List<AppTable> createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
+        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }
@@ -30,7 +30,7 @@ public class AppTableController {
     @GetMapping("/{tableNumber}")
     @Operation(summary = "Get table by table number")
     public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
-        AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
+        var appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
         return ResponseEntity.ok(appTable);
     }
@@ -38,7 +38,7 @@ public class AppTableController {
     @GetMapping("/all")
     @Operation(summary = "Get all tables for a specific restaurant")
     public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
-        List<AppTable> appTables = appTableService.getTablesByRestaurantId(restaurantId);
+        var appTables = appTableService.getTablesByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(appTables);
     }
@@ -46,7 +46,7 @@ public class AppTableController {
     @PutMapping("/{tableNumber}")
     @Operation(summary = "Update table by table number")
     public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) {
-        AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
+        var updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
         return ResponseEntity.ok(updatedTable);
     }
