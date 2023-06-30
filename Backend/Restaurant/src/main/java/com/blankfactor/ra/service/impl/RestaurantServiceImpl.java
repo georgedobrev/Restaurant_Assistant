@@ -32,9 +32,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
         RestaurantDto restaurantDto = createRestaurantDto.getRestaurantDto();
 
+        AppUser appUser = userRepository.findById(createRestaurantDto.getUserId())
+                .orElseThrow(() -> new UserException("User with id " + createRestaurantDto.getUserId() + " not found"));
+
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                .tablesCount(restaurantDto.getTablesCount())
+                .tablesCount(0)
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
@@ -42,20 +45,16 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .active(restaurantDto.getActive())
                 .build();
 
-        Restaurant restaurant1 = restaurantRepository.save(restaurant);
-
-        //TODO maybe improve exception message
-        AppUser appUser = userRepository.findById(createRestaurantDto.getUserId())
-                .orElseThrow(() -> new UserException("User not found"));
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
 
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
-                .restaurant(restaurant1)
+                .restaurant(savedRestaurant)
                 .roleType(RoleType.ADMIN)
                 .build();
         userRoleRepository.save(userRole);
 
-        return restaurant1;
+        return savedRestaurant;
     }
 
     @Override

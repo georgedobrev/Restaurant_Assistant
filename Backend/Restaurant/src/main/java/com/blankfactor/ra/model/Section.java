@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
                 @UniqueConstraint(columnNames = {"section_name", "restaurant_id"})
         }
 )
-public class Section {
+public class Section extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "section_name", nullable = false)
     private String sectionName;

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "waiter_section")
 @IdClass(WaiterSectionPK.class)
-public class WaiterSection {
+public class WaiterSection extends Audit {
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "section_id", nullable = false)

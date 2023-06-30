@@ -5,5 +5,9 @@ CREATE TABLE virtual_table
     restaurant_id INT,
     occupied BIT,
     active BIT,
+    created_by INT NOT NULL,
+    updated_by INT,
+    created_at DATETIMEOFFSET NOT NULL,
+    updated_at DATETIMEOFFSET,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)
 );
