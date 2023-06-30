@@ -30,8 +30,12 @@ public class UserTable {
     private String waiterIds;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_table_id", nullable = false)
+    @JoinColumn(name = "app_table_id")
     private AppTable appTable;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "virtual_table_id")
+    private VirtualTable virtualTable;
 
     @Column(name = "start_time")
     @JsonSerialize(using = InstantSerializer.class)

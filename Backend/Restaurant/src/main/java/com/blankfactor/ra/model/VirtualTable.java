@@ -18,6 +18,18 @@ public class VirtualTable extends Audit {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "tables_ids")
-    private String tablesIds;
+    @Column(name = "table_numbers")
+    private String tableNumbers;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
+    @Builder.Default
+    @Column(name = "occupied")
+    private boolean occupied = false;
+
+    @Builder.Default
+    @Column(name = "active")
+    private boolean active = true;
 }

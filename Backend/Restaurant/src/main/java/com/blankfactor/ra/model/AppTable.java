@@ -27,10 +27,6 @@ public class AppTable extends Audit {
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
-    @Builder.Default
-    @Column(name = "occupied")
-    private boolean occupied = false;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
@@ -41,6 +37,10 @@ public class AppTable extends Audit {
     @Builder.Default
     @Column(name = "virtual_table")
     private boolean isVirtualTable = false;
+
+    @Builder.Default
+    @Column(name = "occupied")
+    private boolean occupied = false;
 
     @Builder.Default
     @Column(name = "active")

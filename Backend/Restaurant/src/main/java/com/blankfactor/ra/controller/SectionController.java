@@ -2,7 +2,6 @@ package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.SectionDto;
 import com.blankfactor.ra.dto.WaiterSectionDto;
-import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.service.SectionService;

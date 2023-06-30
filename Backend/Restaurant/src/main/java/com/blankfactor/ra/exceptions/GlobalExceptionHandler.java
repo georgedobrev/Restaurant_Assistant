@@ -48,6 +48,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(VirtualTableException.class)
+    public ResponseEntity<ExceptionResponse> handleVirtualTableException(VirtualTableException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Virtual Table Exception", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(SectionDuplicateException.class)
     public ResponseEntity<ExceptionResponse> handleSectionDuplicateException(SectionDuplicateException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Section duplicate exception", ex.getMessage());
