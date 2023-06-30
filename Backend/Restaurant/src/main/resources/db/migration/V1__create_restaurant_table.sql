@@ -1,3 +1,5 @@
+-- TODO research address length
+
 CREATE TABLE restaurant
 (
     id INT IDENTITY(1,1) PRIMARY KEY ,

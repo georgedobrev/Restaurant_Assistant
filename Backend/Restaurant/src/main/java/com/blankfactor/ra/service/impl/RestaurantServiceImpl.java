@@ -37,7 +37,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantDto.getName())
-                .tablesCount(restaurantDto.getTablesCount())
+                .tablesCount(0)
                 .address(restaurantDto.getAddress())
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())

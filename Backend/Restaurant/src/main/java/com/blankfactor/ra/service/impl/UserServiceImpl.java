@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         List<UserRole> userRoles = userRoleRepository.findAllByRestaurantIdAndRoleType(restaurantId, RoleType.ADMIN);
         List<AppUser> admins = new ArrayList<>();
 
-        userRoles.forEach(userRole ->  admins.add(userRole.getAppUser()));
+        userRoles.forEach(userRole -> admins.add(userRole.getAppUser()));
 
         return admins;
     }
