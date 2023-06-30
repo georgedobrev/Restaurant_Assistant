@@ -20,18 +20,18 @@ public class RestaurantDto {
 
     private Integer tablesCount;
 
-    @Size(max = 100, message = "Address cannot be more than 50 characters")
+    @Size(max = 255, message = "Address cannot be more than 100 characters")
     @NotNull(message = "Address cannot not be null")
     private String address;
 
-    @Size(min = 10, max = 20, message = "Number cannot be more than 20 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be less than 10 and more than 20 characters")
     @NotNull(message = "Phone Number 1 cannot not be null")
     private String phoneNumber1;
 
-    @Size(min = 10, max = 20, message = "Number cannot be more than 20 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be less than 10 and more than 20 characters")
     private String phoneNumber2;
 
-    @Size(min = 10, max = 20, message = "Number cannot be more than 13 characters and less than 10")
+    @Size(min = 10, max = 20, message = "Number cannot be less than 10 and more than 20 characters")
     private String phoneNumber3;
     private Boolean active;
 }
