@@ -23,7 +23,7 @@ public class AppTable extends Audit {
     @Column(name = "table_number")
     private int tableNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "qr_id")
     private QrCode qr;
 
@@ -34,10 +34,6 @@ public class AppTable extends Audit {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "section_id")
-    private Section section;
 
     @Column(name = "capacity")
     private int capacity;

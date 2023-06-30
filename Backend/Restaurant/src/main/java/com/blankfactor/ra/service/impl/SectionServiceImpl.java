@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
+import com.blankfactor.ra.exceptions.custom.SectionException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
@@ -63,5 +64,26 @@ public class SectionServiceImpl implements SectionService {
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 
         return allSections;
+    }
+
+    @Override
+    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
+        Section existingSection = getSectionById(sectionId);
+
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+        existingSection.setSectionName(sectionDto.getSectionName());
+        existingSection.setTableNumbers(tableNumbers);
+
+        return sectionRepository.save(existingSection);
+    }
+
+    @Override
+    public void deleteSectionById(Integer sectionId) {
+        Section section = getSectionById(sectionId);
+        sectionRepository.deleteById(sectionId);
+    }
+
+    public Section getSectionById(Integer sectionId) {
+        return sectionRepository.findById(sectionId).orElseThrow(() -> new SectionException("Section not found"));
     }
 }

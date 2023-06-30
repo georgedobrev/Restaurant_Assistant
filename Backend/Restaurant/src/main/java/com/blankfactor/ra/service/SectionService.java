@@ -9,4 +9,8 @@ public interface SectionService {
     Section createSection(SectionDto sectionDto);
 
     List<Section> getAllSections(Integer restaurantId);
+
+    Section updateSectionById(Integer sectionId, SectionDto sectionDto);
+
+    void deleteSectionById(Integer sectionId);
 }
