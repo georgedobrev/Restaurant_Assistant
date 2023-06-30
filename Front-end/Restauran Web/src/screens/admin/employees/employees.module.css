@@ -68,6 +68,12 @@
   font-size: 12px;
 }
 
+.errorMsg {
+  color: var(--error-color);
+  font-size: 16px;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 768px) {
   .userDetails {
     flex-direction: column;
