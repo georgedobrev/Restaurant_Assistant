@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
+import java.util.Collection;
 
 @Builder
 @AllArgsConstructor
@@ -14,7 +16,7 @@ import java.time.Instant;
 @Data
 @Entity
 @Table(name = "app_user")
-public class AppUser {
+public class AppUser extends Audit implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -22,6 +24,9 @@ public class AppUser {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "name")
     private String name;
@@ -37,7 +42,35 @@ public class AppUser {
     @Column(name = "active")
     private Boolean active = true;
 
-    @Builder.Default
-    @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        //todo fix this
+//        return List.of(new SimpleGrantedAuthority(roleType.name()));
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

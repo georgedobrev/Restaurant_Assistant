@@ -1,15 +1,16 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
+import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,22 +18,37 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
-
+    private final SimpMessagingTemplate template;
     private final NotificationRepository notificationRepository;
     private final AppTableRepository appTableRepository;
 
     @Override
     public Notification createNotification(NotificationDto notificationDto) {
-        Notification notification = new Notification();
+        AppTable appTable = appTableRepository.findById(notificationDto.getAppTable().getId())
+                .orElseThrow(() -> new AppTableException("App table " + notificationDto.getAppTable().getId() + " not found"));
 
-        notification.setAppTable(notificationDto.getAppTable());
-        notification.setAppUser(notificationDto.getAppUser());
-        notification.setRequestType(notificationDto.getRequestType());
-        notification.setMessage(notificationDto.getMessage());
-        notification.setApproved(notificationDto.isApproved());
-        notification.setCreatedAt(Instant.now());
+        String notificationMessage = switch (notificationDto.getRequestType()) {
+            case Waiter -> "Table " + appTable.getTableNumber() + " requested a waiter.";
+            case Bill -> "Table " + appTable.getTableNumber() + " requested the bill.";
+            case Menu -> "Table " + appTable.getTableNumber() + " requested the menu.";
+        };
+
+        Notification notification = Notification.builder()
+                .appUser(notificationDto.getAppUser())
+                .appTable(appTable)
+                .requestType(notificationDto.getRequestType())
+                .message(notificationMessage)
+                .build();
+
+        sendNotificationToWaiter(notification);
+
 
         return notificationRepository.save(notification);
+    }
+
+    // TODO: Fix for specific waiter
+    private void sendNotificationToWaiter(Notification notification) {
+        template.convertAndSend("/topic/message", notification);
     }
 
     @Override
@@ -63,7 +79,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void deleteById(int notificationId) {
-        notificationRepository.deleteNotificationById(notificationId);
+        notificationRepository.deleteById(notificationId);
     }
 
     @Override

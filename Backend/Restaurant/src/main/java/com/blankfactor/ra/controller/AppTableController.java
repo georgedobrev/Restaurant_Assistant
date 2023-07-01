@@ -3,6 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.AppTableDto;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.service.AppTableService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,37 +19,43 @@ public class AppTableController {
     private final AppTableService appTableService;
 
     @PostMapping()
-    public ResponseEntity<List<AppTable>> createTable(@PathVariable("restaurantId") Integer restaurantId,
-                                                      @RequestBody List<AppTable> appTables) throws Exception {
-        List<AppTable> createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
+    @Operation(summary = "Create tables for existing restaurant")
+    public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
+                                                                    @RequestBody List<AppTable> appTables) {
+        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }
 
     @GetMapping("/{tableNumber}")
-    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
-        AppTable appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
+    @Operation(summary = "Get table by table number")
+    public ResponseEntity<AppTable> getTableByTableNumber(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
+        var appTable = appTableService.getTableByTableNumber(restaurantId, tableNumber);
 
         return ResponseEntity.ok(appTable);
     }
 
     @GetMapping("/all")
+    @Operation(summary = "Get all tables for a specific restaurant")
     public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
-        List<AppTable> appTables = appTableService.getTablesByRestaurantId(restaurantId);
+        var appTables = appTableService.getTablesByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(appTables);
     }
 
     @PutMapping("/{tableNumber}")
-    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) throws Exception {
-        AppTable updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
+    @Operation(summary = "Update table by table number")
+    public ResponseEntity<AppTable> updateTableByTableNumber(@PathVariable("restaurantId") Integer restaurantId, @PathVariable("tableNumber") Integer tableNumber, @RequestBody AppTableDto appTableDto) {
+        var updatedTable = appTableService.updateTableByNumber(restaurantId, tableNumber, appTableDto);
 
         return ResponseEntity.ok(updatedTable);
     }
 
     @DeleteMapping("/{tableNumber}")
-    public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) throws Exception {
+    @Operation(summary = "Delete table by table number")
+    public ResponseEntity<?> removeTableByName(@PathVariable Integer restaurantId, @PathVariable Integer tableNumber) {
         appTableService.removeTableByName(restaurantId, tableNumber);
+
         return ResponseEntity.ok().build();
     }
 }

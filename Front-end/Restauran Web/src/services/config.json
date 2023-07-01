@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:8080/",
+  "create": "/create",
+
+  "auth": "auth",
+  "loginEndpoint": "/login",
+  "registerEndpoint": "/register",
+
+  "usersEndpoint": "user",
+  "addRole": "/addRole",
+  "waiter": "/waiter",
+  "admin": "/admin",
+
+  "restaurantsEndpoint": "restaurant",
+  "restaurants": "/getAll",
+  "getRestaurantsByAdmin": "/getAllByAdmin",
+
+  "notificationEndpoint": "notification",
+  "tenantsEndpoint": "tenant"
+}
