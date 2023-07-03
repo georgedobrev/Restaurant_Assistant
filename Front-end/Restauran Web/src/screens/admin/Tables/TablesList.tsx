@@ -44,8 +44,8 @@ export const TablesList: React.FC = () => {
       <div className={styles.container}>
         <h1 className={styles.sectionTitle}>Existing Tables</h1>
         <div className={styles.tablesSection}>
-          {tables.map((table, index) => (
-            <div key={index}>
+          {tables.map((table) => (
+            <div key={table.tableNumber}>
               <div className={styles.flexRow}>
                 <div className={styles.notificationItem}>
                   <h4>Table: {table.tableNumber}</h4>

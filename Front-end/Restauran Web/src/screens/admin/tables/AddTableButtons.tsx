@@ -9,8 +9,8 @@ type AddTableButtonsProps = {
 };
 
 const AddTableButtons: React.FC<AddTableButtonsProps> = ({ onAddTable }) => {
-  const [tableNumber, setTableNumber] = useState("");
-  const [capacity, setCapacity] = useState("");
+  const [tableNumber, setTableNumber] = useState<string>("");
+  const [capacity, setCapacity] = useState<string>("");
 
   const handleSubmit = () => {
     const num = parseInt(tableNumber);
@@ -45,7 +45,7 @@ const AddTableButtons: React.FC<AddTableButtonsProps> = ({ onAddTable }) => {
           required
         ></TextField>
         <Button onClick={handleSubmit} className={styles.addIcon}>
-          <AddIcon className={styles.iconSize} style={{ fontSize: "35px" }} />
+          <AddIcon className={styles.iconSize} style={{ fontSize: "36px" }} />
         </Button>
       </div>
     </div>
