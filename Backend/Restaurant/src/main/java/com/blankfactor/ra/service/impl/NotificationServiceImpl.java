@@ -50,6 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.save(notification);
     }
 
+    //TODO: Check if we should use findAllByTableNumbersContains
     private void sendNotificationToWaiter(Notification notification) {
         List<WaiterSection> waiterSections = new ArrayList<>();
 
