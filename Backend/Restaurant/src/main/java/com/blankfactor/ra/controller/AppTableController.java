@@ -35,7 +35,7 @@ public class AppTableController {
         return ResponseEntity.ok(appTable);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     @Operation(summary = "Get all tables for a specific restaurant")
     public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         var appTables = appTableService.getTablesByRestaurantId(restaurantId);

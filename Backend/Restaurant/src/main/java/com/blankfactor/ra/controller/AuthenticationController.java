@@ -22,12 +22,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.login(googleJwt));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(authenticationService.register(userDto));
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/authentication")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequestDto request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

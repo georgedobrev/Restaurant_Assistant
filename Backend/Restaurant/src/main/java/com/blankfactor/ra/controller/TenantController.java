@@ -26,37 +26,37 @@ public class TenantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
-    @GetMapping("/{tenant_id}")
-    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
+    @GetMapping("/{tenantId}")
+    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenantId") int tenantId) throws Exception {
         var tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<Tenant>> getAllTenants() {
         var restaurants = tenantService.getAllTenants();
 
         return ResponseEntity.ok(restaurants);
     }
 
-    @PutMapping("/{user_id}")
+    @PutMapping("/{userId}")
     @Operation(summary = "Update tenant")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("user_id") int userId,
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") int userId,
                                                @RequestBody TenantDto tenantDto) {
         var tenant = tenantService.updateTenant(userId, tenantDto);
 
         return ResponseEntity.ok(tenant);
     }
 
-    @DeleteMapping("/{tenant_id}")
-    public ResponseEntity<?> deleteTenant(@PathVariable("tenant_id") int tenantId) {
+    @DeleteMapping("/{tenantId}")
+    public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") int tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/all")
+    @DeleteMapping()
     public ResponseEntity<?> deleteAll() {
         tenantService.deleteAll();
 

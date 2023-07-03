@@ -26,7 +26,7 @@ public class ShiftController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdShift);
     }
 
-    @GetMapping("/all/{restaurantId}")
+    @GetMapping("/restaurant/{restaurantId}")
     @Operation(summary = "Get all shifts for a specific restaurant")
     public ResponseEntity<List<Shift>> getAllShiftsByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         var allShifts = shiftService.getAllShiftsByRestaurantId(restaurantId);

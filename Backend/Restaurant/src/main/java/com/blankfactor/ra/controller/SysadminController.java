@@ -36,7 +36,7 @@ public class SysadminController {
         return ResponseEntity.ok(sysadmin);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<Sysadmin>> getAllSysadminsByRestaurantId() {
         var sysadmins = sysadminService.getAllSysadmins();
 

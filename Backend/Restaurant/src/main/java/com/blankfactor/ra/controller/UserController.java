@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
     }
 
-    @PostMapping("/addRole")
+    @PostMapping("/role")
     @Operation(summary = "Add role to existing user")
     public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
         var createdAppUser = userService.addRoleToUser(updateUserDto);
@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(appUser);
     }
 
-    @GetMapping("/all-admins/{restaurantId}")
+    @GetMapping("/admins/{restaurantId}")
     @Operation(summary = "Get all admins for a specific restaurant")
     public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
         var admins = userService.getAllAdminsByRestaurantId(restaurantId);

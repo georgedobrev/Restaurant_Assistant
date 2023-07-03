@@ -28,7 +28,7 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping()
     @Operation(summary = "Get all restaurants")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         var restaurants = restaurantService.getAllRestaurants();
@@ -36,9 +36,9 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/allByAdmin/{admin_id}")
+    @GetMapping("/admin/{adminId}")
     @Operation(summary = "Get all restaurants by specific admin")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("admin_id") int userId) {
+    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("adminId") int userId) {
         var restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);

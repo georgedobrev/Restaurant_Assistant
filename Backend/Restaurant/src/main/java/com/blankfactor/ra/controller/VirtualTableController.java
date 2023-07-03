@@ -24,7 +24,7 @@ public class VirtualTableController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdVirtualTable);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<Map<Integer, VirtualTable>> getAllVirtualTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         Map<Integer, VirtualTable> allVirtualTables = virtualTableService.getAllVirtualTablesByRestaurantId(restaurantId);
         return ResponseEntity.ok(allVirtualTables);

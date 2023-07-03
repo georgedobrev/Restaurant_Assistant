@@ -29,19 +29,19 @@ public class SectionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
 
-    @GetMapping("/getAll/{restaurantId}")
-    @Operation(summary = "Get all sections from a specific restaurant")
-    public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) {
-        var allSections = sectionService.getAllSections(restaurantId);
-        return ResponseEntity.ok(allSections);
-    }
-
-    @PostMapping("/addWaiter")
+    @PostMapping("/waiter")
     @Operation(summary = "Assign waiter to a section with a shift")
     public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
         // TODO Null Null Null
         var createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
+    }
+
+    @GetMapping("/{restaurantId}")
+    @Operation(summary = "Get all sections from a specific restaurant")
+    public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) {
+        var allSections = sectionService.getAllSections(restaurantId);
+        return ResponseEntity.ok(allSections);
     }
 
     @PutMapping("/{sectionId}")
