@@ -7,7 +7,7 @@ CREATE TABLE app_table
     capacity INT,
     virtual_table BIT,
     occupied BIT,
-    active BIT,
+    deleted BIT,
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,

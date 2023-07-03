@@ -19,7 +19,7 @@ public class NotificationDto {
     @NotNull(message = "AppUser is required for notifications")
     private AppUser appUser;
 
-    @NotBlank(message = "Request type is required for notifications")
+    @NotNull(message = "Request type is required for notifications")
     private RequestType requestType;
 
     @Size(max = 50, message = "Name cannot be more than 50 characters")

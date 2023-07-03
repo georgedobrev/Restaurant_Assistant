@@ -55,7 +55,6 @@ public class AppTableServiceImpl implements AppTableService {
         existingTable.setOccupied(updatedTableDto.isOccupied());
         existingTable.setCapacity(updatedTableDto.getCapacity());
         existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
-        existingTable.setActive(updatedTableDto.isActive());
 
         appTableRepository.save(existingTable);
 
@@ -64,14 +63,14 @@ public class AppTableServiceImpl implements AppTableService {
 
     @Override
     public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
-        return appTableRepository.findByRestaurantId(restaurantId);
+        return appTableRepository.findByRestaurantIdAndDeletedIsFalse(restaurantId);
     }
 
-
+    @Transactional
     @Override
-    public void removeTableByName(Integer restaurantId, Integer tableNumber) {
+    public void deleteTableByTableNumber(Integer restaurantId, Integer tableNumber) {
         AppTable existingTable = getTableByTableNumber(restaurantId, tableNumber);
-        appTableRepository.delete(existingTable);
+        appTableRepository.softDeleteAppTable(existingTable.getId());
     }
 
     @Override
