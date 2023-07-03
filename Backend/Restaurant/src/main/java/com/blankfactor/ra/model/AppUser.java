@@ -39,10 +39,6 @@ public class AppUser extends Audit implements UserDetails {
     private Boolean blacklisted = false;
 
     @Builder.Default
-    @Column(name = "active")
-    private Boolean active = true;
-
-    @Builder.Default
     @Column(name = "deleted")
     private Boolean deleted = false;
 
