@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
 
     List<AppTable> findByRestaurantIdAndDeletedIsFalse(Integer restaurantId);
+
     List<AppTable> findByRestaurantId(Integer restaurantId);
 
     Optional<AppTable> findByRestaurantIdAndTableNumber(Integer restaurantId, Integer tableNumber);
@@ -25,5 +26,9 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
     @Modifying
     @Query("UPDATE AppTable a SET a.deleted = true WHERE a.id = :appTableId")
     void softDeleteAppTable(Integer appTableId);
+
+    @Modifying
+    @Query("UPDATE AppTable a SET a.deleted = true WHERE a.restaurant.id = :restaurantId")
+    void softDeleteAppTablesByRestaurantId(Integer restaurantId);
 }
 

@@ -46,6 +46,12 @@ public class AppTableServiceImpl implements AppTableService {
         return appTableRepository.saveAll(appTables);
     }
 
+    @Override
+    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
+        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+                .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
+    }
+
     @Transactional
     @Override
     public AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto) {
@@ -71,12 +77,6 @@ public class AppTableServiceImpl implements AppTableService {
     public void deleteTableByTableNumber(Integer restaurantId, Integer tableNumber) {
         AppTable existingTable = getTableByTableNumber(restaurantId, tableNumber);
         appTableRepository.softDeleteAppTable(existingTable.getId());
-    }
-
-    @Override
-    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
-        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
     }
 }
 

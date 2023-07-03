@@ -60,4 +60,12 @@ public class RestaurantController {
 
         return ResponseEntity.ok(updatedRestaurant);
     }
+
+    @DeleteMapping("/{restaurantId}")
+    @Operation(summary = "Soft delete restaurant by id")
+    public ResponseEntity<?> deleteRestaurantById(@PathVariable("restaurantId") Integer restaurantId) {
+        restaurantService.deleteRestaurantById(restaurantId);
+
+        return ResponseEntity.ok().build();
+    }
 }

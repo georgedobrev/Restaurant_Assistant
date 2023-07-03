@@ -8,6 +8,7 @@ CREATE TABLE restaurant
     phone_number2 NVARCHAR(20),
     phone_number3 NVARCHAR(20),
     active BIT,
+    deleted BIT,
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,

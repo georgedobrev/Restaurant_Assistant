@@ -40,4 +40,8 @@ public class Restaurant extends Audit {
     @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
+
+    @Builder.Default
+    @Column(name = "deleted")
+    private Boolean deleted = false;
 }

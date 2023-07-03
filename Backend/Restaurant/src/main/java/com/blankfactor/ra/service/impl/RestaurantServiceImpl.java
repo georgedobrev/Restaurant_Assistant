@@ -8,10 +8,12 @@ import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
+    private final AppTableRepository appTableRepository;
 
     @Override
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
@@ -89,5 +92,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setActive(updatedRestaurant.getActive());
 
         return restaurantRepository.save(existingRestaurant);
+    }
+
+    @Transactional
+    @Override
+    public void deleteRestaurantById(Integer restaurantId) {
+        restaurantRepository.softDeleteRestaurant(restaurantId);
+        appTableRepository.softDeleteAppTablesByRestaurantId(restaurantId);
     }
 }
