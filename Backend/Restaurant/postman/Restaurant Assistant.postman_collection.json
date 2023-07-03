@@ -707,7 +707,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notifications/restaurants?restaurantId=1",
+              "raw": "localhost:8080/notifications/restaurants?restaurant_Id=1",
               "host": [
                 "localhost"
               ],
@@ -718,7 +718,7 @@
               ],
               "query": [
                 {
-                  "key": "restaurantId",
+                  "key": "restaurant_Id",
                   "value": "1"
                 }
               ]
@@ -732,7 +732,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notifications/tables?tableId=1",
+              "raw": "localhost:8080/notifications/tables?table_Id=1",
               "host": [
                 "localhost"
               ],
@@ -743,7 +743,7 @@
               ],
               "query": [
                 {
-                  "key": "tableId",
+                  "key": "table_Id",
                   "value": "1"
                 }
               ]
@@ -1383,16 +1383,6 @@
         {
           "name": "Register",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMzMzQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg3MzI5NDA1LCJleHAiOjIwNDczMjk0MDV9.fM7tz-HMZrwz5E2K6095McgL4_7SH24ZVF1aIBQX1Fg",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
             "header": [],
             "body": {

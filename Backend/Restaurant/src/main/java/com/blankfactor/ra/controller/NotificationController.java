@@ -25,14 +25,14 @@ public class NotificationController {
     }
 
     @GetMapping("/restaurants")
-    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@RequestParam("restaurantId") int restaurantId) {
+    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@RequestParam("restaurant_Id") int restaurantId) {
         var notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(notifications);
     }
 
     @GetMapping("/tables")
-    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@RequestParam("tableId") int tableId) {
+    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@RequestParam("table_Id") int tableId) {
         var notifications = notificationService.getAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok(notifications);
