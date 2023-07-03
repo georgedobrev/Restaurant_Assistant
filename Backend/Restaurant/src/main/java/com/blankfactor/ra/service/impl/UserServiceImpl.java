@@ -24,7 +24,6 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;

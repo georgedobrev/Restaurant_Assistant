@@ -13,7 +13,6 @@ import java.security.GeneralSecurityException;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final AuthenticationService authenticationService;
 
     // Todo make sure the second time we call the /login we receive the same refresh from db

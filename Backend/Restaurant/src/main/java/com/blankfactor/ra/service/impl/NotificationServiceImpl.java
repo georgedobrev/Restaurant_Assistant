@@ -78,11 +78,6 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void deleteById(int notificationId) {
-        notificationRepository.deleteById(notificationId);
-    }
-
-    @Override
     public void deleteAllNotificationsByTableId(int tableId) {
         notificationRepository.deleteAllByAppTableId(tableId);
     }

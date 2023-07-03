@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/section")
+@RequestMapping("/sections")
 @AllArgsConstructor
 public class SectionController {
     private final SectionService sectionService;

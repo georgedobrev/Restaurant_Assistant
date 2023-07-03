@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/sysadmin")
+@RequestMapping("/sysadmins")
 @AllArgsConstructor
 @RestController
 public class SysadminController {

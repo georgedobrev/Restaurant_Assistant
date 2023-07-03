@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
-
     List<AppTable> findByRestaurantId(Integer restaurantId);
 
     Optional<AppTable> findByRestaurantIdAndTableNumber(Integer restaurantId, Integer tableNumber);
@@ -19,4 +18,3 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
 
     List<AppTable> findByRestaurantIdAndTableNumberIn(Integer restaurantId, List<Integer> tableNumbers);
 }
-

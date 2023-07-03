@@ -14,10 +14,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 @AllArgsConstructor
 public class RestaurantController {
-
     private final RestaurantService restaurantService;
 
     @PostMapping()

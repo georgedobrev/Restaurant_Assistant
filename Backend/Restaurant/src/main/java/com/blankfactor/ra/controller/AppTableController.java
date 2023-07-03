@@ -15,14 +15,13 @@ import java.util.List;
 @RequestMapping("/tables/{restaurantId}")
 @AllArgsConstructor
 public class AppTableController {
-
     private final AppTableService appTableService;
 
     @PostMapping()
     @Operation(summary = "Create tables for existing restaurant")
     public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
-                                                                    @RequestBody List<AppTable> appTables) {
-        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
+                                                                    @RequestBody List<AppTableDto> appTablesDto) {
+        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTablesDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }

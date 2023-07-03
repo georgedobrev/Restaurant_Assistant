@@ -17,7 +17,6 @@ import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(RestaurantException.class)
     public ResponseEntity<ExceptionResponse> handleRestaurantException(RestaurantException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse("Restaurant Not Found", ex.getMessage());

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @AllArgsConstructor
-@RequestMapping("/notification")
+@RequestMapping("/notifications")
 @RestController
 public class NotificationController {
     private final NotificationService notificationService;
@@ -24,15 +24,15 @@ public class NotificationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 
-    @GetMapping("/restaurants/{restaurantId}")
-    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+    @GetMapping("/restaurants")
+    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@RequestParam("restaurantId") int restaurantId) {
         var notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(notifications);
     }
 
-    @GetMapping("/tables/{tableId}")
-    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@PathVariable("tableId") int tableId) {
+    @GetMapping("/tables")
+    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@RequestParam("tableId") int tableId) {
         var notifications = notificationService.getAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok(notifications);
@@ -43,13 +43,6 @@ public class NotificationController {
         var notification = notificationService.updateNotification(notificationId);
 
         return ResponseEntity.ok(notification);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteNotificationById(@PathVariable("id") int notificationId) {
-        notificationService.deleteById(notificationId);
-
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/all/{appTableId}")

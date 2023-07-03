@@ -16,5 +16,4 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
 //            AND (table_numbers LIKE '%:tableNumber%');
 //            """, nativeQuery = true)
 //    List<Section> findByRestaurantIdAndTableNumberInSection(@Param("restaurantId") Integer restaurantId, @Param("tableNumber") Integer tableNumber);
-
 }

@@ -21,7 +21,6 @@ import java.util.function.Function;
 @Service
 @AllArgsConstructor
 public class JwtService {
-
     private final AppProp appProp;
 
     public String generateJwtToken(UserDetails userDetails) {
