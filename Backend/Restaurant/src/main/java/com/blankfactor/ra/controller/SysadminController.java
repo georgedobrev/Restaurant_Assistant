@@ -30,17 +30,17 @@ public class SysadminController {
         return ResponseEntity.ok().body(sysadmin);
     }
 
-    @PutMapping("/{sysadminId}")
-    public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") int sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
-        var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
-        return ResponseEntity.ok(sysadmin);
-    }
-
     @GetMapping()
     public ResponseEntity<List<Sysadmin>> getAllSysadminsByRestaurantId() {
         var sysadmins = sysadminService.getAllSysadmins();
 
         return ResponseEntity.ok(sysadmins);
+    }
+
+    @PutMapping("/{sysadminId}")
+    public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") int sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
+        var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
+        return ResponseEntity.ok(sysadmin);
     }
 
     @DeleteMapping("/{sysadminId}")
