@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VirtualTableDto {
+public class MergedTableDto {
     private List<Integer> tableNumbers;
 }

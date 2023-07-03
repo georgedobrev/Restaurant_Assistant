@@ -47,9 +47,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(VirtualTableException.class)
-    public ResponseEntity<ExceptionResponse> handleVirtualTableException(VirtualTableException ex) {
-        ExceptionResponse errorResponse = new ExceptionResponse("Virtual Table Exception", ex.getMessage());
+    @ExceptionHandler(MergedTableException.class)
+    public ResponseEntity<ExceptionResponse> handleVirtualTableException(MergedTableException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse("Merged Table Exception", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 

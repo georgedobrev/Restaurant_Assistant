@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +61,7 @@ public class AppTableServiceImpl implements AppTableService {
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
         existingTable.setCapacity(updatedTableDto.getCapacity());
-        existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
+        existingTable.setMergedTable(updatedTableDto.isMergedTable());
         existingTable.setActive(updatedTableDto.isActive());
 
         appTableRepository.save(existingTable);
