@@ -1,6 +1,5 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.config.AuditConfig;
 import com.blankfactor.ra.dto.AdminDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.WaiterDto;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -30,26 +28,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
-    private final AuditConfig auditConfig;
 
     @Override
     public AppUser createWaiter(WaiterDto waiterDto) {
-        checkIfAuditorIsEnabled();
-
         return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
     }
 
     @Override
     public AppUser createAdmin(AdminDto adminDto) {
-        checkIfAuditorIsEnabled();
-
         return createUserWithEmailAndRoleType(adminDto.getEmail(), RoleType.ADMIN, adminDto.getRestaurant());
     }
 
     @Override
     public AppUser addRoleToUser(UpdateUserDto updateUserDto) {
-        checkIfAuditorIsEnabled();
-
         AppUser appUser = userRepository.findAppUserByEmail(updateUserDto.getEmail())
                 .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
 
@@ -58,8 +49,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UpdateUserDto getUserById(int userId, int restaurantId) {
-        checkIfAuditorIsEnabled();
-
         AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
@@ -82,8 +71,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser getUserByEmail(String email) {
-        checkIfAuditorIsEnabled();
-
         return userRepository.findAppUserByEmail(email)
                 .orElseThrow(() -> new UserException("User with email " + email + " not found"));
     }
@@ -91,8 +78,6 @@ public class UserServiceImpl implements UserService {
     //TODO admins onboarding
     @Override
     public List<AppUser> getAllAdminsByRestaurantId(int restaurantId) {
-        checkIfAuditorIsEnabled();
-
         List<UserRole> userRoles = userRoleRepository.findAllByRestaurantIdAndRoleType(restaurantId, RoleType.ADMIN);
         List<AppUser> admins = new ArrayList<>();
 
@@ -104,8 +89,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public AppUser updateUserByEmail(UpdateUserDto updateUserDto) {
-        checkIfAuditorIsEnabled();
-
         AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserDto.getEmail())
                 .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
 
@@ -142,8 +125,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUserById(int id) {
-        checkIfAuditorIsEnabled();
-
         List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
 
         if (userRoles.isEmpty()) {
@@ -155,8 +136,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {
-        checkIfAuditorIsEnabled();
-
         UserRole userRole = UserRole.builder()
                 .appUser(appUser)
                 .roleType(updateUserDto.getRoleType())
@@ -169,8 +148,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
-        checkIfAuditorIsEnabled();
-
         AppUser user = AppUser.builder()
                 .email(email)
                 .build();
@@ -188,17 +165,5 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return savedAppUser;
-    }
-
-    private void checkIfAuditorIsEnabled() {
-        Integer currentAuditorId = auditConfig.auditorAware().getCurrentAuditor()
-                .orElseThrow(() -> new UserException("No current auditor"));
-
-        AppUser auditor = userRepository.findById(currentAuditorId)
-                .orElseThrow(() -> new UserException("No auditor with id " + currentAuditorId + " found"));
-
-        if (auditor.getDeleted()) {
-            throw new UserException("Deleted auditor cannot make any actions");
-        }
     }
 }
