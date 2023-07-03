@@ -52,11 +52,10 @@ public class NotificationController {
         return ResponseEntity.ok().build();
     }
 
+    // TODO: Add websocket direction for user
     @MessageMapping("/app/notify")
     @SendTo("/topic/notifications")
-    public Notification sendNotification(NotificationDto notificationDto) throws InterruptedException {
-        Thread.sleep(2000);
-
+    public Notification sendNotification(NotificationDto notificationDto) {
         return notificationService.createNotification(notificationDto);
     }
 }
