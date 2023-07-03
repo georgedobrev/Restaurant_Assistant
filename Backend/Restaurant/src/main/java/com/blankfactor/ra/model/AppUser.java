@@ -1,7 +1,5 @@
 package com.blankfactor.ra.model;
 
-import com.blankfactor.ra.config.InstantSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
 import java.util.Collection;
 
 @Builder
@@ -19,7 +16,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "app_user")
-public class AppUser implements UserDetails {
+public class AppUser extends Audit implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -44,11 +41,6 @@ public class AppUser implements UserDetails {
     @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
-
-    @Builder.Default
-    @JsonSerialize(using = InstantSerializer.class)
-    @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

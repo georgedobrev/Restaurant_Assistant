@@ -1,6 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SectionDto;
+import com.blankfactor.ra.exceptions.custom.SectionException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.Section;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,5 +65,39 @@ public class SectionServiceImpl implements SectionService {
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 
         return allSections;
+    }
+
+    @Override
+    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
+        Section existingSection = getSectionById(sectionId);
+
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+        existingSection.setSectionName(sectionDto.getSectionName());
+        existingSection.setTableNumbers(tableNumbers);
+
+        return sectionRepository.save(existingSection);
+    }
+
+    @Override
+    public void deleteSectionById(Integer sectionId) {
+        Section section = getSectionById(sectionId);
+        sectionRepository.deleteById(sectionId);
+    }
+
+    public Section getSectionById(Integer sectionId) {
+        return sectionRepository.findById(sectionId).orElseThrow(() -> new SectionException("Section not found"));
+    }
+
+    @Override
+    public List<Section> getSectionsForTable(AppTable table) {
+        List<Section> sections = sectionRepository.findByRestaurant(table.getRestaurant());
+        int currentTableNum = table.getTableNumber();
+
+        // TODO check if we can make it with objectMapper
+        return sections.stream()
+                .filter(section -> Arrays.stream(section.getTableNumbers().split(","))
+                        .map(Integer::valueOf)
+                        .anyMatch(num -> num == currentTableNum))
+                .collect(Collectors.toList());
     }
 }

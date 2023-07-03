@@ -3,6 +3,8 @@ package com.blankfactor.ra.service.impl;
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
 import com.blankfactor.ra.model.*;
+import com.blankfactor.ra.model.AppTable;
+import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.repository.SectionRepository;
@@ -10,8 +12,6 @@ import com.blankfactor.ra.repository.WaiterSectionRepository;
 import com.blankfactor.ra.service.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,15 +32,11 @@ public class NotificationServiceImpl implements NotificationService {
         AppTable appTable = appTableRepository.findById(notificationDto.getAppTable().getId())
                 .orElseThrow(() -> new AppTableException("App table " + notificationDto.getAppTable().getId() + " not found"));
 
-        String notificationMessage = "";
-        switch (notificationDto.getRequestType()) {
-            case Waiter ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested a waiter.";
-            case Bill ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the bill.";
-            case Menu ->
-                    notificationMessage = "Table " + appTable.getTableNumber() + " requested the menu.";
-        }
+        String notificationMessage = switch (notificationDto.getRequestType()) {
+            case Waiter -> "Table " + appTable.getTableNumber() + " requested a waiter.";
+            case Bill -> "Table " + appTable.getTableNumber() + " requested the bill.";
+            case Menu -> "Table " + appTable.getTableNumber() + " requested the menu.";
+        };
 
         Notification notification = Notification.builder()
                 .appUser(notificationDto.getAppUser())

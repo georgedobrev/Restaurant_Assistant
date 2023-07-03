@@ -6,12 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Builder
-@Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Restaurant {
+@Data
+@Entity
+public class Restaurant extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -20,8 +21,9 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
+    @Builder.Default
     @Column(name = "tables_count")
-    private Integer tablesCount;
+    private Integer tablesCount = 0;
 
     @Column(name = "address")
     private String address;
@@ -35,6 +37,7 @@ public class Restaurant {
     @Column(name = "phone_number3")
     private String phoneNumber3;
 
+    @Builder.Default
     @Column(name = "active")
     private Boolean active = true;
 }

@@ -13,14 +13,16 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Section")
 @Table(
         name = "section",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"})
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"table_numbers", "restaurant_id"}),
+                @UniqueConstraint(columnNames = {"section_name", "restaurant_id"})
+        }
 )
-public class Section {
+public class Section extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "section_name", nullable = false)
     private String sectionName;

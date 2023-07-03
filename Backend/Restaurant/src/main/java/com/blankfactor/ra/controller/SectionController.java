@@ -25,14 +25,14 @@ public class SectionController {
     @PostMapping()
     @Operation(summary = "Create section for a specific restaurant")
     public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) {
-        Section createdSection = sectionService.createSection(sectionDto);
+        var createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
 
     @GetMapping("/getAll/{restaurantId}")
     @Operation(summary = "Get all sections from a specific restaurant")
     public ResponseEntity<List<Section>> getAllSections(@PathVariable("restaurantId") Integer restaurantId) {
-        List<Section> allSections = sectionService.getAllSections(restaurantId);
+        var allSections = sectionService.getAllSections(restaurantId);
         return ResponseEntity.ok(allSections);
     }
 
@@ -40,7 +40,21 @@ public class SectionController {
     @Operation(summary = "Assign waiter to a section with a shift")
     public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
         // TODO Null Null Null
-        WaiterSection createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
+        var createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
+    }
+
+    @PutMapping("/{sectionId}")
+    @Operation(summary = "Update section by id")
+    public ResponseEntity<Section> updateSectionById(@PathVariable("sectionId") Integer sectionId, @RequestBody SectionDto sectionDto) {
+        Section section = sectionService.updateSectionById(sectionId, sectionDto);
+        return ResponseEntity.ok(section);
+    }
+
+    @DeleteMapping("/{sectionId}")
+    @Operation(summary = "Delete section by id")
+    public ResponseEntity<?> deleteSectionById(@PathVariable("sectionId") Integer sectionId) {
+        sectionService.deleteSectionById(sectionId);
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,12 +1,22 @@
 import { fetchWrapper } from "./fetchWrapper";
-import { baseUrl, restaurantsEndpoint, restaurants } from "./config.json";
+import {
+  baseUrl,
+  restaurantsEndpoint,
+  restaurants,
+  getRestaurantsByAdmin,
+} from "./config.json";
 
 export interface Restaurant {
   id?: number;
   name: string;
   tablesCount: number;
   address: string;
-  phoneNumber: string;
+  phoneNumber1: string;
+}
+
+export interface RestaurantObj {
+  restaurantDto: Restaurant;
+  userId: number;
 }
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
@@ -15,11 +25,19 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
   );
 };
 
-export const getRestaurantByID = async (id: number): Promise<Restaurant> => {
-  const response = await fetchWrapper.get<Restaurant[]>(
+export const getRestaurantByID = async (id: number) => {
+  return fetchWrapper.get<Restaurant[]>(
     `${baseUrl}${restaurantsEndpoint}/${id}`
   );
-  return response[0];
+};
+
+export const getRestaurantsByAdminID = async (
+  userId: number
+): Promise<Restaurant[]> => {
+  const response = await fetchWrapper.get<Restaurant[]>(
+    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/${userId}`
+  );
+  return response;
 };
 
 export const editRestaurant = async (
@@ -32,9 +50,9 @@ export const editRestaurant = async (
 };
 
 export const createRestaurant = async (
-  restaurantData: Restaurant
-): Promise<Restaurant> => {
-  return fetchWrapper.post<Restaurant>(
+  restaurantData: RestaurantObj
+): Promise<RestaurantObj> => {
+  return fetchWrapper.post<RestaurantObj>(
     `${baseUrl}${restaurantsEndpoint}`,
     restaurantData
   );

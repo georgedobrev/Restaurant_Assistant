@@ -1,28 +1,24 @@
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
-import styles from "./users.module.css";
 import { deleteUser, getUsers, User } from "../../../services/userService";
+import { getServerErrorMessage } from "../../../services/ErrorHandling";
+import styles from "./employees.module.css";
 
-const DeleteUserComponent: React.FC = () => {
+const DeleteEmployee: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleDeleteUser = async () => {
-    setErrorMsg("");
-
     try {
       const user: User | undefined = await getUsers(parseInt(id));
-
       if (user && user.email === email) {
         await deleteUser(parseInt(id));
         setId("");
         setEmail("");
-      } else {
-        setErrorMsg("There is no such user");
       }
-    } catch (err) {
-      setErrorMsg("Error occurred while deleting user");
+    } catch (err: any) {
+      setErrorMsg(getServerErrorMessage(err));
     }
   };
 
@@ -32,22 +28,22 @@ const DeleteUserComponent: React.FC = () => {
 
       <TextField
         label="ID"
+        color="warning"
+        margin="normal"
         value={id}
         onChange={(e) => setId(e.target.value)}
-        color="warning"
         fullWidth
         required
-        margin="normal"
       />
 
       <TextField
         label="Email"
+        color="warning"
+        margin="normal"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        color="warning"
         fullWidth
         required
-        margin="normal"
       />
 
       <Button
@@ -63,4 +59,4 @@ const DeleteUserComponent: React.FC = () => {
   );
 };
 
-export default DeleteUserComponent;
+export default DeleteEmployee;

@@ -21,7 +21,5 @@ public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
     Optional<AppTable> findByQrId(Integer qrId);
 
     List<AppTable> findByRestaurantIdAndTableNumberIn(Integer restaurantId, List<Integer> tableNumbers);
-
-    List<AppTable> findAllById(int tableId);
 }
 

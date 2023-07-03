@@ -1,15 +1,11 @@
 package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.SysadminDto;
-import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.SysadminException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Sysadmin;
-import com.blankfactor.ra.model.UserRole;
-import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.SysadminRepository;
 import com.blankfactor.ra.repository.UserRepository;
-import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.SysadminService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +17,7 @@ import java.util.List;
 public class SysadminServiceImpl implements SysadminService {
     private final SysadminRepository sysadminRepository;
     private final UserRepository userRepository;
+
     @Override
     public Sysadmin createSysadmin(SysadminDto sysadminDto) {
         Sysadmin sysadmin = Sysadmin.builder()
@@ -62,6 +59,7 @@ public class SysadminServiceImpl implements SysadminService {
     public List<Sysadmin> getAllSysadmins() {
         return sysadminRepository.findAll();
     }
+
     @Override
     public void deleteSysadminById(int sysadminId) {
         sysadminRepository.deleteById(sysadminId);

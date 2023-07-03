@@ -19,17 +19,17 @@ import java.util.List;
 public class ShiftController {
     private final ShiftService shiftService;
 
-    @PostMapping()
+    @PostMapping("/{restaurantId}")
     @Operation(summary = "Create shift for a specific restaurant")
-    public ResponseEntity<Shift> createShift(@Valid @RequestBody ShiftDto shiftDto) {
-        Shift createdShift = shiftService.createShift(shiftDto);
+    public ResponseEntity<Shift> createShift(@PathVariable("restaurantId") Integer restaurantId, @Valid @RequestBody ShiftDto shiftDto) {
+        var createdShift = shiftService.createShift(restaurantId, shiftDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdShift);
     }
 
     @GetMapping("/all/{restaurantId}")
     @Operation(summary = "Get all shifts for a specific restaurant")
     public ResponseEntity<List<Shift>> getAllShiftsByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
-        List<Shift> allShifts = shiftService.getAllShiftsByRestaurantId(restaurantId);
+        var allShifts = shiftService.getAllShiftsByRestaurantId(restaurantId);
         return ResponseEntity.ok(allShifts);
     }
 
@@ -37,7 +37,7 @@ public class ShiftController {
     @Operation(summary = "Update shift by id")
     public ResponseEntity<Shift> updateShiftById(@PathVariable("shiftId") Integer shiftId,
                                                  @Valid @RequestBody ShiftDto shiftDto) throws ShiftException {
-        Shift updatedShift = shiftService.updateShiftById(shiftId, shiftDto);
+        var updatedShift = shiftService.updateShiftById(shiftId, shiftDto);
         return ResponseEntity.ok(updatedShift);
     }
 
