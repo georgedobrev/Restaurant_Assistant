@@ -556,10 +556,10 @@
       ]
     },
     {
-      "name": "Virtual Table",
+      "name": "Merged Table",
       "item": [
         {
-          "name": "Create Virtual Table",
+          "name": "Create Merged Table",
           "request": {
             "method": "POST",
             "header": [],
@@ -573,13 +573,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/virtual/1",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1"
               ]
             }
@@ -587,18 +587,18 @@
           "response": []
         },
         {
-          "name": "Get all Virtual Tables",
+          "name": "Get All Merged Tables",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/virtual/1",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1"
               ]
             }
@@ -606,7 +606,7 @@
           "response": []
         },
         {
-          "name": "Update Virtual By ID",
+          "name": "Update Merged Table By ID",
           "request": {
             "method": "PUT",
             "header": [],
@@ -620,13 +620,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/virtual/1/1",
+              "raw": "localhost:8080/mergedTable/1/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1",
                 "1"
               ],
@@ -642,7 +642,7 @@
           "response": []
         },
         {
-          "name": "Delete Virtual Table",
+          "name": "Delete Merged Table",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -656,13 +656,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/virtual/1",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1"
               ]
             }
