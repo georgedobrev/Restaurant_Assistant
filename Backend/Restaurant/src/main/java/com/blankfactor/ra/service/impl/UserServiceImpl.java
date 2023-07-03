@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
         return appUserToUpdate;
     }
 
+    @Transactional
     @Override
     public void deleteUserById(int id) {
         List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
@@ -130,8 +131,8 @@ public class UserServiceImpl implements UserService {
             throw new UserException("UserRoles not found for User with id " + id);
         }
 
-        userRoleRepository.deleteAll(userRoles);
-        userRepository.deleteById(id);
+        userRoleRepository.softDeleteByUserRoles(userRoles);
+        userRepository.softDeleteUser(id);
     }
 
     private AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {

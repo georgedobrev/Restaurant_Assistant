@@ -42,6 +42,10 @@ public class AppUser extends Audit implements UserDetails {
     @Column(name = "active")
     private Boolean active = true;
 
+    @Builder.Default
+    @Column(name = "deleted")
+    private Boolean deleted = false;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //todo fix this

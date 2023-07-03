@@ -33,4 +33,8 @@ public class UserRole extends Audit {
     @Column(name = "role_type", nullable = false)
     @NotNull
     private RoleType roleType;
+
+    @Builder.Default
+    @Column(name = "deleted")
+    private Boolean deleted = false;
 }
