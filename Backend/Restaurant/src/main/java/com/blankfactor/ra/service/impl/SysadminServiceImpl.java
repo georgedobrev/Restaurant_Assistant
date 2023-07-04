@@ -50,7 +50,6 @@ public class SysadminServiceImpl implements SysadminService {
         sysadmin.setEmail(sysadminDto.getEmail());
         sysadmin.setName(sysadminDto.getName());
         sysadmin.setSurname(sysadminDto.getSurname());
-        sysadmin.setActive(!sysadmin.getActive());
 
         return sysadminRepository.save(sysadmin);
     }
