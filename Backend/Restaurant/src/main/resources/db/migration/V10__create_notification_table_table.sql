@@ -8,8 +8,8 @@ CREATE TABLE notification
     approved BIT,
     created_by INT NOT NULL,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET,
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime,
     FOREIGN KEY (app_table_id) REFERENCES app_table (id),
     FOREIGN KEY (app_user_id) REFERENCES app_user (id)
 );

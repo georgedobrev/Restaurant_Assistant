@@ -5,8 +5,8 @@ CREATE TABLE user_role
     role_type NVARCHAR(6) CHECK (role_type IN ('Admin', 'Waiter')) NOT NULL,
     created_by INT NOT NULL,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET,
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime,
     FOREIGN KEY (app_user_id) REFERENCES app_user (id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id),
     PRIMARY KEY (app_user_id, restaurant_id, role_type)

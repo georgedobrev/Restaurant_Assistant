@@ -10,8 +10,8 @@ CREATE TABLE app_table
     active BIT,
     created_by INT NOT NULL,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET,
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime,
     CONSTRAINT UQ_app_table_restaurant_id_table_number UNIQUE (restaurant_id, table_number),
     FOREIGN KEY (qr_id) REFERENCES qr_code (id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)

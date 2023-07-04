@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class UserTableServiceImpl implements UserTableService {
                 .waiterIds(waiterIds)
                 .appTable(appTable)
                 .virtualTable(virtualTable)
-                .startTime(new Date().toInstant())
+                .startTime(new Timestamp(System.currentTimeMillis()))
                 .build();
 
         if (appTable != null) {

@@ -13,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Getter
@@ -31,10 +32,10 @@ public class Audit {
     @CreatedDate
     @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
     @LastModifiedDate
     @JsonSerialize(using = InstantSerializer.class)
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 }

@@ -5,5 +5,5 @@ CREATE TABLE sysadmin
     name       VARCHAR(100),
     surname    VARCHAR(100),
     active     BIT,
-    created_at DATETIMEOFFSET
+    created_at smalldatetime
 )
