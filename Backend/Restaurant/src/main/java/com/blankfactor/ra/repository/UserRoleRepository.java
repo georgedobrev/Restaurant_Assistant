@@ -29,4 +29,8 @@ public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> 
     @Modifying
     @Query("UPDATE UserRole ur SET ur.deleted = true WHERE ur IN :userRoles")
     void softDeleteByUserRoles(Collection<UserRole> userRoles);
+
+    @Modifying
+    @Query("UPDATE UserRole ur SET ur.deleted = false WHERE ur IN :userRoles")
+    void softUpdateByUserRoles(Collection<UserRole> userRoles);
 }

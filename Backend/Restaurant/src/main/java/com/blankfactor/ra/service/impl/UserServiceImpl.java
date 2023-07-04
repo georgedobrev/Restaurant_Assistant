@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -29,11 +30,13 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Transactional
     @Override
     public AppUser createWaiter(WaiterDto waiterDto) {
         return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
     }
 
+    @Transactional
     @Override
     public AppUser createAdmin(AdminDto adminDto) {
         return createUserWithEmailAndRoleType(adminDto.getEmail(), RoleType.ADMIN, adminDto.getRestaurant());
@@ -49,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UpdateUserDto getUserById(int userId, int restaurantId) {
-        AppUser appUser = userRepository.findById(userId)
+        AppUser appUser = userRepository.findAppUserByIdAndDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
@@ -71,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser getUserByEmail(String email) {
-        return userRepository.findAppUserByEmail(email)
+        return userRepository.findAppUserByEmailAndDeletedIsFalse(email)
                 .orElseThrow(() -> new UserException("User with email " + email + " not found"));
     }
 
@@ -147,23 +150,38 @@ public class UserServiceImpl implements UserService {
         return appUser;
     }
 
-    private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
-        AppUser user = AppUser.builder()
-                .email(email)
-                .build();
+    @Transactional
+    public AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
+        Optional<AppUser> appUserByEmailAndDeletedIsTrue = userRepository.findAppUserByEmailAndDeletedIsTrue(email);
 
-        Restaurant restaurantRetrieved = restaurantRepository.findById(restaurant.getId())
-                .orElseThrow(() -> new RestaurantException("No restaurant with id " + restaurant.getId()));
+        if (appUserByEmailAndDeletedIsTrue.isPresent()) {
+            int appUserId = appUserByEmailAndDeletedIsTrue.get().getId();
 
-        UserRole userRole = UserRole.builder()
-                .appUser(user)
-                .roleType(roleType)
-                .restaurant(restaurantRetrieved)
-                .build();
+            List<UserRole> roles = userRoleRepository.findByAppUser_Id(appUserId);
 
-        AppUser savedAppUser = userRepository.save(user);
-        userRoleRepository.save(userRole);
+            userRoleRepository.softUpdateByUserRoles(roles);
 
-        return savedAppUser;
+            userRepository.softUpdateUser(appUserId);
+
+            return null;
+        } else {
+            AppUser user = AppUser.builder()
+                    .email(email)
+                    .build();
+
+            Restaurant restaurantRetrieved = restaurantRepository.findById(restaurant.getId())
+                    .orElseThrow(() -> new RestaurantException("No restaurant with id " + restaurant.getId()));
+
+            UserRole userRole = UserRole.builder()
+                    .appUser(user)
+                    .roleType(roleType)
+                    .restaurant(restaurantRetrieved)
+                    .build();
+
+            AppUser savedAppUser = userRepository.save(user);
+            userRoleRepository.save(userRole);
+
+            return savedAppUser;
+        }
     }
 }

@@ -12,7 +12,17 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<AppUser, Integer> {
     Optional<AppUser> findAppUserByEmail(String email);
 
+    Optional<AppUser> findAppUserByEmailAndDeletedIsFalse(String email);
+
+    Optional<AppUser> findAppUserByEmailAndDeletedIsTrue(String email);
+
+    Optional<AppUser> findAppUserByIdAndDeletedIsFalse(Integer id);
+
     @Modifying
     @Query("UPDATE AppUser u SET u.deleted = true WHERE u.id = :userId")
     void softDeleteUser(Integer userId);
+
+    @Modifying
+    @Query("UPDATE AppUser u SET u.deleted = false WHERE u.id = :userId")
+    void softUpdateUser(Integer userId);
 }
