@@ -1,8 +1,7 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.dto.AdminDto;
+import com.blankfactor.ra.dto.EmployeeDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
@@ -29,13 +28,24 @@ public class UserServiceImpl implements UserService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public AppUser createWaiter(WaiterDto waiterDto) {
-        return createUserWithEmailAndRoleType(waiterDto.getEmail(), RoleType.WAITER, waiterDto.getRestaurant());
-    }
+    public AppUser createEmployee(EmployeeDto employeeDto) {
+        AppUser user = AppUser.builder()
+                .email(employeeDto.getEmail())
+                .build();
 
-    @Override
-    public AppUser createAdmin(AdminDto adminDto) {
-        return createUserWithEmailAndRoleType(adminDto.getEmail(), RoleType.ADMIN, adminDto.getRestaurant());
+        Restaurant restaurantRetrieved = restaurantRepository.findById(employeeDto.getRestaurant().getId())
+                .orElseThrow(() -> new RestaurantException("No restaurant with id " + employeeDto.getRestaurant().getId()));
+
+        UserRole userRole = UserRole.builder()
+                .appUser(user)
+                .roleType(employeeDto.getRoleType())
+                .restaurant(restaurantRetrieved)
+                .build();
+
+        AppUser savedAppUser = userRepository.save(user);
+        userRoleRepository.save(userRole);
+
+        return savedAppUser;
     }
 
     @Override
@@ -143,25 +153,5 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return appUser;
-    }
-
-    private AppUser createUserWithEmailAndRoleType(String email, RoleType roleType, Restaurant restaurant) {
-        AppUser user = AppUser.builder()
-                .email(email)
-                .build();
-
-        Restaurant restaurantRetrieved = restaurantRepository.findById(restaurant.getId())
-                .orElseThrow(() -> new RestaurantException("No restaurant with id " + restaurant.getId()));
-
-        UserRole userRole = UserRole.builder()
-                .appUser(user)
-                .roleType(roleType)
-                .restaurant(restaurantRetrieved)
-                .build();
-
-        AppUser savedAppUser = userRepository.save(user);
-        userRoleRepository.save(userRole);
-
-        return savedAppUser;
     }
 }

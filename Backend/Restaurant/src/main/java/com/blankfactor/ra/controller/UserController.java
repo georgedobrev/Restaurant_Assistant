@@ -1,9 +1,8 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.AdminDto;
+import com.blankfactor.ra.dto.EmployeeDto;
 import com.blankfactor.ra.dto.UpdateUserDto;
 import com.blankfactor.ra.dto.UserEmailDto;
-import com.blankfactor.ra.dto.WaiterDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,20 +20,12 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/waiter")
-    @Operation(summary = "Create waiter")
-    public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
-        var createdWaiter = userService.createWaiter(waiterDto);
+    @PostMapping("/employee")
+    @Operation(summary = "Create employee")
+    public ResponseEntity<AppUser> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+        var createdEmployee = userService.createEmployee(employeeDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
-    }
-
-    @PostMapping("/admin")
-    @Operation(summary = "Create admin")
-    public ResponseEntity<AppUser> createAdmin(@Valid @RequestBody AdminDto adminDto) {
-        var createdAdmin = userService.createAdmin(adminDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
     @PostMapping("/role")
