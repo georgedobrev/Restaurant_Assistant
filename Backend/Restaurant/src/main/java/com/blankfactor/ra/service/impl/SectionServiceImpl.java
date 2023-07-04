@@ -67,23 +67,6 @@ public class SectionServiceImpl implements SectionService {
         return allSections;
     }
 
-    @Override
-    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
-        Section existingSection = getSectionById(sectionId);
-
-        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
-        existingSection.setSectionName(sectionDto.getSectionName());
-        existingSection.setTableNumbers(tableNumbers);
-
-        return sectionRepository.save(existingSection);
-    }
-
-    @Override
-    public void deleteSectionById(Integer sectionId) {
-        Section section = getSectionById(sectionId);
-        sectionRepository.deleteById(sectionId);
-    }
-
     public Section getSectionById(Integer sectionId) {
         return sectionRepository.findById(sectionId).orElseThrow(() -> new SectionException("Section not found"));
     }
@@ -99,5 +82,22 @@ public class SectionServiceImpl implements SectionService {
                         .map(Integer::valueOf)
                         .anyMatch(num -> num == currentTableNum))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
+        Section existingSection = getSectionById(sectionId);
+
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+        existingSection.setSectionName(sectionDto.getSectionName());
+        existingSection.setTableNumbers(tableNumbers);
+
+        return sectionRepository.save(existingSection);
+    }
+
+    @Override
+    public void deleteSectionById(Integer sectionId) {
+        Section section = getSectionById(sectionId);
+        sectionRepository.deleteById(sectionId);
     }
 }

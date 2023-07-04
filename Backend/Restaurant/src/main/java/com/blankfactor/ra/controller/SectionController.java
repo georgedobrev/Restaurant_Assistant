@@ -39,7 +39,6 @@ public class SectionController {
     @PostMapping("/addWaiter")
     @Operation(summary = "Assign waiter to a section with a shift")
     public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
-        // TODO Null Null Null
         var createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
     }

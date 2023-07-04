@@ -33,4 +33,8 @@ public class Section extends Audit {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    @Builder.Default
+    @Column(name = "deleted")
+    private boolean deleted = false;
 }

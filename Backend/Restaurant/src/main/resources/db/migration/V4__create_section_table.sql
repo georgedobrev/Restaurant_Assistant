@@ -4,6 +4,7 @@ CREATE TABLE section
     section_name NVARCHAR(50),
     table_numbers NVARCHAR(30),
     restaurant_id INT,
+    deleted BIT,
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,

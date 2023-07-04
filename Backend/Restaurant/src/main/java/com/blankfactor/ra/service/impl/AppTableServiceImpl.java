@@ -80,4 +80,3 @@ public class AppTableServiceImpl implements AppTableService {
                 .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
     }
 }
-
