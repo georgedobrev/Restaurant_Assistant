@@ -35,12 +35,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/{restaurantId}")
-    @Operation(summary = "Get user by id")
-    public ResponseEntity<GetUserResponseDto> getUserById(@PathVariable int userId,
-                                                     @PathVariable int restaurantId) {
-        var appUser = userService.getUserById(userId, restaurantId);
+    @Operation(summary = "Get employee details")
+    public ResponseEntity<GetEmployeeResponseDto> getEmployeeById(@PathVariable int userId,
+                                                                  @PathVariable int restaurantId) {
+        var employee = userService.getEmployeeById(userId, restaurantId);
 
-        return ResponseEntity.ok(appUser);
+        return ResponseEntity.ok(employee);
     }
 
     @GetMapping("")
@@ -61,15 +61,15 @@ public class UserController {
 
     @PutMapping("/details")
     @Operation(summary = "Update user details")
-    public ResponseEntity<AppUser> updateUserDetails(@RequestBody UpdateUserDetailsDto updateUserDetailsDto) {
-        var updatedAppUser = userService.updateUserDetails(updateUserDetailsDto);
+    public ResponseEntity<AppUser> updateUserInfo(@RequestBody UpdateUserDetailsDto updateUserDetailsDto) {
+        var updatedAppUser = userService.updateUserInfo(updateUserDetailsDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }
 
     @PutMapping("/role")
     @Operation(summary = "Update user role")
-    public ResponseEntity<AppUser> updateUserDetails(@RequestBody UpdateUserRoleDto updateUserRoleDto) {
+    public ResponseEntity<AppUser> updateUserRole(@RequestBody UpdateUserRoleDto updateUserRoleDto) {
         var updatedAppUser = userService.updateUserRole(updateUserRoleDto);
 
         return ResponseEntity.ok(updatedAppUser);

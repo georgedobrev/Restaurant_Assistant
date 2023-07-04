@@ -15,7 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @Data
 @JsonInclude(NON_NULL)
-public class GetUserResponseDto {
+public class GetEmployeeResponseDto {
     private String email;
     private String name;
     private String surname;

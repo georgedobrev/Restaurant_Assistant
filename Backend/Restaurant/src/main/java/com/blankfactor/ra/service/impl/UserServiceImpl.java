@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetUserResponseDto getUserById(int userId, int restaurantId) {
+    public GetEmployeeResponseDto getEmployeeById(int userId, int restaurantId) {
         AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
@@ -67,14 +67,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserRoleException("No user/restaurant found"));
 
 
-        GetUserResponseDto getUserResponseDto = GetUserResponseDto.builder()
+        GetEmployeeResponseDto getEmployeeResponseDto = GetEmployeeResponseDto.builder()
                 .email(appUser.getEmail())
                 .name(appUser.getName())
                 .surname(appUser.getSurname())
                 .roleType(userRole.getRoleType())
                 .build();
 
-        return getUserResponseDto;
+        return getEmployeeResponseDto;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public AppUser updateUserDetails(UpdateUserDetailsDto updateUserDetailsDto) {
+    public AppUser updateUserInfo(UpdateUserDetailsDto updateUserDetailsDto) {
         AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserDetailsDto.getEmail())
                 .orElseThrow(() -> new UserException("User with email " + updateUserDetailsDto.getEmail() + " not found"));
 

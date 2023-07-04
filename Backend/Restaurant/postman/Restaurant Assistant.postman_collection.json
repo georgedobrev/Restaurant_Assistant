@@ -1100,6 +1100,25 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Delete Tenant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/tenants/3",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tenants",
+                "3"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

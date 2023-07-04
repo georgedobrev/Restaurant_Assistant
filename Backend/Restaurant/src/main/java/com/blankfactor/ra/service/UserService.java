@@ -12,11 +12,11 @@ public interface UserService {
 
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
 
-    GetUserResponseDto getUserById(int id, int restaurantId);
+    GetEmployeeResponseDto getEmployeeById(int id, int restaurantId);
 
     AppUser getUserByEmail(String email);
 
-    AppUser updateUserDetails(UpdateUserDetailsDto updateUserDetailsDto);
+    AppUser updateUserInfo(UpdateUserDetailsDto updateUserDetailsDto);
 
     AppUser updateUserRole(UpdateUserRoleDto updateUserRoleDto);
 

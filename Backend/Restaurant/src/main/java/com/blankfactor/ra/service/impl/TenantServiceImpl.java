@@ -57,4 +57,9 @@ public class TenantServiceImpl implements TenantService {
 
         return tenantRepository.save(tenantToUpdate);
     }
+
+    @Override
+    public void deleteTenant(int tenantId) {
+        tenantRepository.deleteById(tenantId);
+    }
 }
