@@ -92,45 +92,6 @@
             }
           },
           "response": []
-        },
-        {
-          "name": "deleteSysadminById",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/sysadmins/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "sysadmins",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteAllSysadmins",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/sysadmins/all/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "sysadmins",
-                "all",
-                "1"
-              ]
-            }
-          },
-          "response": []
         }
       ]
     },
@@ -257,6 +218,35 @@
               "port": "8080",
               "path": [
                 "restaurants",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete restaurant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4NDEyOTQzLCJleHAiOjIwNDg0MTI5NDN9.G8CqA2_OnV2rpqtJTe3DaN6R24OoIEDY_AFS234KWek",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/restaurant/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "restaurant",
                 "1"
               ]
             }
@@ -796,13 +786,13 @@
       "name": "Users",
       "item": [
         {
-          "name": "Create Waiter",
+          "name": "Create Employee",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"waiter111@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -810,7 +800,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/waiter",
+              "raw": "http://localhost:8080/users/employee",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -818,36 +808,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "waiter"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create Admin",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/admin",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "admin"
+                "employee"
               ]
             }
           },
@@ -955,13 +916,13 @@
           "response": []
         },
         {
-          "name": "Update User",
+          "name": "Update User Details",
           "request": {
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"name\": \"JohnyJohnyeeee\",\n  \"surname\": \"Doe\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"name\": \"JohnyJohnyeeee\",\n  \"surname\": \"Doe\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -969,14 +930,44 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users",
+              "raw": "http://localhost:8080/users/details",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "users"
+                "users",
+                "details"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/role",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "role"
               ]
             }
           },
@@ -1105,43 +1096,6 @@
               "path": [
                 "tenants",
                 "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteTenant",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/tenants/3",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "tenants",
-                "3"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteAllTenants",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/tenants",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "tenants"
               ]
             }
           },
