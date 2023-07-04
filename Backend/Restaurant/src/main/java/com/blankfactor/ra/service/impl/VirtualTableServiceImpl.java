@@ -91,7 +91,7 @@ public class VirtualTableServiceImpl implements VirtualTableService {
     private void checkIfTableNumbersExistsAndSetVirtualTable(List<Integer> tableNumbers, Integer restaurantId, boolean isVirtual) {
         for (int tableNumber : tableNumbers) {
 
-            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumberAndDeletedIsFalse(restaurantId, tableNumber)
                     .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
 
             if (isVirtual) {

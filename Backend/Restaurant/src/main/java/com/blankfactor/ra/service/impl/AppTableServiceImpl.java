@@ -11,6 +11,7 @@ import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.RestaurantService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -28,12 +32,13 @@ public class AppTableServiceImpl implements AppTableService {
     private final QRCodeService qrCodeService;
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
+    private final ObjectMapper objectMapper;
 
+    @Transactional
     @Override
-    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) {
+    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> appTableDtos) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
-
-        appTables.forEach(t -> t.setRestaurant(restaurant));
+        List<AppTable> appTables = createTablesFromDto(restaurant, appTableDtos);
 
         try {
             qrCodeService.createQRCodesForTables(restaurant, appTables);
@@ -46,10 +51,39 @@ public class AppTableServiceImpl implements AppTableService {
         return appTableRepository.saveAll(appTables);
     }
 
+    private List<AppTable> createTablesFromDto(Restaurant restaurant, List<AppTableDto> appTableDtos) {
+        List<AppTable> appTables = new ArrayList<>();
+
+        for (AppTableDto tableDto : appTableDtos) {
+            Integer tableNumber = tableDto.getTableNumber();
+
+            Optional<AppTable> appTable = appTableRepository
+                    .findByRestaurantIdAndTableNumberAndDeletedIsTrue(restaurant.getId(), tableNumber);
+
+            if (appTable.isEmpty()) {
+                AppTable table = objectMapper.convertValue(tableDto, AppTable.class);
+                table.setRestaurant(restaurant);
+                appTables.add(table);
+            } else {
+                appTable.ifPresent(table -> {
+                    table.setCapacity(tableDto.getCapacity());
+                    table.setDeleted(false);
+                    appTableRepository.save(table);
+                });
+            }
+        }
+        return appTables;
+    }
+
     @Override
     public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
-        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+        return appTableRepository.findByRestaurantIdAndTableNumberAndDeletedIsFalse(restaurantId, tableNumber)
                 .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
+    }
+
+    @Override
+    public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
+        return appTableRepository.findByRestaurantIdAndDeletedIsFalse(restaurantId);
     }
 
     @Transactional
@@ -60,16 +94,10 @@ public class AppTableServiceImpl implements AppTableService {
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
         existingTable.setCapacity(updatedTableDto.getCapacity());
-        existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
 
         appTableRepository.save(existingTable);
 
         return existingTable;
-    }
-
-    @Override
-    public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
-        return appTableRepository.findByRestaurantIdAndDeletedIsFalse(restaurantId);
     }
 
     @Transactional

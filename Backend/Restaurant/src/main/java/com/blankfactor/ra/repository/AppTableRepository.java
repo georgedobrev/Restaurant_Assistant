@@ -12,12 +12,11 @@ import java.util.Optional;
 
 @Repository
 public interface AppTableRepository extends JpaRepository<AppTable, Integer> {
-
     List<AppTable> findByRestaurantIdAndDeletedIsFalse(Integer restaurantId);
 
-    List<AppTable> findByRestaurantId(Integer restaurantId);
+    Optional<AppTable> findByRestaurantIdAndTableNumberAndDeletedIsTrue(Integer restaurantId, Integer tableNumber);
 
-    Optional<AppTable> findByRestaurantIdAndTableNumber(Integer restaurantId, Integer tableNumber);
+    Optional<AppTable> findByRestaurantIdAndTableNumberAndDeletedIsFalse(Integer restaurantId, Integer tableNumber);
 
     Optional<AppTable> findByQrId(Integer qrId);
 

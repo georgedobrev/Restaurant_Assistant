@@ -21,8 +21,8 @@ public class AppTableController {
     @PostMapping()
     @Operation(summary = "Create tables for existing restaurant")
     public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
-                                                                    @RequestBody List<AppTable> appTables) {
-        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTables);
+                                                                    @RequestBody List<AppTableDto> appTableDtos) {
+        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTableDtos);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }
