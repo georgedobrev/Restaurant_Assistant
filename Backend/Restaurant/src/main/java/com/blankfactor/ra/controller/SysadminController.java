@@ -42,16 +42,4 @@ public class SysadminController {
         var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
         return ResponseEntity.ok(sysadmin);
     }
-
-    @DeleteMapping("/{sysadminId}")
-    public ResponseEntity<?> deleteSysadmin(@PathVariable("sysadminId") int sysadminId) {
-        sysadminService.deleteSysadminById(sysadminId);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping()
-    public ResponseEntity<?> deleteAllSysadmins() {
-        sysadminService.deleteAll();
-        return ResponseEntity.ok().build();
-    }
 }

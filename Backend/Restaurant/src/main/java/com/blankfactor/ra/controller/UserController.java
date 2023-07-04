@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @PutMapping("")
-    @Operation(summary = "Update user by email")
+    @Operation(summary = "Update user by user details")
     public ResponseEntity<AppUser> updateUserByEmail(@RequestBody UpdateUserDto updateUserDto) {
         var updatedAppUser = userService.updateUserByEmail(updateUserDto);
 

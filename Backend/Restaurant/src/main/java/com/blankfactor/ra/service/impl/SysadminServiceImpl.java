@@ -43,6 +43,11 @@ public class SysadminServiceImpl implements SysadminService {
     }
 
     @Override
+    public List<Sysadmin> getAllSysadmins() {
+        return sysadminRepository.findAll();
+    }
+
+    @Override
     public Sysadmin updateSysadminById(int sysadminId, SysadminDto sysadminDto) {
         Sysadmin sysadmin = sysadminRepository.findById(sysadminId)
                 .orElseThrow(() -> new SysadminException("Sysadmin" + sysadminId + "not found."));
@@ -53,20 +58,5 @@ public class SysadminServiceImpl implements SysadminService {
         sysadmin.setActive(!sysadmin.getActive());
 
         return sysadminRepository.save(sysadmin);
-    }
-
-    @Override
-    public List<Sysadmin> getAllSysadmins() {
-        return sysadminRepository.findAll();
-    }
-
-    @Override
-    public void deleteSysadminById(int sysadminId) {
-        sysadminRepository.deleteById(sysadminId);
-    }
-
-    @Override
-    public void deleteAll() {
-        sysadminRepository.deleteAll();
     }
 }

@@ -14,8 +14,4 @@ public interface SysadminService {
     List<Sysadmin> getAllSysadmins();
 
     Sysadmin updateSysadminById(int sysadminId, SysadminDto sysadminDto) throws SysadminException;
-
-    void deleteSysadminById(int sysadminId);
-
-    void deleteAll();
 }

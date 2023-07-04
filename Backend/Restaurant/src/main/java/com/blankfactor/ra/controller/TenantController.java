@@ -48,18 +48,4 @@ public class TenantController {
 
         return ResponseEntity.ok(tenant);
     }
-
-    @DeleteMapping("/{tenantId}")
-    public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") int tenantId) {
-        tenantService.deleteTenant(tenantId);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping()
-    public ResponseEntity<?> deleteAll() {
-        tenantService.deleteAll();
-
-        return ResponseEntity.ok().build();
-    }
 }
