@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.dto.EmployeeDto;
-import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserDto getUserById(int userId, int restaurantId) {
+    public GetUserResponseDto getUserById(int userId, int restaurantId) {
         AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
@@ -68,14 +67,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserRoleException("No user/restaurant found"));
 
 
-        UpdateUserDto updateUserDto = UpdateUserDto.builder()
+        GetUserResponseDto getUserResponseDto = GetUserResponseDto.builder()
                 .email(appUser.getEmail())
                 .name(appUser.getName())
                 .surname(appUser.getSurname())
                 .roleType(userRole.getRoleType())
                 .build();
 
-        return updateUserDto;
+        return getUserResponseDto;
     }
 
     @Override
@@ -97,32 +96,39 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public AppUser updateUserByEmail(UpdateUserDto updateUserDto) {
-        AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserDto.getEmail())
-                .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
+    public AppUser updateUserDetails(UpdateUserDetailsDto updateUserDetailsDto) {
+        AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserDetailsDto.getEmail())
+                .orElseThrow(() -> new UserException("User with email " + updateUserDetailsDto.getEmail() + " not found"));
 
-        appUserToUpdate.setName(updateUserDto.getName());
-        appUserToUpdate.setSurname(updateUserDto.getSurname());
+        appUserToUpdate.setName(updateUserDetailsDto.getName());
+        appUserToUpdate.setSurname(updateUserDetailsDto.getSurname());
 
-        userRepository.save(appUserToUpdate);
+        return userRepository.save(appUserToUpdate);
+    }
+
+    @Transactional
+    @Override
+    public AppUser updateUserRole(UpdateUserRoleDto updateUserRoleDto) {
+        AppUser appUserToUpdate = userRepository.findAppUserByEmail(updateUserRoleDto.getEmail())
+                .orElseThrow(() -> new UserException("User with email " + updateUserRoleDto.getEmail() + " not found"));
 
         RoleType oldRoleType;
-        if (updateUserDto.getRoleType() != null) {
-            if (updateUserDto.getRoleType() == RoleType.ADMIN) {
+        if (updateUserRoleDto.getRoleType() != null) {
+            if (updateUserRoleDto.getRoleType() == RoleType.ADMIN) {
                 oldRoleType = RoleType.WAITER;
             } else {
                 oldRoleType = RoleType.ADMIN;
             }
             UserRole userRoleToDelete = userRoleRepository
-                    .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserDto.getRestaurant(), oldRoleType)
+                    .findByAppUserAndRestaurantAndRoleType(appUserToUpdate, updateUserRoleDto.getRestaurant(), oldRoleType)
                     .orElseThrow(() -> new UserException("No such record in UserRole table"));
 
             userRoleRepository.delete(userRoleToDelete);
 
             UserRole userRoleToUpdate = UserRole.builder()
                     .appUser(appUserToUpdate)
-                    .restaurant(updateUserDto.getRestaurant())
-                    .roleType(updateUserDto.getRoleType())
+                    .restaurant(updateUserRoleDto.getRestaurant())
+                    .roleType(updateUserRoleDto.getRoleType())
                     .build();
 
             userRoleRepository.save(userRoleToUpdate);

@@ -1,8 +1,6 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.EmployeeDto;
-import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserEmailDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +36,7 @@ public class UserController {
 
     @GetMapping("/{userId}/{restaurantId}")
     @Operation(summary = "Get user by id")
-    public ResponseEntity<UpdateUserDto> getUserById(@PathVariable int userId,
+    public ResponseEntity<GetUserResponseDto> getUserById(@PathVariable int userId,
                                                      @PathVariable int restaurantId) {
         var appUser = userService.getUserById(userId, restaurantId);
 
@@ -61,10 +59,18 @@ public class UserController {
         return ResponseEntity.ok(admins);
     }
 
-    @PutMapping("")
-    @Operation(summary = "Update user by user details")
-    public ResponseEntity<AppUser> updateUserByEmail(@RequestBody UpdateUserDto updateUserDto) {
-        var updatedAppUser = userService.updateUserByEmail(updateUserDto);
+    @PutMapping("/details")
+    @Operation(summary = "Update user details")
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody UpdateUserDetailsDto updateUserDetailsDto) {
+        var updatedAppUser = userService.updateUserDetails(updateUserDetailsDto);
+
+        return ResponseEntity.ok(updatedAppUser);
+    }
+
+    @PutMapping("/role")
+    @Operation(summary = "Update user role")
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody UpdateUserRoleDto updateUserRoleDto) {
+        var updatedAppUser = userService.updateUserRole(updateUserRoleDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }

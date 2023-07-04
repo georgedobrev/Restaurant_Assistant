@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service;
 
-import com.blankfactor.ra.dto.EmployeeDto;
-import com.blankfactor.ra.dto.UpdateUserDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.model.AppUser;
 
 import java.util.List;
@@ -13,11 +12,13 @@ public interface UserService {
 
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
 
-    UpdateUserDto getUserById(int id, int restaurantId);
+    GetUserResponseDto getUserById(int id, int restaurantId);
 
     AppUser getUserByEmail(String email);
 
-    AppUser updateUserByEmail(UpdateUserDto updateUserDto);
+    AppUser updateUserDetails(UpdateUserDetailsDto updateUserDetailsDto);
+
+    AppUser updateUserRole(UpdateUserRoleDto updateUserRoleDto);
 
     void deleteUserById(int id);
 }
