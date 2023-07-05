@@ -43,7 +43,7 @@ public class SysadminController {
 
     @PutMapping("/{sysadminId}")
     @Operation(summary = "Update sysadmin")
-    public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") int sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
+    public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") Integer sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
         var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
         return ResponseEntity.ok(sysadmin);
     }

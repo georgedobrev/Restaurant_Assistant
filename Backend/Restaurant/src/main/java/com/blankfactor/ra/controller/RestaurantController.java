@@ -37,7 +37,7 @@ public class RestaurantController {
 
     @GetMapping("/admin/{adminId}")
     @Operation(summary = "Get all restaurants by specific admin")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("adminId") int userId) {
+    public ResponseEntity<List<Restaurant>> getAllRestaurantsByAdmin(@PathVariable("adminId") Integer userId) {
         var restaurants = restaurantService.getAllRestaurantsByAdmin(userId);
 
         return ResponseEntity.ok(restaurants);

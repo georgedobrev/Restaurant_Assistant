@@ -29,7 +29,7 @@ public class TenantController {
 
     @GetMapping("/{tenantId}")
     @Operation(summary = "Get tenant by id")
-    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenantId") int tenantId) throws Exception {
+    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenantId") Integer tenantId) throws Exception {
         var tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
@@ -45,7 +45,7 @@ public class TenantController {
 
     @PutMapping("/{userId}")
     @Operation(summary = "Update tenant")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") int userId,
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") Integer userId,
                                                @RequestBody TenantDto tenantDto) {
         var tenant = tenantService.updateTenant(userId, tenantDto);
 
@@ -54,7 +54,7 @@ public class TenantController {
 
     @DeleteMapping("/{tenantId}")
     @Operation(summary = "Delete tenant by id")
-    public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") int tenantId) {
+    public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") Integer tenantId) {
         tenantService.deleteTenant(tenantId);
 
         return ResponseEntity.ok().build();

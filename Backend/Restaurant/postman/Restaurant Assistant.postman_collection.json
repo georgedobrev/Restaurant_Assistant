@@ -671,7 +671,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n     \"appTable\": {\n    \"id\": 5\n  },\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
+              "raw": "{\n    \"appTable\": {\n    \"id\": 5\n  },\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -697,19 +697,21 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notifications/restaurants?restaurant_Id=1",
+              "raw": "localhost:8080/notifications/restaurants/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "notifications",
-                "restaurants"
+                "restaurants",
+                "1"
               ],
               "query": [
                 {
                   "key": "restaurant_Id",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 }
               ]
             }
@@ -722,19 +724,21 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notifications/tables?table_Id=1",
+              "raw": "localhost:8080/notifications/tables/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "notifications",
-                "tables"
+                "tables",
+                "1"
               ],
               "query": [
                 {
                   "key": "table_Id",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 }
               ]
             }

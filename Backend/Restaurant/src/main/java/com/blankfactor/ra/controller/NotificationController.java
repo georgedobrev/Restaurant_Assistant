@@ -26,17 +26,17 @@ public class NotificationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 
-    @GetMapping("/restaurants")
+    @GetMapping("/restaurants/{restaurantId}")
     @Operation(summary = "Get all notifications for a specific restaurant")
-    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@RequestParam("restaurant_Id") int restaurantId) {
+    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable Integer restaurantId) {
         var notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(notifications);
     }
 
-    @GetMapping("/tables")
+    @GetMapping("/tables/{tableId}")
     @Operation(summary = "Get all notifications for a specific table")
-    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@RequestParam("table_Id") int tableId) {
+    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@PathVariable Integer tableId) {
         var notifications = notificationService.getAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok(notifications);
@@ -44,7 +44,7 @@ public class NotificationController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update notification by notificationId")
-    public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId) throws Exception {
+    public ResponseEntity<Notification> updateNotification(@PathVariable("id") Integer notificationId) throws Exception {
         var notification = notificationService.updateNotification(notificationId);
 
         return ResponseEntity.ok(notification);
@@ -52,7 +52,7 @@ public class NotificationController {
 
     @DeleteMapping("/all/{appTableId}")
     @Operation(summary = "Delete all notifications by given table id")
-    public ResponseEntity<?> deleteAllNotifications(@PathVariable("appTableId") int tableId) {
+    public ResponseEntity<?> deleteAllNotifications(@PathVariable("appTableId") Integer tableId) {
         notificationService.deleteAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok().build();

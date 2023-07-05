@@ -36,8 +36,8 @@ public class UserController {
 
     @GetMapping("/{userId}/{restaurantId}")
     @Operation(summary = "Get employee details")
-    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable int userId,
-                                                               @PathVariable int restaurantId) {
+    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Integer userId,
+                                                               @PathVariable Integer restaurantId) {
         var employee = userService.getEmployeeById(userId, restaurantId);
 
         return ResponseEntity.ok(employee);
@@ -53,7 +53,7 @@ public class UserController {
 
     @GetMapping("/admins/{restaurantId}")
     @Operation(summary = "Get all admins for a specific restaurant")
-    public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         var admins = userService.getAllAdminsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(admins);
@@ -77,7 +77,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @Operation(summary = "Delete user by id")
-    public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
+    public ResponseEntity<?> deleteUserById(@PathVariable Integer userId) {
         userService.deleteUserById(userId);
 
         return ResponseEntity.ok().build();
