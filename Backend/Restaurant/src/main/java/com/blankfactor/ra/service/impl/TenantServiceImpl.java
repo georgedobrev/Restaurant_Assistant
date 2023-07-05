@@ -44,13 +44,13 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int userId, TenantDto tenantDto) {
+    public Tenant updateTenant(int tenantId, TenantDto tenantDto) {
 
-        AppUser appUserToUpdate = userRepository.findById(userId)
-                .orElseThrow(() -> new UserException("User with id " + userId + "not found."));
+        AppUser appUserToUpdate = userRepository.findById(tenantId)
+                .orElseThrow(() -> new UserException("User with id " + tenantId + " not found."));
 
         Tenant tenantToUpdate = tenantRepository.findTenantByEmail(appUserToUpdate.getEmail())
-                .orElseThrow(() -> new TenantException("Tenant with id " + userId + "not found."));
+                .orElseThrow(() -> new TenantException("Tenant with id " + tenantId + " not found."));
 
         tenantToUpdate.setEmail(tenantDto.getEmail());
         appUserToUpdate.setEmail(tenantDto.getEmail());
