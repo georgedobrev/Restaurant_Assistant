@@ -30,9 +30,9 @@ const Navigation = () => (
           <span className={styles["nav-link-name"]}>Tables</span>
         </Link>
 
-        <Link to="/reports" className={styles["nav-link"]}>
+        <Link to="/sections" className={styles["nav-link"]}>
           <i className="fa-solid fa-file-lines"></i>
-          <span className={styles["nav-link-name"]}>Reports</span>
+          <span className={styles["nav-link-name"]}>Sections</span>
         </Link>
 
         <Link to="/transactions" className={styles["nav-link"]}>

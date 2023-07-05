@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import Sidebar from "./components/sidebar/SideBar";
 import Dashboard from "./screens/admin/Dashboard/Dashboard";
-import Reports from "./screens/admin/Reports/Reports";
+import TablesSection from "./screens/admin/sections/TableSections";
 import Restaurant from "./screens/admin/restaurants/Restaurant";
 import Transactions from "./screens/admin/Transactions/Transactions";
 import Users from "./screens/admin/employees/Employees";
@@ -40,7 +40,7 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/restaurant" element={<Restaurant />} />
             <Route path="/tables" element={<TablesList />} />
-            <Route path="/reports" element={<Reports />} />
+            <Route path="/sections" element={<TablesSection />} />
             <Route path="/transactions" element={<Transactions />} />
           </Routes>
         </div>

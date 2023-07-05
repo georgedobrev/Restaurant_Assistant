@@ -19,5 +19,8 @@
   "tenantsEndpoint": "tenant",
   
   "tablesEndpoint": "tables/",
-  "allTables": "/all"
+  "allTables": "/all",
+
+  "section": "section",
+  "allSection": "/getAll/"
 }
