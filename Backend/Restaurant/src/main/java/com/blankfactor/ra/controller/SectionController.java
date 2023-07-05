@@ -56,4 +56,10 @@ public class SectionController {
         sectionService.deleteSectionById(sectionId);
         return ResponseEntity.ok().build();
     }
+    @DeleteMapping("/delete/{sectionId}")
+    @Operation(summary = "Delete section by id")
+    public ResponseEntity<?> deleteSection(@PathVariable("sectionId") Integer sectionId) {
+        sectionService.deleteSection(sectionId);
+        return ResponseEntity.ok().build();
+    }
 }

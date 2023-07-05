@@ -16,4 +16,5 @@ public interface SectionService {
     Section updateSectionById(Integer sectionId, SectionDto sectionDto);
 
     void deleteSectionById(Integer sectionId);
+    void deleteSection(Integer sectionId);
 }

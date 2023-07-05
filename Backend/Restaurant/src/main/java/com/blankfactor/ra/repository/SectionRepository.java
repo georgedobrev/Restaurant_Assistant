@@ -30,8 +30,8 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
     Optional<Section> findByRestaurantIdAndSectionNameAndDeletedIsTrue(Integer restaurantId, String sectionName);
 
     @Modifying
-    @Query("DELETE FROM Section s WHERE s = :section")
-    void deleteSection(@Param("section") Section section);
+    @Query("DELETE FROM Section s WHERE s.id = :sectionId")
+    void deleteSection(Integer sectionId);
     @Modifying
     @Query("UPDATE Section s SET s.deleted = true WHERE s.id = :sectionId")
     void softDeleteSection(Integer sectionId);

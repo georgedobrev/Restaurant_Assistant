@@ -11,12 +11,10 @@ import com.blankfactor.ra.service.SectionService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +28,10 @@ public class SectionServiceImpl implements SectionService {
         Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
         String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
 
-        Optional<Section> firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers);
-        Optional<Section> secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName());
+        Section firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers).orElse(null);
+        Section secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName()).orElse(null);
 
-        if (firstSection.isEmpty() && secondSection.isEmpty()) {
+        if (firstSection == null && secondSection == null) {
             Section section = Section.builder()
                     .sectionName(sectionDto.getSectionName())
                     .restaurant(restaurant)
@@ -42,28 +40,24 @@ public class SectionServiceImpl implements SectionService {
             return sectionRepository.save(section);
         }
 
-        Section section;
-        if (firstSection.isPresent()) {
-            section = firstSection.get();
-            section.setSectionName(sectionDto.getSectionName());
-            section.setDeleted(false);
+        if (firstSection != null) {
+            firstSection.setSectionName(sectionDto.getSectionName());
+            firstSection.setDeleted(false);
 
-            if (secondSection.isPresent()) {
-                sectionRepository.delete(secondSection.get());
+            if (secondSection != null) {
+                deleteSection(secondSection.getId());
             }
-
+            return sectionRepository.save(firstSection);
         } else {
-            section = secondSection.get();
-            section.setTableNumbers(tableNumbers);
-            section.setDeleted(false);
+            secondSection.setTableNumbers(tableNumbers);
+            secondSection.setDeleted(false);
+            return sectionRepository.save(secondSection);
         }
-        return sectionRepository.save(section);
-
-        // TODO research how to implement object mapper to create section
-    }
-
-    private void deleteSection(Section section) {
-        sectionRepository.delete(section);
+        // TODO: Research entityManager
+//        this.entityManager.delete(entity);
+//        Entity e = this.entityManager.findById(id)
+//        otherEntity.setId(entity.getId());
+//        this.entityManager.save(otherEntity);
     }
 
     private String mapTableNumbersToString(List<AppTable> tables) {
@@ -106,6 +100,12 @@ public class SectionServiceImpl implements SectionService {
         existingSection.setTableNumbers(tableNumbers);
 
         return sectionRepository.save(existingSection);
+    }
+
+    @Override
+    public void deleteSection(Integer sectionId) {
+        Section section = getSectionById(sectionId);
+        sectionRepository.deleteById(sectionId);
     }
 
     @Transactional
