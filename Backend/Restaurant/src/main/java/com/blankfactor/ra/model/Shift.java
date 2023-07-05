@@ -43,4 +43,8 @@ public class Shift extends Audit {
     @Enumerated(EnumType.STRING)
     @Column(name = "day_to", nullable = false)
     private DayType dayTo;
+
+    @Builder.Default
+    @Column(name = "deleted")
+    private boolean deleted = false;
 }

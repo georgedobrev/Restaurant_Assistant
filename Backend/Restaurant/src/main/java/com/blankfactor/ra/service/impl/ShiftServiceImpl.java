@@ -54,6 +54,6 @@ public class ShiftServiceImpl implements ShiftService {
     @Override
     public void deleteShiftById(Integer shiftId) throws ShiftException {
         Shift shift = shiftRepository.findById(shiftId).orElseThrow(() -> new ShiftException("Shift not found"));
-        shiftRepository.delete(shift);
+        shiftRepository.softDeleteShift(shiftId);
     }
 }

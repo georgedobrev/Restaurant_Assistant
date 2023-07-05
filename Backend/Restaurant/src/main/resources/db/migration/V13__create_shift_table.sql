@@ -6,6 +6,7 @@ CREATE TABLE shift
     end_time TIME NOT NULL,
     day_from NVARCHAR(9) CHECK (day_from IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')) NOT NULL,
     day_to NVARCHAR(9) CHECK (day_to IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')) NOT NULL,
+    deleted BIT,
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,
