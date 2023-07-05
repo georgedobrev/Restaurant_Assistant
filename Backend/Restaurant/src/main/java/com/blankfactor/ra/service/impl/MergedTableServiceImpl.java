@@ -2,14 +2,14 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.MergedTableDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
-import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.MergedTableException;
+import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.model.AppTable;
-import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.MergedTable;
+import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.repository.AppTableRepository;
-import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.MergedTableRepository;
+import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.MergedTableService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

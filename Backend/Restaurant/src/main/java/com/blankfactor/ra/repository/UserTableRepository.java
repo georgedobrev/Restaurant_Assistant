@@ -2,8 +2,8 @@ package com.blankfactor.ra.repository;
 
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.AppUser;
-import com.blankfactor.ra.model.UserTable;
 import com.blankfactor.ra.model.MergedTable;
+import com.blankfactor.ra.model.UserTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,11 +2,11 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.model.*;
 import com.blankfactor.ra.repository.AppTableRepository;
-import com.blankfactor.ra.repository.UserTableRepository;
 import com.blankfactor.ra.repository.MergedTableRepository;
+import com.blankfactor.ra.repository.UserTableRepository;
+import com.blankfactor.ra.service.MergedTableService;
 import com.blankfactor.ra.service.SectionService;
 import com.blankfactor.ra.service.UserTableService;
-import com.blankfactor.ra.service.MergedTableService;
 import com.blankfactor.ra.service.WaiterSectionService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
