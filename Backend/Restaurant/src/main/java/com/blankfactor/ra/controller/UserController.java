@@ -36,8 +36,8 @@ public class UserController {
 
     @GetMapping("/{userId}/{restaurantId}")
     @Operation(summary = "Get employee details")
-    public ResponseEntity<GetEmployeeResponseDto> getEmployeeById(@PathVariable int userId,
-                                                                  @PathVariable int restaurantId) {
+    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable int userId,
+                                                               @PathVariable int restaurantId) {
         var employee = userService.getEmployeeById(userId, restaurantId);
 
         return ResponseEntity.ok(employee);

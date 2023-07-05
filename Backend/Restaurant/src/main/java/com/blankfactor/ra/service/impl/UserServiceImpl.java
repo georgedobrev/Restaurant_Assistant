@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetEmployeeResponseDto getEmployeeById(int userId, int restaurantId) {
+    public EmployeeResponseDto getEmployeeById(int userId, int restaurantId) {
         AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
@@ -67,14 +67,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserRoleException("No user/restaurant found"));
 
 
-        GetEmployeeResponseDto getEmployeeResponseDto = GetEmployeeResponseDto.builder()
+        EmployeeResponseDto employeeResponseDto = EmployeeResponseDto.builder()
                 .email(appUser.getEmail())
                 .name(appUser.getName())
                 .surname(appUser.getSurname())
                 .roleType(userRole.getRoleType())
                 .build();
 
-        return getEmployeeResponseDto;
+        return employeeResponseDto;
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface UserService {
 
     List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
 
-    GetEmployeeResponseDto getEmployeeById(int id, int restaurantId);
+    EmployeeResponseDto getEmployeeById(int id, int restaurantId);
 
     AppUser getUserByEmail(String email);
 

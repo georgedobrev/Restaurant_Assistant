@@ -43,11 +43,11 @@ public class TenantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @PutMapping("/{tenantId}")
+    @PutMapping("/{userId}")
     @Operation(summary = "Update tenant")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenantId") int tenantId,
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") int userId,
                                                @RequestBody TenantDto tenantDto) {
-        var tenant = tenantService.updateTenant(tenantId, tenantDto);
+        var tenant = tenantService.updateTenant(userId, tenantDto);
 
         return ResponseEntity.ok(tenant);
     }
