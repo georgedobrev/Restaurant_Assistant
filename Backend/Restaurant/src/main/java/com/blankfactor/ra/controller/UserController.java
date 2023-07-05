@@ -26,14 +26,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
-    @PostMapping("/role")
-    @Operation(summary = "Add role to existing user")
-    public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
-        var createdAppUser = userService.addRoleToUser(updateUserDto);
-
-        return ResponseEntity.ok(createdAppUser);
-    }
-
     @GetMapping("/{userId}/{restaurantId}")
     @Operation(summary = "Get employee details")
     public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Integer userId,

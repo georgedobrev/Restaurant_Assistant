@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -28,31 +29,43 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser createEmployee(EmployeeDto employeeDto) {
-        AppUser user = AppUser.builder()
-                .email(employeeDto.getEmail())
-                .build();
+        Optional<AppUser> appUser = userRepository.findAppUserByEmail(employeeDto.getEmail());
 
         Restaurant restaurantRetrieved = restaurantRepository.findById(employeeDto.getRestaurant().getId())
                 .orElseThrow(() -> new RestaurantException("No restaurant with id " + employeeDto.getRestaurant().getId()));
 
-        UserRole userRole = UserRole.builder()
-                .appUser(user)
-                .roleType(employeeDto.getRoleType())
-                .restaurant(restaurantRetrieved)
-                .build();
+        if (appUser.isPresent()) {
+            Optional<UserRole> userRole = userRoleRepository
+                    .findByAppUserAndRestaurantAndRoleType(appUser.get(), restaurantRetrieved, employeeDto.getRoleType());
 
-        AppUser savedAppUser = userRepository.save(user);
-        userRoleRepository.save(userRole);
+            if (userRole.isEmpty()) {
 
-        return savedAppUser;
-    }
+                UserRole newUserRole = UserRole.builder()
+                        .appUser(appUser.get())
+                        .roleType(employeeDto.getRoleType())
+                        .restaurant(restaurantRetrieved)
+                        .build();
 
-    @Override
-    public AppUser addRoleToUser(UpdateUserDto updateUserDto) {
-        AppUser appUser = userRepository.findAppUserByEmail(updateUserDto.getEmail())
-                .orElseThrow(() -> new UserException("User with email " + updateUserDto.getEmail() + " not found"));
+                userRoleRepository.save(newUserRole);
+            }
 
-        return assignUserRole(updateUserDto, appUser);
+            return appUser.get();
+        } else {
+            AppUser user = AppUser.builder()
+                    .email(employeeDto.getEmail())
+                    .build();
+
+            UserRole userRole = UserRole.builder()
+                    .appUser(user)
+                    .roleType(employeeDto.getRoleType())
+                    .restaurant(restaurantRetrieved)
+                    .build();
+
+            AppUser savedAppUser = userRepository.save(user);
+
+            userRoleRepository.save(userRole);
+            return savedAppUser;
+        }
     }
 
     @Override
@@ -147,17 +160,5 @@ public class UserServiceImpl implements UserService {
 
         userRoleRepository.deleteAll(userRoles);
         userRepository.deleteById(id);
-    }
-
-    private AppUser assignUserRole(UpdateUserDto updateUserDto, AppUser appUser) {
-        UserRole userRole = UserRole.builder()
-                .appUser(appUser)
-                .roleType(updateUserDto.getRoleType())
-                .restaurant(updateUserDto.getRestaurant())
-                .build();
-
-        userRoleRepository.save(userRole);
-
-        return appUser;
     }
 }

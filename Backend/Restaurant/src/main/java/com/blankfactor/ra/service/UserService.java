@@ -8,8 +8,6 @@ import java.util.List;
 public interface UserService {
     AppUser createEmployee(EmployeeDto employeeDto);
 
-    AppUser addRoleToUser(UpdateUserDto updateUserDto);
-
     List<AppUser> getAllAdminsByRestaurantId(Integer restaurantId);
 
     EmployeeResponseDto getEmployeeById(Integer id, Integer restaurantId);
