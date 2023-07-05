@@ -37,7 +37,7 @@ public class SysadminServiceImpl implements SysadminService {
     }
 
     @Override
-    public Sysadmin getSysadminById(int sysadminId) {
+    public Sysadmin getSysadminById(Integer sysadminId) {
         return sysadminRepository.findById(sysadminId)
                 .orElseThrow(() -> new SysadminException("Sysadmin not found with id " + sysadminId));
     }
@@ -48,7 +48,7 @@ public class SysadminServiceImpl implements SysadminService {
     }
 
     @Override
-    public Sysadmin updateSysadminById(int sysadminId, SysadminDto sysadminDto) {
+    public Sysadmin updateSysadminById(Integer sysadminId, SysadminDto sysadminDto) {
         Sysadmin sysadmin = sysadminRepository.findById(sysadminId)
                 .orElseThrow(() -> new SysadminException("Sysadmin" + sysadminId + "not found."));
 

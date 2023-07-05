@@ -10,9 +10,9 @@ public interface UserService {
 
     AppUser addRoleToUser(UpdateUserDto updateUserDto);
 
-    List<AppUser> getAllAdminsByRestaurantId(int restaurantId);
+    List<AppUser> getAllAdminsByRestaurantId(Integer restaurantId);
 
-    EmployeeResponseDto getEmployeeById(int id, int restaurantId);
+    EmployeeResponseDto getEmployeeById(Integer id, Integer restaurantId);
 
     AppUser getUserByEmail(String email);
 
@@ -20,5 +20,5 @@ public interface UserService {
 
     AppUser updateUserRole(UpdateUserRoleDto updateUserRoleDto);
 
-    void deleteUserById(int id);
+    void deleteUserById(Integer id);
 }

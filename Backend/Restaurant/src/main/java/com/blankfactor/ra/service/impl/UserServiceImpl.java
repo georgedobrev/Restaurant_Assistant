@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public EmployeeResponseDto getEmployeeById(int userId, int restaurantId) {
+    public EmployeeResponseDto getEmployeeById(Integer userId, Integer restaurantId) {
         AppUser appUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     //TODO admins onboarding
     @Override
-    public List<AppUser> getAllAdminsByRestaurantId(int restaurantId) {
+    public List<AppUser> getAllAdminsByRestaurantId(Integer restaurantId) {
         List<UserRole> userRoles = userRoleRepository.findAllByRestaurantIdAndRoleType(restaurantId, RoleType.ADMIN);
         List<AppUser> admins = new ArrayList<>();
 
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteUserById(Integer id) {
         List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
 
         if (userRoles.isEmpty()) {

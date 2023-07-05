@@ -8,11 +8,11 @@ import java.util.List;
 public interface TenantService {
     Tenant createTenant(TenantDto tenantDto);
 
-    Tenant getTenantById(int tenantId) throws Exception;
+    Tenant getTenantById(Integer tenantId);
 
     List<Tenant> getAllTenants();
 
-    Tenant updateTenant(int userId, TenantDto updateTenantDto);
+    Tenant updateTenant(Integer userId, TenantDto updateTenantDto);
 
-    void deleteTenant(int tenantId);
+    void deleteTenant(Integer tenantId);
 }

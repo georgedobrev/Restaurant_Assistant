@@ -13,7 +13,7 @@ public interface MergedTableService {
 
     Map<Integer, MergedTable> getAllMergedTablesByRestaurantId(Integer restaurantId);
 
-    MergedTable updateMergedTableByMergedTableId(Integer restaurantId, Integer virtualTableId, MergedTable mergedTable) throws MergedTableException;
+    MergedTable updateMergedTableByMergedTableId(Integer restaurantId, Integer virtualTableId, MergedTable mergedTable);
 
     void deleteMergedTable(Integer restaurantId, MergedTable mergedTable);
 }
