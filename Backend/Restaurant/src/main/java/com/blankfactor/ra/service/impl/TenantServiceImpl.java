@@ -34,8 +34,9 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant getTenantById(int tenantId) throws Exception {
-        return tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found."));
+    public Tenant getTenantById(Integer tenantId) {
+        return tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new TenantException("Tenant " + tenantId + " not found."));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int userId, TenantDto tenantDto) {
+    public Tenant updateTenant(Integer userId, TenantDto tenantDto) {
 
         AppUser appUserToUpdate = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(""));
@@ -59,12 +60,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void deleteTenant(int tenantId) {
+    public void deleteTenant(Integer tenantId) {
         tenantRepository.deleteById(tenantId);
-    }
-
-    @Override
-    public void deleteAll() {
-        tenantRepository.deleteAll();
     }
 }

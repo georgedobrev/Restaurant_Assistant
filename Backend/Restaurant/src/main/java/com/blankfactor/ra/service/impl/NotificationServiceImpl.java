@@ -2,9 +2,11 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
-import com.blankfactor.ra.model.*;
+import com.blankfactor.ra.exceptions.custom.NotificationException;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.model.Section;
+import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.repository.SectionRepository;
@@ -67,7 +69,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> getAllNotificationsByRestaurantId(int restaurantId) {
+    public List<Notification> getAllNotificationsByRestaurantId(Integer restaurantId) {
         List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
         List<Integer> appTableIds = new ArrayList<>();
 
@@ -79,26 +81,21 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> getAllNotificationsByTableId(int tableId) {
-
+    public List<Notification> getAllNotificationsByTableId(Integer tableId) {
         return notificationRepository.findAllByAppTableId(tableId);
     }
 
     @Override
-    public Notification updateNotification(int notificationId) throws Exception {
-        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new Exception("Notification" + notificationId + "not found."));
+    public Notification updateNotification(Integer notificationId) {
+        Notification notification = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new NotificationException("Notification" + notificationId + "not found."));
         notification.setApproved(!notification.getApproved());
 
         return notificationRepository.save(notification);
     }
 
     @Override
-    public void deleteById(int notificationId) {
-        notificationRepository.deleteById(notificationId);
-    }
-
-    @Override
-    public void deleteAllNotificationsByTableId(int tableId) {
+    public void deleteAllNotificationsByTableId(Integer tableId) {
         notificationRepository.deleteAllByAppTableId(tableId);
     }
 }

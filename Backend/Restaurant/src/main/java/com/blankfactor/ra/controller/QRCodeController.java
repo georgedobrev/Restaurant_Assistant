@@ -17,10 +17,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/qrcode")
+@RequestMapping("/qrcodes")
 @AllArgsConstructor
 public class QRCodeController {
-
     private final QRCodeService qrCodeService;
 
     @PostMapping("/download/{restaurantId}")

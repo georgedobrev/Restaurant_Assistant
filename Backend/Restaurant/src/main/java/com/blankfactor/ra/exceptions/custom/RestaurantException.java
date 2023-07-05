@@ -5,7 +5,7 @@ public class RestaurantException extends RuntimeException {
         super(exMessage);
     }
 
-    public RestaurantException(String exMessage, Exception exception) {
-        super(exMessage, exception);
+    public RestaurantException(String message, Exception e) {
+        super(message);
     }
 }

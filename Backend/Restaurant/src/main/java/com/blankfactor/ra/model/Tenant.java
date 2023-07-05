@@ -20,4 +20,3 @@ public class Tenant {
     @Column(name = "email")
     private String email;
 }
-
