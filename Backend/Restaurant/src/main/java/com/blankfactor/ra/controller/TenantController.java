@@ -20,6 +20,7 @@ public class TenantController {
     private final TenantService tenantService;
 
     @PostMapping("")
+    @Operation(summary = "Create tenant")
     public ResponseEntity<Tenant> createTenant(@Valid @RequestBody TenantDto tenantDto) {
         var createdTenant = tenantService.createTenant(tenantDto);
 
@@ -27,6 +28,7 @@ public class TenantController {
     }
 
     @GetMapping("/{tenantId}")
+    @Operation(summary = "Get tenant by id")
     public ResponseEntity<Tenant> getTenantById(@PathVariable("tenantId") int tenantId) throws Exception {
         var tenant = tenantService.getTenantById(tenantId);
 
@@ -34,22 +36,24 @@ public class TenantController {
     }
 
     @GetMapping()
+    @Operation(summary = "Get all tenants")
     public ResponseEntity<List<Tenant>> getAllTenants() {
         var restaurants = tenantService.getAllTenants();
 
         return ResponseEntity.ok(restaurants);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{tenantId}")
     @Operation(summary = "Update tenant")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") int userId,
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("tenantId") int tenantId,
                                                @RequestBody TenantDto tenantDto) {
-        var tenant = tenantService.updateTenant(userId, tenantDto);
+        var tenant = tenantService.updateTenant(tenantId, tenantDto);
 
         return ResponseEntity.ok(tenant);
     }
 
     @DeleteMapping("/{tenantId}")
+    @Operation(summary = "Delete tenant by id")
     public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") int tenantId) {
         tenantService.deleteTenant(tenantId);
 

@@ -4,6 +4,7 @@ import com.blankfactor.ra.dto.SysadminDto;
 import com.blankfactor.ra.exceptions.custom.SysadminException;
 import com.blankfactor.ra.model.Sysadmin;
 import com.blankfactor.ra.service.SysadminService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class SysadminController {
     private final SysadminService sysadminService;
 
     @PostMapping()
+    @Operation(summary = "Create sysadmin")
     public ResponseEntity<Sysadmin> createSysadmin(@RequestBody SysadminDto sysadminDto) {
         var createdSysadmin = sysadminService.createSysadmin(sysadminDto);
 
@@ -25,19 +27,22 @@ public class SysadminController {
     }
 
     @GetMapping("/{sysadminId}")
+    @Operation(summary = "Get sysadmin by id")
     public ResponseEntity<Sysadmin> getSysadminById(@PathVariable("sysadminId") int sysadminId) {
         var sysadmin = sysadminService.getSysadminById(sysadminId);
         return ResponseEntity.ok().body(sysadmin);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Sysadmin>> getAllSysadminsByRestaurantId() {
+    @Operation(summary = "Get all sysadmins")
+    public ResponseEntity<List<Sysadmin>> getAllSysadmins() {
         var sysadmins = sysadminService.getAllSysadmins();
 
         return ResponseEntity.ok(sysadmins);
     }
 
     @PutMapping("/{sysadminId}")
+    @Operation(summary = "Update sysadmin")
     public ResponseEntity<Sysadmin> updateSysadmin(@PathVariable("sysadminId") int sysadminId, @RequestBody SysadminDto sysadminDto) throws SysadminException {
         var sysadmin = sysadminService.updateSysadminById(sysadminId, sysadminDto);
         return ResponseEntity.ok(sysadmin);
