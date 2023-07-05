@@ -1,8 +1,9 @@
 import ButtonSection from "./buttonsSection";
+import styles from "./employees.module.css";
 
 const Users: React.FC = () => {
   return (
-    <div>
+    <div className={styles.section}>
       <ButtonSection />
     </div>
   );

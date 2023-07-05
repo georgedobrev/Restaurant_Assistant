@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppTableDto {
-
     private int tableNumber;
     private boolean occupied;
     private int capacity;
-    private boolean virtualTable;
+    private boolean mergedTable;
     private boolean active;
 }

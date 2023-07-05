@@ -5,7 +5,7 @@ public class UserException extends RuntimeException {
         super(exMessage);
     }
 
-    public UserException(String exMessage, Exception exception) {
-        super(exMessage, exception);
+    public UserException(String message, Exception e) {
+        super(message);
     }
 }

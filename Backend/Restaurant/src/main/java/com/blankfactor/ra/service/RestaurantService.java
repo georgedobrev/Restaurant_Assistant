@@ -8,14 +8,13 @@ import com.blankfactor.ra.model.Restaurant;
 import java.util.List;
 
 public interface RestaurantService {
-
     Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto);
 
     List<Restaurant> getAllRestaurants();
 
-    List<Restaurant> getAllRestaurantsByAdmin(int userId) throws RestaurantException;
+    List<Restaurant> getAllRestaurantsByAdmin(Integer userId);
 
     Restaurant updateRestaurantById(Integer restaurantId, RestaurantDto updatedRestaurant);
 
-    Restaurant getRestaurantById(Integer restaurantId) throws RestaurantException;
+    Restaurant getRestaurantById(Integer restaurantId);
 }
