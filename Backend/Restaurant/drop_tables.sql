@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS flyway_schema_history;
 DROP TABLE IF EXISTS reservation;
 DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS user_table;
-DROP TABLE IF EXISTS virtual_table;
+DROP TABLE IF EXISTS merged_table;
 DROP TABLE IF EXISTS tenant;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS refresh_token;
