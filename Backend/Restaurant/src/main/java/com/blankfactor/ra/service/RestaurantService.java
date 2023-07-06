@@ -8,7 +8,6 @@ import com.blankfactor.ra.model.Restaurant;
 import java.util.List;
 
 public interface RestaurantService {
-
     Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto);
 
     List<Restaurant> getAllRestaurants();

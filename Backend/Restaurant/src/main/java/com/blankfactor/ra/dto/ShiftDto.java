@@ -12,7 +12,6 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShiftDto {
-
     @NotNull(message = "StartTime cannot be null")
     private LocalTime startTime;
 

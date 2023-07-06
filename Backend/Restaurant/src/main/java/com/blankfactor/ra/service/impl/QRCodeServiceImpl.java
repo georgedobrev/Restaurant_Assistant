@@ -35,7 +35,6 @@ import java.util.zip.ZipOutputStream;
 @Service
 @AllArgsConstructor
 public class QRCodeServiceImpl implements QRCodeService {
-
     private final QrCodeRepository qrCodeRepository;
     private final AppProp appProp;
     private final AppTableRepository appTableRepository;
@@ -61,7 +60,7 @@ public class QRCodeServiceImpl implements QRCodeService {
             try {
                 qrCodeImage = createQRCodeImage(baseUrl + "/" + hashedURL);
             } catch (IOException | WriterException e) {
-                throw new QRCodeException("Error generating QR code for table " + table.getTableNumber(), e);
+                throw new QRCodeException("Error generating QR code for table " + table.getTableNumber());
             }
 
             QrCode qrCode = new QrCode(qrCodeImage, hashedURL);

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class WaiterSectionDto {
-
     @NotNull(message = "Section cannot be null")
     private Section section;
 

@@ -1,9 +1,6 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.AdminDto;
-import com.blankfactor.ra.dto.UpdateUserDto;
-import com.blankfactor.ra.dto.UserEmailDto;
-import com.blankfactor.ra.dto.WaiterDto;
+import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,42 +13,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @AllArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RestController
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/waiter")
-    @Operation(summary = "Create waiter")
-    public ResponseEntity<AppUser> createWaiter(@Valid @RequestBody WaiterDto waiterDto) {
-        var createdWaiter = userService.createWaiter(waiterDto);
+    @PostMapping("/employee")
+    @Operation(summary = "Create employee")
+    public ResponseEntity<AppUser> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+        var createdEmployee = userService.createEmployee(employeeDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiter);
-    }
-
-    @PostMapping("/admin")
-    @Operation(summary = "Create admin")
-    public ResponseEntity<AppUser> createAdmin(@Valid @RequestBody AdminDto adminDto) {
-        var createdAdmin = userService.createAdmin(adminDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
-    }
-
-    @PostMapping("/addRole")
-    @Operation(summary = "Add role to existing user")
-    public ResponseEntity<AppUser> addRoleToUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
-        var createdAppUser = userService.addRoleToUser(updateUserDto);
-
-        return ResponseEntity.ok(createdAppUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
     @GetMapping("/{userId}/{restaurantId}")
-    @Operation(summary = "Get user by id")
-    public ResponseEntity<UpdateUserDto> getUserById(@PathVariable int userId,
-                                                     @PathVariable int restaurantId) {
-        var appUser = userService.getUserById(userId, restaurantId);
+    @Operation(summary = "Get employee details")
+    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Integer userId,
+                                                               @PathVariable Integer restaurantId) {
+        var employee = userService.getEmployeeById(userId, restaurantId);
 
-        return ResponseEntity.ok(appUser);
+        return ResponseEntity.ok(employee);
     }
 
     @GetMapping("")
@@ -62,25 +43,33 @@ public class UserController {
         return ResponseEntity.ok(appUser);
     }
 
-    @GetMapping("/all-admins/{restaurantId}")
+    @GetMapping("/admins/{restaurantId}")
     @Operation(summary = "Get all admins for a specific restaurant")
-    public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<List<AppUser>> getAllAdminsByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         var admins = userService.getAllAdminsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(admins);
     }
 
-    @PutMapping("")
-    @Operation(summary = "Update user by email")
-    public ResponseEntity<AppUser> updateUserByEmail(@RequestBody UpdateUserDto updateUserDto) {
-        var updatedAppUser = userService.updateUserByEmail(updateUserDto);
+    @PutMapping("/details")
+    @Operation(summary = "Update user details")
+    public ResponseEntity<AppUser> updateUserInfo(@RequestBody UpdateUserDetailsDto updateUserDetailsDto) {
+        var updatedAppUser = userService.updateUserInfo(updateUserDetailsDto);
+
+        return ResponseEntity.ok(updatedAppUser);
+    }
+
+    @PutMapping("/role")
+    @Operation(summary = "Update user role")
+    public ResponseEntity<AppUser> updateUserRole(@RequestBody UpdateUserRoleDto updateUserRoleDto) {
+        var updatedAppUser = userService.updateUserRole(updateUserRoleDto);
 
         return ResponseEntity.ok(updatedAppUser);
     }
 
     @DeleteMapping("/{userId}")
     @Operation(summary = "Delete user by id")
-    public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
+    public ResponseEntity<?> deleteUserById(@PathVariable Integer userId) {
         userService.deleteUserById(userId);
 
         return ResponseEntity.ok().build();

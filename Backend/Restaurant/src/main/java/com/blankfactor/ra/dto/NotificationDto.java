@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class NotificationDto {
-
     @NotNull(message = "AppTable is required for notifications")
     private AppTable appTable;
 
@@ -25,5 +24,4 @@ public class NotificationDto {
     @Size(max = 50, message = "Name cannot be more than 50 characters")
     @NotBlank(message = "Message is required for notifications")
     private String message;
-
 }

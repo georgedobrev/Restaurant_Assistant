@@ -21,8 +21,8 @@ public class AppTableController {
     @PostMapping()
     @Operation(summary = "Create tables for existing restaurant")
     public ResponseEntity<List<AppTable>> createTablesForRestaurant(@PathVariable("restaurantId") Integer restaurantId,
-                                                                    @RequestBody List<AppTableDto> appTableDtos) {
-        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTableDtos);
+                                                                    @RequestBody List<AppTableDto> appTablesDto) {
+        var createdAppTables = appTableService.createTablesForRestaurant(restaurantId, appTablesDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAppTables);
     }
@@ -35,7 +35,7 @@ public class AppTableController {
         return ResponseEntity.ok(appTable);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     @Operation(summary = "Get all tables for a specific restaurant")
     public ResponseEntity<List<AppTable>> getTablesByRestaurantId(@PathVariable("restaurantId") Integer restaurantId) {
         var appTables = appTableService.getTablesByRestaurantId(restaurantId);

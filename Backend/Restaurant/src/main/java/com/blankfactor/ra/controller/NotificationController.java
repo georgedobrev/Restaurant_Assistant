@@ -3,7 +3,7 @@ package com.blankfactor.ra.controller;
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.model.Notification;
 import com.blankfactor.ra.service.NotificationService;
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,48 +14,45 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @AllArgsConstructor
-@RequestMapping("/notification")
+@RequestMapping("/notifications")
 @RestController
 public class NotificationController {
     private final NotificationService notificationService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Notification> createNotification(@Valid @RequestBody NotificationDto notificationDto) {
+    @PostMapping()
+    @Operation(summary = "Create notification")
+    public ResponseEntity<Notification> createNotification(@RequestBody NotificationDto notificationDto) {
         var notification = notificationService.createNotification(notificationDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
 
-    @GetMapping("/all/restaurant/{restaurant_id}")
-    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable("restaurant_id") int restaurantId) {
+    @GetMapping("/restaurants/{restaurantId}")
+    @Operation(summary = "Get all notifications for a specific restaurant")
+    public ResponseEntity<List<Notification>> getAllNotificationsByRestaurantId(@PathVariable Integer restaurantId) {
         var notifications = notificationService.getAllNotificationsByRestaurantId(restaurantId);
 
         return ResponseEntity.ok(notifications);
     }
 
-    @GetMapping("/all/table/{table_id}")
-    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@PathVariable("table_id") int tableId) {
+    @GetMapping("/tables/{tableId}")
+    @Operation(summary = "Get all notifications for a specific table")
+    public ResponseEntity<List<Notification>> getAllNotificationsByTableId(@PathVariable Integer tableId) {
         var notifications = notificationService.getAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok(notifications);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Notification> updateNotification(@PathVariable("id") int notificationId) throws Exception {
+    @PutMapping("/{id}")
+    @Operation(summary = "Update notification by notificationId")
+    public ResponseEntity<Notification> updateNotification(@PathVariable("id") Integer notificationId) throws Exception {
         var notification = notificationService.updateNotification(notificationId);
 
         return ResponseEntity.ok(notification);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteNotificationById(@PathVariable("id") int notificationId) {
-        notificationService.deleteById(notificationId);
-
-        return ResponseEntity.ok().build();
-    }
-
-
-    @DeleteMapping("/delete/all/{app_table_id}")
-    public ResponseEntity<?> deleteAllNotifications(@PathVariable("app_table_id") int tableId) {
+    @DeleteMapping("/all/{appTableId}")
+    @Operation(summary = "Delete all notifications by given table id")
+    public ResponseEntity<?> deleteAllNotifications(@PathVariable("appTableId") Integer tableId) {
         notificationService.deleteAllNotificationsByTableId(tableId);
 
         return ResponseEntity.ok().build();

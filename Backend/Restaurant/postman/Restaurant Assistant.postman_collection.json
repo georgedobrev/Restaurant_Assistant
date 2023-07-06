@@ -3,8 +3,8 @@
     "_postman_id": "8bd208ba-c073-4236-bad9-c4434769190e",
     "name": "Restaurant Assistant",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "27618519",
-    "_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27618519&source=collection_link"
+    "_exporter_id": "27763372",
+    "_collection_link": "https://ninja-turtules-blankfactor.postman.co/workspace/Team-Workspace~bd117811-b1f7-49c8-86cf-00456f1baba5/collection/27618519-8bd208ba-c073-4236-bad9-c4434769190e?action=share&creator=27763372&source=collection_link"
   },
   "item": [
     {
@@ -25,13 +25,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/sysadmin",
+              "raw": "localhost:8080/sysadmins",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "sysadmin"
+                "sysadmins"
               ]
             }
           },
@@ -43,13 +43,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/sysadmin/1",
+              "raw": "localhost:8080/sysadmins/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "sysadmin",
+                "sysadmins",
                 "1"
               ]
             }
@@ -62,15 +62,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/sysadmin/all/1",
+              "raw": "localhost:8080/sysadmins",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "sysadmin",
-                "all",
-                "1"
+                "sysadmins"
               ]
             }
           },
@@ -82,52 +80,13 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "localhost:8080/sysadmin/1",
+              "raw": "localhost:8080/sysadmins/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "sysadmin",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteSysadminById",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/sysadmin/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "sysadmin",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteAllSysadmins",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/sysadmin/all/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "sysadmin",
-                "all",
+                "sysadmins",
                 "1"
               ]
             }
@@ -154,13 +113,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/restaurant",
+              "raw": "localhost:8080/restaurants",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "restaurant"
+                "restaurants"
               ]
             }
           },
@@ -178,13 +137,13 @@
               }
             ],
             "url": {
-              "raw": "localhost:8080/restaurant/1",
+              "raw": "localhost:8080/restaurants/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "restaurant",
+                "restaurants",
                 "1"
               ],
               "query": [
@@ -204,14 +163,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/restaurant/getAll",
+              "raw": "localhost:8080/restaurants",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "restaurant",
-                "getAll"
+                "restaurants"
               ]
             }
           },
@@ -223,35 +181,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/restaurant/getAllByAdmin/1",
+              "raw": "localhost:8080/restaurants/admin/2",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "restaurant",
-                "getAllByAdmin",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get all phone numbers by restaurant id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/restaurant/getAllPhoneNumbers/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "restaurant",
-                "getAllPhoneNumbers",
-                "1"
+                "restaurants",
+                "admin",
+                "2"
               ]
             }
           },
@@ -272,8 +210,37 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/restaurant/1",
+              "raw": "http://localhost:8080/restaurants/1",
               "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "restaurants",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete restaurant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4NDEyOTQzLCJleHAiOjIwNDg0MTI5NDN9.G8CqA2_OnV2rpqtJTe3DaN6R24OoIEDY_AFS234KWek",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/restaurant/1",
               "host": [
                 "localhost"
               ],
@@ -306,13 +273,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/shift/1",
+              "raw": "localhost:8080/shifts/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "shift",
+                "shifts",
                 "1"
               ]
             }
@@ -325,14 +292,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/shift/getAll/1",
+              "raw": "localhost:8080/shifts/restaurant/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "shift",
-                "getAll",
+                "shifts",
+                "restaurant",
                 "1"
               ]
             }
@@ -354,13 +321,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/shift/1",
+              "raw": "localhost:8080/shifts/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "shift",
+                "shifts",
                 "1"
               ]
             }
@@ -373,13 +340,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:8080/shift/3",
+              "raw": "localhost:8080/shifts/3",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "shift",
+                "shifts",
                 "3"
               ]
             }
@@ -397,13 +364,13 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "localhost:8080/qrcode/download/1?ids=10,20",
+              "raw": "localhost:8080/qrcodes/download/1?ids=10,20",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "qrcode",
+                "qrcodes",
                 "download",
                 "1"
               ],
@@ -432,13 +399,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/qrcode/zjDmIwlUFMr_IKUhQUekZw",
+              "raw": "localhost:8080/qrcodes/zjDmIwlUFMr_IKUhQUekZw",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "qrcode",
+                "qrcodes",
                 "zjDmIwlUFMr_IKUhQUekZw"
               ]
             },
@@ -485,15 +452,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/tables/1/all",
+              "raw": "localhost:8080/tables/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
                 "tables",
-                "1",
-                "all"
+                "1"
               ]
             }
           },
@@ -529,26 +495,6 @@
           "response": []
         },
         {
-          "name": "Deleta a table",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/tables/1/13",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "tables",
-                "1",
-                "13"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "Clear table",
           "request": {
             "method": "PUT",
@@ -576,14 +522,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Deleta a table",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/tables/1/13",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tables",
+                "1",
+                "13"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
     {
-      "name": "Virtual Table",
+      "name": "Merged Table",
       "item": [
         {
-          "name": "Create Virtual Table",
+          "name": "Create Merged Table",
           "request": {
             "method": "POST",
             "header": [],
@@ -597,13 +563,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/virtual/1",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1"
               ]
             }
@@ -611,27 +577,18 @@
           "response": []
         },
         {
-          "name": "Delete Virtual Table",
+          "name": "Get All Merged Tables",
           "request": {
-            "method": "DELETE",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"id\" : 1,\r\n    \"tableNumbers\" : \"1,2,3,4\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "localhost:8080/virtual/1",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1"
               ]
             }
@@ -639,7 +596,7 @@
           "response": []
         },
         {
-          "name": "Update Virtual By ID",
+          "name": "Update Merged Table By ID",
           "request": {
             "method": "PUT",
             "header": [],
@@ -653,13 +610,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/virtual/1/1",
+              "raw": "localhost:8080/mergedTable/1/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
+                "mergedTable",
                 "1",
                 "1"
               ],
@@ -675,20 +632,28 @@
           "response": []
         },
         {
-          "name": "Get all Virtual Tables",
+          "name": "Delete Merged Table",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\" : 1,\r\n    \"tableNumbers\" : \"1,2,3,4\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "localhost:8080/virtual/1/all",
+              "raw": "localhost:8080/mergedTable/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "virtual",
-                "1",
-                "all"
+                "mergedTable",
+                "1"
               ]
             }
           },
@@ -706,7 +671,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n     \"appTable\": {\n    \"id\": 5\n  },\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
+              "raw": "{\n    \"appTable\": {\n    \"id\": 5\n  },\n    \"appUser\": {\n    \"id\": 1\n    },\n  \"requestType\": \"Menu\",\n  \"message\": \"string\",\n  \"approved\": false\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -714,14 +679,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/notification/create",
+              "raw": "localhost:8080/notifications",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "notification",
-                "create"
+                "notifications"
               ]
             }
           },
@@ -733,16 +697,22 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notification/all/restaurant/1",
+              "raw": "localhost:8080/notifications/restaurants/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "notification",
-                "all",
-                "restaurant",
+                "notifications",
+                "restaurants",
                 "1"
+              ],
+              "query": [
+                {
+                  "key": "restaurant_Id",
+                  "value": "1",
+                  "disabled": true
+                }
               ]
             }
           },
@@ -754,15 +724,40 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notification/all/table/1",
+              "raw": "localhost:8080/notifications/tables/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "notification",
-                "all",
-                "table",
+                "notifications",
+                "tables",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "table_Id",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateNotification",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/notifications/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "notifications",
                 "1"
               ]
             }
@@ -775,55 +770,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:8080/notification/delete/all/1",
+              "raw": "localhost:8080/notifications/all/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "notification",
-                "delete",
+                "notifications",
                 "all",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteNotification",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/notification/delete/16",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "notification",
-                "delete",
-                "16"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "updateNotification",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/notification/update/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "notification",
-                "update",
                 "1"
               ]
             }
@@ -836,13 +790,13 @@
       "name": "Users",
       "item": [
         {
-          "name": "Create Waiter",
+          "name": "Create Employee",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"waiter111@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -850,38 +804,15 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/user/waiter",
+              "raw": "http://localhost:8080/users/employee",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user",
-                "waiter"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create Admin",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "Create Admin",
-              "host": [
-                "Create Admin"
+                "users",
+                "employee"
               ]
             }
           },
@@ -902,43 +833,15 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/user/addRole",
+              "raw": "http://localhost:8080/users/role",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user",
-                "addRole"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create Tenant",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"hristiyana.shopova@gmail.com\",\n  \"name\": \"Hristiyana\",\n  \"surname\": \"Shopova\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "localhost:8080/tenant/create",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "tenant",
-                "create"
+                "users",
+                "role"
               ]
             }
           },
@@ -950,14 +853,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/user/1/1",
+              "raw": "http://localhost:8080/users/1/1",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user",
+                "users",
                 "1",
                 "1"
               ]
@@ -983,14 +886,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/user",
+              "raw": "http://localhost:8080/users",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user"
+                "users"
               ]
             }
           },
@@ -1002,14 +905,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/user/all-admins/2",
+              "raw": "localhost:8080/users/admins/2",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user",
-                "all-admins",
+                "users",
+                "admins",
                 "2"
               ]
             }
@@ -1017,18 +920,59 @@
           "response": []
         },
         {
-          "name": "Update User",
+          "name": "Update User Details",
           "request": {
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"name\": \"JohnyJohnyeeee\",\n  \"surname\": \"Doe\",\n  \"roleType\": \"WAITER\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"name\": \"JohnyJohnyeeee\",\n  \"surname\": \"Doe\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/details",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "details"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"waiter@example.com\",\n  \"roleType\": \"ADMIN\",\n  \"restaurant\": {\n      \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/role",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "role"
+              ]
             }
           },
           "response": []
@@ -1039,14 +983,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/user/1",
+              "raw": "http://localhost:8080/users/1",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "user",
+                "users",
                 "1"
               ]
             }
@@ -1076,7 +1020,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"validation@exampl1e.com\",\n  \"name\": \"John\",\n  \"surname\": \"Doe\"\n}",
+              "raw": "{\n  \"email\": \"hristiyana.shopova@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1084,14 +1028,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/tenant/create",
+              "raw": "localhost:8080/tenants",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "tenant",
-                "create"
+                "tenants"
               ]
             }
           },
@@ -1103,15 +1046,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/tenant/get/all",
+              "raw": "localhost:8080/tenants",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "tenant",
-                "get",
-                "all"
+                "tenants"
               ]
             }
           },
@@ -1123,14 +1064,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/tenant/get/3",
+              "raw": "localhost:8080/tenants/3",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "tenant",
-                "get",
+                "tenants",
                 "3"
               ]
             }
@@ -1152,14 +1092,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/tenant/update/1",
+              "raw": "localhost:8080/tenants/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "tenant",
-                "update",
+                "tenants",
                 "1"
               ]
             }
@@ -1167,39 +1106,19 @@
           "response": []
         },
         {
-          "name": "deleteTenant",
+          "name": "Delete Tenant",
           "request": {
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:8080/tenant/delete/3",
+              "raw": "localhost:8080/tenants/3",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "tenant",
-                "delete",
+                "tenants",
                 "3"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteAllTenants",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/tenant/all",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "tenant",
-                "all"
               ]
             }
           },
@@ -1259,33 +1178,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/section",
+              "raw": "localhost:8080/sections",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "section"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get all sections",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:8080/section/getAll/1",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "section",
-                "getAll",
-                "1"
+                "sections"
               ]
             }
           },
@@ -1294,6 +1193,16 @@
         {
           "name": "Assign waiter with shift",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4MzY0MDA5LCJleHAiOjIwNDgzNjQwMDl9.wxchjnEc4cVccwmCaqFCIzA0rUaQgfiQH6x8Idp0Cy8",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
@@ -1306,33 +1215,33 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/section/addWaiter",
+              "raw": "localhost:8080/sections/waiter",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "section",
-                "addWaiter"
+                "sections",
+                "waiter"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Delete Section By ID",
+          "name": "Get all sections",
           "request": {
-            "method": "DELETE",
+            "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/section/2",
+              "raw": "localhost:8080/sections/1",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "section",
-                "2"
+                "sections",
+                "1"
               ]
             }
           },
@@ -1353,14 +1262,33 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/section/3",
+              "raw": "localhost:8080/sections/3",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "section",
+                "sections",
                 "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Section By ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/sections/2",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "sections",
+                "2"
               ]
             }
           },
@@ -1415,7 +1343,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/auth/authenticate",
+              "raw": "http://localhost:8080/auth/authentication",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1423,7 +1351,7 @@
               "port": "8080",
               "path": [
                 "auth",
-                "authenticate"
+                "authentication"
               ]
             }
           },
@@ -1432,21 +1360,11 @@
         {
           "name": "Register",
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMzMzQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg3MzI5NDA1LCJleHAiOjIwNDczMjk0MDV9.fM7tz-HMZrwz5E2K6095McgL4_7SH24ZVF1aIBQX1Fg",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Mike\",\n  \"surname\": \"Doee\",\n  \"email\": \"user333@example.com\",\n  \"password\": \"alabala\"\n}",
+              "raw": "{\n  \"name\": \"Johny\",\n  \"surname\": \"Doee\",\n  \"email\": \"test@example.com\",\n  \"password\": \"alabala\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1454,7 +1372,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/auth/register",
+              "raw": "http://localhost:8080/auth/registration",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1462,7 +1380,7 @@
               "port": "8080",
               "path": [
                 "auth",
-                "register"
+                "registration"
               ]
             }
           },
