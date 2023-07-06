@@ -6,7 +6,7 @@ CREATE TABLE app_user
     name NVARCHAR(100),
     surname NVARCHAR(100),
     blacklisted BIT,
-    active BIT,
+    deleted BIT,
     created_by INT,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,

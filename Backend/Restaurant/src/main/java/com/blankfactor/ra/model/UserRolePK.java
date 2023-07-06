@@ -15,4 +15,5 @@ public class UserRolePK implements Serializable {
     private Integer appUser;
     private Integer restaurant;
     private RoleType roleType;
+    private Boolean deleted;
 }

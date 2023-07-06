@@ -1,6 +1,9 @@
 package com.blankfactor.ra.service.impl;
 
-import com.blankfactor.ra.dto.*;
+import com.blankfactor.ra.dto.EmployeeDto;
+import com.blankfactor.ra.dto.EmployeeResponseDto;
+import com.blankfactor.ra.dto.UpdateUserDetailsDto;
+import com.blankfactor.ra.dto.UpdateUserRoleDto;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.exceptions.custom.RestaurantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Transactional
     @Override
     public AppUser createEmployee(EmployeeDto employeeDto) {
         Optional<AppUser> appUser = userRepository.findAppUserByEmail(employeeDto.getEmail());
@@ -34,12 +38,11 @@ public class UserServiceImpl implements UserService {
         Restaurant restaurantRetrieved = restaurantRepository.findById(employeeDto.getRestaurant().getId())
                 .orElseThrow(() -> new RestaurantException("No restaurant with id " + employeeDto.getRestaurant().getId()));
 
-        if (appUser.isPresent()) {
+        if (appUser.isPresent() && !appUser.get().getDeleted()) {
             Optional<UserRole> userRole = userRoleRepository
                     .findByAppUserAndRestaurantAndRoleType(appUser.get(), restaurantRetrieved, employeeDto.getRoleType());
 
             if (userRole.isEmpty()) {
-
                 UserRole newUserRole = UserRole.builder()
                         .appUser(appUser.get())
                         .roleType(employeeDto.getRoleType())
@@ -48,6 +51,26 @@ public class UserServiceImpl implements UserService {
 
                 userRoleRepository.save(newUserRole);
             }
+
+            return appUser.get();
+        } else if (appUser.isPresent() && appUser.get().getDeleted()) {
+            Optional<UserRole> userRole = userRoleRepository
+                    .findByAppUserAndRestaurantAndRoleType(appUser.get(), restaurantRetrieved, employeeDto.getRoleType());
+
+            List<UserRole> roles = userRoleRepository.findByAppUserId(appUser.get().getId());
+            userRoleRepository.softUpdateByUserRoles(roles);
+
+            if (userRole.isEmpty()) {
+                UserRole newUserRole = UserRole.builder()
+                        .appUser(appUser.get())
+                        .roleType(employeeDto.getRoleType())
+                        .restaurant(restaurantRetrieved)
+                        .build();
+
+                userRoleRepository.save(newUserRole);
+            }
+
+            userRepository.softUpdateUser(appUser.get().getId());
 
             return appUser.get();
         } else {
@@ -62,15 +85,15 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             AppUser savedAppUser = userRepository.save(user);
-
             userRoleRepository.save(userRole);
+
             return savedAppUser;
         }
     }
 
     @Override
     public EmployeeResponseDto getEmployeeById(Integer userId, Integer restaurantId) {
-        AppUser appUser = userRepository.findById(userId)
+        AppUser appUser = userRepository.findAppUserByIdAndDeletedIsFalse(userId)
                 .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
@@ -92,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser getUserByEmail(String email) {
-        return userRepository.findAppUserByEmail(email)
+        return userRepository.findAppUserByEmailAndDeletedIsFalse(email)
                 .orElseThrow(() -> new UserException("User with email " + email + " not found"));
     }
 
@@ -150,15 +173,16 @@ public class UserServiceImpl implements UserService {
         return appUserToUpdate;
     }
 
+    @Transactional
     @Override
     public void deleteUserById(Integer id) {
-        List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
+        List<UserRole> userRoles = userRoleRepository.findByAppUserId(id);
 
         if (userRoles.isEmpty()) {
             throw new UserException("UserRoles not found for User with id " + id);
         }
 
-        userRoleRepository.deleteAll(userRoles);
-        userRepository.deleteById(id);
+        userRoleRepository.softDeleteByUserRoles(userRoles);
+        userRepository.softDeleteUser(id);
     }
 }

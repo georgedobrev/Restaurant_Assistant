@@ -3,6 +3,7 @@ CREATE TABLE user_role
     app_user_id INT NOT NULL,
     restaurant_id INT NOT NULL,
     role_type NVARCHAR(6) CHECK (role_type IN ('Admin', 'Waiter')) NOT NULL,
+    deleted BIT,
     created_by INT NOT NULL,
     updated_by INT,
     created_at DATETIMEOFFSET NOT NULL,
