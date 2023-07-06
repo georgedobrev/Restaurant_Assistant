@@ -10,6 +10,7 @@ import {
   OutlinedInput,
   Checkbox,
   ListItemText,
+  SelectChangeEvent,
 } from "@mui/material";
 import styles from "./sections.module.css";
 import { maxHeight, storedRestaurantID } from "../../constants";
@@ -23,11 +24,12 @@ const AddSectionsButtons: React.FC = () => {
   const [sectionName, setSectionName] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const handleChange = (event: any) => {
-    const {
-      target: { value },
-    } = event;
-    setTableNumber(typeof value === "string" ? value.split(",") : value);
+  const handleChange = ({ target: { value } }: SelectChangeEvent<number[]>) => {
+    setTableNumber(
+      typeof value === "string"
+        ? value.split(",").map((num) => parseInt(num))
+        : value
+    );
   };
 
   useEffect(() => {

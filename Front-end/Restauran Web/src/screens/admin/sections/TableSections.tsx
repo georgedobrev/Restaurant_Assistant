@@ -5,11 +5,15 @@ import styles from "./sections.module.css";
 import AddSectionsButtons from "./AddSectionButtons";
 import EditIcon from "@mui/icons-material/Edit";
 import { storedRestaurantID } from "../../constants";
-import { getAllSections } from "../../../services/sectionsService";
+import {
+  AppTable,
+  getAllSections,
+  SectionData,
+} from "../../../services/sectionsService";
 
 const TablesSection: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [sections, setSections] = useState<any[]>([]);
+  const [sections, setSections] = useState<SectionData[]>([]);
 
   useEffect(() => {
     if (storedRestaurantID !== null) {
