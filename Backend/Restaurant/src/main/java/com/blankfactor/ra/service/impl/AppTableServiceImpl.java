@@ -19,21 +19,27 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AppTableServiceImpl implements AppTableService {
-
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTable> appTables) {
+    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> appTablesDto) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        appTables.forEach(t -> t.setRestaurant(restaurant));
+        List<AppTable> appTables = appTablesDto.stream()
+                .map(appTableDto -> AppTable.builder()
+                        .tableNumber(appTableDto.getTableNumber())
+                        .capacity(appTableDto.getCapacity())
+                        .restaurant(restaurant)
+                        .build())
+                .collect(Collectors.toList());
 
         try {
             qrCodeService.createQRCodesForTables(restaurant, appTables);
@@ -41,8 +47,9 @@ public class AppTableServiceImpl implements AppTableService {
             throw new QRCodeException("Could not create QR codes");
         }
 
-        restaurant.setTablesCount(restaurant.getTablesCount() + appTables.size());
+        restaurant.setTablesCount(restaurant.getTablesCount() + appTablesDto.size());
         restaurantRepository.save(restaurant);
+
         return appTableRepository.saveAll(appTables);
     }
 
@@ -54,7 +61,7 @@ public class AppTableServiceImpl implements AppTableService {
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
         existingTable.setCapacity(updatedTableDto.getCapacity());
-        existingTable.setVirtualTable(updatedTableDto.isVirtualTable());
+        existingTable.setMergedTable(updatedTableDto.isMergedTable());
         existingTable.setActive(updatedTableDto.isActive());
 
         appTableRepository.save(existingTable);

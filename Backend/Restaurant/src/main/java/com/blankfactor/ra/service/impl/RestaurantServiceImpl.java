@@ -66,7 +66,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getAllRestaurantsByAdmin(int userId) {
+    public List<Restaurant> getAllRestaurantsByAdmin(Integer userId) {
         List<UserRole> userRoles = userRoleRepository.findByAppUserIdAndRoleType(userId, RoleType.ADMIN);
         List<Restaurant> userRestaurant = new ArrayList<>();
 

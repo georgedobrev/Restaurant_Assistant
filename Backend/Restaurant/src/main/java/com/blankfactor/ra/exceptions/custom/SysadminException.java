@@ -5,7 +5,7 @@ public class SysadminException extends RuntimeException {
         super(exMessage);
     }
 
-    public SysadminException(String exMessage, Exception exception) {
-        super(exMessage, exception);
+    public SysadminException(String message, Exception e) {
+        super(message);
     }
 }

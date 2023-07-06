@@ -14,51 +14,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/tenant")
+@RequestMapping("/tenants")
 @AllArgsConstructor
 public class TenantController {
     private final TenantService tenantService;
 
     @PostMapping("")
+    @Operation(summary = "Create tenant")
     public ResponseEntity<Tenant> createTenant(@Valid @RequestBody TenantDto tenantDto) {
         var createdTenant = tenantService.createTenant(tenantDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTenant);
     }
 
-    @GetMapping("/{tenant_id}")
-    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenant_id") int tenantId) throws Exception {
+    @GetMapping("/{tenantId}")
+    @Operation(summary = "Get tenant by id")
+    public ResponseEntity<Tenant> getTenantById(@PathVariable("tenantId") Integer tenantId) throws Exception {
         var tenant = tenantService.getTenantById(tenantId);
 
         return ResponseEntity.ok(tenant);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
+    @Operation(summary = "Get all tenants")
     public ResponseEntity<List<Tenant>> getAllTenants() {
         var restaurants = tenantService.getAllTenants();
 
         return ResponseEntity.ok(restaurants);
     }
 
-    @PutMapping("/{user_id}")
+    @PutMapping("/{userId}")
     @Operation(summary = "Update tenant")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable("user_id") int userId,
+    public ResponseEntity<Tenant> updateTenant(@PathVariable("userId") Integer userId,
                                                @RequestBody TenantDto tenantDto) {
         var tenant = tenantService.updateTenant(userId, tenantDto);
 
         return ResponseEntity.ok(tenant);
     }
 
-    @DeleteMapping("/{tenant_id}")
-    public ResponseEntity<?> deleteTenant(@PathVariable("tenant_id") int tenantId) {
+    @DeleteMapping("/{tenantId}")
+    @Operation(summary = "Delete tenant by id")
+    public ResponseEntity<?> deleteTenant(@PathVariable("tenantId") Integer tenantId) {
         tenantService.deleteTenant(tenantId);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/all")
-    public ResponseEntity<?> deleteAll() {
-        tenantService.deleteAll();
 
         return ResponseEntity.ok().build();
     }
