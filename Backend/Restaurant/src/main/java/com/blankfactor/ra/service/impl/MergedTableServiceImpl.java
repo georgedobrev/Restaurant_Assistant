@@ -92,7 +92,7 @@ public class MergedTableServiceImpl implements MergedTableService {
     private void checkIfTableNumbersExistsAndSetMergedTable(List<Integer> tableNumbers, Integer restaurantId, boolean isVirtual) {
         for (int tableNumber : tableNumbers) {
 
-            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
+            AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumberAndDeletedIsFalse(restaurantId, tableNumber)
                     .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
 
             if (isVirtual) {

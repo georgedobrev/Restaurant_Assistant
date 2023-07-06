@@ -12,7 +12,7 @@ public interface RestaurantService {
 
     List<Restaurant> getAllRestaurants();
 
-    List<Restaurant> getAllRestaurantsByAdmin(int userId) throws RestaurantException;
+    List<Restaurant> getAllRestaurantsByAdmin(Integer userId) throws RestaurantException;
 
     Restaurant getRestaurantById(Integer restaurantId) throws RestaurantException;
 
