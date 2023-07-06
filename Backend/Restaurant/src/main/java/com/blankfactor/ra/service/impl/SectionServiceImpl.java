@@ -30,9 +30,9 @@ public class SectionServiceImpl implements SectionService {
 
         Section firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers).orElse(null);
         Section secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName()).orElse(null);
-
+        Section section;
         if (firstSection == null && secondSection == null) {
-            Section section = Section.builder()
+            section = Section.builder()
                     .sectionName(sectionDto.getSectionName())
                     .restaurant(restaurant)
                     .tableNumbers(tableNumbers)
@@ -43,21 +43,25 @@ public class SectionServiceImpl implements SectionService {
         if (firstSection != null) {
             firstSection.setSectionName(sectionDto.getSectionName());
             firstSection.setDeleted(false);
-
-            if (secondSection != null) {
-                deleteSection(secondSection.getId());
-            }
             return sectionRepository.save(firstSection);
         } else {
             secondSection.setTableNumbers(tableNumbers);
             secondSection.setDeleted(false);
             return sectionRepository.save(secondSection);
         }
-        // TODO: Research entityManager
-//        this.entityManager.delete(entity);
-//        Entity e = this.entityManager.findById(id)
-//        otherEntity.setId(entity.getId());
-//        this.entityManager.save(otherEntity);
+    }
+
+    @Override
+    public void checkForFoundTwoDeletedSectionsBeforeCreation(SectionDto sectionDto) {
+        Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+
+        Section firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers).orElse(null);
+        Section secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName()).orElse(null);
+
+        if (firstSection != null && secondSection != null) {
+            sectionRepository.delete(secondSection);
+        }
     }
 
     private String mapTableNumbersToString(List<AppTable> tables) {
@@ -100,12 +104,6 @@ public class SectionServiceImpl implements SectionService {
         existingSection.setTableNumbers(tableNumbers);
 
         return sectionRepository.save(existingSection);
-    }
-
-    @Override
-    public void deleteSection(Integer sectionId) {
-        Section section = getSectionById(sectionId);
-        sectionRepository.deleteById(sectionId);
     }
 
     @Transactional

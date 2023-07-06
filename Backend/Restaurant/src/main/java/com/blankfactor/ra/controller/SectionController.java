@@ -25,6 +25,7 @@ public class SectionController {
     @PostMapping()
     @Operation(summary = "Create section for a specific restaurant")
     public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) {
+        sectionService.checkForFoundTwoDeletedSectionsBeforeCreation(sectionDto);
         var createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
@@ -54,12 +55,6 @@ public class SectionController {
     @Operation(summary = "Delete section by id")
     public ResponseEntity<?> deleteSectionById(@PathVariable("sectionId") Integer sectionId) {
         sectionService.deleteSectionById(sectionId);
-        return ResponseEntity.ok().build();
-    }
-    @DeleteMapping("/delete/{sectionId}")
-    @Operation(summary = "Delete section by id")
-    public ResponseEntity<?> deleteSection(@PathVariable("sectionId") Integer sectionId) {
-        sectionService.deleteSection(sectionId);
         return ResponseEntity.ok().build();
     }
 }
