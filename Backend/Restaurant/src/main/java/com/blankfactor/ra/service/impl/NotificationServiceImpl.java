@@ -2,9 +2,10 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.dto.NotificationDto;
 import com.blankfactor.ra.exceptions.custom.AppTableException;
-import com.blankfactor.ra.model.*;
 import com.blankfactor.ra.model.AppTable;
 import com.blankfactor.ra.model.Notification;
+import com.blankfactor.ra.model.Section;
+import com.blankfactor.ra.model.WaiterSection;
 import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.NotificationRepository;
 import com.blankfactor.ra.repository.SectionRepository;

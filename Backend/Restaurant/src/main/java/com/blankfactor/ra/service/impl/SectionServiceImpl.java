@@ -8,7 +8,6 @@ import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface ShiftRepository extends JpaRepository<Shift, Integer> {
     List<Shift> findByRestaurantId(Integer restaurantId);
+
     @Modifying
     @Query("UPDATE Shift s SET s.deleted = true WHERE s.id = :shiftId")
     void softDeleteShift(Integer shiftId);
