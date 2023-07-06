@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             Optional<UserRole> userRole = userRoleRepository
                     .findByAppUserAndRestaurantAndRoleType(appUser.get(), restaurantRetrieved, employeeDto.getRoleType());
 
-            List<UserRole> roles = userRoleRepository.findByAppUser_Id(appUser.get().getId());
+            List<UserRole> roles = userRoleRepository.findByAppUserId(appUser.get().getId());
             userRoleRepository.softUpdateByUserRoles(roles);
 
             if (userRole.isEmpty()) {
@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUserById(Integer id) {
-        List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
+        List<UserRole> userRoles = userRoleRepository.findByAppUserId(id);
 
         if (userRoles.isEmpty()) {
             throw new UserException("UserRoles not found for User with id " + id);
