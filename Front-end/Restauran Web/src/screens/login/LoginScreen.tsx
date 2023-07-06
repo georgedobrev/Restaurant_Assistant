@@ -28,11 +28,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         const responseData: LoginResponse = await sendJWT({ googleJwt: JWT });
         setLoggedIn(true);
         setUserType(responseData.userType);
-
         localStorage.setItem("refreshToken", responseData.refreshToken);
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userId", responseData.appUser.id.toString());
-        navigate("/dashboard");
+        navigate("/restaurants");
       } catch (err: any) {
         setErrorMsg(getServerErrorMessage(err));
       }

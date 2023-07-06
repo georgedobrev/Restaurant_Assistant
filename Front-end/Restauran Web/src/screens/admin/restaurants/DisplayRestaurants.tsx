@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import styles from "./restaurant.module.css";
 import { storedUserId } from "../../constants";
@@ -14,6 +15,7 @@ interface Restaurant extends BaseRestaurant {
 const DisplayRestaurants: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -50,6 +52,16 @@ const DisplayRestaurants: React.FC = () => {
     setRestaurants(updatedRestaurants);
   };
 
+  const handleNavigate = () => {
+    const isRestaurantSelected = restaurants.some(
+      (restaurant) => restaurant.isSelected
+    );
+
+    isRestaurantSelected
+      ? navigate("/tables")
+      : alert("Please select a restaurant");
+  };
+
   return (
     <div className={styles.restaurantsSection}>
       {restaurants.map((restaurant) => (
@@ -80,6 +92,9 @@ const DisplayRestaurants: React.FC = () => {
           </div>
         </div>
       ))}
+      <Button className={styles.manageBtn} onClick={() => handleNavigate()}>
+        Manage Restaurant
+      </Button>
     </div>
   );
 };

@@ -16,7 +16,7 @@ export const TablesList: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
-    (async () => {
+    const fetchTablesData = async () => {
       try {
         if (storedRestaurantID) {
           const tablesData = await getAllTables(parseInt(storedRestaurantID));
@@ -25,8 +25,10 @@ export const TablesList: React.FC = () => {
       } catch (err: any) {
         setErrorMsg(getServerErrorMessage(err));
       }
-    })();
-  }, []);
+    };
+
+    fetchTablesData();
+  }, [storedRestaurantID]);
 
   const handleDeleteTable = async (tableNumber: number) => {
     try {

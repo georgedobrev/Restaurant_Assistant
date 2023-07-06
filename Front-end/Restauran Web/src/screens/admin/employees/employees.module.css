@@ -79,15 +79,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  .userDetails {
-    flex-direction: column;
-  }
-
-  .userDetails > div {
-    width: 100%;
-  }
-
-  .flexColumn .button {
-    width: auto;
+  .container {
+    height: 100%;
+    width: 95%;
+    margin: 20% auto;
   }
 }
