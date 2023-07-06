@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ShiftRepository extends JpaRepository<Shift, Integer> {
-    List<Shift> findByRestaurantId(Integer restaurantId);
+    List<Shift> findByRestaurantIdAndDeletedIsFalse(Integer restaurantId);
+
+    Optional<Shift> findByRestaurantIdAndShiftNameAndDeletedIsTrue(Integer restaurantId, String shiftName);
 
     @Modifying
     @Query("UPDATE Shift s SET s.deleted = true WHERE s.id = :shiftId")
