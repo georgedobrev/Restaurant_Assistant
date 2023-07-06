@@ -8,10 +8,12 @@ import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
 import com.blankfactor.ra.model.UserRole;
+import com.blankfactor.ra.repository.AppTableRepository;
 import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.repository.UserRepository;
 import com.blankfactor.ra.repository.UserRoleRepository;
 import com.blankfactor.ra.service.RestaurantService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
+    private final AppTableRepository appTableRepository;
 
     @Override
     public Restaurant createRestaurant(CreateRestaurantDto createRestaurantDto) {
@@ -39,7 +42,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .phoneNumber1(restaurantDto.getPhoneNumber1())
                 .phoneNumber2(restaurantDto.getPhoneNumber2())
                 .phoneNumber3(restaurantDto.getPhoneNumber3())
-                .active(restaurantDto.getActive())
                 .build();
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
@@ -56,12 +58,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findAll();
+        return restaurantRepository.findAllByDeletedIsFalse();
     }
 
     @Override
     public Restaurant getRestaurantById(Integer restaurantId) {
-        return restaurantRepository.findById(restaurantId)
+        return restaurantRepository.findByIdAndDeletedIsFalse(restaurantId)
                 .orElseThrow(() -> new RestaurantException("Restaurant with id " + restaurantId + " not found"));
     }
 
@@ -86,8 +88,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         existingRestaurant.setPhoneNumber1(updatedRestaurant.getPhoneNumber1());
         existingRestaurant.setPhoneNumber2(updatedRestaurant.getPhoneNumber2());
         existingRestaurant.setPhoneNumber3(updatedRestaurant.getPhoneNumber3());
-        existingRestaurant.setActive(updatedRestaurant.getActive());
 
         return restaurantRepository.save(existingRestaurant);
+    }
+
+    // TODO Implement soft delete for sections and shifts!
+    @Transactional
+    @Override
+    public void deleteRestaurantById(Integer restaurantId) {
+        Restaurant restaurant = getRestaurantById(restaurantId);
+        restaurantRepository.softDeleteRestaurant(restaurantId);
+        appTableRepository.softDeleteAppTablesByRestaurantId(restaurantId);
     }
 }

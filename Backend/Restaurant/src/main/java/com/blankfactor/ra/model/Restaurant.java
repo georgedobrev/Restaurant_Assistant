@@ -38,6 +38,6 @@ public class Restaurant extends Audit {
     private String phoneNumber3;
 
     @Builder.Default
-    @Column(name = "active")
-    private Boolean active = true;
+    @Column(name = "deleted")
+    private Boolean deleted = false;
 }

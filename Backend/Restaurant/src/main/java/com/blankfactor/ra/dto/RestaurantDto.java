@@ -23,5 +23,4 @@ public class RestaurantDto {
 
     @Size(min = 10, max = 20, message = "Number cannot be less than 10 and more than 20 characters")
     private String phoneNumber3;
-    private Boolean active;
 }

@@ -11,6 +11,7 @@ import com.blankfactor.ra.repository.RestaurantRepository;
 import com.blankfactor.ra.service.AppTableService;
 import com.blankfactor.ra.service.QRCodeService;
 import com.blankfactor.ra.service.RestaurantService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,28 +19,25 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class AppTableServiceImpl implements AppTableService {
+
     private final AppTableRepository appTableRepository;
     private final QRCodeService qrCodeService;
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
+    private final ObjectMapper objectMapper;
 
+    @Transactional
     @Override
-    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> appTablesDto) {
+    public List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> appTableDtos) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
-
-        List<AppTable> appTables = appTablesDto.stream()
-                .map(appTableDto -> AppTable.builder()
-                        .tableNumber(appTableDto.getTableNumber())
-                        .capacity(appTableDto.getCapacity())
-                        .restaurant(restaurant)
-                        .build())
-                .collect(Collectors.toList());
+        List<AppTable> appTables = createTablesFromDto(restaurant, appTableDtos);
 
         try {
             qrCodeService.createQRCodesForTables(restaurant, appTables);
@@ -47,10 +45,44 @@ public class AppTableServiceImpl implements AppTableService {
             throw new QRCodeException("Could not create QR codes");
         }
 
-        restaurant.setTablesCount(restaurant.getTablesCount() + appTablesDto.size());
+        restaurant.setTablesCount(restaurant.getTablesCount() + appTables.size());
         restaurantRepository.save(restaurant);
-
         return appTableRepository.saveAll(appTables);
+    }
+
+    private List<AppTable> createTablesFromDto(Restaurant restaurant, List<AppTableDto> appTableDtos) {
+        List<AppTable> appTables = new ArrayList<>();
+
+        for (AppTableDto tableDto : appTableDtos) {
+            Integer tableNumber = tableDto.getTableNumber();
+
+            Optional<AppTable> appTable = appTableRepository
+                    .findByRestaurantIdAndTableNumberAndDeletedIsTrue(restaurant.getId(), tableNumber);
+
+            if (appTable.isEmpty()) {
+                AppTable table = objectMapper.convertValue(tableDto, AppTable.class);
+                table.setRestaurant(restaurant);
+                appTables.add(table);
+            } else {
+                appTable.ifPresent(table -> {
+                    table.setCapacity(tableDto.getCapacity());
+                    table.setDeleted(false);
+                    appTableRepository.save(table);
+                });
+            }
+        }
+        return appTables;
+    }
+
+    @Override
+    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
+        return appTableRepository.findByRestaurantIdAndTableNumberAndDeletedIsFalse(restaurantId, tableNumber)
+                .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
+    }
+
+    @Override
+    public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
+        return appTableRepository.findByRestaurantIdAndDeletedIsFalse(restaurantId);
     }
 
     @Transactional
@@ -61,29 +93,17 @@ public class AppTableServiceImpl implements AppTableService {
         existingTable.setTableNumber(updatedTableDto.getTableNumber());
         existingTable.setOccupied(updatedTableDto.isOccupied());
         existingTable.setCapacity(updatedTableDto.getCapacity());
-        existingTable.setMergedTable(updatedTableDto.isMergedTable());
-        existingTable.setActive(updatedTableDto.isActive());
 
         appTableRepository.save(existingTable);
 
         return existingTable;
     }
 
+    @Transactional
     @Override
-    public List<AppTable> getTablesByRestaurantId(Integer restaurantId) {
-        return appTableRepository.findByRestaurantId(restaurantId);
-    }
-
-
-    @Override
-    public void removeTableByName(Integer restaurantId, Integer tableNumber) {
+    public void deleteTableByTableNumber(Integer restaurantId, Integer tableNumber) {
         AppTable existingTable = getTableByTableNumber(restaurantId, tableNumber);
-        appTableRepository.delete(existingTable);
-    }
-
-    @Override
-    public AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber) {
-        return appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
-                .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
+        appTableRepository.softDeleteAppTable(existingTable.getId());
     }
 }
+

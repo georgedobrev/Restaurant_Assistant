@@ -43,6 +43,6 @@ public class AppTable extends Audit {
     private boolean occupied = false;
 
     @Builder.Default
-    @Column(name = "active")
-    private boolean active = true;
+    @Column(name = "deleted")
+    private boolean deleted = false;
 }

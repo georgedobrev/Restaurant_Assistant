@@ -70,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> getAllNotificationsByRestaurantId(Integer restaurantId) {
-        List<AppTable> appTables = appTableRepository.findByRestaurantId(restaurantId);
+        List<AppTable> appTables = appTableRepository.findByRestaurantIdAndDeletedIsFalse(restaurantId);
         List<Integer> appTableIds = new ArrayList<>();
 
         for (AppTable appTable : appTables) {

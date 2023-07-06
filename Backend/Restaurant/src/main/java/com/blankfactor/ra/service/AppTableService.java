@@ -6,7 +6,7 @@ import com.blankfactor.ra.model.AppTable;
 import java.util.List;
 
 public interface AppTableService {
-    List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> restaurantTables);
+    List<AppTable> createTablesForRestaurant(Integer restaurantId, List<AppTableDto> appTableDtos);
 
     AppTable getTableByTableNumber(Integer restaurantId, Integer tableNumber);
 
@@ -14,5 +14,5 @@ public interface AppTableService {
 
     AppTable updateTableByNumber(Integer restaurantId, Integer tableNumber, AppTableDto updatedTableDto);
 
-    void removeTableByName(Integer restaurantId, Integer tableNumber);
+    void deleteTableByTableNumber(Integer restaurantId, Integer tableNumber);
 }

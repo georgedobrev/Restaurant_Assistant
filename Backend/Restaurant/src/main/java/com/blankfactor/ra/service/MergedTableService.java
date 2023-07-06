@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.MergedTableDto;
-import com.blankfactor.ra.exceptions.custom.MergedTableException;
 import com.blankfactor.ra.model.MergedTable;
 
 import java.util.Map;
