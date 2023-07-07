@@ -4,7 +4,6 @@ import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.enums.LoginRequestRoleType;
 import com.blankfactor.ra.enums.LoginResponseRoleType;
 import com.blankfactor.ra.enums.RoleType;
-import com.blankfactor.ra.exceptions.custom.TenantException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Sysadmin;
@@ -30,8 +29,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-import static com.blankfactor.ra.enums.LoginRequestRoleType.EMPLOYEE;
-import static com.blankfactor.ra.enums.LoginRequestRoleType.USER;
+import static com.blankfactor.ra.enums.LoginRequestRoleType.EXECUTIVE;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         AuthenticationResponse authenticationResponse;
 
         switch (googleToken.getLoginRequestRoleType()) {
-            case EMPLOYEE:
+            case EXECUTIVE:
 
                 try {
                     authenticationResponse = authenticate(userDto);
@@ -59,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
                     return authenticationResponse;
                 } catch (Exception exception) {
-                    authenticationResponse = register(userDto, EMPLOYEE);
+                    authenticationResponse = register(userDto, EXECUTIVE);
                     authenticationResponse.setRoleType(LoginResponseRoleType.USER);
 
                     return authenticationResponse;
@@ -103,39 +101,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         switch (loginRequestRoleType) {
-            case EMPLOYEE -> {
-                Optional<AppUser> appUserOptional = userRepository.findAppUserByEmail(userDto.getEmail());
+            case EXECUTIVE -> {
+                AppUser appUserRetrieved = userRepository.findAppUserByEmail(userDto.getEmail())
+                        .orElseThrow(() -> new UserException("User not found"));
 
-                if (appUserOptional.isPresent()) {
-                    Optional<Tenant> tenant = tenantRepository.findTenantByEmail(userDto.getEmail());
-                    Optional<Sysadmin> sysadmin = sysadminRepository.findSysadminByEmail(userDto.getEmail());
-                    UserRole userRoles = userRoleRepository.findUserRoleByAppUser(appUserOptional.get());
+                Optional<Tenant> tenant = tenantRepository.findTenantByEmail(userDto.getEmail());
+                Optional<Sysadmin> sysadmin = sysadminRepository.findSysadminByEmail(userDto.getEmail());
+                UserRole userRoles = userRoleRepository.findUserRoleByAppUser(appUserRetrieved);
 
-                    if (tenant.isPresent() || sysadmin.isPresent() || userRoles.getRoleType() == RoleType.WAITER || userRoles.getRoleType() == RoleType.ADMIN) {
-                        appUser.setEmail(userDto.getEmail());
-                        appUser.setName(userDto.getName());
-                        appUser.setSurname(userDto.getSurname());
-                        appUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                if (tenant.isPresent() || sysadmin.isPresent() || userRoles.getRoleType() == RoleType.WAITER || userRoles.getRoleType() == RoleType.ADMIN) {
+                    appUser.setEmail(userDto.getEmail());
+                    appUser.setName(userDto.getName());
+                    appUser.setSurname(userDto.getSurname());
+                    appUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-                        if (tenant.isPresent()) {
-                            loginResponseRoleType = LoginResponseRoleType.TENANT;
-                            authorities.add(new SimpleGrantedAuthority("ROLE_TENANT"));
-                            extraClaims.put("authorities", authorities);
-                        } else if (sysadmin.isPresent()) {
-                            loginResponseRoleType = LoginResponseRoleType.SYSADMIN;
-                            authorities.add(new SimpleGrantedAuthority("ROLE_SYSADMIN"));
-                            extraClaims.put("authorities", authorities);
-                        } else if (userRoles.getRoleType() == RoleType.WAITER) {
-                            loginResponseRoleType = LoginResponseRoleType.WAITER;
-                            authorities.add(new SimpleGrantedAuthority("ROLE_WAITER"));
-                            extraClaims.put("authorities", authorities);
-                        } else if (userRoles.getRoleType() == RoleType.ADMIN) {
-                            loginResponseRoleType = LoginResponseRoleType.ADMIN;
-                            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                            extraClaims.put("authorities", authorities);
-                        }
+                    if (tenant.isPresent()) {
+                        loginResponseRoleType = LoginResponseRoleType.TENANT;
+                        authorities.add(new SimpleGrantedAuthority("ROLE_TENANT"));
+                        extraClaims.put("authorities", authorities);
+                    } else if (sysadmin.isPresent()) {
+                        loginResponseRoleType = LoginResponseRoleType.SYSADMIN;
+                        authorities.add(new SimpleGrantedAuthority("ROLE_SYSADMIN"));
+                        extraClaims.put("authorities", authorities);
+                    } else if (userRoles.getRoleType() == RoleType.ADMIN) {
+                        loginResponseRoleType = LoginResponseRoleType.ADMIN;
+                        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                        extraClaims.put("authorities", authorities);
                     }
                 }
+            }
+            case WAITER -> {
+                loginResponseRoleType = LoginResponseRoleType.WAITER;
+                authorities.add(new SimpleGrantedAuthority("ROLE_WAITER"));
+                extraClaims.put("authorities", authorities);
             }
             case USER -> {
                 loginResponseRoleType = LoginResponseRoleType.USER;
