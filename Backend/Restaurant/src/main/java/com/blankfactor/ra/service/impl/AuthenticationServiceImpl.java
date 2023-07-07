@@ -4,11 +4,11 @@ import com.blankfactor.ra.dto.*;
 import com.blankfactor.ra.enums.LoginRequestRoleType;
 import com.blankfactor.ra.enums.LoginResponseRoleType;
 import com.blankfactor.ra.enums.RoleType;
+import com.blankfactor.ra.exceptions.custom.AuthenticationException;
 import com.blankfactor.ra.exceptions.custom.UserException;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Sysadmin;
 import com.blankfactor.ra.model.Tenant;
-import com.blankfactor.ra.model.UserRole;
 import com.blankfactor.ra.repository.SysadminRepository;
 import com.blankfactor.ra.repository.TenantRepository;
 import com.blankfactor.ra.repository.UserRepository;
@@ -29,7 +29,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-import static com.blankfactor.ra.enums.LoginRequestRoleType.EXECUTIVE;
+import static com.blankfactor.ra.enums.LoginRequestRoleType.*;
+import static com.blankfactor.ra.enums.LoginResponseRoleType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -44,113 +45,82 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRoleRepository userRoleRepository;
 
     @Override
-    public AuthenticationResponse login(GoogleTokenDto googleToken) throws GeneralSecurityException, IOException {
-        UserDto userDto = googleService.buildUserDtoFromGoogleToken(googleToken.getGoogleJwt());
-        AuthenticationResponse authenticationResponse;
+    public AuthenticationResponseDto login(GoogleTokenDto googleTokenDto) throws GeneralSecurityException, IOException {
+        UserDto userDto = googleService.buildUserDtoFromGoogleToken(googleTokenDto.getGoogleJwt());
+        AuthenticationResponseDto authenticationResponse;
 
-        switch (googleToken.getLoginRequestRoleType()) {
-            case EXECUTIVE:
+        try {
+            authenticationResponse = authenticate(userDto, googleTokenDto.getLoginRequestRoleType());
 
-                try {
-                    authenticationResponse = authenticate(userDto);
-                    authenticationResponse.setRoleType(LoginResponseRoleType.USER);
+            return authenticationResponse;
+        } catch (Exception exception) {
+            authenticationResponse = register(userDto, googleTokenDto.getLoginRequestRoleType());
 
-                    return authenticationResponse;
-                } catch (Exception exception) {
-                    authenticationResponse = register(userDto, EXECUTIVE);
-                    authenticationResponse.setRoleType(LoginResponseRoleType.USER);
-
-                    return authenticationResponse;
-                }
-//            case EMPLOYEE:
-//                try {
-//
-//                } catch (Exception exception) {
-//
-//                }
-//
-//                break;
-//            default: throw new UserRoleException("No such role");
+            return authenticationResponse;
         }
 
-
-        //UserDto userDto = googleService.buildUserDtoFromGoogleToken(googleToken.getGoogleJwt());
-
-        System.out.println(googleToken);
-
-//        AuthenticationRequestDto authenticationRequestDto = AuthenticationRequestDto.builder()
-//                .email(userDto.getEmail())
-//                .password(userDto.getPassword())
-//                .build();
-
-//        //TODO Reconsider
-//        try {
-//            return authenticate(authenticationRequestDto);
-//        } catch (Exception exception) {
-//            return register(userDto);
-//        }
-        return null;
     }
 
 
     @Override
-    public AuthenticationResponse register(UserDto userDto, LoginRequestRoleType loginRequestRoleType) {
+    public AuthenticationResponseDto register(UserDto userDto, LoginRequestRoleType loginRequestRoleType) {
         AppUser appUser = new AppUser();
         LoginResponseRoleType loginResponseRoleType = null;
         Map<String, Object> extraClaims = new HashMap<>();
         List<GrantedAuthority> authorities = new ArrayList<>();
 
+        if (loginRequestRoleType == APPEXECUTIVE || loginRequestRoleType == APPWAITER) {
+            appUser = userRepository.findAppUserByEmail(userDto.getEmail())
+                    .orElseThrow(() -> new UserException("User not found"));
+
+            appUser.setName(userDto.getName());
+            appUser.setSurname(userDto.getSurname());
+            appUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+
         switch (loginRequestRoleType) {
-            case EXECUTIVE -> {
-                AppUser appUserRetrieved = userRepository.findAppUserByEmail(userDto.getEmail())
-                        .orElseThrow(() -> new UserException("User not found"));
+            case APPEXECUTIVE -> {
+                boolean isAppUserAdmin = userRoleRepository.findUserRoleByAppUser(appUser)
+                        .stream()
+                        .findAny()
+                        .map(role -> role.getRoleType().equals(RoleType.ADMIN))
+                        .orElse(false);
 
                 Optional<Tenant> tenant = tenantRepository.findTenantByEmail(userDto.getEmail());
                 Optional<Sysadmin> sysadmin = sysadminRepository.findSysadminByEmail(userDto.getEmail());
-                UserRole userRoles = userRoleRepository.findUserRoleByAppUser(appUserRetrieved);
 
-                if (tenant.isPresent() || sysadmin.isPresent() || userRoles.getRoleType() == RoleType.WAITER || userRoles.getRoleType() == RoleType.ADMIN) {
-                    appUser.setEmail(userDto.getEmail());
-                    appUser.setName(userDto.getName());
-                    appUser.setSurname(userDto.getSurname());
-                    appUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-                    if (tenant.isPresent()) {
-                        loginResponseRoleType = LoginResponseRoleType.TENANT;
-                        authorities.add(new SimpleGrantedAuthority("ROLE_TENANT"));
-                        extraClaims.put("authorities", authorities);
-                    } else if (sysadmin.isPresent()) {
-                        loginResponseRoleType = LoginResponseRoleType.SYSADMIN;
-                        authorities.add(new SimpleGrantedAuthority("ROLE_SYSADMIN"));
-                        extraClaims.put("authorities", authorities);
-                    } else if (userRoles.getRoleType() == RoleType.ADMIN) {
-                        loginResponseRoleType = LoginResponseRoleType.ADMIN;
-                        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                        extraClaims.put("authorities", authorities);
-                    }
+                if (sysadmin.isPresent()) {
+                    loginResponseRoleType = SYSADMIN;
+                    authorities.add(new SimpleGrantedAuthority(SYSADMIN.name()));
+                } else if (tenant.isPresent()) {
+                    loginResponseRoleType = TENANT;
+                    authorities.add(new SimpleGrantedAuthority(TENANT.name()));
+                } else if (isAppUserAdmin) {
+                    loginResponseRoleType = ADMIN;
+                    authorities.add(new SimpleGrantedAuthority(ADMIN.name()));
                 }
             }
-            case WAITER -> {
-                loginResponseRoleType = LoginResponseRoleType.WAITER;
-                authorities.add(new SimpleGrantedAuthority("ROLE_WAITER"));
-                extraClaims.put("authorities", authorities);
+            case APPWAITER -> {
+                loginResponseRoleType = WAITER;
+                authorities.add(new SimpleGrantedAuthority(WAITER.name()));
             }
-            case USER -> {
-                loginResponseRoleType = LoginResponseRoleType.USER;
+            case APPUSER -> {
+                appUser.setEmail(userDto.getEmail());
                 appUser.setName(userDto.getName());
                 appUser.setSurname(userDto.getSurname());
                 appUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                extraClaims.put("authorities", authorities);
+                loginResponseRoleType = USER;
+                authorities.add(new SimpleGrantedAuthority(USER.name()));
             }
+            default -> throw new AuthenticationException("Wrong role request type");
         }
 
+        extraClaims.put("authorities", authorities);
         String jwtToken = jwtService.generateJwtToken(extraClaims, appUser);
         String refreshToken = jwtService.generateRefreshToken(appUser);
         userRepository.save(appUser);
 
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
                 .appUser(appUser)
@@ -159,20 +129,60 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse authenticate(UserDto userDto) {
+    public AuthenticationResponseDto authenticate(UserDto userDto, LoginRequestRoleType loginRequestRoleType) {
         //TODO: test if authenticate checks the data from the db
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
 
         AppUser appUser = userRepository.findAppUserByEmail(userDto.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("No user found"));
 
-        String jwtToken = jwtService.generateJwtToken(appUser);
+        LoginResponseRoleType loginResponseRoleType = null;
+        Map<String, Object> extraClaims = new HashMap<>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        switch (loginRequestRoleType) {
+            case APPEXECUTIVE -> {
+                boolean isAppUserAdmin = userRoleRepository.findUserRoleByAppUser(appUser)
+                        .stream()
+                        .findAny()
+                        .map(role -> role.getRoleType().equals(RoleType.ADMIN))
+                        .orElse(false);
+
+                Optional<Tenant> tenant = tenantRepository.findTenantByEmail(userDto.getEmail());
+                Optional<Sysadmin> sysadmin = sysadminRepository.findSysadminByEmail(userDto.getEmail());
+
+                //TODO: If sysadmin can never log in as tenant/admin
+                if (sysadmin.isPresent()) {
+                    loginResponseRoleType = SYSADMIN;
+                    authorities.add(new SimpleGrantedAuthority(SYSADMIN.name()));
+                } else if (tenant.isPresent()) {
+                    loginResponseRoleType = TENANT;
+                    authorities.add(new SimpleGrantedAuthority(TENANT.name()));
+                } else if (isAppUserAdmin) {
+                    loginResponseRoleType = ADMIN;
+                    authorities.add(new SimpleGrantedAuthority(ADMIN.name()));
+                }
+            }
+            case APPWAITER -> {
+                loginResponseRoleType = WAITER;
+                authorities.add(new SimpleGrantedAuthority(WAITER.name()));
+            }
+            case APPUSER -> {
+                loginResponseRoleType = USER;
+                authorities.add(new SimpleGrantedAuthority(USER.name()));
+            }
+            default -> throw new AuthenticationException("Wrong role request type");
+        }
+
+        extraClaims.put("authorities", authorities);
+        String jwtToken = jwtService.generateJwtToken(extraClaims, appUser);
         String refreshToken = jwtService.generateRefreshToken(appUser);
 
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
                 .appUser(appUser)
+                .roleType(loginResponseRoleType)
                 .build();
     }
 
