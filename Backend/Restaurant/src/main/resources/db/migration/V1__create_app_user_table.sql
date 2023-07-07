@@ -9,6 +9,6 @@ CREATE TABLE app_user
     active BIT,
     created_by INT,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime
 );

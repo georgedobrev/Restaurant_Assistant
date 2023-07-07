@@ -10,6 +10,6 @@ CREATE TABLE restaurant
     active BIT,
     created_by INT NOT NULL,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime
 );

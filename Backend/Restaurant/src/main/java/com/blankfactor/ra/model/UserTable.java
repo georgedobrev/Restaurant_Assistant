@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Builder
@@ -39,9 +40,9 @@ public class UserTable {
 
     @Column(name = "start_time")
     @JsonSerialize(using = InstantSerializer.class)
-    private Instant startTime;
+    private Timestamp startTime;
 
     @Column(name = "end_time")
     @JsonSerialize(using = InstantSerializer.class)
-    private Instant endTime;
+    private Timestamp endTime;
 }

@@ -6,8 +6,8 @@ CREATE TABLE section
     restaurant_id INT,
     created_by INT NOT NULL,
     updated_by INT,
-    created_at DATETIMEOFFSET NOT NULL,
-    updated_at DATETIMEOFFSET,
+    created_at smalldatetime NOT NULL,
+    updated_at smalldatetime,
     CONSTRAINT UQ_section_table_numbers_restaurant_id UNIQUE (table_numbers, restaurant_id),
     CONSTRAINT UQ_section_section_name_restaurant_id UNIQUE (section_name, restaurant_id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)

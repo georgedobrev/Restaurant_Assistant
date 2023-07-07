@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -34,5 +34,5 @@ public class Sysadmin {
 
     @Builder.Default
     @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 }

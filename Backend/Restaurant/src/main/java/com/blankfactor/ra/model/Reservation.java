@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Builder
@@ -34,7 +35,7 @@ public class Reservation extends Audit {
 
     @Column(name = "reservation_time")
     @JsonSerialize(using = InstantSerializer.class)
-    private Instant reservationTime;
+    private Timestamp reservationTime;
 
     @Column(name = "client_phone_number")
     private String clientPhoneNumber;
