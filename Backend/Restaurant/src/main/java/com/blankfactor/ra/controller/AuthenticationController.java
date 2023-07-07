@@ -1,6 +1,7 @@
 package com.blankfactor.ra.controller;
 
 import com.blankfactor.ra.dto.*;
+import com.blankfactor.ra.enums.LoginRequestRoleType;
 import com.blankfactor.ra.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(authenticationService.register(userDto));
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto userDto, LoginRequestRoleType loginRequestRoleType) {
+        return ResponseEntity.ok(authenticationService.register(userDto, loginRequestRoleType));
     }
 
     @PostMapping("/authentication")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequestDto request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(authenticationService.authenticate(userDto));
     }
 
     @GetMapping("/jwt")
