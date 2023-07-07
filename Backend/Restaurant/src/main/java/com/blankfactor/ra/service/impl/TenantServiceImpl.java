@@ -32,10 +32,10 @@ public class TenantServiceImpl implements TenantService {
         userRepository.save(appUser);
         return tenantRepository.save(tenant);
     }
-
     @Override
-    public Tenant getTenantById(int tenantId) throws Exception {
-        return tenantRepository.findById(tenantId).orElseThrow(() -> new Exception("Tenant " + tenantId + " not found."));
+    public Tenant getTenantById(Integer tenantId) {
+        return tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new TenantException("Tenant " + tenantId + " not found."));
     }
 
     @Override
@@ -44,13 +44,13 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant updateTenant(int tenantId, TenantDto tenantDto) {
+    public Tenant updateTenant(Integer userId, TenantDto tenantDto) {
 
-        AppUser appUserToUpdate = userRepository.findById(tenantId)
-                .orElseThrow(() -> new UserException("User with id " + tenantId + " not found."));
+        AppUser appUserToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(""));
 
         Tenant tenantToUpdate = tenantRepository.findTenantByEmail(appUserToUpdate.getEmail())
-                .orElseThrow(() -> new TenantException("Tenant with id " + tenantId + " not found."));
+                .orElseThrow(() -> new TenantException(""));
 
         tenantToUpdate.setEmail(tenantDto.getEmail());
         appUserToUpdate.setEmail(tenantDto.getEmail());
@@ -59,12 +59,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public void deleteTenant(int tenantId) {
+    public void deleteTenant(Integer tenantId) {
         tenantRepository.deleteById(tenantId);
-    }
-
-    @Override
-    public void deleteAll() {
-        tenantRepository.deleteAll();
     }
 }

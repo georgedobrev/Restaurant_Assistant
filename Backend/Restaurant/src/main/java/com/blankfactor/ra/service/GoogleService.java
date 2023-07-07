@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public interface GoogleService {
-
     GoogleIdToken verifyGoogleToken(String token) throws GeneralSecurityException, IOException;
 
     UserDto buildUserDtoFromGoogleToken(String token) throws GeneralSecurityException, IOException;

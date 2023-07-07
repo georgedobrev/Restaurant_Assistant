@@ -34,8 +34,8 @@ public class UserTable {
     private AppTable appTable;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "virtual_table_id")
-    private VirtualTable virtualTable;
+    @JoinColumn(name = "merged_table_id")
+    private MergedTable mergedTable;
 
     @Column(name = "start_time")
     @JsonSerialize(using = InstantSerializer.class)

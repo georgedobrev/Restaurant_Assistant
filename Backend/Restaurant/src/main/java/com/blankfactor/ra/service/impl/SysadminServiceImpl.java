@@ -37,21 +37,9 @@ public class SysadminServiceImpl implements SysadminService {
     }
 
     @Override
-    public Sysadmin getSysadminById(int sysadminId) {
+    public Sysadmin getSysadminById(Integer sysadminId) {
         return sysadminRepository.findById(sysadminId)
                 .orElseThrow(() -> new SysadminException("Sysadmin not found with id " + sysadminId));
-    }
-
-    @Override
-    public Sysadmin updateSysadminById(int sysadminId, SysadminDto sysadminDto) {
-        Sysadmin sysadmin = sysadminRepository.findById(sysadminId)
-                .orElseThrow(() -> new SysadminException("Sysadmin" + sysadminId + "not found."));
-
-        sysadmin.setEmail(sysadminDto.getEmail());
-        sysadmin.setName(sysadminDto.getName());
-        sysadmin.setSurname(sysadminDto.getSurname());
-
-        return sysadminRepository.save(sysadmin);
     }
 
     @Override
@@ -60,12 +48,14 @@ public class SysadminServiceImpl implements SysadminService {
     }
 
     @Override
-    public void deleteSysadminById(int sysadminId) {
-        sysadminRepository.deleteById(sysadminId);
-    }
+    public Sysadmin updateSysadminById(Integer sysadminId, SysadminDto sysadminDto) {
+        Sysadmin sysadmin = sysadminRepository.findById(sysadminId)
+                .orElseThrow(() -> new SysadminException("Sysadmin" + sysadminId + "not found."));
 
-    @Override
-    public void deleteAll() {
-        sysadminRepository.deleteAll();
+        sysadmin.setEmail(sysadminDto.getEmail());
+        sysadmin.setName(sysadminDto.getName());
+        sysadmin.setSurname(sysadminDto.getSurname());
+
+        return sysadminRepository.save(sysadmin);
     }
 }

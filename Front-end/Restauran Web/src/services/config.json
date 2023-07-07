@@ -16,5 +16,11 @@
   "getRestaurantsByAdmin": "/getAllByAdmin",
 
   "notificationEndpoint": "notification",
-  "tenantsEndpoint": "tenant"
+  "tenantsEndpoint": "tenant",
+  
+  "tablesEndpoint": "tables/",
+  "allTables": "/all",
+
+  "section": "section",
+  "allSection": "/getAll/"
 }

@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VirtualTableDto {
-    private List<Integer> tableNumbers;
+public class UpdateUserDetailsDto {
+    private String email;
+    private String name;
+    private String surname;
 }
