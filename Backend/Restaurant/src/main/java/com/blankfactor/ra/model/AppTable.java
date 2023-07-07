@@ -35,8 +35,8 @@ public class AppTable extends Audit {
     private int capacity;
 
     @Builder.Default
-    @Column(name = "virtual_table")
-    private boolean isVirtualTable = false;
+    @Column(name = "merged_table")
+    private boolean isMergedTable = false;
 
     @Builder.Default
     @Column(name = "occupied")

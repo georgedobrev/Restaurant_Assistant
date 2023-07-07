@@ -1,3 +1,7 @@
+.section {
+  margin-top: 8%;
+}
+
 .dataGrid {
   width: 80%;
   margin-left: 20%;
@@ -75,15 +79,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  .userDetails {
-    flex-direction: column;
-  }
-
-  .userDetails > div {
-    width: 100%;
-  }
-
-  .flexColumn .button {
-    width: auto;
+  .container {
+    height: 100%;
+    width: 95%;
+    margin: 20% auto;
   }
 }

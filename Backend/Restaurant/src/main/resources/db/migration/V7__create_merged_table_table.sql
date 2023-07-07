@@ -1,4 +1,4 @@
-CREATE TABLE virtual_table
+CREATE TABLE merged_table
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
     table_numbers NVARCHAR(50),

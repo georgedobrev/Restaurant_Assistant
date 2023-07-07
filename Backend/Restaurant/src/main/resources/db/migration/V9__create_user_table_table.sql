@@ -4,7 +4,7 @@ CREATE TABLE user_table
     app_user_id INT NOT NULL,
     waiter_ids NVARCHAR(50) NOT NULL,
     app_table_id INT,
-    virtual_table_id INT,
+    merged_table_id INT,
     start_time smalldatetime NOT NULL,
     end_time smalldatetime,
     FOREIGN KEY (app_user_id) REFERENCES app_user (id),

@@ -5,7 +5,7 @@ CREATE TABLE app_table
     qr_id INT,
     restaurant_id INT NOT NULL,
     capacity INT,
-    virtual_table BIT,
+    merged_table BIT,
     occupied BIT,
     active BIT,
     created_by INT NOT NULL,

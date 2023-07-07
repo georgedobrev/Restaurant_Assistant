@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SectionDto {
-
     @Size(max = 50, message = "Section name cannot be more than 50 characters")
     private String sectionName;
 

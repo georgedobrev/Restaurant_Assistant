@@ -2,11 +2,11 @@ package com.blankfactor.ra.service.impl;
 
 import com.blankfactor.ra.model.*;
 import com.blankfactor.ra.repository.AppTableRepository;
+import com.blankfactor.ra.repository.MergedTableRepository;
 import com.blankfactor.ra.repository.UserTableRepository;
-import com.blankfactor.ra.repository.VirtualTableRepository;
+import com.blankfactor.ra.service.MergedTableService;
 import com.blankfactor.ra.service.SectionService;
 import com.blankfactor.ra.service.UserTableService;
-import com.blankfactor.ra.service.VirtualTableService;
 import com.blankfactor.ra.service.WaiterSectionService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,12 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class UserTableServiceImpl implements UserTableService {
-    private final VirtualTableRepository virtualTableRepository;
+    private final MergedTableRepository mergedTableRepository;
     private final UserTableRepository userTableRepository;
     private final AppTableRepository appTableRepository;
     private final WaiterSectionService waiterSectionService;
     private final SectionService sectionService;
-    private final VirtualTableService virtualTableService;
+    private final MergedTableService mergedTableService;
 
     @Override
     public void createUserTable(AppTable appTable, AppUser user) {
@@ -33,11 +33,11 @@ public class UserTableServiceImpl implements UserTableService {
         String waiterIds = waiterSectionService.getWaitersFromSections(sections);
 
 
-        if (appTable.isVirtualTable()) {
-            VirtualTable virtualTable = virtualTableService.getVirtualTableByAppTableNumber(appTable.getRestaurant().getId(), appTable.getTableNumber());
+        if (appTable.isMergedTable()) {
+            MergedTable mergedTable = mergedTableService.getMergedTableByAppTableNumber(appTable.getRestaurant().getId(), appTable.getTableNumber());
 
-            if (!isAppUserSeated(user, virtualTable)) {
-                createUserTableRecord(user, waiterIds, null, virtualTable);
+            if (!isAppUserSeated(user, mergedTable)) {
+                createUserTableRecord(user, waiterIds, null, mergedTable);
             }
 
         } else {
@@ -48,22 +48,23 @@ public class UserTableServiceImpl implements UserTableService {
         }
     }
 
-    public void createUserTableRecord(AppUser user, String waiterIds, AppTable appTable, VirtualTable virtualTable) {
+    public void createUserTableRecord(AppUser user, String waiterIds, AppTable appTable, MergedTable mergedTable) {
         UserTable userTable = UserTable.builder()
                 .appUser(user)
                 .waiterIds(waiterIds)
                 .appTable(appTable)
-                .virtualTable(virtualTable)
-                .startTime(new Timestamp(System.currentTimeMillis()))
+                .mergedTable(mergedTable)
+                .startTime(new Date().toInstant())
                 .build();
 
         if (appTable != null) {
             appTable.setOccupied(true);
             appTableRepository.save(appTable);
         } else {
-            virtualTable.setOccupied(true);
-            virtualTableRepository.save(virtualTable);
+            mergedTable.setOccupied(true);
+            mergedTableRepository.save(mergedTable);
         }
+
         userTableRepository.save(userTable);
     }
 
@@ -72,8 +73,8 @@ public class UserTableServiceImpl implements UserTableService {
         return userTable != null;
     }
 
-    public boolean isAppUserSeated(AppUser user, VirtualTable virtualTable) {
-        UserTable userTable = userTableRepository.findByAppUserAndVirtualTableAndEndTimeIsNull(user, virtualTable).orElse(null);
+    public boolean isAppUserSeated(AppUser user, MergedTable mergedTable) {
+        UserTable userTable = userTableRepository.findByAppUserAndMergedTableAndEndTimeIsNull(user, mergedTable).orElse(null);
         return userTable != null;
     }
 }
