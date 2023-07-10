@@ -1,6 +1,9 @@
 package com.blankfactor.ra.controller;
 
-import com.blankfactor.ra.dto.*;
+import com.blankfactor.ra.dto.EmployeeDto;
+import com.blankfactor.ra.dto.EmployeeResponseDto;
+import com.blankfactor.ra.dto.UpdateUserDetailsDto;
+import com.blankfactor.ra.dto.UpdateUserRoleDto;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,10 +38,10 @@ public class UserController {
         return ResponseEntity.ok(employee);
     }
 
-    @GetMapping("")
+    @GetMapping("/{email}")
     @Operation(summary = "Get user by email")
-    public ResponseEntity<AppUser> getUserByEmail(@Valid @RequestBody UserEmailDto userEmailDto) {
-        var appUser = userService.getUserByEmail(userEmailDto.getEmail());
+    public ResponseEntity<AppUser> getUserByEmail(@PathVariable String email) {
+        var appUser = userService.getUserByEmail(email);
 
         return ResponseEntity.ok(appUser);
     }
