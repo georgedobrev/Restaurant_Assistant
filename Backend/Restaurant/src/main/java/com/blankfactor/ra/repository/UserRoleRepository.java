@@ -1,6 +1,5 @@
 package com.blankfactor.ra.repository;
 
-import com.blankfactor.ra.enums.LoginRequestRoleType;
 import com.blankfactor.ra.enums.RoleType;
 import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.model.Restaurant;
@@ -23,5 +22,6 @@ public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> 
     List<UserRole> findAllByRestaurantIdAndRoleType(int restaurantId, RoleType roleType);
 
     Optional<UserRole> findByAppUserAndRestaurant(AppUser appUser, Restaurant restaurant);
+
     List<UserRole> findUserRoleByAppUser(AppUser appUser);
 }

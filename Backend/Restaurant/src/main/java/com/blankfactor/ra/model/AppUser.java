@@ -46,14 +46,13 @@ public class AppUser extends Audit implements UserDetails {
     @Transient
     private List<GrantedAuthority> authorities;
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //todo fix this
         return authorities;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override

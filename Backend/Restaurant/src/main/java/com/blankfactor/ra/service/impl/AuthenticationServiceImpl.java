@@ -29,7 +29,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-import static com.blankfactor.ra.enums.LoginRequestRoleType.*;
+import static com.blankfactor.ra.enums.LoginRequestRoleType.APPEXECUTIVE;
+import static com.blankfactor.ra.enums.LoginRequestRoleType.APPWAITER;
 import static com.blankfactor.ra.enums.LoginResponseRoleType.*;
 
 @Service
