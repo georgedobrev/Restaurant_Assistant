@@ -1,6 +1,6 @@
 package com.blankfactor.ra.model;
 
-import com.blankfactor.ra.config.InstantSerializer;
+import com.blankfactor.ra.config.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -39,10 +38,10 @@ public class UserTable {
     private MergedTable mergedTable;
 
     @Column(name = "start_time")
-    @JsonSerialize(using = InstantSerializer.class)
-    private Timestamp startTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    @JsonSerialize(using = InstantSerializer.class)
-    private Timestamp endTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime endTime;
 }

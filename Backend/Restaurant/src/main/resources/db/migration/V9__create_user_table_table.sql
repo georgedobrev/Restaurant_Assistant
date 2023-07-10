@@ -9,5 +9,5 @@ CREATE TABLE user_table
     end_time smalldatetime,
     FOREIGN KEY (app_user_id) REFERENCES app_user (id),
     FOREIGN KEY (app_table_id) REFERENCES app_table (id),
-    FOREIGN KEY (virtual_table_id) REFERENCES virtual_table (id)
+    FOREIGN KEY (merged_table_id) REFERENCES merged_table (id)
 );

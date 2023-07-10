@@ -1,6 +1,6 @@
 package com.blankfactor.ra.model;
 
-import com.blankfactor.ra.config.InstantSerializer;
+import com.blankfactor.ra.config.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -34,8 +33,8 @@ public class Reservation extends Audit {
     private Integer peopleCount;
 
     @Column(name = "reservation_time")
-    @JsonSerialize(using = InstantSerializer.class)
-    private Timestamp reservationTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime reservationTime;
 
     @Column(name = "client_phone_number")
     private String clientPhoneNumber;

@@ -1,6 +1,6 @@
 package com.blankfactor.ra.model;
 
-import com.blankfactor.ra.config.InstantSerializer;
+import com.blankfactor.ra.config.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -13,7 +13,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,12 +29,12 @@ public class Audit {
     private Integer updatedBy;
 
     @CreatedDate
-    @JsonSerialize(using = InstantSerializer.class)
-    @Column(name = "created_at")
-    private Timestamp createdAt;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Column(name = "created_at", columnDefinition = "smalldatetime")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @JsonSerialize(using = InstantSerializer.class)
-    @Column(name = "updated_at")
-    private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Column(name = "updated_at", columnDefinition = "smalldatetime")
+    private LocalDateTime updatedAt;
 }

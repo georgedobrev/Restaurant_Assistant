@@ -13,6 +13,8 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class UserTableServiceImpl implements UserTableService {
                 .waiterIds(waiterIds)
                 .appTable(appTable)
                 .mergedTable(mergedTable)
-                .startTime(new Date().toInstant())
+                .startTime(LocalDateTime.now())
                 .build();
 
         if (appTable != null) {

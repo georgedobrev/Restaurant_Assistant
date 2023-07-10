@@ -19,8 +19,9 @@ public class AuditorAwareImpl implements AuditorAware<Integer> {
                 Integer userId = ((AppUser) principal).getId();
                 return Optional.of(userId);
             }
+
         }
 
-        return Optional.empty();
+       return Optional.empty();
     }
 }

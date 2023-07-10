@@ -1,12 +1,18 @@
 package com.blankfactor.ra.model;
 
+import com.blankfactor.ra.config.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Data
@@ -34,5 +40,6 @@ public class Sysadmin {
 
     @Builder.Default
     @Column(name = "created_at")
-    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt = LocalDateTime.now(ZoneId.of("UTC"));
 }
