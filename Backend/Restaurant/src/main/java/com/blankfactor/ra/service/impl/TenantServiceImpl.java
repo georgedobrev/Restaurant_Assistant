@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,11 +26,16 @@ public class TenantServiceImpl implements TenantService {
                 .email(tenantDto.getEmail())
                 .build();
 
-        AppUser appUser = AppUser.builder()
-                .email(tenantDto.getEmail())
-                .build();
+        Optional<AppUser> appUserRetrieved = userRepository.findAppUserByEmail(tenant.getEmail());
 
-        userRepository.save(appUser);
+        if (appUserRetrieved.isEmpty()) {
+            AppUser appUser = AppUser.builder()
+                    .email(tenantDto.getEmail())
+                    .build();
+
+            userRepository.save(appUser);
+        }
+
         return tenantRepository.save(tenant);
     }
 
