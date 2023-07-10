@@ -60,8 +60,8 @@ public class MergedTableServiceImpl implements MergedTableService {
 
         for (MergedTable table : mergedTables) {
             List<Integer> tableNumbers = mapMergedTableNumbersToInteger(table);
-            for (Integer virtualTableNumber : tableNumbers) {
-                if (Objects.equals(virtualTableNumber, tableNumber)) {
+            for (Integer mergedTableNumber : tableNumbers) {
+                if (Objects.equals(mergedTableNumber, tableNumber)) {
                     return table;
                 }
             }
@@ -70,8 +70,8 @@ public class MergedTableServiceImpl implements MergedTableService {
     }
 
     @Override
-    public MergedTable updateMergedTableByMergedTableId(Integer restaurantId, Integer virtualTableId, MergedTable updatedMergedTable) {
-        MergedTable existingMergedTable = mergedTableRepository.findById(virtualTableId)
+    public MergedTable updateMergedTableByMergedTableId(Integer restaurantId, Integer mergedTableId, MergedTable updatedMergedTable) {
+        MergedTable existingMergedTable = mergedTableRepository.findById(mergedTableId)
                 .orElseThrow(() -> new MergedTableException("Merged table not found"));
 
         existingMergedTable.setTableNumbers(updatedMergedTable.getTableNumbers());
@@ -89,19 +89,19 @@ public class MergedTableServiceImpl implements MergedTableService {
         mergedTableRepository.delete(mergedTable);
     }
 
-    private void checkIfTableNumbersExistsAndSetMergedTable(List<Integer> tableNumbers, Integer restaurantId, boolean isVirtual) {
+    private void checkIfTableNumbersExistsAndSetMergedTable(List<Integer> tableNumbers, Integer restaurantId, boolean isMerged) {
         for (int tableNumber : tableNumbers) {
 
             AppTable appTable = appTableRepository.findByRestaurantIdAndTableNumber(restaurantId, tableNumber)
                     .orElseThrow(() -> new AppTableException("App table " + tableNumber + " not found"));
 
-            if (isVirtual) {
+            if (isMerged) {
                 if (appTable.isMergedTable()) {
-                    throw new MergedTableException("Table " + tableNumber + " is already assigned as virtual table");
+                    throw new MergedTableException("Table " + tableNumber + " is already assigned as merged table");
                 }
             }
 
-            appTable.setMergedTable(isVirtual);
+            appTable.setMergedTable(isMerged);
             appTableRepository.save(appTable);
         }
     }

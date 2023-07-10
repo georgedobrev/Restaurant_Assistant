@@ -1,7 +1,6 @@
 package com.blankfactor.ra.service;
 
 import com.blankfactor.ra.dto.ShiftDto;
-import com.blankfactor.ra.exceptions.custom.ShiftException;
 import com.blankfactor.ra.model.Shift;
 
 import java.util.List;
