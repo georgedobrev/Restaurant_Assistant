@@ -129,22 +129,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 //TODO: If sysadmin can never log in as tenant/admin
                 if (sysadmin.isPresent()) {
                     loginResponseRoleType = SYSADMIN;
-                    authorities.add(new SimpleGrantedAuthority(SYSADMIN.name()));
+                    authorities.add(new SimpleGrantedAuthority(loginResponseRoleType.name()));
                 } else if (tenant.isPresent()) {
                     loginResponseRoleType = TENANT;
-                    authorities.add(new SimpleGrantedAuthority(TENANT.name()));
+                    authorities.add(new SimpleGrantedAuthority(loginResponseRoleType.name()));
                 } else if (isAppUserAdmin) {
                     loginResponseRoleType = ADMIN;
-                    authorities.add(new SimpleGrantedAuthority(ADMIN.name()));
+                    authorities.add(new SimpleGrantedAuthority(loginResponseRoleType.name()));
                 }
             }
             case APPWAITER -> {
                 loginResponseRoleType = WAITER;
-                authorities.add(new SimpleGrantedAuthority(WAITER.name()));
+                authorities.add(new SimpleGrantedAuthority(loginResponseRoleType.name()));
             }
             case APPUSER -> {
                 loginResponseRoleType = USER;
-                authorities.add(new SimpleGrantedAuthority(USER.name()));
+                authorities.add(new SimpleGrantedAuthority(loginResponseRoleType.name()));
             }
             default -> throw new AuthenticationException("Wrong role request type");
         }

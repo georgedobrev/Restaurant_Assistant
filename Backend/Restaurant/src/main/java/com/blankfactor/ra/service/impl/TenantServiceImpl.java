@@ -26,9 +26,9 @@ public class TenantServiceImpl implements TenantService {
                 .email(tenantDto.getEmail())
                 .build();
 
-        Optional<AppUser> appUser1 = userRepository.findAppUserByEmail(tenant.getEmail());
+        Optional<AppUser> appUserRetrieved = userRepository.findAppUserByEmail(tenant.getEmail());
 
-        if (!appUser1.isPresent()) {
+        if (appUserRetrieved.isEmpty()) {
             AppUser appUser = AppUser.builder()
                     .email(tenantDto.getEmail())
                     .build();
