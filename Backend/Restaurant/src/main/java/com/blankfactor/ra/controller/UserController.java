@@ -35,10 +35,10 @@ public class UserController {
         return ResponseEntity.ok(employee);
     }
 
-    @GetMapping("")
+    @GetMapping("/{email:^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$}")
     @Operation(summary = "Get user by email")
-    public ResponseEntity<AppUser> getUserByEmail(@Valid @RequestBody UserEmailDto userEmailDto) {
-        var appUser = userService.getUserByEmail(userEmailDto.getEmail());
+    public ResponseEntity<AppUser> getUserByEmail(@PathVariable String email) {
+        var appUser = userService.getUserByEmail(email);
 
         return ResponseEntity.ok(appUser);
     }

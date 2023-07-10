@@ -32,7 +32,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.authenticate(userDto, loginRequestRoleType));
     }
 
-    @GetMapping("/jwt")
+    @PostMapping("/jwt")
     public ResponseEntity<JwtTokenDto> jwtFromRefreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
         return ResponseEntity.ok(authenticationService.jwtFromRefreshToken(refreshTokenDto));
     }
