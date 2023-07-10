@@ -5,6 +5,7 @@ import com.blankfactor.ra.model.AppUser;
 import com.blankfactor.ra.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class UserController {
         return ResponseEntity.ok(employee);
     }
 
-    @GetMapping("/{email:^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$}")
+    @GetMapping("/{email}")
     @Operation(summary = "Get user by email")
-    public ResponseEntity<AppUser> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<AppUser> getUserByEmail(@PathVariable @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$}") String email) {
         var appUser = userService.getUserByEmail(email);
 
         return ResponseEntity.ok(appUser);
