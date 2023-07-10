@@ -16,8 +16,10 @@ import java.time.LocalTime;
 @Entity
 @Table(
         name = "shift",
-        uniqueConstraints =
-        @UniqueConstraint(columnNames = {"restaurant_id", "start_time", "end_time", "day_from", "day_to"})
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"restaurant_id", "start_time", "end_time", "day_from", "day_to"}),
+                @UniqueConstraint(columnNames = {"restaurant_id", "shift_name"})
+        }
 )
 public class Shift extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,9 @@ public class Shift extends Audit {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    @Column(name = "shift_name")
+    private String shiftName;
 
     // TODO format correctly
     @Column(name = "start_time", nullable = false)
@@ -43,4 +48,8 @@ public class Shift extends Audit {
     @Enumerated(EnumType.STRING)
     @Column(name = "day_to", nullable = false)
     private DayType dayTo;
+
+    @Builder.Default
+    @Column(name = "deleted")
+    private boolean deleted = false;
 }

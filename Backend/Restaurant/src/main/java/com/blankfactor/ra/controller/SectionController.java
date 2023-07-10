@@ -25,6 +25,7 @@ public class SectionController {
     @PostMapping()
     @Operation(summary = "Create section for a specific restaurant")
     public ResponseEntity<Section> createSection(@Valid @RequestBody SectionDto sectionDto) {
+        sectionService.checkForFoundTwoDeletedSectionsBeforeCreation(sectionDto);
         var createdSection = sectionService.createSection(sectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSection);
     }
@@ -32,7 +33,6 @@ public class SectionController {
     @PostMapping("/waiter")
     @Operation(summary = "Assign waiter to a section with a shift")
     public ResponseEntity<WaiterSection> assignWaiterToSection(@Valid @RequestBody WaiterSectionDto waiterSectionDto) {
-        // TODO Null Null Null
         var createdWaiterSection = waiterSectionService.createWaiterSection(waiterSectionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWaiterSection);
     }

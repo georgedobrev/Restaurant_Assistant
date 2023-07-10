@@ -8,9 +8,9 @@ import com.blankfactor.ra.model.Section;
 import com.blankfactor.ra.repository.SectionRepository;
 import com.blankfactor.ra.service.RestaurantService;
 import com.blankfactor.ra.service.SectionService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,35 +22,45 @@ public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final RestaurantService restaurantService;
 
-    @Transactional
     @Override
     public Section createSection(SectionDto sectionDto) {
         Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
         String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
 
-        Section section = Section.builder()
-                .sectionName(sectionDto.getSectionName())
-                .restaurant(restaurant)
-                .tableNumbers(tableNumbers)
-                .build();
+        Section firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers).orElse(null);
+        Section secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName()).orElse(null);
+        Section section;
+        if (firstSection == null && secondSection == null) {
+            section = Section.builder()
+                    .sectionName(sectionDto.getSectionName())
+                    .restaurant(restaurant)
+                    .tableNumbers(tableNumbers)
+                    .build();
+            return sectionRepository.save(section);
+        }
 
-        return sectionRepository.save(section);
+        if (firstSection != null) {
+            firstSection.setSectionName(sectionDto.getSectionName());
+            firstSection.setDeleted(false);
+            return sectionRepository.save(firstSection);
+        } else {
+            secondSection.setTableNumbers(tableNumbers);
+            secondSection.setDeleted(false);
+            return sectionRepository.save(secondSection);
+        }
+    }
 
-        // TODO research how to implement object mapper to create section
-//        try {
-//            ObjectMapper mapper = new ObjectMapper();
-//
-//            Section section = mapper.convertValue(sectionDto, Section.class);
-//
-//            Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
-//            String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
-//
-//            section.setRestaurant(restaurant);
-//            section.setTableNumbers(tableNumbers);
-//            return sectionRepository.save(section);
-//        } catch (IllegalArgumentException e) {
-//            throw new RuntimeException("Error mapping SectionDto to Section object");
-//        }
+    @Override
+    public void checkForFoundTwoDeletedSectionsBeforeCreation(SectionDto sectionDto) {
+        Restaurant restaurant = sectionDto.getAppTables().get(0).getRestaurant();
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+
+        Section firstSection = sectionRepository.findByRestaurantIdAndTableNumbersAndDeletedIsTrue(restaurant.getId(), tableNumbers).orElse(null);
+        Section secondSection = sectionRepository.findByRestaurantIdAndSectionNameAndDeletedIsTrue(restaurant.getId(), sectionDto.getSectionName()).orElse(null);
+
+        if (firstSection != null && secondSection != null) {
+            sectionRepository.delete(secondSection);
+        }
     }
 
     private String mapTableNumbersToString(List<AppTable> tables) {
@@ -65,23 +75,6 @@ public class SectionServiceImpl implements SectionService {
         List<Section> allSections = sectionRepository.findByRestaurant(restaurant);
 
         return allSections;
-    }
-
-    @Override
-    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
-        Section existingSection = getSectionById(sectionId);
-
-        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
-        existingSection.setSectionName(sectionDto.getSectionName());
-        existingSection.setTableNumbers(tableNumbers);
-
-        return sectionRepository.save(existingSection);
-    }
-
-    @Override
-    public void deleteSectionById(Integer sectionId) {
-        Section section = getSectionById(sectionId);
-        sectionRepository.deleteById(sectionId);
     }
 
     public Section getSectionById(Integer sectionId) {
@@ -99,5 +92,23 @@ public class SectionServiceImpl implements SectionService {
                         .map(Integer::valueOf)
                         .anyMatch(num -> num == currentTableNum))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Section updateSectionById(Integer sectionId, SectionDto sectionDto) {
+        Section existingSection = getSectionById(sectionId);
+
+        String tableNumbers = mapTableNumbersToString(sectionDto.getAppTables());
+        existingSection.setSectionName(sectionDto.getSectionName());
+        existingSection.setTableNumbers(tableNumbers);
+
+        return sectionRepository.save(existingSection);
+    }
+
+    @Transactional
+    @Override
+    public void deleteSectionById(Integer sectionId) {
+        Section section = getSectionById(sectionId);
+        sectionRepository.softDeleteSection(sectionId);
     }
 }

@@ -2,6 +2,7 @@ package com.blankfactor.ra.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,11 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShiftDto {
+
+    @NotNull(message = "Shift name cannot be null")
+    @Size(max = 50, message = "Shift name cannot be more than 50 characters")
+    private String shiftName;
+
     @NotNull(message = "StartTime cannot be null")
     private LocalTime startTime;
 
