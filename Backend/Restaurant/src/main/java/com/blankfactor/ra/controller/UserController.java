@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("/{email}")
     @Operation(summary = "Get user by email")
-    public ResponseEntity<AppUser> getUserByEmail(@PathVariable @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$}") String email) {
+    public ResponseEntity<AppUser> getUserByEmail(@PathVariable String email) {
         var appUser = userService.getUserByEmail(email);
 
         return ResponseEntity.ok(appUser);
