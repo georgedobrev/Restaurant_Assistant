@@ -38,11 +38,10 @@ public class TenantServiceImpl implements TenantService {
 
         return tenantRepository.save(tenant);
     }
-
     @Override
     public Tenant getTenantById(Integer tenantId) {
         return tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new TenantException("Tenant " + tenantId + " not found."));
+                .orElseThrow(() -> new TenantException("Tenant " + tenantId + " not found"));
     }
 
     @Override
@@ -54,10 +53,10 @@ public class TenantServiceImpl implements TenantService {
     public Tenant updateTenant(Integer userId, TenantDto tenantDto) {
 
         AppUser appUserToUpdate = userRepository.findById(userId)
-                .orElseThrow(() -> new UserException(""));
+                .orElseThrow(() -> new UserException("User with id " + userId + " not found"));
 
         Tenant tenantToUpdate = tenantRepository.findTenantByEmail(appUserToUpdate.getEmail())
-                .orElseThrow(() -> new TenantException(""));
+                .orElseThrow(() -> new TenantException("Tenant with email " + appUserToUpdate.getEmail() + " not found."));
 
         tenantToUpdate.setEmail(tenantDto.getEmail());
         appUserToUpdate.setEmail(tenantDto.getEmail());
