@@ -154,14 +154,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Integer id) {
-        List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(id);
+    public void deleteUserByEmail(String email) {
+        AppUser appUser = userRepository.findAppUserByEmail(email)
+                .orElseThrow(() -> new UserException("User with email " + email + " does not exist"));
+
+        List<UserRole> userRoles = userRoleRepository.findByAppUser_Id(appUser.getId());
 
         if (userRoles.isEmpty()) {
-            throw new UserException("UserRoles not found for User with id " + id);
+            throw new UserException("UserRoles not found for User with email " + email);
         }
 
         userRoleRepository.deleteAll(userRoles);
-        userRepository.deleteById(id);
+        userRepository.deleteById(appUser.getId());
     }
 }

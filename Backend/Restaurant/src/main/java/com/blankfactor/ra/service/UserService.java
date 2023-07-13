@@ -21,5 +21,5 @@ public interface UserService {
 
     AppUser updateUserRole(UpdateUserRoleDto updateUserRoleDto);
 
-    void deleteUserById(Integer id);
+    void deleteUserByEmail(String email);
 }

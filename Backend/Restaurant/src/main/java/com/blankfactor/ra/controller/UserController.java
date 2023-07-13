@@ -70,10 +70,10 @@ public class UserController {
         return ResponseEntity.ok(updatedAppUser);
     }
 
-    @DeleteMapping("/{userId}")
-    @Operation(summary = "Delete user by id")
-    public ResponseEntity<?> deleteUserById(@PathVariable Integer userId) {
-        userService.deleteUserById(userId);
+    @DeleteMapping("/{email}")
+    @Operation(summary = "Delete user by email")
+    public ResponseEntity<?> deleteUserByEmail(@PathVariable String email) {
+        userService.deleteUserByEmail(email);
 
         return ResponseEntity.ok().build();
     }
