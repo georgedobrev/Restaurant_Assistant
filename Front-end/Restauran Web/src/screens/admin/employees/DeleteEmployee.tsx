@@ -1,40 +1,43 @@
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
-import { deleteUser, getUsers, User } from "../../../services/userService";
+import { Button, TextField, Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 import { getServerErrorMessage } from "../../../services/ErrorHandling";
 import styles from "./employees.module.css";
+import { storedJWT } from "../../constants";
 
 const DeleteEmployee: React.FC = () => {
-  const [id, setId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleDeleteUser = async () => {
     try {
-      const user: User | undefined = await getUsers(parseInt(id));
-      if (user && user.email === email) {
-        await deleteUser(parseInt(id));
-        setId("");
+      const response = await fetch(`http://localhost:8080/users/${email}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${storedJWT}`,
+        },
+      });
+
+      if (response.ok) {
         setEmail("");
+        setOpenSnackbar(true);
+      } else {
+        throw new Error("Failed to delete user");
       }
     } catch (err: any) {
       setErrorMsg(getServerErrorMessage(err));
     }
   };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   return (
     <div>
       <h2 className={styles.newUser}>Delete User</h2>
-
-      <TextField
-        label="ID"
-        color="warning"
-        margin="normal"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        fullWidth
-        required
-      />
 
       <TextField
         label="Email"
@@ -55,6 +58,21 @@ const DeleteEmployee: React.FC = () => {
       </Button>
 
       {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          User successfully deleted
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

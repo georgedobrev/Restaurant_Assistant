@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./sections.module.css";
 import AddSectionsButtons from "./AddSectionButtons";
 import EditIcon from "@mui/icons-material/Edit";
 import { storedRestaurantID } from "../../constants";
-import {
-  AppTable,
-  getAllSections,
-  SectionData,
-} from "../../../services/sectionsService";
+import { getAllSections, SectionData } from "../../../services/sectionsService";
 
 const TablesSection: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -52,7 +48,7 @@ const TablesSection: React.FC = () => {
             </div>
           ))}
         </div>
-        {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
+        {errorMsg && <Alert className={styles.errorMsg}>{errorMsg}</Alert>}
       </div>
       <AddSectionsButtons />
     </div>

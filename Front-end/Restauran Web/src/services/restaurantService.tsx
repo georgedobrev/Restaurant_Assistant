@@ -1,10 +1,6 @@
 import { fetchWrapper } from "./fetchWrapper";
-import {
-  baseUrl,
-  restaurantsEndpoint,
-  restaurants,
-  getRestaurantsByAdmin,
-} from "./config.json";
+import { baseUrl, restaurantsEndpoint, admin } from "./config.json";
+import { storedJWT } from "../screens/constants";
 
 export interface Restaurant {
   id?: number;
@@ -20,22 +16,40 @@ export interface RestaurantObj {
 }
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.get<Restaurant[]>(
-    `${baseUrl}${restaurantsEndpoint}${restaurants}`
+    `${baseUrl}${restaurantsEndpoint}`,
+    headers
   );
 };
 
-export const getRestaurantByID = async (id: number) => {
-  return fetchWrapper.get<Restaurant[]>(
-    `${baseUrl}${restaurantsEndpoint}/${id}`
+export const getRestaurantByID = async (
+  id: number
+): Promise<Restaurant | undefined> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
+  const response = await fetchWrapper.get<Restaurant>(
+    `${baseUrl}${restaurantsEndpoint}/${id}`,
+    headers
   );
+  return response;
 };
 
 export const getRestaurantsByAdminID = async (
   userId: number
 ): Promise<Restaurant[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   const response = await fetchWrapper.get<Restaurant[]>(
-    `${baseUrl}${restaurantsEndpoint}${getRestaurantsByAdmin}/${userId}`
+    `${baseUrl}${restaurantsEndpoint}${admin}/${userId}`,
+    headers
   );
   return response;
 };
@@ -43,17 +57,27 @@ export const getRestaurantsByAdminID = async (
 export const editRestaurant = async (
   restaurantData: Restaurant
 ): Promise<Restaurant> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.put<Restaurant>(
     `${baseUrl}${restaurantsEndpoint}/${restaurantData.id}`,
-    restaurantData
+    restaurantData,
+    headers
   );
 };
 
 export const createRestaurant = async (
   restaurantData: RestaurantObj
 ): Promise<RestaurantObj> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.post<RestaurantObj>(
     `${baseUrl}${restaurantsEndpoint}`,
-    restaurantData
+    restaurantData,
+    headers
   );
 };

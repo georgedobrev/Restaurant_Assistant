@@ -11,6 +11,7 @@ import {
   Checkbox,
   ListItemText,
   SelectChangeEvent,
+  Alert,
 } from "@mui/material";
 import styles from "./sections.module.css";
 import { maxHeight, storedRestaurantID } from "../../constants";
@@ -68,6 +69,8 @@ const AddSectionsButtons: React.FC = () => {
       };
 
       const response = await createSection(sectionData);
+      setSectionName("");
+      setTableNumber([]);
       return response;
     } catch (err: any) {
       setErrorMsg(getServerErrorMessage(err));
@@ -117,6 +120,11 @@ const AddSectionsButtons: React.FC = () => {
           <AddIcon className={styles.iconSize} style={{ fontSize: "36px" }} />
         </Button>
       </div>
+      {errorMsg && (
+        <Alert className={styles.errorMsg}>
+          A section with tables {tableNumber} already exists
+        </Alert>
+      )}
     </div>
   );
 };

@@ -11,11 +11,13 @@ import styles from "./employees.module.css";
 import { addEmployee } from "../../../services/userService";
 import { getServerErrorMessage } from "../../../services/ErrorHandling";
 import { storedRestaurantID } from "../../constants";
-
+import { Snackbar, Alert } from "@mui/material";
 const AddEmployee: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [roleType, setRoleType] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const restaurantID: number = parseInt(storedRestaurantID || "0");
 
@@ -33,7 +35,8 @@ const AddEmployee: React.FC = () => {
       const createdUser = await addEmployee(user);
       setEmail("");
       setRoleType("");
-
+      setOpenSnackbar(true);
+      setSnackbarMessage(`Successfully added ${createdUser.email}`);
       return createdUser;
     } catch (err: any) {
       setErrorMsg(getServerErrorMessage(err));
@@ -78,6 +81,20 @@ const AddEmployee: React.FC = () => {
           Add new employee
         </Button>
       </form>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

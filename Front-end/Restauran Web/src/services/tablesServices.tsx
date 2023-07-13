@@ -1,6 +1,7 @@
 import { fetchWrapper } from "./fetchWrapper";
-import { baseUrl, tablesEndpoint, allTables } from "./config.json";
+import { baseUrl, tablesEndpoint } from "./config.json";
 import { storedRestaurantID } from "../screens/constants";
+import { storedJWT } from "../screens/constants";
 
 interface Qr {
   id: number;
@@ -41,22 +42,37 @@ export interface Table {
 export type TableData = Pick<Table, "tableNumber" | "capacity">;
 
 export const getAllTables = async (restaurantid: number): Promise<Table[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.get<Table[]>(
-    `${baseUrl}${tablesEndpoint}${restaurantid}${allTables}`
+    `${baseUrl}${tablesEndpoint}${restaurantid}`,
+    headers
   );
 };
 
 export const deleteTable = async (tableNumber: number): Promise<Table[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.del<Table[]>(
-    `${baseUrl}${tablesEndpoint}${storedRestaurantID}/${tableNumber}`
+    `${baseUrl}${tablesEndpoint}${storedRestaurantID}/${tableNumber}`,
+    headers
   );
 };
 
 export const createTables = async (
   tables: TableData[]
 ): Promise<TableData[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.post<TableData[]>(
     `${baseUrl}${tablesEndpoint}${storedRestaurantID}`,
-    tables
+    tables,
+    headers
   );
 };

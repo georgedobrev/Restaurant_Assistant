@@ -1,5 +1,6 @@
 import { fetchWrapper } from "./fetchWrapper";
 import { baseUrl, section, allSection } from "./config.json";
+import { storedJWT } from "../screens/constants";
 
 export interface AppTable {
   id: number;
@@ -20,13 +21,26 @@ export interface SectionData {
 export const createSection = async (
   sectionData: SectionData
 ): Promise<SectionData> => {
-  return fetchWrapper.post<SectionData>(`${baseUrl}${section}`, sectionData);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
+  return fetchWrapper.post<SectionData>(
+    `${baseUrl}${section}`,
+    sectionData,
+    headers
+  );
 };
 
 export const getAllSections = async (
   restaurantId: number
 ): Promise<SectionData[]> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.get<SectionData[]>(
-    `${baseUrl}${section}${allSection}${restaurantId}`
+    `${baseUrl}${section}/${restaurantId}`,
+    headers
   );
 };

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
-import AddUser from "./AddAdmin";
+import AddEmployee from "./AddEmployee";
 import EditUserComponent from "./EditEmployee";
 import DeleteUserComponent from "./DeleteEmployee";
 import styles from "./employees.module.css";
 import { usersSections } from "../../constants";
-import AddRoles from "./AddWaiter";
 
 const ButtonSection: React.FC = () => {
   const [renderComponent, setRenderComponent] = useState("addUser");
@@ -17,13 +16,11 @@ const ButtonSection: React.FC = () => {
   const renderSelectedComponent = () => {
     switch (renderComponent) {
       case usersSections.addUser:
-        return <AddUser />;
+        return <AddEmployee />;
       case usersSections.editUser:
         return <EditUserComponent />;
       case usersSections.deleteUser:
         return <DeleteUserComponent />;
-      case usersSections.addUserRole:
-        return <AddRoles />;
       default:
         return null;
     }
@@ -37,15 +34,9 @@ const ButtonSection: React.FC = () => {
           variant="contained"
           onClick={() => handleButtonClick(usersSections.addUser)}
         >
-          Add Admin
+          Add Employee
         </Button>
-        <Button
-          className={styles.btns}
-          variant="contained"
-          onClick={() => handleButtonClick(usersSections.addUserRole)}
-        >
-          Add Waiter
-        </Button>
+
         <Button
           className={styles.btns}
           variant="contained"
@@ -58,11 +49,11 @@ const ButtonSection: React.FC = () => {
           variant="contained"
           onClick={() => handleButtonClick(usersSections.deleteUser)}
         >
-          Delete User
+          Delete Employee
         </Button>
       </div>
 
-      <div>{renderComponent === usersSections.addUser && <AddUser />}</div>
+      <div>{renderComponent === usersSections.addUser && <AddEmployee />}</div>
 
       <div>
         {renderComponent === usersSections.editUser && <EditUserComponent />}
@@ -73,8 +64,6 @@ const ButtonSection: React.FC = () => {
           <DeleteUserComponent />
         )}
       </div>
-
-      <div>{renderComponent === usersSections.addUserRole && <AddRoles />}</div>
     </div>
   );
 };

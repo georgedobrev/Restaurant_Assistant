@@ -1,22 +1,36 @@
 import axios, { AxiosResponse } from "axios";
 
-const get = async <T,>(url: string): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.get(url);
+const get = async <T,>(
+  url: string,
+  headers?: { "Content-Type": string; Authorization?: string }
+): Promise<T> => {
+  const response: AxiosResponse<T> = await axios.get(url, { headers });
   return response.data;
 };
 
-const post = async <T,>(url: string, data: T): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.post(url, data);
+const post = async <T,>(
+  url: string,
+  data: T,
+  headers?: { "Content-Type": string; Authorization?: string }
+): Promise<T> => {
+  const response: AxiosResponse<T> = await axios.post(url, data, { headers });
   return response.data;
 };
 
-const put = async <T,>(url: string, data: T): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.put(url, data);
+const put = async <T,>(
+  url: string,
+  data: T,
+  headers?: { "Content-Type": string; Authorization?: string }
+): Promise<T> => {
+  const response: AxiosResponse<T> = await axios.put(url, data, { headers });
   return response.data;
 };
 
-const del = async <T,>(url: string): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.delete(url);
+const del = async <T,>(
+  url: string,
+  headers?: { "Content-Type": string; Authorization?: string }
+): Promise<T> => {
+  const response: AxiosResponse<T> = await axios.delete(url, { headers });
   return response.data;
 };
 

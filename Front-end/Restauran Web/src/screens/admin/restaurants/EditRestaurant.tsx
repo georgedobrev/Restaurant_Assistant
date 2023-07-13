@@ -8,6 +8,7 @@ import {
   getRestaurantByID,
   editRestaurant,
 } from "../../../services/restaurantService";
+import { Snackbar, Alert } from "@mui/material";
 
 const EditRestaurant: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -15,6 +16,8 @@ const EditRestaurant: React.FC = () => {
   const [tablesCount, setTablesCount] = useState<number>(0);
   const [phoneNumber1, setPhoneNumber1] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     const storedRestaurantIdNum = Number(storedRestaurantID);
@@ -22,14 +25,14 @@ const EditRestaurant: React.FC = () => {
     if (!isNaN(storedRestaurantIdNum)) {
       const loadRestaurantData = async () => {
         try {
-          const [restaurantData]: Restaurant[] | undefined =
-            await getRestaurantByID(storedRestaurantIdNum);
-          await getRestaurantByID(storedRestaurantIdNum);
+          const restaurantData = await getRestaurantByID(storedRestaurantIdNum);
           if (restaurantData) {
             setName(restaurantData.name);
             setAddress(restaurantData.address);
             setTablesCount(restaurantData.tablesCount);
             setPhoneNumber1(restaurantData.phoneNumber1);
+            setOpenSnackbar(true);
+            setSnackbarMessage(`Succesfully updated`);
           }
         } catch (err: any) {
           setErrorMsg(getServerErrorMessage(err));
@@ -55,20 +58,28 @@ const EditRestaurant: React.FC = () => {
         phoneNumber1,
       });
 
-      setName("");
-      setAddress("");
-      setTablesCount(0);
-      setPhoneNumber1("");
+      if (updatedRestaurant) {
+        setName("");
+        setAddress("");
+        setTablesCount(0);
+        setPhoneNumber1("");
+        setOpenSnackbar(true);
+        setSnackbarMessage(
+          `Restaurant ${updatedRestaurant.name} has been successfully updated.`
+        );
+      }
+
       return updatedRestaurant;
     } catch (err: any) {
       setErrorMsg(getServerErrorMessage(err));
     }
   };
+
   return (
     <div>
       <h2 className={styles.newRestaurant}>Edit Restaurant</h2>
 
-      <div>
+      <div className={styles.editSection}>
         <TextField
           label="Name"
           color="warning"
@@ -120,8 +131,20 @@ const EditRestaurant: React.FC = () => {
           Update Restaurant
         </Button>
       </div>
-
-      {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

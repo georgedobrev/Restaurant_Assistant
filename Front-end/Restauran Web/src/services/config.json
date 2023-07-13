@@ -1,26 +1,27 @@
 {
   "baseUrl": "http://localhost:8080/",
-  "create": "/create",
 
   "auth": "auth",
   "loginEndpoint": "/login",
   "registerEndpoint": "/register",
 
-  "usersEndpoint": "user",
-  "addRole": "/addRole",
-  "waiter": "/waiter",
+  "usersEndpoint": "users",
   "admin": "/admin",
 
-  "restaurantsEndpoint": "restaurant",
+  "employee": "/employee",
+  "admins": "/admins",
+  "details": "/details",
+  "role": "/role",
+
+  "restaurantsEndpoint": "restaurants",
   "restaurants": "/getAll",
   "getRestaurantsByAdmin": "/getAllByAdmin",
 
-  "notificationEndpoint": "notification",
+  "notificationEndpoint": "notifications",
   "tenantsEndpoint": "tenant",
   
   "tablesEndpoint": "tables/",
   "allTables": "/all",
 
-  "section": "section",
-  "allSection": "/getAll/"
+  "section": "sections"
 }

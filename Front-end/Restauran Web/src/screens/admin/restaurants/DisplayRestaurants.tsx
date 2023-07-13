@@ -18,23 +18,24 @@ const DisplayRestaurants: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
+    const fetchRestaurants = async () => {
       try {
         if (storedUserId) {
-          const restaurants = await getRestaurantsByAdminID(
+          const restaurantsData = await getRestaurantsByAdminID(
             parseInt(storedUserId)
           );
-          setRestaurants(
-            restaurants.map((restaurant) => ({
-              ...restaurant,
-              isSelected: false,
-            }))
-          );
+          const updatedRestaurants = restaurantsData.map((restaurant) => ({
+            ...restaurant,
+            isSelected: false,
+          }));
+          setRestaurants(updatedRestaurants);
         }
       } catch (error) {
-        return error;
+        console.error(error);
       }
-    })();
+    };
+
+    fetchRestaurants();
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./restaurant.module.css";
 import { getServerErrorMessage } from "../../../services/ErrorHandling";
@@ -8,6 +8,7 @@ import {
   Restaurant,
   RestaurantObj,
 } from "../../../services/restaurantService";
+import { Snackbar, Alert } from "@mui/material";
 
 const AddRestaurant: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -17,6 +18,9 @@ const AddRestaurant: React.FC = () => {
   const initialUserId = storedUserId ? parseInt(storedUserId) : 0;
   const [userId, setUserId] = useState<number>(initialUserId);
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [successMsg, setSuccessMsg] = useState<string>(""); // New state variable for success message
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +43,8 @@ const AddRestaurant: React.FC = () => {
       setAddress("");
       setTablesCount("");
       setPhoneNumber1("");
-      return response;
+      setOpenSnackbar(true);
+      setSnackbarMessage(`${restaurantData.name} has been added successfully`);
     } catch (err: any) {
       setErrorMsg(getServerErrorMessage(err));
     }
@@ -59,7 +64,6 @@ const AddRestaurant: React.FC = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-
         <TextField
           className={styles.inputFields}
           label="Address"
@@ -69,7 +73,6 @@ const AddRestaurant: React.FC = () => {
           onChange={(e) => setAddress(e.target.value)}
           required
         />
-
         <TextField
           label="Tables Count"
           color="warning"
@@ -79,7 +82,6 @@ const AddRestaurant: React.FC = () => {
           required
           className={styles.inputFields}
         />
-
         <TextField
           label="Phone Number"
           color="warning"
@@ -89,12 +91,26 @@ const AddRestaurant: React.FC = () => {
           required
           className={styles.inputFields}
         />
-        {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
+        {/* {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>} */}
 
         <Button type="submit" className={styles.btns} variant="contained">
           Add new restaurant
         </Button>
       </form>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

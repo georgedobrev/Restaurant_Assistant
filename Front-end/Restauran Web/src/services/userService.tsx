@@ -1,5 +1,6 @@
 import { fetchWrapper } from "./fetchWrapper";
-import { baseUrl, usersEndpoint, addRole, waiter, admin } from "./config.json";
+import { baseUrl, usersEndpoint } from "./config.json";
+import { storedJWT } from "../screens/constants";
 
 export interface User {
   id?: number;
@@ -22,38 +23,47 @@ export interface Roles {
 }
 
 export const editUser = async (userData: User): Promise<User> => {
-  return fetchWrapper.put<User>(`${baseUrl}${usersEndpoint}`, userData);
-};
-
-export const addUserRole = async (rolesData: Roles): Promise<Roles> => {
-  return fetchWrapper.post<Roles>(
-    `${baseUrl}${usersEndpoint}${addRole}`,
-    rolesData
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
+  return fetchWrapper.put<User>(
+    `${baseUrl}${usersEndpoint}/details`,
+    userData,
+    headers
   );
 };
 
-export const createWaiter = async (rolesData: Roles): Promise<Roles> => {
+export const addEmployee = async (rolesData: Roles): Promise<Roles> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
   return fetchWrapper.post<Roles>(
-    `${baseUrl}${usersEndpoint}${waiter}`,
-    rolesData
-  );
-};
-
-export const createAdmin = async (rolesData: Roles): Promise<Roles> => {
-  return fetchWrapper.post<Roles>(
-    `${baseUrl}${usersEndpoint}${admin}`,
-    rolesData
+    `${baseUrl}${usersEndpoint}/employee`,
+    rolesData,
+    headers
   );
 };
 
 //TODO
 //MAKE RESTAURANTS DYNAMIC WHEN TENANT MENU IS DONE
-export const getUsers = async (id: number): Promise<User | undefined> => {
+export const getUserByEmail = async (
+  email: string
+): Promise<User | undefined> => {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${storedJWT}`,
+  };
+
   return fetchWrapper.get<User | undefined>(
-    `${baseUrl}${usersEndpoint}/${id}/1`
+    `${baseUrl}${usersEndpoint}`,
+    headers
   );
 };
 
-export const deleteUser = async (id: number): Promise<void> => {
-  return fetchWrapper.del<void>(`${baseUrl}${usersEndpoint}/${id}`);
+export const deleteUserByEmail = async (email: string): Promise<void> => {
+  return fetchWrapper.del<void>(
+    `${baseUrl}${usersEndpoint}/${encodeURIComponent(email)}`
+  );
 };
