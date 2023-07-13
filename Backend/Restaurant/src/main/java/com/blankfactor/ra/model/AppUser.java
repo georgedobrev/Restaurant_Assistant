@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -42,11 +43,16 @@ public class AppUser extends Audit implements UserDetails {
     @Column(name = "active")
     private Boolean active = true;
 
+    @Transient
+    private List<GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //todo fix this
-//        return List.of(new SimpleGrantedAuthority(roleType.name()));
-        return null;
+        return authorities;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
