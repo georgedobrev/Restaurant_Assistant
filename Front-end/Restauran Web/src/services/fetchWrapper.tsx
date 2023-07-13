@@ -8,12 +8,12 @@ const get = async <T,>(
   return response.data;
 };
 
-const post = async <T,>(
+const post = async <T, U>(
   url: string,
   data: T,
   headers?: { "Content-Type": string; Authorization?: string }
-): Promise<T> => {
-  const response: AxiosResponse<T> = await axios.post(url, data, { headers });
+): Promise<U> => {
+  const response: AxiosResponse<U> = await axios.post(url, data, { headers });
   return response.data;
 };
 

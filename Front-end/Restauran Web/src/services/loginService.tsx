@@ -8,6 +8,7 @@ export interface LoginScreenProps {
 
 export interface LoginRequest {
   googleJwt: string;
+  loginRequestRoleType: string;
 }
 
 export interface LoginResponse {
@@ -22,7 +23,7 @@ export interface LoginResponse {
 export const sendJWT = async (
   loginData: LoginRequest
 ): Promise<LoginResponse> => {
-  return fetchWrapper.post<LoginRequest>(
+  return fetchWrapper.post<LoginRequest, LoginResponse>(
     `${baseUrl}${auth}${loginEndpoint}`,
     loginData
   );

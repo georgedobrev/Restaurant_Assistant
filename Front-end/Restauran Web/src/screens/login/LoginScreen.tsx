@@ -31,7 +31,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
       setLoggedIn(true);
 
       try {
-        const responseData: LoginResponse = await sendJWT({ googleJwt: JWT });
+        const responseData: LoginResponse = await sendJWT({
+          googleJwt: JWT,
+          loginRequestRoleType: "APPEXECUTIVE",
+        });
         setLoggedIn(true);
         setUserType(responseData.userType);
         localStorage.setItem("refreshToken", responseData.refreshToken);
